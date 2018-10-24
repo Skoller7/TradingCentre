@@ -12,7 +12,7 @@ document.getElementById("MLoginIUsername").addEventListener("focusout",function(
 document.getElementById("MLoginIPassword").addEventListener("focusout",function(){
 	checkInputIsEmpty(document.getElementById("MLoginIPassword"))
 });
-//modal button
+//modal button.
 document.getElementById("MLoginBLogin").addEventListener("click",login);
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
 document.getElementById("MLoginBCrosse").addEventListener("click",MLoginClose);
