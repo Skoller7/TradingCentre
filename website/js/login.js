@@ -3,6 +3,10 @@ modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
 
+console.log(getCookie("cookieBanner"));
+if(getCookie("cooikesAllowed") == "true"){
+	document.getElementById("cookieBanner").style.display = "none";	
+}
 //button header/test
 
 document.getElementById("BLogin").addEventListener("click",openMLogin);
@@ -32,6 +36,22 @@ document.getElementById("MForgotPasswordBCrosse").addEventListener("click",MForg
 
 function closeAllModals(){
 	modalList.forEach(closeModal);	
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 
 function closeModal(item){
@@ -89,9 +109,6 @@ function checkInputIsEmpty(e){
 	}
 }
 function allowCookies(){
-	console.log("test");
 	document.cookie = "cooikesAllowed=true";
-	document.cookie = "username=John Doe";
-	var x = document.cookie;
-	console.log(x);
+	document.getElementById("cookieBanner").style.display = "none";
 }
