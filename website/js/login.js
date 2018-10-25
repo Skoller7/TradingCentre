@@ -91,7 +91,7 @@ function checkInputIsEmpty(e){
 function allowCookies(){
 	console.log("test");
 	document.cookie = "cooikesAllowed=true";
+	document.cookie = "username=John Doe";
 	var x = document.cookie;
-
 	console.log(x);
 }
