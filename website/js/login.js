@@ -3,9 +3,15 @@ modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
 
-console.log(getCookie("cookieBanner"));
+console.log(document.cookie);
+
 if(getCookie("cooikesAllowed") == "true"){
 	document.getElementById("cookieBanner").style.display = "none";	
+}
+if(getCookie("cooikesAllowed")){
+	if(getCookie("rememberMe")){
+		autoLogin(getCookie("username"),getCookie("password"));
+	}
 }
 //button header/test
 
@@ -20,6 +26,7 @@ document.getElementById("MLoginIUsername").addEventListener("focusout",function(
 document.getElementById("MLoginIPassword").addEventListener("focusout",function(){
 	checkInputIsEmpty(document.getElementById("MLoginIPassword"))
 });
+
 //modal button.
 document.getElementById("MLoginBLogin").addEventListener("click",login);
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
@@ -80,10 +87,31 @@ function openMForgotPassword() {
 	});
 }
 
+function autoLogin(username, password){
 
+
+	//login logic
+	if(true){
+		window.location.href = "home.html?username=" + username + "&password=" + password;
+	}
+
+
+}
 function login(){
 	
 	MLoginClose();
+	console.log(document.getElementById("CBremimberMe"));
+	//login logic
+	if(true){
+		if(document.getElementById("CBremimberMe").value){
+			document.cookie = "rememberMe=true";
+			document.cookie = "username=" + document.getElementById("MLoginIUsername").value;
+			document.cookie = "password=" + document.getElementById("MLoginIPassword").value;
+		}
+		window.location.href = "home.html?username=" + document.getElementById("MLoginIUsername").value + "&password=" + document.getElementById("MLoginIPassword").value;
+	}
+	//login code
+
 }
 function singUp(){
 
