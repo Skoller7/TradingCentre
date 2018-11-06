@@ -101,6 +101,9 @@
 
     </style>
     <script>
+        function delcard(id){
+            document.getElementById(id).style.display = "block";
+        }
         function addzero(number){
             if(number < 10){
                 number = "0" + number;
@@ -109,29 +112,43 @@
         }
         function onclickplus(){
             var note = document.createElement("div");
-            var notecontent = document.getElementById("notecontent");
+            var notebody = document.createElement("div");
+            var notetitle = document.createElement("h5");
+            var notetext = document.createElement("p");
+            var notedel = document.createElement("button");
+            var notecontent = document.getElementById("notecontent").value;
             if(notecontent == ""){
-                alert("The note cannot be empty!");
+                document.getElementById('falsenote').style.color = "red";
+                document.getElementById('falsenote').innerHTML = '* This field cannot be empty!';
+            
             }else{
-                note.className = "note";
+                var ID = Math.random();
+                document.getElementById('falsenote').innerHTML = '';
+                note.className = "card";
+                note.setAttribute("id",ID);
+                notebody.className = "card-body";
+                notetitle.className = "card-title";
+                notetext.className = "card-text";
+                notedel.className = "btn btn-primary";
+                 //notedel.setAttribute("onclick",delcard(ID););
                 var today = new Date();
                 var dd = today.getDate();
                 var mm = today.getMonth() +1;
                 var yyyy = today.getFullYear();
                 var hh = addzero(today.getHours());
-                var mm = addzero(today.getMinutes());
-                today = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + mm;
-                note.innerHTML = today + '<br>';
-                note.innerHTML +=  notecontent.value;
+                var MM = addzero(today.getMinutes());
+                today = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + MM;
+                notetitle.innerHTML = today + '<br>';
+                notetext.innerHTML =  notecontent;
+                notedel.innerHTML = "Delete";
                 document.getElementById("notes").appendChild(note);
+                note.appendChild(notebody);
+                notebody.appendChild(notetitle);
+                notebody.appendChild(notetext);
+                notebody.appendChild(notedel);
+                document.getElementById("notecontent").value = "";
             }
         }
-        $('button#Mnotesubmit').submit(function(e) {
-    e.preventDefault();
-    // Coding
-    $('#Mnote').modal('toggle'); //or  $('#IDModal').modal('hide');
-    return false;
-});
     </script>
 	<body>
 <nav class="navbar navbar-expand-lg fixed-top">
@@ -163,7 +180,8 @@
 <div class="container">
     <div class="row">
         <div id="context-firstrow" class="col-md-2 col-sm-12 col-xs-12">
-        Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
+            <h2>PORTFOLIO</h2>
+            
         </div>
         <div id="context-head" class="col-md-8 col-sm-12 col-xs-12">
         <div class="row">
@@ -182,9 +200,6 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" id="nav-tab" href="#order-history">Order history</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" id="nav-tab" href="#tab3">Tab3</a>
                 </li>
               </ul>
             <div class="tab-content">
@@ -490,10 +505,6 @@
                     </div>
                     </div>
                 </div>
-                <div id="tab3" class="tab-pane fade" role="tabpanel">
-                  <h3>Menu 2</h3>
-                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-                </div>
               </div>
             </div>
         </div>
@@ -514,6 +525,9 @@
                       </div>
                       <div class="modal-body">
                         <input type="text" class="form-control" id="notecontent">
+                                                      <div id="falsenote">
+                            
+                            </div>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -534,27 +548,6 @@
         </div>
         </div>
     </div>
-		<div class="modal fade" id="Mnote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  		<div class="modal-dialog" role="document">
-	    		<div class="modal-content">
-	    			<div class="modal-header">
-				        <h5 class="modal-title">Note</h5>
-				        <button type="button" class="close" id="MnoteBCrosse" aria-label="Close">
-			          		<span aria-hidden="true">&times;</span>
-						</button>
-				    </div>
-		      		<div class="modal-body">
-		      			<form action="Home.html">
-		      				<input type="text" name="Mnotecontent" placeholder="Note" id="Mnotecontent" autocomplete="off">
-		      			</form>
-		      		</div>
-		      		<div class="modal-footer">
-		        		<button type="button" class="btn btn-primary" id="Mnotesubmit">Submit</button>
-		        		<button type="button" class="btn btn-secondary" id="Mnoteclose">Close</button>
-		      		</div>
-		    	</div>
-  			</div>
-		</div>
 <footer>
 <div class="container">
     <div class="row" id="footertext">
