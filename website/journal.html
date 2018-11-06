@@ -94,8 +94,45 @@
         .footer-ul li a{
             color: #fff;
         }
+        .note{
+            background-color: #d9d9d9;
+            margin:2%;
+        }
 
     </style>
+    <script>
+        function addzero(number){
+            if(number < 10){
+                number = "0" + number;
+            }
+            return number;
+        }
+        function onclickplus(){
+            var note = document.createElement("div");
+            var notecontent = document.getElementById("notecontent");
+            if(notecontent == ""){
+                alert("The note cannot be empty!");
+            }else{
+                note.className = "note";
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() +1;
+                var yyyy = today.getFullYear();
+                var hh = addzero(today.getHours());
+                var mm = addzero(today.getMinutes());
+                today = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + mm;
+                note.innerHTML = today + '<br>';
+                note.innerHTML +=  notecontent.value;
+                document.getElementById("notes").appendChild(note);
+            }
+        }
+        $('button#Mnotesubmit').submit(function(e) {
+    e.preventDefault();
+    // Coding
+    $('#Mnote').modal('toggle'); //or  $('#IDModal').modal('hide');
+    return false;
+});
+    </script>
 	<body>
 <nav class="navbar navbar-expand-lg fixed-top">
   <a class="navbar-brand" href="#">
@@ -131,10 +168,10 @@
         <div id="context-head" class="col-md-8 col-sm-12 col-xs-12">
         <div class="row">
             <div class="col-md-6 col-sm-12 col-xs-12" id="context">
-            Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
+            <img src="img/linechart.png" width="100%"/>  
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12" id="context">
-            Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
+            <img src="img/chart.png" width="100%"/>  
             </div>  
         </div>
         <div class="row">
@@ -152,47 +189,47 @@
               </ul>
             <div class="tab-content">
                 <div id="order-active" class="tab-pane fade show active" role="tabpanel">
-                    <div class="row">
-                    <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
                     <img src="img/tradeimg.png" width="100%"/>    
                     </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12">
-                        <table class="table" width="100%;">
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
                           <tbody>
                             <tr>
-                            <td style="background-color: #999;">Trade type</td>
+                            <td>Trade type</td>
                             <td>Head & shoulders</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Entry price</td>
+                            <td>Entry price</td>
                             <td>1</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Exit price</td>
+                            <td>Exit price</td>
                             <td>3</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Entry date</td>
+                            <td>Entry date</td>
                             <td>30/10/18</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Exit date</td>
+                            <td>Exit date</td>
                             <td>2/11/18</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Technique</td>
+                            <td>Technique</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Gain</td>
+                            <td>Gain</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Profit USD</td>
+                            <td>Profit USD</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Profit BTC</td>
+                            <td>Profit BTC</td>
                             <td>?</td>
                             </tr>
                           </tbody>
@@ -200,47 +237,47 @@
                         </table>
                         </div>
                     </div>
-                                        <div class="row">
-                    <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
                     <img src="img/tradeimg.png" width="100%"/>    
                     </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12">
-                        <table class="table" width="100%;">
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
                           <tbody>
                             <tr>
-                            <td style="background-color: #999;">Trade type</td>
+                            <td>Trade type</td>
                             <td>Head & shoulders</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Entry price</td>
+                            <td>Entry price</td>
                             <td>1</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Exit price</td>
+                            <td>Exit price</td>
                             <td>3</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Entry date</td>
+                            <td>Entry date</td>
                             <td>30/10/18</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Exit date</td>
+                            <td>Exit date</td>
                             <td>2/11/18</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Technique</td>
+                            <td>Technique</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Gain</td>
+                            <td>Gain</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Profit USD</td>
+                            <td>Profit USD</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Profit BTC</td>
+                            <td>Profit BTC</td>
                             <td>?</td>
                             </tr>
                           </tbody>
@@ -248,51 +285,51 @@
                         </table>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" style="background-color: #212529;">
                         <a class="btn btn-primary" data-toggle="collapse" href="#moreorders" role="button" aria-expanded="false" aria-controls="moreorders" style="margin:1% auto;">Show more ...</a>
                     </div>
                     <div id="moreorders" class="collapse">
-                    <div class="row">
-                    <div class="col-md-8 col-sm-12 col-xs-12">
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
                     <img src="img/tradeimg.png" width="100%"/>    
                     </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12">
-                        <table class="table" width="100%;">
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
                           <tbody>
                             <tr>
-                            <td style="background-color: #999;">Trade type</td>
+                            <td>Trade type</td>
                             <td>Head & shoulders</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Entry price</td>
+                            <td>Entry price</td>
                             <td>1</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Exit price</td>
+                            <td>Exit price</td>
                             <td>3</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Entry date</td>
+                            <td>Entry date</td>
                             <td>30/10/18</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Exit date</td>
+                            <td>Exit date</td>
                             <td>2/11/18</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Technique</td>
+                            <td>Technique</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Gain</td>
+                            <td>Gain</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Profit USD</td>
+                            <td>Profit USD</td>
                             <td>?</td>
                             </tr>
                                                           <tr>
-                            <td style="background-color: #999;">Profit BTC</td>
+                            <td>Profit BTC</td>
                             <td>?</td>
                             </tr>
                           </tbody>
@@ -303,8 +340,155 @@
                     </div>
                 </div>
                 <div id="order-history" class="tab-pane fade" role="tabpanel">
-                  <h3>Menu 1</h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    <div class="row" style="background-color: #212529;">
+                        <a class="btn btn-primary" data-toggle="collapse" href="#moreorders" role="button" aria-expanded="false" aria-controls="moreorders" style="margin:1% auto;">Show more ...</a>
+                    </div>
+                    <div id="moreorders" class="collapse">
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    </div>
                 </div>
                 <div id="tab3" class="tab-pane fade" role="tabpanel">
                   <h3>Menu 2</h3>
@@ -314,12 +498,63 @@
             </div>
         </div>
         </div>
-        <div id="context-firstrow" class="col-md-2 col-sm-12 col-xs-12">
-        Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
+        <div id="context-head" class="col-md-2 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12" id="context">
+                <h2>NOTES</h2>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addnote"><i class="fa fa-plus"></i> NEW</button>
+                <div class="modal fade" id="addnote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add note</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <input type="text" class="form-control" id="notecontent">
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="onclickplus();">Create note</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="notes">
+                    
+                
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12" id="context">Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.</div>
+            </div>
         </div>
         </div>
     </div>
-        
+		<div class="modal fade" id="Mnote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  		<div class="modal-dialog" role="document">
+	    		<div class="modal-content">
+	    			<div class="modal-header">
+				        <h5 class="modal-title">Note</h5>
+				        <button type="button" class="close" id="MnoteBCrosse" aria-label="Close">
+			          		<span aria-hidden="true">&times;</span>
+						</button>
+				    </div>
+		      		<div class="modal-body">
+		      			<form action="Home.html">
+		      				<input type="text" name="Mnotecontent" placeholder="Note" id="Mnotecontent" autocomplete="off">
+		      			</form>
+		      		</div>
+		      		<div class="modal-footer">
+		        		<button type="button" class="btn btn-primary" id="Mnotesubmit">Submit</button>
+		        		<button type="button" class="btn btn-secondary" id="Mnoteclose">Close</button>
+		      		</div>
+		    	</div>
+  			</div>
+		</div>
 <footer>
 <div class="container">
     <div class="row" id="footertext">
