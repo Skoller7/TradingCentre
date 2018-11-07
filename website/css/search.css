@@ -1,0 +1,15 @@
+#user{
+	margin-top: 10%;
+}
+.searchResult{
+	margin: 1% 15% 1% 15%;
+	border: 1px solid black;
+}
+.markedText{
+	color: yellow;
+	font-style: italic;
+}
+.searchImg{
+	height: 64px;
+	width: 64px;
+}
