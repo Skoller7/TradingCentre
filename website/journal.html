@@ -94,9 +94,62 @@
         .footer-ul li a{
             color: #fff;
         }
-        
+        .note{
+            background-color: #d9d9d9;
+            margin:2%;
+        }
 
     </style>
+    <script>
+        function delcard(id){
+            document.getElementById(id).style.display = "block";
+        }
+        function addzero(number){
+            if(number < 10){
+                number = "0" + number;
+            }
+            return number;
+        }
+        function onclickplus(){
+            var note = document.createElement("div");
+            var notebody = document.createElement("div");
+            var notetitle = document.createElement("h5");
+            var notetext = document.createElement("p");
+            var notedel = document.createElement("button");
+            var notecontent = document.getElementById("notecontent").value;
+            if(notecontent == ""){
+                document.getElementById('falsenote').style.color = "red";
+                document.getElementById('falsenote').innerHTML = '* This field cannot be empty!';
+            
+            }else{
+                var ID = Math.random();
+                document.getElementById('falsenote').innerHTML = '';
+                note.className = "card";
+                note.setAttribute("id",ID);
+                notebody.className = "card-body";
+                notetitle.className = "card-title";
+                notetext.className = "card-text";
+                notedel.className = "btn btn-primary";
+                 //notedel.setAttribute("onclick",delcard(ID););
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() +1;
+                var yyyy = today.getFullYear();
+                var hh = addzero(today.getHours());
+                var MM = addzero(today.getMinutes());
+                today = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + MM;
+                notetitle.innerHTML = today + '<br>';
+                notetext.innerHTML =  notecontent;
+                notedel.innerHTML = "Delete";
+                document.getElementById("notes").appendChild(note);
+                note.appendChild(notebody);
+                notebody.appendChild(notetitle);
+                notebody.appendChild(notetext);
+                notebody.appendChild(notedel);
+                document.getElementById("notecontent").value = "";
+            }
+        }
+    </script>
 	<body>
 <nav class="navbar navbar-expand-lg fixed-top">
   <a class="navbar-brand" href="#">
@@ -127,15 +180,16 @@
 <div class="container">
     <div class="row">
         <div id="context-firstrow" class="col-md-2 col-sm-12 col-xs-12">
-        Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
+            <h2>PORTFOLIO</h2>
+            
         </div>
         <div id="context-head" class="col-md-8 col-sm-12 col-xs-12">
         <div class="row">
             <div class="col-md-6 col-sm-12 col-xs-12" id="context">
-            Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
+            <img src="img/linechart.png" width="100%"/>  
             </div>
             <div class="col-md-6 col-sm-12 col-xs-12" id="context">
-            Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
+            <img src="img/chart.png" width="100%"/>  
             </div>  
         </div>
         <div class="row">
@@ -147,46 +201,353 @@
                 <li class="nav-item">
                   <a class="nav-link" data-toggle="tab" id="nav-tab" href="#order-history">Order history</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" id="nav-tab" href="#tab3">Tab3</a>
-                </li>
               </ul>
             <div class="tab-content">
                 <div id="order-active" class="tab-pane fade show active" role="tabpanel">
-                                          <table class="table">
-                                              <thead class="thead-dark">
-                                                <tr>
-                                                    <h2>TOP SELLERS</h2>
-                                                </tr>
-                                              </thead>
-                                              <tbody>
-                                                <tr>
-                                                  <th><img class="img-person" src="img/person.svg"></th>
-                                                    <td><a href="Index.html">Mark</a></td>
-                                                  <td>25000 <i class="fa fa-user"></i></td>
-                                                  <td><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span></td>
-                                                    </tr>
-                                              </tbody>
-                                            </table>
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    <div class="row" style="background-color: #212529;">
+                        <a class="btn btn-primary" data-toggle="collapse" href="#moreorders" role="button" aria-expanded="false" aria-controls="moreorders" style="margin:1% auto;">Show more ...</a>
+                    </div>
+                    <div id="moreorders" class="collapse">
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    </div>
                 </div>
                 <div id="order-history" class="tab-pane fade" role="tabpanel">
-                  <h3>Menu 1</h3>
-                  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                </div>
-                <div id="tab3" class="tab-pane fade" role="tabpanel">
-                  <h3>Menu 2</h3>
-                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    <div class="row" style="background-color: #212529;">
+                        <a class="btn btn-primary" data-toggle="collapse" href="#moreorders" role="button" aria-expanded="false" aria-controls="moreorders" style="margin:1% auto;">Show more ...</a>
+                    </div>
+                    <div id="moreorders" class="collapse">
+                    <div class="row" style="border-bottom: 2px solid #fff;">
+                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                    <img src="img/tradeimg.png" width="100%"/>    
+                    </div>
+                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                        <table class="table table-dark" width="100%;">
+                          <tbody>
+                            <tr>
+                            <td>Trade type</td>
+                            <td>Head & shoulders</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry price</td>
+                            <td>1</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit price</td>
+                            <td>3</td>
+                            </tr>
+                                                          <tr>
+                            <td>Entry date</td>
+                            <td>30/10/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Exit date</td>
+                            <td>2/11/18</td>
+                            </tr>
+                                                          <tr>
+                            <td>Technique</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Gain</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit USD</td>
+                            <td>?</td>
+                            </tr>
+                                                          <tr>
+                            <td>Profit BTC</td>
+                            <td>?</td>
+                            </tr>
+                          </tbody>
+                            
+                        </table>
+                        </div>
+                    </div>
+                    </div>
                 </div>
               </div>
             </div>
         </div>
         </div>
-        <div id="context-firstrow" class="col-md-2 col-sm-12 col-xs-12">
-        Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
+        <div id="context-head" class="col-md-2 col-sm-12 col-xs-12">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12" id="context">
+                <h2>NOTES</h2>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#addnote"><i class="fa fa-plus"></i> NEW</button>
+                <div class="modal fade" id="addnote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Add note</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <input type="text" class="form-control" id="notecontent">
+                                                      <div id="falsenote">
+                            
+                            </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" onclick="onclickplus();">Create note</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div id="notes">
+                    
+                
+                </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12" id="context">Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.</div>
+            </div>
         </div>
         </div>
     </div>
-        
 <footer>
 <div class="container">
     <div class="row" id="footertext">
