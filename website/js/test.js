@@ -4,6 +4,8 @@ xhttp.open("POST", "http://localhost:5000/api/auth/login", true);
 xhttp.send();
 var test = xhttp.();
 */
+/*
+
 
 $(function(){
 
@@ -35,6 +37,9 @@ $(function(){
     });
 });
 
+
+
+*/
 /*
 //localhost:5000/api/auth/login
 

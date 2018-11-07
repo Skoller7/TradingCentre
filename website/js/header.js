@@ -117,41 +117,102 @@ function logout(){
 }
 function login(){
 	
-	MLoginClose();
-	console.log(document.getElementById("CBremimberMe"));
+	//MLoginClose();
+	//console.log(document.getElementById("CBremimberMe"));
 	//login logic
-	$(function(){
 
-	var testUser = {
-		username: document.getElementById("MLoginIUsername").value,
-        password: document.getElementById("MLoginIPassword").value,
-        email: document.getElementById("MLoginIEmail").value
+
+	document.getElementById("MLoginIUsername").classList.remove("modalError");
+	document.getElementById("MLoginIEmail").classList.remove("modalError");
+	document.getElementById("MLoginIPassword").classList.remove("modalError");
+
+	document.getElementById("MLoginEMMain").style.display = "none";
+
+	document.getElementById("MLoginEMUsername").innerHTML = "";
+	document.getElementById("MLoginEMEmail").innerHTML = "";
+	document.getElementById("MLoginEMPassword").innerHTML = "";
+	document.getElementById("MLoginEMMain").innerHTML = "";
+
+	var allowedToLogin = true;
+	if(document.getElementById("MLoginIUsername").value == ""){
+		errorModal(document.getElementById("MLoginIUsername"), document.getElementById("MLoginEMUsername"), "Username required");
+		allowedToLogin = false;
 	}
-	//http://localhost:5000/api/auth/login
-	console.log(testUser);
-    $.ajax({
-    	"async": true,
-  		"crossDomain": true,
-  		url: 'http://localhost:5000/api/auth/login',
-        type: 'POST',
-        "headers": {
-    		"Content-Type": "application/json"
-  		},
-        data: JSON.stringify(testUser),
-        dataType: 'json',
-        success: function(data){
-            console.log(data.token);
-            document.cookie = "token=" + data.token;
-            window.location.href = "home.html";
-        },
-        error: function(xhr, ajaxOptions, thrownError){
-        	console.log(xhr.status);
-        	console.log(thrownError);
-            //console.log("error");
-        }
-    });
-});
+	if(document.getElementById("MLoginIEmail").value == ""){
+		errorModal(document.getElementById("MLoginIEmail"), document.getElementById("MLoginEMEmail"), "Email required");
+		allowedToLogin = false;
+	}
+	if(document.getElementById("MLoginIPassword").value == ""){
+		errorModal(document.getElementById("MLoginIPassword"), document.getElementById("MLoginEMPassword"), "Password required");
+		allowedToLogin = false;
+	}
+	if(allowedToLogin){
 
+
+		$(function(){
+
+		var loginUser = {
+			username: document.getElementById("MLoginIUsername").value,
+	        password: document.getElementById("MLoginIPassword").value,
+	        email: document.getElementById("MLoginIEmail").value
+		}
+		//http://localhost:5000/api/auth/login
+		console.log(loginUser);
+	    $.ajax({
+	    	"async": true,
+	  		"crossDomain": true,
+	  		url: 'http://localhost:5000/api/auth/login',
+	        type: 'POST',
+	        "headers": {
+	    		"Content-Type": "application/json"
+	  		},
+	        data: JSON.stringify(loginUser),
+	        dataType: 'json',
+	        success: function(data){
+	        	console.log(data);
+	            console.log(data.token);
+	            document.cookie = "token=" + data.token;
+	            window.location.href = "home.html";
+	        },
+	        error: function(data, ajaxOptions, thrownError){
+	        	console.log(data);
+	        	console.log(data.status);
+	        	console.log(thrownError);
+	        	document.getElementById("MLoginEMMain").style.display = "block";
+	        	document.getElementById("MLoginEMMain").innerHTML = "Wrong username, email or password";
+	        	if(data.responseText != null){
+	        		console.log(data.responseText);
+	        		/*
+	        		if(data.responseText == "Username already exists"){
+						errorModal(document.getElementById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username already exists");
+					}
+					if(data.responseText == "Email is not valid"){
+						errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email is not valid");
+					}
+					*/
+	        	}
+	        	//console.log(JSON.parse(data.responseJSON));
+	            //console.log("error");
+	            if(data.responseJSON != null){
+	        		console.log(data.responseJSON);
+	        		/*
+
+	        		if(data.responseJSON.Username != null){
+	            	data.responseJSON.Username.forEach(loginUserNameErrorHandeler);
+		            }
+		            if(data.responseJSON.Email != null){
+		            	data.responseJSON.Email.forEach(loginEmailErrorHandeler);
+		            }
+		            if(data.responseJSON.Password != null){
+		            	data.responseJSON.Password.forEach(loginPasswordErrorHandeler);
+		            }
+		            */
+	        	}
+	            //console.log("error");
+	        }
+	    });
+	});
+}
 
 	/*
 	if(true){
@@ -167,7 +228,100 @@ function login(){
 }
 function singUp(){
 
+if(document.getElementById("MSignUpIPassword").value != document.getElementById("MSignUpIRePassword").value){
+	errorModal(document.getElementById("MSignUpIPassword"), document.getElementById("MSignUpEMPassword"), "Password must be between 4 and 20 characters");
+	errorModal(document.getElementById("MSignUpIRePassword"));
 }
+else{
+$(function(){
+
+	var newUserData = {
+		username: document.getElementById("MSignUpIUsername").value,
+        password: document.getElementById("MSignUpIPassword").value,
+        email: document.getElementById("MSignUpIEmail").value
+	}
+
+
+	document.getElementById("MSignUpIUsername").classList.remove("modalError");
+	document.getElementById("MSignUpIPassword").classList.remove("modalError");
+	document.getElementById("MSignUpIRePassword").classList.remove("modalError");
+	document.getElementById("MSignUpIEmail").classList.remove("modalError");
+
+	document.getElementById("MSignUpEMUsername").innerHTML = "";
+	document.getElementById("MSignUpEMPassword").innerHTML = "";
+	document.getElementById("MSignUpEMRePassword").innerHTML = "";
+	document.getElementById("MSignUpEMEmail").innerHTML = "";
+
+	console.log(newUserData);
+    $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		url: 'http://localhost:5000/api/auth/register',
+        type: 'POST',
+        "headers": {
+    		"Content-Type": "application/json"
+  		},
+        data: JSON.stringify(newUserData),
+        dataType: 'json',
+        success: function(data){
+            console.log(data.token);
+            document.cookie = "token=" + data.token;
+            window.location.href = "home.html";
+        },
+        error: function(data, ajaxOptions, thrownError){
+        	console.log(data.status);
+        	console.log(thrownError);
+        	if(data.responseText != null){
+        		console.log(data.responseText);
+        		if(data.responseText == "Username already exists"){
+					errorModal(document.getElementById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username already exists");
+				}
+				if(data.responseText == "Email is not valid"){
+					errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email is not valid");
+				}
+        	}
+        	console.log(data);
+        	//console.log(JSON.parse(data.responseJSON));
+            //console.log("error");
+            if(data.responseJSON != null){
+        		console.log(data.responseJSON);
+        		if(data.responseJSON.Username != null){
+            	data.responseJSON.Username.forEach(loginUserNameErrorHandeler);
+	            }
+	            if(data.responseJSON.Email != null){
+	            	data.responseJSON.Email.forEach(loginEmailErrorHandeler);
+	            }
+	            if(data.responseJSON.Password != null){
+	            	data.responseJSON.Password.forEach(loginPasswordErrorHandeler);
+	            }
+        	}
+        }
+    });
+});
+	
+}
+}
+function loginUserNameErrorHandeler(e){
+	if(e == "The Username field is required."){
+		errorModal(document.getElementById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username required");
+	}
+}
+function loginEmailErrorHandeler(e){
+	if(e == "The Email field is required."){
+		errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email required");
+	}
+}
+function loginPasswordErrorHandeler(e){
+	if(e == "The Password field is required."){
+		errorModal(document.getElementById("MSignUpIPassword"), document.getElementById("MSignUpEMPassword"), "Password required");
+		errorModal(document.getElementById("MSignUpIRePassword"));
+	}
+	if(e == "Password must be between 4 and 20 characters long"){
+		errorModal(document.getElementById("MSignUpIPassword"), document.getElementById("MSignUpEMPassword"), "Password must be between 4 and 20 characters");
+		errorModal(document.getElementById("MSignUpIRePassword"));
+	}
+}
+
 function forgotPassword(){
 
 }
@@ -192,6 +346,20 @@ function checkInputIsEmpty(e){
 		return true;	
 	}
 }
+
+function errorModal(modal, errorElement, errorMsg){
+	modal.classList.add("modalError");
+
+	if(errorElement != null){
+		if(errorElement.innerHTML == ""){
+			errorElement.innerHTML = errorMsg;
+		}
+		else{
+			errorElement.innerHTML = errorElement.innerHTML + ", " + errorMsg;
+		}
+	}
+}
+
 
 function closeModal(item){
 	//https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate

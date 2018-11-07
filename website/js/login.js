@@ -31,7 +31,7 @@ function getCookie(cname) {
     return "";
 }
 
-
+/*
 function autoLogin(username, password){
 
 	//login logic
@@ -41,6 +41,7 @@ function autoLogin(username, password){
 
 
 }
+*/
 
 function allowCookies(){
 	document.cookie = "cooikesAllowed=true";
