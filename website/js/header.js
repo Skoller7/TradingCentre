@@ -3,6 +3,10 @@ modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
 
+
+//headerButton
+document.getElementById("navBJournal").addEventListener("click", goToJournal);
+document.getElementById("mavBHome").addEventListener("click", goToHome);
 //modal button.
 document.getElementById("MLoginBLogin").addEventListener("click",login);
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
@@ -26,14 +30,29 @@ document.getElementById("MLoginIPassword").addEventListener("focusout",function(
 
 document.getElementById("Bsearch").addEventListener("click",search);
 
-var logedIn = false;
 
 
-changeLoginchangeLogin(false);
+changeLoginchangeLogin();
+
+//https://www.w3schools.com/js/js_cookies.asp
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 
 
-
-function changeLoginchangeLogin(e) {
+function changeLoginchangeLogin() {
 	
 	if(document.getElementById("BSetttings") != null){
 		document.getElementById("rightButtonNav").removeChild(document.getElementById("BSetttings"));
@@ -52,7 +71,7 @@ function changeLoginchangeLogin(e) {
 	}
 	
 
-	if (e) {
+	if (getCookie("token")) {
 		var bt1 = document.createElement("LI");
 		bt1.classList.add("nav-item");
 		var link1 = document.createElement("A");
@@ -110,10 +129,8 @@ function closeAllModals(){
 }
 
 function logout(){
-
-	logedIn = false;
+	document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 	window.location.href = "index.html";
-
 }
 function login(){
 	
@@ -385,4 +402,22 @@ function openMForgotPassword() {
 	$('#MForgotPassword').modal({
 		backdrop: 'static'
 	});
+}
+
+function goToJournal(){
+	if(document.cookie.indexOf("token=") >= 0){
+		window.location.href = "journal.html";
+	}
+	else{
+		openMLogin();
+	}
+}
+function goToHome(){
+
+	if(document.cookie.indexOf("token=") >= 0){
+		window.location.href = "home.html";
+	}
+	else{
+		openMLogin();
+	}
 }
