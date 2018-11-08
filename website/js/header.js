@@ -108,7 +108,8 @@ function changeLoginchangeLogin() {
 		bt2.classList.add("nav-item");
 		var link2 = document.createElement("A");
 		link2.classList.add("nav-link");
-		link2.appendChild(document.createTextNode("Sign up"));
+		//link2.appendChild(document.createTextNode("Sign up"));
+		link2.appendChild(document.createTextNode("Signup"));
 
 		bt1.setAttribute("id","BLogin");
 		bt2.setAttribute("id","BSignUp");
@@ -405,7 +406,7 @@ function openMForgotPassword() {
 }
 
 function goToJournal(){
-	if(document.cookie.indexOf("token=") >= 0){
+	if(getCookie("token")){
 		window.location.href = "journal.html";
 	}
 	else{
@@ -414,7 +415,7 @@ function goToJournal(){
 }
 function goToHome(){
 
-	if(document.cookie.indexOf("token=") >= 0){
+	if(getCookie("token")){
 		window.location.href = "home.html";
 	}
 	else{

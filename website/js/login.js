@@ -2,6 +2,8 @@
 
 //console.log(document.cookie);
 
+/*
+
 if(getCookie("cooikesAllowed") == "true"){
 	document.getElementById("cookieBanner").style.display = "none";	
 }
@@ -10,6 +12,7 @@ if(getCookie("cooikesAllowed")){
 		autoLogin(getCookie("username"),getCookie("password"));
 	}
 }
+*/
 //button header/test
 document.getElementById("BAllowCookies").addEventListener("click",allowCookies);
 document.getElementById("journalImg").addEventListener("click", goToJournal);
