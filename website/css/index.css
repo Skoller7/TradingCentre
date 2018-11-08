@@ -16,3 +16,19 @@
 	margin: 0.5% 0% 0% 0.5%;
     padding: 0.5%;
 }
+body{
+	/*
+	background-color: grey;
+	background-image: url("../img/indexBG1920.jpeg");
+	background-repeat: no-repeat;
+	*/
+
+}
+.bg{
+	background-color: white;
+	opacity: 0.2;
+	border-radius: 0.5%
+}
+.indexTitle{
+	margin-left: 2%;
+}
