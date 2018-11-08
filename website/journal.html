@@ -98,7 +98,6 @@
             background-color: #d9d9d9;
             margin:2%;
         }
-
     </style>
     <script>
         function delcard(id){
@@ -140,7 +139,7 @@
                 today = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + MM;
                 notetitle.innerHTML = today + '<br>';
                 notetext.innerHTML =  notecontent;
-                notedel.innerHTML = "Delete";
+                notedel.innerHTML = "X";
                 document.getElementById("notes").appendChild(note);
                 note.appendChild(notebody);
                 notebody.appendChild(notetitle);
@@ -149,6 +148,45 @@
                 document.getElementById("notecontent").value = "";
             }
         }
+            $(function(){
+
+	var dateTo = {
+        dateTo:"01/01/0002"
+	}
+	//http://localhost:5000/api/auth/login
+	console.log(dateTo);
+    $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		url: 'http://localhost:5000/api/orders/get',
+        type: 'POST',
+        "headers": {
+    		"Content-Type": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0IiwidW5pcXVlX25hbWUiOiJ1bW9tIiwibmJmIjoxNTQxNjIxNjQyLCJleHAiOjE1NDE3MDgwNDIsImlhdCI6MTU0MTYyMTY0Mn0.Hk4elhI4pkrr0XdksGu2gxwLGg27qv9oH6nfgnODTi-j62Axk9TeVY3OH58H1gBVBw-UyMWRuOWk6GVyVTHJpw"
+  		},
+        data: JSON.stringify(dateTo),
+        dataType: 'json',
+        success: function(data){
+            console.log(data);
+           for(var i = 0; i < data.length; i++){
+                var table_orders = document.getElementById("orders");
+                var row = orders.insertRow(i);
+                row.insertCell(0).innerHTML = data[i].exchange;
+                row.insertCell(1).innerHTML = data[i].isBuy;
+                row.insertCell(2).innerHTML = data[i].symbol;
+                row.insertCell(3).innerHTML = data[i].currency;
+                row.insertCell(4).innerHTML = data[i].price;
+                row.insertCell(5).innerHTML = data[i].timePlaced;
+            }
+        },
+        error: function(xhr, ajaxOptions, thrownError){
+        	console.log(xhr.status);
+        	console.log(thrownError);
+            //console.log("error");
+        }
+    });
+});
+        
     </script>
 	<body>
 <nav class="navbar navbar-expand-lg fixed-top">
@@ -319,306 +357,24 @@
                 <li class="nav-item">
                   <a class="nav-link active" data-toggle="tab" id="nav-tab"  href="#order-active">Active orders</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" id="nav-tab" href="#order-history">Order history</a>
-                </li>
               </ul>
             <div class="tab-content">
                 <div id="order-active" class="tab-pane fade show active" role="tabpanel">
                     <div class="row" style="border-bottom: 2px solid #fff;">
-                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
+                 <!--   <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
                     <img src="img/tradeimg.png" width="100%"/>    
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
+                    </div>!-->
+                    <div class="col-md-12 col-sm-12 col-xs-12" style="background-color: #212529;">
                         <table class="table table-dark" width="100%;">
-                          <tbody>
-                            <tr>
-                            <td>Trade type</td>
-                            <td>Head & shoulders</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry price</td>
-                            <td>1</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit price</td>
-                            <td>3</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry date</td>
-                            <td>30/10/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit date</td>
-                            <td>2/11/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Technique</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Gain</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit USD</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit BTC</td>
-                            <td>?</td>
-                            </tr>
-                          </tbody>
-                            
-                        </table>
-                        </div>
-                    </div>
-                    <div class="row" style="border-bottom: 2px solid #fff;">
-                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
-                    <img src="img/tradeimg.png" width="100%"/>    
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
-                        <table class="table table-dark" width="100%;">
-                          <tbody>
-                            <tr>
-                            <td>Trade type</td>
-                            <td>Head & shoulders</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry price</td>
-                            <td>1</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit price</td>
-                            <td>3</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry date</td>
-                            <td>30/10/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit date</td>
-                            <td>2/11/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Technique</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Gain</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit USD</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit BTC</td>
-                            <td>?</td>
-                            </tr>
-                          </tbody>
-                            
-                        </table>
-                        </div>
-                    </div>
-                    <div class="row" style="background-color: #212529;">
-                        <a class="btn btn-primary" data-toggle="collapse" href="#moreorders" role="button" aria-expanded="false" aria-controls="moreorders" style="margin:1% auto;">Show more ...</a>
-                    </div>
-                    <div id="moreorders" class="collapse">
-                    <div class="row" style="border-bottom: 2px solid #fff;">
-                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
-                    <img src="img/tradeimg.png" width="100%"/>    
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
-                        <table class="table table-dark" width="100%;">
-                          <tbody>
-                            <tr>
-                            <td>Trade type</td>
-                            <td>Head & shoulders</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry price</td>
-                            <td>1</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit price</td>
-                            <td>3</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry date</td>
-                            <td>30/10/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit date</td>
-                            <td>2/11/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Technique</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Gain</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit USD</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit BTC</td>
-                            <td>?</td>
-                            </tr>
-                          </tbody>
-                            
-                        </table>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                <div id="order-history" class="tab-pane fade" role="tabpanel">
-                    <div class="row" style="border-bottom: 2px solid #fff;">
-                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
-                    <img src="img/tradeimg.png" width="100%"/>    
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
-                        <table class="table table-dark" width="100%;">
-                          <tbody>
-                            <tr>
-                            <td>Trade type</td>
-                            <td>Head & shoulders</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry price</td>
-                            <td>1</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit price</td>
-                            <td>3</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry date</td>
-                            <td>30/10/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit date</td>
-                            <td>2/11/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Technique</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Gain</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit USD</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit BTC</td>
-                            <td>?</td>
-                            </tr>
-                          </tbody>
-                            
-                        </table>
-                        </div>
-                    </div>
-                    <div class="row" style="border-bottom: 2px solid #fff;">
-                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
-                    <img src="img/tradeimg.png" width="100%"/>    
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
-                        <table class="table table-dark" width="100%;">
-                          <tbody>
-                            <tr>
-                            <td>Trade type</td>
-                            <td>Head & shoulders</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry price</td>
-                            <td>1</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit price</td>
-                            <td>3</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry date</td>
-                            <td>30/10/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit date</td>
-                            <td>2/11/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Technique</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Gain</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit USD</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit BTC</td>
-                            <td>?</td>
-                            </tr>
-                          </tbody>
-                            
-                        </table>
-                        </div>
-                    </div>
-                    <div class="row" style="background-color: #212529;">
-                        <a class="btn btn-primary" data-toggle="collapse" href="#moreorders" role="button" aria-expanded="false" aria-controls="moreorders" style="margin:1% auto;">Show more ...</a>
-                    </div>
-                    <div id="moreorders" class="collapse">
-                    <div class="row" style="border-bottom: 2px solid #fff;">
-                    <div class="col-md-8 col-sm-12 col-xs-12"  style="background-color: #212529;">
-                    <img src="img/tradeimg.png" width="100%"/>    
-                    </div>
-                    <div class="col-md-4 col-sm-12 col-xs-12" style="background-color: #212529;">
-                        <table class="table table-dark" width="100%;">
-                          <tbody>
-                            <tr>
-                            <td>Trade type</td>
-                            <td>Head & shoulders</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry price</td>
-                            <td>1</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit price</td>
-                            <td>3</td>
-                            </tr>
-                                                          <tr>
-                            <td>Entry date</td>
-                            <td>30/10/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Exit date</td>
-                            <td>2/11/18</td>
-                            </tr>
-                                                          <tr>
-                            <td>Technique</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Gain</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit USD</td>
-                            <td>?</td>
-                            </tr>
-                                                          <tr>
-                            <td>Profit BTC</td>
-                            <td>?</td>
-                            </tr>
+                          <tbody id="orders">
+                            <thead>
+                              <td>Exchange</td>
+                                <td>Isbuy</td>
+                                <td>Symbol</td>
+                                <td>Currency</td>
+                                <td>Price</td>
+                                <td>Timeplaced</td>
+                              </thead>
                           </tbody>
                             
                         </table>
@@ -628,7 +384,6 @@
                 </div>
               </div>
             </div>
-        </div>
         </div>
         <div id="context-head" class="col-md-2 col-sm-12 col-xs-12">
             <div class="row">
