@@ -148,7 +148,7 @@
                 document.getElementById("notecontent").value = "";
             }
         }
-            $(function(){
+$(function(){
 
 	var dateTo = {
         dateTo:"01/01/0002"
@@ -162,7 +162,7 @@
         type: 'POST',
         "headers": {
     		"Content-Type": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI0IiwidW5pcXVlX25hbWUiOiJ1bW9tIiwibmJmIjoxNTQxNjIxNjQyLCJleHAiOjE1NDE3MDgwNDIsImlhdCI6MTU0MTYyMTY0Mn0.Hk4elhI4pkrr0XdksGu2gxwLGg27qv9oH6nfgnODTi-j62Axk9TeVY3OH58H1gBVBw-UyMWRuOWk6GVyVTHJpw"
+            "Authorization": "Bearer "
   		},
         data: JSON.stringify(dateTo),
         dataType: 'json',
@@ -172,10 +172,10 @@
                 var table_orders = document.getElementById("orders");
                 var row = orders.insertRow(i);
                 row.insertCell(0).innerHTML = data[i].exchange;
-                row.insertCell(1).innerHTML = data[i].isBuy;
-                row.insertCell(2).innerHTML = data[i].symbol;
-                row.insertCell(3).innerHTML = data[i].currency;
-                row.insertCell(4).innerHTML = data[i].price;
+                row.insertCell(1).innerHTML = data[i].symbol;
+                row.insertCell(2).innerHTML = data[i].currency;
+                row.insertCell(3).innerHTML = data[i].price;
+                row.insertCell(4).innerHTML = data[i].qty;
                 row.insertCell(5).innerHTML = data[i].timePlaced;
             }
         },
@@ -186,35 +186,8 @@
         }
     });
 });
-        
     </script>
 	<body>
-<nav class="navbar navbar-expand-lg fixed-top">
-  <a class="navbar-brand" href="#">
-    <img src="img/logo.svg" width="30" height="30" class="d-inline-block align-top" alt=""> Tradingcentre
-  </a>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb" aria-controls="navb" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-<div class="collapse navbar-collapse" id="navb">
-    <ul class="nav nav-pills mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="home.html">Home</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="journal.html">Journal</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="javascript:void(0)">Datacenter</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search">
-      <button class="btn btn-success my-2 my-sm-0" type="button">Search</button>
-    </form>
-  </div>
-</nav>
-        
 <div class="container">
     <div class="row">
         <div id="context-firstrow" class="col-md-2 col-sm-12 col-xs-12">
@@ -248,10 +221,10 @@
                           <tbody id="orders">
                             <thead>
                               <td>Exchange</td>
-                                <td>Isbuy</td>
                                 <td>Symbol</td>
                                 <td>Currency</td>
                                 <td>Price</td>
+                                <td>Qauntity</td>
                                 <td>Timeplaced</td>
                               </thead>
                           </tbody>
