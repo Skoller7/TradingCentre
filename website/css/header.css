@@ -85,3 +85,12 @@ footer{
 .nav-item:hover{
     color: #fff;
 }
+.modalError{
+    border: 2px red solid;
+}
+.modalErrorMsg{
+    color: red;
+}
+.modalParagraph{
+    margin-bottom: 0px;
+}

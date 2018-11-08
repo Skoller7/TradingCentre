@@ -188,6 +188,156 @@ $(function(){
 });
     </script>
 	<body>
+<<<<<<< HEAD
+=======
+<nav class="navbar navbar-expand-lg fixed-top">
+            <a class="navbar-brand" href="#">
+                <img src="img/logo.svg" width="30" height="30" class="d-inline-block align-top" alt=""> Tradingcenter
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb" aria-controls="navb" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navb">
+                <ul class="nav nav-pills mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html" id="mavBHome">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="navBJournal">Journal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0)">Datacenter</a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" size="50">
+                    <button class="btn btn-success my-2 my-sm-0" type="button" id="Bsearch">Search</button>
+                </form>
+                <ul class="nav nav-pills" id="rightButtonNav">
+                    <!--
+                    <li class="nav-item">
+                        <a class="nav-link" id="BLogin">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="BSignUp">Sign up</a>
+                    </li>
+                    -->
+                </ul>
+            </div>
+        </nav>
+        <!--buttons modal demo-->
+        <!--
+        <div class="button" id="BLogin">
+            Login
+        </div>
+        <div class="button" id="BSignUp">
+            SignUp
+        </div>
+        <div class="button" id="BForgotPassword">
+            Forgot password
+        </div>
+        -->
+        <!--Login modal-->
+        <div class="modal fade" id="MLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Login</h5>
+                        <button type="button" class="close" id="MLoginBCrosse" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!--<form action="Home.html">-->
+                        <p class="modalParagraph modalErrorMsg" id="MLoginEMMain" style="display: none;"></p>
+                        <p class="modalParagraph">Login</p>
+                        <input type="text" name="username" placeholder="Username" id="MLoginIUsername" autocomplete="off">
+                        <span class="modalErrorMsg" id="MLoginEMUsername"></span>
+                        <p class="modalParagraph">Email</p>
+                        <input type="text" name="email" placeholder="email" id="MLoginIEmail" autocomplete="off">
+                        <span class="modalErrorMsg" id="MLoginEMEmail"></span>
+                        <p class="modalParagraph">Password</p>
+                        <input type="password" name="password" placeholder="Password" id="MLoginIPassword">
+                        <span class="modalErrorMsg" id="MLoginEMPassword"></span>
+                        <br>
+                        <input type="checkbox" name="remimberMe" id="CBremimberMe">
+                        Remember me
+                        <p id="MLoginBForgotPassword">Forgot password?</p>
+                        <p id="MLoginBSingUp">don't have an account?</p>
+                        <!--</form>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="MLoginBLogin">Login</button>
+                        <button type="button" class="btn btn-secondary" id="MLoginBClose">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Sing up modal-->
+        <div class="modal fade" id="MSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Sign up</h5>
+                        <button type="button" class="close" id="MSignUpBCrosse" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- <form action="Home.html"> -->
+                            <p class="modalParagraph">Login</p>
+                            <input type="text" name="username" placeholder="Username" id="MSignUpIUsername" autocomplete="off">
+                            <span class="modalErrorMsg" id="MSignUpEMUsername"></span>
+                            <p class="modalParagraph">Password (between 4 and 20 characters)</p>
+                            <input type="password" name="password" placeholder="Password" id="MSignUpIPassword">
+                            <span class="modalErrorMsg" id="MSignUpEMPassword"></span>
+                            <p class="modalParagraph">Re-password</p>
+                            <input type="password" name="password" placeholder="Re-password" id="MSignUpIRePassword">
+                            <span class="modalErrorMsg" id="MSignUpEMRePassword"></span>
+                            <p class="modalParagraph">Email</p>
+                            <input type="text" name="password" placeholder="Email" id="MSignUpIEmail" autocomplete="off">
+                            <span class="modalErrorMsg" id="MSignUpEMEmail"></span>
+                            <p id="MSingUpBLogin">already have an account?</p>
+                        <!-- </form> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="MSignUpBSingUp">Login</button>
+                        <button type="button" class="btn btn-secondary" id="MSignUpBClose">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Forgot password modal-->
+        <div class="modal fade" id="MForgotPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Forgoten password</h5>
+                        <button type="button" class="close" id="MForgotPasswordBCrosse" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <from action="home.html">
+                            <p class="modalParagraph">Username</p>
+                            <input type="text" name="username" id="MForgotPasswordIUsername" placeholder="Username" autocomplete="off">
+                            <span class="modalErrorMsg"></span>
+                            <p class="modalParagraph">Email</p>
+                            <input type="text" name="email" id="MForgotPasswordIEmail" placeholder="Email" autocomplete="off">
+                            <span class="modalErrorMsg"></span>
+                        </from>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="MForgotPasswordBForgotPassword">Login</button>
+                        <button type="button" class="btn btn-secondary" id="MForgotPasswordBClose">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="js/header.js" type="text/javascript"></script>
+
+        
+>>>>>>> master
 <div class="container">
     <div class="row">
         <div id="context-firstrow" class="col-md-2 col-sm-12 col-xs-12">
@@ -284,10 +434,10 @@ $(function(){
             <li><h2>ABOUT US</h2></li>
             <li><a href="">about us</a></li>
             <li><a href="">contact</a></li>
-            <li><a href="">privacy police</a></li>
+            <li><a href="">privacy policy</a></li>
             <li><a href="">security</a></li>
             <li><a href="">FAQ</a></li>
-            <li><a href="">api</a></li>
+            <li><a href="">API</a></li>
         </ul>
         </div>
         <div class="col-md-4 col-sm-12 col-xs-12">
@@ -309,7 +459,7 @@ $(function(){
     </div>
     <div class="row" id="footertext" style="border-top:2px solid #fff;">
         <div class="col-md-12 col-sm-12 col-xs-12">
-        Tradingcenter&copy;2019 
+        Tradingcenter &copy; 2018 
         </div>
     </div>
 </div>
