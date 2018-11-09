@@ -53,8 +53,7 @@ function getCookie(cname) {
 
 
 function changeLoginchangeLogin() {
-	
-	console.log("token1");
+
 
 	if(document.getElementById("BSetttings") != null){
 		document.getElementById("rightButtonNav").removeChild(document.getElementById("BSetttings"));
@@ -74,7 +73,6 @@ function changeLoginchangeLogin() {
 	
 
 	if (getCookie("token")) {
-		console.log("token2");
 		var bt1 = document.createElement("LI");
 		bt1.classList.add("nav-item");
 		var link1 = document.createElement("A");
@@ -101,7 +99,6 @@ function changeLoginchangeLogin() {
 		document.getElementById("BLogout").addEventListener("click",logout);
 	}
 	else{
-		console.log("token3");
 		var bt1 = document.createElement("LI");
 		bt1.classList.add("nav-item");
 		var link1 = document.createElement("A");
@@ -135,7 +132,7 @@ function closeAllModals(){
 
 function logout(){
 	console.log(getCookie("token"));
-	document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 	window.location.href = "index.html";
 }
 function login(){
@@ -194,7 +191,7 @@ function login(){
 	        success: function(data){
 	        	console.log(data);
 	            console.log(data.token);
-	            document.cookie = "token=" + data.token;
+	            document.cookie = "token=" + data.token + "expires=Mon Dec 18 2023 13:00:00 GMT+0100 (Central European Standard Time)";
 	            window.location.href = "home.html";
 	        },
 	        error: function(data, ajaxOptions, thrownError){

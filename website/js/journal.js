@@ -1,3 +1,8 @@
+        if(!getCookie("token")){
+            window.location.href  = "index.html";
+        }
+
+
         function delcard(id){
             document.getElementById(id).style.display = "block";
         }
