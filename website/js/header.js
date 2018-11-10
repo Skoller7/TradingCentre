@@ -3,9 +3,8 @@ modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
 
-
 //headerButton
-document.getElementById("navBJournal").addEventListener("click", goToJournal);
+//document.getElementById("navBJournal").addEventListener("click", goToJournal);
 document.getElementById("mavBHome").addEventListener("click", goToHome);
 //modal button.
 document.getElementById("MLoginBLogin").addEventListener("click",login);
@@ -191,7 +190,10 @@ function login(){
 	        success: function(data){
 	        	console.log(data);
 	            console.log(data.token);
-	            document.cookie = "token=" + data.token + "expires=Mon Dec 18 2023 13:00:00 GMT+0100 (Central European Standard Time)";
+	            //Mon Dec 18 2023 13:00:00 GMT+0100 (Central European Standard Time)
+	            var date = new Date();
+	            date.setMilliseconds(date.getMilliseconds() + 21600000);
+	            document.cookie = "token=" + data.token + "expires=" + date;
 	            window.location.href = "home.html";
 	        },
 	        error: function(data, ajaxOptions, thrownError){
@@ -285,7 +287,9 @@ $(function(){
         dataType: 'json',
         success: function(data){
             console.log(data.token);
-            document.cookie = "token=" + data.token;
+           	var date = new Date();
+	        date.setMilliseconds(date.getMilliseconds() + 21600000);
+	        document.cookie = "token=" + data.token + "expires=" + date;
             window.location.href = "home.html";
         },
         error: function(data, ajaxOptions, thrownError){
@@ -406,7 +410,7 @@ function openMForgotPassword() {
 		backdrop: 'static'
 	});
 }
-
+/*
 function goToJournal(){
 	if(getCookie("token")){
 		window.location.href = "journal.html";
@@ -415,6 +419,7 @@ function goToJournal(){
 		openMLogin();
 	}
 }
+*/
 function goToHome(){
 	if(getCookie("token")){
 		window.location.href = "home.html";
