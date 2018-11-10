@@ -1,4 +1,3 @@
-var modalList = [];
 modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
@@ -33,22 +32,7 @@ document.getElementById("Bsearch").addEventListener("click",search);
 
 changeLoginchangeLogin();
 
-//https://www.w3schools.com/js/js_cookies.asp
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
+
 
 
 function changeLoginchangeLogin() {
@@ -125,9 +109,7 @@ function changeLoginchangeLogin() {
 	}
 }
 
-function closeAllModals(){
-	modalList.forEach(closeModal);	
-}
+
 
 function logout(){
 	console.log(getCookie("token"));

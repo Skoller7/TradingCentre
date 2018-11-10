@@ -19,7 +19,7 @@ if(getCookie("cooikesAllowed")){
 */
 //button header/test
 document.getElementById("BAllowCookies").addEventListener("click",allowCookies);
-document.getElementById("journalImg").addEventListener("click", goToJournal);
+//document.getElementById("journalImg").addEventListener("click", goToJournal);
 
 
 /*
