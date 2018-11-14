@@ -4,7 +4,7 @@ modalList.push(document.getElementById("MForgotPassword"));
 
 //headerButton
 //document.getElementById("navBJournal").addEventListener("click", goToJournal);
-document.getElementById("mavBHome").addEventListener("click", goToHome);
+//document.getElementById("mavBHome").addEventListener("click", goToHome);
 //modal button.
 document.getElementById("MLoginBLogin").addEventListener("click",login);
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
@@ -162,7 +162,7 @@ function login(){
 	    $.ajax({
 	    	"async": true,
 	  		"crossDomain": true,
-	  		url: 'http://localhost:5000/api/auth/login',
+	  		url: 'http://10.3.50.6/api/user/login',
 	        type: 'POST',
 	        "headers": {
 	    		"Content-Type": "application/json"
@@ -260,7 +260,7 @@ $(function(){
     $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: 'http://localhost:5000/api/auth/register',
+  		url: 'http://10.3.50.6/api/user/register',
         type: 'POST',
         "headers": {
     		"Content-Type": "application/json"
@@ -363,14 +363,6 @@ function errorModal(modal, errorElement, errorMsg){
 		else{
 			errorElement.innerHTML = errorElement.innerHTML + ", " + errorMsg;
 		}
-	}
-}
-
-
-function closeModal(item){
-	//https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
-	if ($(item).is(':visible')){
-		$(item).modal('toggle');	
 	}
 }
 
