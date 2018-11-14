@@ -76,3 +76,9 @@ function closeAllModals(){
   modalList.forEach(closeModal);  
 }
 
+function closeModal(item){
+  //https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
+  if ($(item).is(':visible')){
+    $(item).modal('toggle');  
+  }
+}
