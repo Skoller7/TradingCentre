@@ -57,6 +57,7 @@
                 });
             }
         }*/
+
 $(function(){
 
 	var dateTo = {
@@ -80,9 +81,9 @@ dateTo: "15/05/2018"
         dataType: 'json',
         success: function(data){
             console.log(data);
-           for(var i = 0; i < data.length; i++){
+           for(var i = 0,rowCtr = data.length; i <= rowCtr; i++){
                 var table_orders = document.getElementById("orders");
-                var row = orders.insertRow(i);
+                var row = table_orders.insertRow(i);
                 row.insertCell(0).innerHTML = data[i].exchange;
                 row.insertCell(1).innerHTML = data[i].symbol;
                 row.insertCell(2).innerHTML = data[i].currency;
@@ -90,7 +91,8 @@ dateTo: "15/05/2018"
                 row.insertCell(4).innerHTML = data[i].price;
                 row.insertCell(5).innerHTML = data[i].orderQty;
                 row.insertCell(6).innerHTML = data[i].timestamp;
-               var div = document.createElement("div");
+               
+              var div = document.createElement("div");
                div.className = "order-type-div";
                 var array = ["Head & Shoulders","Saab","Mercades","Audi"];
                 //Create and append select list
@@ -104,8 +106,8 @@ dateTo: "15/05/2018"
                     option.text = array[i];
                     type.appendChild(option);
                 }
-               div.appendCh
-               row.insertCell(7).innerHTML = div;
+               div.appendChild(type);
+            row.insertCell(7).appendChild(div);
             }
         },
         error: function(xhr, ajaxOptions, thrownError){
@@ -115,6 +117,7 @@ dateTo: "15/05/2018"
         }
     });
 });
+
 function addchart(){ 
         // based on prepared DOM, initialize echarts instance 
         var myChart = echarts.init(document.getElementById('main'));
