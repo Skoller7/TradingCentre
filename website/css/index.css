@@ -46,6 +46,7 @@ body{
   -webkit-filter: blur(4px);
   	height: 800px;
     background-position: left; 
+    height: 1000px;
 }
 
 #leftPanel {
@@ -78,17 +79,31 @@ body{
   content: " ";
   display: block;
   position: absolute;
-  height: 100%;
+  height: 110%;
   top: 0;
   left: 0;
   right: 0;
-  background: rgba(240, 240, 240, 0.5);
+  background: rgba(220, 220, 220, 0.5);
 }
 
 #promo {
-	padding-top: 300px;
+	padding-top: 250px;
 	color: white;
-	font-size: 3em;
+}
+
+.promoLogo {
+	width: 128px;
+	filter: invert(95%);
+}
+
+.promoText {
+	width: 500px;
+	font-size: 1.2em;
+	text-align: center;
+	margin-top: 40px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
 }
 
 #promoLeft {
@@ -103,12 +118,45 @@ body{
 	text-align:center;
 }
 
-#demoJournal {
-	padding-top: 500px;
+.promoButton {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.2em;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+    border: 2px solid white;
+    border-radius: 10px;
+    background-color: transparent;
 }
 
-#demoJournal img {
-	width: 100%
+.promoButton:hover {
+	text-decoration: none;
+	background-color: #4B77BE;
+	border: 2px solid #4B77BE;
+	color: white;
+}
+
+.demo {
+	padding-top: 50px;
+}
+
+#demoJournal {
+	margin-top: 750px;
+	width: 100%;
+	height: 100%;
+	background-color: white;
+}
+
+#demoDatacenter {
+	width: 100%;
+	height: 100%;
+	background-color: pink;
 }
 
 .parallax {
