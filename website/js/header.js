@@ -1,12 +1,10 @@
-var modalList = [];
 modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
 
-
 //headerButton
-document.getElementById("navBJournal").addEventListener("click", goToJournal);
-document.getElementById("mavBHome").addEventListener("click", goToHome);
+//document.getElementById("navBJournal").addEventListener("click", goToJournal);
+//document.getElementById("mavBHome").addEventListener("click", goToHome);
 //modal button.
 document.getElementById("MLoginBLogin").addEventListener("click",login);
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
@@ -34,27 +32,11 @@ document.getElementById("Bsearch").addEventListener("click",search);
 
 changeLoginchangeLogin();
 
-//https://www.w3schools.com/js/js_cookies.asp
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
+
 
 
 function changeLoginchangeLogin() {
-	
-	console.log("token1");
+
 
 	if(document.getElementById("BSetttings") != null){
 		document.getElementById("rightButtonNav").removeChild(document.getElementById("BSetttings"));
@@ -74,7 +56,6 @@ function changeLoginchangeLogin() {
 	
 
 	if (getCookie("token")) {
-		console.log("token2");
 		var bt1 = document.createElement("LI");
 		bt1.classList.add("nav-item");
 		var link1 = document.createElement("A");
@@ -101,7 +82,6 @@ function changeLoginchangeLogin() {
 		document.getElementById("BLogout").addEventListener("click",logout);
 	}
 	else{
-		console.log("token3");
 		var bt1 = document.createElement("LI");
 		bt1.classList.add("nav-item");
 		var link1 = document.createElement("A");
@@ -129,13 +109,11 @@ function changeLoginchangeLogin() {
 	}
 }
 
-function closeAllModals(){
-	modalList.forEach(closeModal);	
-}
+
 
 function logout(){
 	console.log(getCookie("token"));
-	document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
 	window.location.href = "index.html";
 }
 function login(){
@@ -184,7 +162,7 @@ function login(){
 	    $.ajax({
 	    	"async": true,
 	  		"crossDomain": true,
-	  		url: 'http://localhost:5000/api/auth/login',
+	  		url: 'http://10.3.50.6/api/user/login',
 	        type: 'POST',
 	        "headers": {
 	    		"Content-Type": "application/json"
@@ -194,7 +172,10 @@ function login(){
 	        success: function(data){
 	        	console.log(data);
 	            console.log(data.token);
-	            document.cookie = "token=" + data.token;
+	            //Mon Dec 18 2023 13:00:00 GMT+0100 (Central European Standard Time)
+	            var date = new Date();
+	            date.setMilliseconds(date.getMilliseconds() + 21600000);
+	            document.cookie = "token=" + data.token + "expires=" + date;
 	            window.location.href = "home.html";
 	        },
 	        error: function(data, ajaxOptions, thrownError){
@@ -279,7 +260,7 @@ $(function(){
     $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: 'http://localhost:5000/api/auth/register',
+  		url: 'http://10.3.50.6/api/user/register',
         type: 'POST',
         "headers": {
     		"Content-Type": "application/json"
@@ -288,7 +269,9 @@ $(function(){
         dataType: 'json',
         success: function(data){
             console.log(data.token);
-            document.cookie = "token=" + data.token;
+           	var date = new Date();
+	        date.setMilliseconds(date.getMilliseconds() + 21600000);
+	        document.cookie = "token=" + data.token + "expires=" + date;
             window.location.href = "home.html";
         },
         error: function(data, ajaxOptions, thrownError){
@@ -383,14 +366,6 @@ function errorModal(modal, errorElement, errorMsg){
 	}
 }
 
-
-function closeModal(item){
-	//https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
-	if ($(item).is(':visible')){
-		$(item).modal('toggle');	
-	}
-}
-
 function openMLogin(){
 	closeAllModals();
 	$('#MLogin').modal({
@@ -409,7 +384,7 @@ function openMForgotPassword() {
 		backdrop: 'static'
 	});
 }
-
+/*
 function goToJournal(){
 	if(getCookie("token")){
 		window.location.href = "journal.html";
@@ -418,6 +393,7 @@ function goToJournal(){
 		openMLogin();
 	}
 }
+*/
 function goToHome(){
 	if(getCookie("token")){
 		window.location.href = "home.html";

@@ -1,61 +1,61 @@
-        function delcard(id){
-            document.getElementById(id).style.display = "block";
-        }
-        function addzero(number){
-            if(number < 10){
-                number = "0" + number;
-            }
-            return number;
-        }
-                function closeModal(item){
-                    //https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
-                    if ($(item).is(':visible')){
-                        $(item).modal('toggle');	
-                    }
-                }
-        document.getElementById("createnote").addEventListener("click",onclickcreate);
-        function onclickcreate(){
-            var note = document.createElement("div");
-            var notebody = document.createElement("div");
-            var notetitle = document.createElement("h5");
-            var notetext = document.createElement("p");
-            var notedel = document.createElement("button");
-            var notecontent = document.getElementById("notecontent").value;
-            if(notecontent == ""){
-                document.getElementById('falsenote').style.color = "red";
-                document.getElementById('falsenote').innerHTML = '* This field cannot be empty!';
-            
-            }else{
-                var ID = Math.random();
-                document.getElementById('falsenote').innerHTML = '';
-                note.className = "card";
-                note.setAttribute("id",ID);
-                notebody.className = "card-body";
-                notetitle.className = "card-title";
-                notetext.className = "card-text";
-                notedel.className = "btn btn-primary";
-                 //notedel.setAttribute("onclick",delcard(ID););
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth() +1;
-                var yyyy = today.getFullYear();
-                var hh = addzero(today.getHours());
-                var MM = addzero(today.getMinutes());
-                today = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + MM;
-                notetitle.innerHTML = today + '<br>';
-                notetext.innerHTML =  notecontent;
-                notedel.innerHTML = "X";
-                document.getElementById("notes").appendChild(note);
-                note.appendChild(notebody);
-                notebody.appendChild(notetitle);
-                notebody.appendChild(notetext);
-                notebody.appendChild(notedel);
-                document.getElementById("notecontent").value = "";
-                $(function(){
-                    $("#createnote").modal('toggle');	
-                });
-            }
-        }
+function delcard(id){
+    document.getElementById(id).style.display = "block";
+}
+function addzero(number){
+    if(number < 10){
+        number = "0" + number;
+    }
+    return number;
+}
+function closeModal(item){
+    //https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
+    if ($(item).is(':visible')){
+        $(item).modal('toggle');	
+    }
+}
+document.getElementById("createnote").addEventListener("click",onclickcreate);
+function onclickcreate(){
+    var note = document.createElement("div");
+    var notebody = document.createElement("div");
+    var notetitle = document.createElement("h5");
+    var notetext = document.createElement("p");
+    var notedel = document.createElement("button");
+    var notecontent = document.getElementById("notecontent").value;
+    if(notecontent == ""){
+        document.getElementById('falsenote').style.color = "red";
+        document.getElementById('falsenote').innerHTML = '* This field cannot be empty!';
+    }
+    else{
+        var ID = Math.random();
+        document.getElementById('falsenote').innerHTML = '';
+        note.className = "card";
+        note.setAttribute("id",ID);
+        notebody.className = "card-body";
+        notetitle.className = "card-title";
+        notetext.className = "card-text";
+        notedel.className = "btn btn-primary";
+         //notedel.setAttribute("onclick",delcard(ID););
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() +1;
+        var yyyy = today.getFullYear();
+        var hh = addzero(today.getHours());
+        var MM = addzero(today.getMinutes());
+        today = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + MM;
+        notetitle.innerHTML = today + '<br>';
+        notetext.innerHTML =  notecontent;
+        notedel.innerHTML = "X";
+        document.getElementById("notes").appendChild(note);
+        note.appendChild(notebody);
+        notebody.appendChild(notetitle);
+        notebody.appendChild(notetext);
+        notebody.appendChild(notedel);
+        document.getElementById("notecontent").value = "";
+        $(function(){
+            $("#createnote").modal('toggle');	
+        });
+    }
+}
 $(function(){
 
 	var dateTo = {
