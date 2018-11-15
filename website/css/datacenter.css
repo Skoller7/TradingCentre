@@ -1,6 +1,11 @@
+/*#FF751A orange
+#25313B dark blue
+#F8F9FA light grey
+#0889C4 blue*/ 
 .sidebar{
     height:100%;
-    background-color:#f8f9fa;
+    background-color:#25313B;
+    color:#f8f9fa;
     position: fixed;
     top: 55px;
     bottom: 0;
@@ -55,7 +60,7 @@
     background-color:#ff751a;
 }
 .user-buy input[type=submit]:hover{
-    background-color:#0066ff;
+    background-color:#0889C4;
 }
 .user-image{
     margin:2%;
@@ -105,41 +110,8 @@
 .port3{
     color:#ff0000;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .navbar{
-    background-color: #4B77BE;
+    background-color: #007bff;
     margin: 0 auto;
 }
 .navbar-expand-lg .navbar-brand {
