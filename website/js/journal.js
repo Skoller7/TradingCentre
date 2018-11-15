@@ -59,15 +59,18 @@
 $(function(){
 
 	var dateTo = {
-        dateTo:"01/01/0002"
+        portfolioId: "0",
+amount: "200",
+dateFrom: "20/02/2000",
+dateTo: "15/05/2018"
 	}
 	//http://localhost:5000/api/auth/login
 	console.log(dateTo);
     $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: 'http://localhost:5000/api/orders/get',
-        type: 'POST',
+  		url: 'http://10.3.50.6/api/order/get',
+        type: 'GET',
         "headers": {
     		"Content-Type": "application/json",
             "Authorization": "Bearer " + getCookie("token")
@@ -82,9 +85,10 @@ $(function(){
                 row.insertCell(0).innerHTML = data[i].exchange;
                 row.insertCell(1).innerHTML = data[i].symbol;
                 row.insertCell(2).innerHTML = data[i].currency;
-                row.insertCell(3).innerHTML = data[i].price;
-                row.insertCell(4).innerHTML = data[i].qty;
-                row.insertCell(5).innerHTML = data[i].timePlaced;
+                row.insertCell(3).innerHTML = data[i].side;
+                row.insertCell(4).innerHTML = data[i].price;
+                row.insertCell(5).innerHTML = data[i].orderqty;
+                row.insertCell(6).innerHTML = data[i].timestamp;
             }
         },
         error: function(xhr, ajaxOptions, thrownError){
