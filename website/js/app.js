@@ -50,11 +50,6 @@ App = {
       App.contracts.DataContractCreator.setProvider(App.web3Provider);
     });
 },
-  bindEvents: function() {
-   alert();
- $(document).on('click', '.btn-create', App.createContract);
-
-},
 
 createContract: function(event) {
   event.preventDefault();
@@ -63,10 +58,11 @@ createContract: function(event) {
   var contractPrice = 100000;
 
   web3.eth.getAccounts(function(error, accounts){
+    return true;
     if(error){
       console.log(error);
     }
-    var account = account[0];
+    var account = accounts[0];
 
     App.contracts.DataContractCreator.deployed().then(function(instance){
       dataCreatorInstance = instance;
@@ -82,3 +78,10 @@ createContract: function(event) {
 }
 
 };
+
+$('.btn-create').click(function(e){
+  console.log(e);
+   App.createContract(e);
+});
+
+//$(document).on('click', '.btn-create', App.createContract);
