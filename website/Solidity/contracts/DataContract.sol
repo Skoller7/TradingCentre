@@ -4,7 +4,7 @@ pragma solidity ^0.4.17;
 //past the code and go to "run", chose " enviroment : javascript VM".
 //
 
-contract DataContractCreator {
+/* contract DataContractCreator {
     address[]public deployedDataContracts; //alle gemaakte adressen opslaan.
 
     //maakt persoonlijke contracten per gebruiker.
@@ -16,7 +16,7 @@ contract DataContractCreator {
     function getDeployedContracts() public view returns(address[])  {
       return deployedDataContracts;
     }
-}
+} */
 
 
 contract DataContract {

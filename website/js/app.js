@@ -115,13 +115,16 @@ App = {
 initContract: function(){
 
   console.log("test");
-  $.getJSON('../Solidity/build/contracts/DataContractCreator.json', function(data){
-    // Get the necessary contract artifact file and instantiate it with truffle-contract    var DataCreatorArtifact = data;
+  $.getJSON('./Solidity/build/contracts/DataContractCreator.json', function(data){
+    // Get the necessary contract artifact file and instantiate it with truffle-contract
+    var DataCreatorArtifact = data;
     console.log(data);
-    App.contracts.DataContractCreator = TruffleContract(DataContractArtifact);
+    App.contracts.DataContractCreator = TruffleContract(DataCreatorArtifact);
 
     //set the provider for our contracts
-    App.contracts.DatacontractCreator.setProvider(App.web3Provider);
+    App.contracts.DataContractCreator.setProvider(App.web3Provider);
+
+    return App.getDeployedContractAdresses();
   });
 },
 
