@@ -32,16 +32,17 @@ App = {
 
 initContract: function(){
 
-  console.log("test");
   $.getJSON('./Solidity/build/contracts/DataContractCreator.json', function(data){
     // Get the necessary contract artifact file and instantiate it with truffle-contract
     var DataCreatorArtifact = data;
-    console.log(data);
     App.contracts.DataContractCreator = TruffleContract(DataCreatorArtifact);
 
     //set the provider for our contracts
     App.contracts.DataContractCreator.setProvider(App.web3Provider);
 
+
+    //hier nieuwe functies aan chainen als we willen dat die worden geladen bij het begin
+    //van de pagina.
     return App.getDeployedContractAdresses();
   });
 },
@@ -54,33 +55,46 @@ getDeployedContractAdresses: function(){
 
     DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
    $('#amountOfContracts').text(r.length);
+   console.log("requested amount of deployed contracts");
  });
 
-})
+});
 
-}
+},
 
-// createNewContract : function(){
-//
-//   //checking the user accounts.
-//   web3.eth.getAccounts(function(error, accounts) {
-//   if (error) {
-//     console.log(error);
-//   }
-//
-//   var accounts = accounts[1];
-//
-//   App.contracts.DataContractCreator.deployed().then(function(instance){
-//   DataContractCreatorInstance = instance;
-//
-//   return DataContractCreatorInstance.createDataContract(500, {from: account});
+createNewContract : function(){
+
+  //checking the user accounts.
+  web3.eth.getAccounts(function(error, accounts) {
+  if (error) {
+    console.log(error);
+  }
+
+  var account = accounts[0];
+
+  App.contracts.DataContractCreator.deployed().then(function(instance){
+  DataContractCreatorInstance = instance;
+
+  DataContractCreatorInstance.createDataContract(500, {from: account});
+
+  //mogelijke oplossing = werken via .new() maar dan kan ik de gemaakte contracts
+  // niet bijhouden of ?
+  // misschien eens rondvragen of een contract functie wel degelijk een nieuw contract kan
+  // aanmaken in truffle.js
+  // - contract deployen op rinkby en via daar altijd verder werken?
+  // makkelijker om te testen?
+  // youtube guide opzoeken?
+
+
+//   return DataContractCreatorInstance.createDataContract(5000, {from: account});
 // }).then(function(result){
 //   console.log("Deployment succesfull");
+//   $('#contractSucces').text("a succes!");
 // }).catch(function(err){
 //   console.log(err.message);
 //   });
-// });
-// }
+});
+}
 
 
 };
@@ -92,13 +106,11 @@ $(function() {
 });
 
 $('.btn-create-contract-request').click(function(){
-  console.log("button clicked");
    App.getDeployedContractAdresses();
 });
 
 $('.btn-create-contract').click(function(){
-  console.log("button clicked");
-   App.getDeployedContractAdresses();
+   App.createNewContract();
 });
 
 
