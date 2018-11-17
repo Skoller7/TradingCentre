@@ -70,9 +70,18 @@ createNewContract : function(){
     console.log(error);
   }
 
-  var account = accounts[0];
+   var account = accounts[0];
 
+    App.contracts.DataContractCreator.deployed().then(function(instance){
+    DataContractCreatorInstance = instance;
+    console.log(web3.eth.getBalance(account)); //check balance?
+    DataContractCreatorInstance.createDataContract(500, {from: account}).then((r) =>
+ { console.log('deployment is succesfull');
+});
 
+  //  DataContractInstance.createDataContract(500, account);
+
+});
 
 
   //mogelijke oplossing = werken via .new() maar dan kan ik de gemaakte contracts
@@ -84,15 +93,15 @@ createNewContract : function(){
   // youtube guide opzoeken?
 
   //dit weg commenten en alles werkt
-  App.contracts.DataContractCreator.deployed().then(function(instance){
-  DataContractCreatorInstance = instance;
-  return DataContractCreatorInstance.createDataContract(5000, {from: account});
-}).then(function(result){
-  console.log("Deployment succesfull");
-  $('#contractSucces').text("a succes!");
-}).catch(function(err){
-  console.log(err.message);
-  });
+//   App.contracts.DataContractCreator.deployed().then(function(instance){
+//   DataContractCreatorInstance = instance;
+//   return DataContractCreatorInstance.createDataContract(5000, {from: account});
+// }).then(function(result){
+//   console.log("Deployment succesfull");
+//   $('#contractSucces').text("a succes!");
+// }).catch(function(err){
+//   console.log(err.message);
+//   });
 });
 }
 
