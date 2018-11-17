@@ -72,10 +72,8 @@ createNewContract : function(){
 
   var account = accounts[0];
 
-  App.contracts.DataContractCreator.deployed().then(function(instance){
-  DataContractCreatorInstance = instance;
 
-  DataContractCreatorInstance.createDataContract(500, {from: account});
+
 
   //mogelijke oplossing = werken via .new() maar dan kan ik de gemaakte contracts
   // niet bijhouden of ?
@@ -85,14 +83,16 @@ createNewContract : function(){
   // makkelijker om te testen?
   // youtube guide opzoeken?
 
-
-//   return DataContractCreatorInstance.createDataContract(5000, {from: account});
-// }).then(function(result){
-//   console.log("Deployment succesfull");
-//   $('#contractSucces').text("a succes!");
-// }).catch(function(err){
-//   console.log(err.message);
-//   });
+  //dit weg commenten en alles werkt
+  App.contracts.DataContractCreator.deployed().then(function(instance){
+  DataContractCreatorInstance = instance;
+  return DataContractCreatorInstance.createDataContract(5000, {from: account});
+}).then(function(result){
+  console.log("Deployment succesfull");
+  $('#contractSucces').text("a succes!");
+}).catch(function(err){
+  console.log(err.message);
+  });
 });
 }
 
