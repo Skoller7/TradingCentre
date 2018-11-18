@@ -322,8 +322,8 @@ function loginPasswordErrorHandeler(e){
 		errorModal(document.getElementById("MSignUpIPassword"), document.getElementById("MSignUpEMPassword"), "Password required");
 		errorModal(document.getElementById("MSignUpIRePassword"));
 	}
-	if(e == "Password must be longer than 8 characters"){
-		errorModal(document.getElementById("MSignUpIPassword"), document.getElementById("MSignUpEMPassword"), "Password must be 8 characters or longer");
+	if(e == "Password must be between 4 and 20 characters long"){
+		errorModal(document.getElementById("MSignUpIPassword"), document.getElementById("MSignUpEMPassword"), "Password must be between 4 and 20 characters");
 		errorModal(document.getElementById("MSignUpIRePassword"));
 	}
 }
