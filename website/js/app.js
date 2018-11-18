@@ -124,7 +124,66 @@ requestPrice: function(){
 
 });
 
-}
+},
+//can comment away from here ( written on train not tested)
+
+requestBuyersCount: function(){
+
+  App.contracts.DataContract.at('').then(function(instance){
+    DataContractInstance = instance;
+
+    DataContractInstance.buyersCount.call().then(function(){
+      console.log(result);
+      //$('buyersCount').text(result);
+    }).catch(function(err){
+      console.log(err);
+    });
+  });
+},
+
+  isUserBacker: function(){
+
+    App.contracts.DataContract.at('').then(function(instance){
+      DataContractInstance = instance;
+
+      DataContractInstance.backers.call(msg.sender).then(function(r){
+        if(r === true)
+          console.log('Person is a backeer');
+        else console.log('Person is not a backer');
+      }).catch(function(err){
+        console.log(err);
+      });
+    });
+  },
+
+  createBuyRequest: function(){
+
+    App.contracts.Datacontract.at('').then(function(instance){
+      DataContractInstance = instance;
+
+      //hier price of data functie oproepen - klopt de requestbuy()? or gebeurt dit in send?
+      DataContractInstance.createBuyRequest.send(requestPrice()).then(function(r){
+        console.log(r);
+      }).catch(function(err){
+        console.log(err);
+      });
+    });
+  },
+
+  changeDataContractPrice: function(){
+
+    App.contracts.Datacontract.at('').then(function(instance){
+      DataContractInstance = instance;
+
+      DataContractInstance.changePrice(1500).send().then(function(r){
+        console.log(r);
+      }).catch(function(err){
+        console.log(err);
+      });
+    });
+  }
+  //tot hier
+
 
 }
 
@@ -147,6 +206,21 @@ $('.btn-contract-price').click(function(){
    App.requestPrice();
 });
 
+$('btn-contract-buyers').click(function(){
+  console.log("amount of buyers clicked");
+  App.requestBuyersCount();
+});
+
+$('btn-contract-isBacker').click(function(){
+  console.log("is user a backer? clicked");
+  App.isUserBacker();
+});
+
+$('btn-contract-buy').click(function(){
+  console.log("buy contract clicked");
+  App.createBuyRequest();
+
+});
 
 
 

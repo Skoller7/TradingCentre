@@ -11,7 +11,6 @@ module.exports = function(deployer) {
 });
 };
 
-
 // //only dataContract deploy
 // module.exports = function(deployer) {
 //   deployer.deploy(DataContract(500, ));
