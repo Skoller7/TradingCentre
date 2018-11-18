@@ -7,12 +7,7 @@ function addzero(number){
     }
     return number;
 }
-function closeModal(item){
-    //https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
-    if ($(item).is(':visible')){
-        $(item).modal('toggle');	
-    }
-}
+
 document.getElementById("createnote").addEventListener("click",onclickcreate);
 function onclickcreate(){
     var note = document.createElement("div");
