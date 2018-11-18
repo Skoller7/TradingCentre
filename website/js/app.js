@@ -71,18 +71,18 @@ createNewContract : function(){
   }
 
    var account = accounts[0];
-
-    App.contracts.DataContractCreator.deployed().then(function(instance){
+   //adress verandere hier bij nieuwe ganacha load
+    App.contracts.DataContractCreator.at('0x5f11fca8f64a9011cd3ef70ec319be3e1add6225').then(function(instance){
     DataContractCreatorInstance = instance;
     console.log(web3.eth.getBalance(account)); //check balance?
     DataContractCreatorInstance.createDataContract(500, {from: account}).then((r) =>
  { console.log('deployment is succesfull');
+  console.log(instance.address);
 });
 
   //  DataContractInstance.createDataContract(500, account);
 
 });
-
 
   //mogelijke oplossing = werken via .new() maar dan kan ik de gemaakte contracts
   // niet bijhouden of ?
@@ -103,10 +103,29 @@ createNewContract : function(){
 //   console.log(err.message);
 //   });
 });
+
+},
+requestPrice: function(){
+  //hier zullen we de functie nog moeten meegeven van Het
+  //contract dat getoond wordt, momenteel nog niet mogelijke
+  //tot ik zelf accs kan aanmaken.
+
+  App.contracts.DataContract.deployed().then(function(instance){
+  DataContractI = instance;
+  DataContractinstance = DataContractI.at("0x8737a42306d1b59169a7fc54c286b596e5eafbcb");
+  
+  DataContractInstance.PriceOfData()
+  .then(function(result){
+    console.log(result);
+  }).catch(function(err){
+    console.log(err);
+  });
+
+});
+
 }
 
-
-};
+}
 
 $(function() {
   $(window).load(function() {
@@ -121,6 +140,12 @@ $('.btn-create-contract-request').click(function(){
 $('.btn-create-contract').click(function(){
    App.createNewContract();
 });
+
+$('.btn-contract-price').click(function(){
+  console.log("price request clicked");
+   App.requestPrice();
+});
+
 
 
 
