@@ -9,153 +9,156 @@
 		<script src="js/index.js" type="text/javascript"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script src="bootstrap-4.1.3/js/bootstrap.min.js" type="text/javascript"></script>
+	    <script src="js/lib.js" type="text/javascript"></script>
+	    <link rel="apple-touch-icon" sizes="57x57" href="img/favicon/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="img/favicon/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="img/favicon/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="img/favicon/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="img/favicon/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="img/favicon/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="img/favicon/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="img/favicon/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192" href="img/favicon/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="img/favicon/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="img/favicon/favicon-16x16.png">
+		<link rel="manifest" href="img/favicon/manifest.json">
+		<meta name="msapplication-TileColor" content="#ffffff">
+		<meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
+		<meta name="theme-color" content="#ffffff">
 	</head>
-	<body>
-		<nav class="navbar navbar-expand-lg fixed-top">
-	  		<a class="navbar-brand" href="#">
-		    	<img src="img/logo.svg" width="30" height="30" class="d-inline-block align-top" alt=""> Tradingcenter
-		  	</a>
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb" aria-controls="navb" aria-expanded="false" aria-label="Toggle navigation">
-	        	<span class="navbar-toggler-icon"></span>
-	      	</button>
-			<div class="collapse navbar-collapse" id="navb">
-		    	<ul class="nav nav-pills mr-auto">
-		      		<li class="nav-item">
-		        		<a class="nav-link" href="home.html" id="mavBHome">Home</a>
-		      		</li>
-		      		<li class="nav-item">
-		        		<a class="nav-link" id="navBJournal">Journal</a>
-		      		</li>
-		      		<li class="nav-item">
-			        	<a class="nav-link" href="javascript:void(0)">Datacenter</a>
-	      			</li>
-		    	</ul>
-		    	<form class="form-inline my-2 my-lg-0">
-		      		<input class="form-control mr-sm-2" type="text" placeholder="Search" size="50">
-		      		<button class="btn btn-success my-2 my-sm-0" type="button" id="Bsearch">Search</button>
-		    	</form>
-		    	<ul class="nav nav-pills" id="rightButtonNav">
-		      		<!--
-		      		<li class="nav-item">
-		        		<a class="nav-link" id="BLogin">Login</a>
-		      		</li>
-		      		<li class="nav-item">
-		        		<a class="nav-link" id="BSignUp">Sign up</a>
-		      		</li>
-		      		-->
-		    	</ul>
-		  	</div>
-		</nav>
-		<!--buttons modal demo-->
-		<!--
-		<div class="button" id="BLogin">
-		 	Login
-		</div>
-		<div class="button" id="BSignUp">
-			SignUp
-		</div>
-		<div class="button" id="BForgotPassword">
-			Forgot password
-		</div>
-		-->
-		<!--Login modal-->
-		<div class="modal fade" id="MLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  		<div class="modal-dialog" role="document">
-	    		<div class="modal-content">
-	    			<div class="modal-header">
-				        <h5 class="modal-title">Login</h5>
-				        <button type="button" class="close" id="MLoginBCrosse" aria-label="Close">
-			          		<span aria-hidden="true">&times;</span>
-						</button>
-				    </div>
-		      		<div class="modal-body">
-		      			<!--<form action="Home.html">-->
-		      			<p class="modalParagraph modalErrorMsg" id="MLoginEMMain" style="display: none;"></p>
-		      			<p class="modalParagraph">Login</p>
-	      				<input type="text" name="username" placeholder="Username" id="MLoginIUsername" autocomplete="off">
-	      				<span class="modalErrorMsg" id="MLoginEMUsername"></span>
-	      				<p class="modalParagraph">Email</p>
-	      				<input type="text" name="email" placeholder="email" id="MLoginIEmail" autocomplete="off">
-	      				<span class="modalErrorMsg" id="MLoginEMEmail"></span>
-	      				<p class="modalParagraph">Password</p>
-	      				<input type="password" name="password" placeholder="Password" id="MLoginIPassword">
-	      				<span class="modalErrorMsg" id="MLoginEMPassword"></span>
-	      				<br>
-	      				<input type="checkbox" name="remimberMe" id="CBremimberMe">
-	      				Remember me
-	      				<p id="MLoginBForgotPassword">Forgot password?</p>
-	      				<p id="MLoginBSingUp">don't have an account?</p>
-		      			<!--</form>-->
-		      		</div>
-		      		<div class="modal-footer">
-		        		<button type="button" class="btn btn-primary" id="MLoginBLogin">Login</button>
-		        		<button type="button" class="btn btn-secondary" id="MLoginBClose">Close</button>
-		      		</div>
-		    	</div>
-  			</div>
-		</div>
-		<!--Sing up modal-->
-		<div class="modal fade" id="MSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  		<div class="modal-dialog" role="document">
-	    		<div class="modal-content">
-	    			<div class="modal-header">
-				        <h5 class="modal-title">Sign up</h5>
-				        <button type="button" class="close" id="MSignUpBCrosse" aria-label="Close">
-			          		<span aria-hidden="true">&times;</span>
-						</button>
-				    </div>
-		      		<div class="modal-body">
-		      			<!-- <form action="Home.html"> -->
-		      				<p class="modalParagraph">Login</p>
-		      				<input type="text" name="username" placeholder="Username" id="MSignUpIUsername" autocomplete="off">
-		      				<span class="modalErrorMsg" id="MSignUpEMUsername"></span>
-		      				<p class="modalParagraph">Password (between 4 and 20 characters)</p>
-		      				<input type="password" name="password" placeholder="Password" id="MSignUpIPassword">
-		      				<span class="modalErrorMsg" id="MSignUpEMPassword"></span>
-		      				<p class="modalParagraph">Re-password</p>
-		      				<input type="password" name="password" placeholder="Re-password" id="MSignUpIRePassword">
-		      				<span class="modalErrorMsg" id="MSignUpEMRePassword"></span>
-		      				<p class="modalParagraph">Email</p>
-		      				<input type="text" name="password" placeholder="Email" id="MSignUpIEmail" autocomplete="off">
-		      				<span class="modalErrorMsg" id="MSignUpEMEmail"></span>
-		      				<p id="MSingUpBLogin">already have an account?</p>
-		      			<!-- </form> -->
-		      		</div>
-		      		<div class="modal-footer">
-		        		<button type="button" class="btn btn-primary" id="MSignUpBSingUp">Login</button>
-		        		<button type="button" class="btn btn-secondary" id="MSignUpBClose">Close</button>
-		      		</div>
-		    	</div>
-  			</div>
-		</div>
-		<!--Forgot password modal-->
-		<div class="modal fade" id="MForgotPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  		<div class="modal-dialog" role="document">
-	    		<div class="modal-content">
-	    			<div class="modal-header">
-				        <h5 class="modal-title">Forgoten password</h5>
-				        <button type="button" class="close" id="MForgotPasswordBCrosse" aria-label="Close">
-			          		<span aria-hidden="true">&times;</span>
-						</button>
-				    </div>
-		      		<div class="modal-body">
-		      			<from action="home.html">
-		      				<p class="modalParagraph">Username</p>
-		      				<input type="text" name="username" id="MForgotPasswordIUsername" placeholder="Username" autocomplete="off">
-		      				<span class="modalErrorMsg"></span>
-							<p class="modalParagraph">Email</p>
-		      				<input type="text" name="email" id="MForgotPasswordIEmail" placeholder="Email" autocomplete="off">
-		      				<span class="modalErrorMsg"></span>
-		      			</from>
-		      		</div>
-		      		<div class="modal-footer">
-		        		<button type="button" class="btn btn-primary" id="MForgotPasswordBForgotPassword">Login</button>
-		        		<button type="button" class="btn btn-secondary" id="MForgotPasswordBClose">Close</button>
-		      		</div>
-		    	</div>
-  			</div>
-		</div>
+		<body>
+		<header id="header">
+			<nav class="navbar navbar-expand-lg fixed-top">
+				<a class="navbar-brand" href="#">
+			    	<img src="img/logo.svg" width="30" height="30" class="d-inline-block align-top" alt=""> Tradingcenter
+			  	</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb" aria-controls="navb" aria-expanded="false" aria-label="Toggle navigation">
+			    	<span class="navbar-toggler-icon"></span>
+			  	</button>
+				<div class="collapse navbar-collapse" id="navb">
+			    	<ul class="nav nav-pills mr-auto">
+			      		<li class="nav-item">
+			        		<a class="nav-link" href="home.html" id="mavBHome">Home</a>
+			      		</li>
+			      		<li class="nav-item">
+			        		<a class="nav-link" id="navBJournal">Journal</a>
+			      		</li>
+			      		<li class="nav-item">
+				        	<a class="nav-link" href="javascript:void(0)">Datacenter</a>
+			  			</li>
+			    	</ul>
+			    	<form class="form-inline my-2 my-lg-0">
+			      		<input class="form-control mr-sm-2" type="text" placeholder="Search" size="50">
+			      		<button class="btn btn-success my-2 my-sm-0" type="button" id="Bsearch">Search</button>
+			    	</form>
+			    	<ul class="nav nav-pills" id="rightButtonNav">
+			    	</ul>
+			  	</div>
+			</nav>
+			<!--buttons modal demo-->
+			<!--Login modal-->
+			<div class="modal fade" id="MLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+					        <h5 class="modal-title">Login</h5>
+					        <button type="button" class="close" id="MLoginBCrosse" aria-label="Close">
+				          		<span aria-hidden="true">&times;</span>
+							</button>
+					    </div>
+			      		<div class="modal-body">
+			      			<!--<form action="Home.html">-->
+			      			<p class="modalParagraph modalErrorMsg" id="MLoginEMMain" style="display: none;"></p>
+			      			<p class="modalParagraph">Login</p>
+			  				<input type="text" name="username" placeholder="Username" id="MLoginIUsername" autocomplete="off">
+			  				<span class="modalErrorMsg" id="MLoginEMUsername"></span>
+			  				<p class="modalParagraph">Email</p>
+			  				<input type="text" name="email" placeholder="email" id="MLoginIEmail" autocomplete="off">
+			  				<span class="modalErrorMsg" id="MLoginEMEmail"></span>
+			  				<p class="modalParagraph">Password</p>
+			  				<input type="password" name="password" placeholder="Password" id="MLoginIPassword">
+			  				<span class="modalErrorMsg" id="MLoginEMPassword"></span>
+			  				<br>
+			  				<input type="checkbox" name="remimberMe" id="CBremimberMe">
+			  				Remember me
+			  				<p id="MLoginBForgotPassword">Forgot password?</p>
+			  				<p id="MLoginBSingUp">don't have an account?</p>
+			      			<!--</form>-->
+			      		</div>
+			      		<div class="modal-footer">
+			        		<button type="button" class="btn btn-primary" id="MLoginBLogin">Login</button>
+			        		<button type="button" class="btn btn-secondary" id="MLoginBClose">Close</button>
+			      		</div>
+			    	</div>
+					</div>
+			</div>
+			<!--Sing up modal-->
+			<div class="modal fade" id="MSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+					        <h5 class="modal-title">Sign up</h5>
+					        <button type="button" class="close" id="MSignUpBCrosse" aria-label="Close">
+				          		<span aria-hidden="true">&times;</span>
+							</button>
+					    </div>
+			      		<div class="modal-body">
+			      			<!-- <form action="Home.html"> -->
+			      				<p class="modalParagraph">Login</p>
+			      				<input type="text" name="username" placeholder="Username" id="MSignUpIUsername" autocomplete="off">
+			      				<span class="modalErrorMsg" id="MSignUpEMUsername"></span>
+			      				<p class="modalParagraph">Password (between 4 and 20 characters)</p>
+			      				<input type="password" name="password" placeholder="Password" id="MSignUpIPassword">
+			      				<span class="modalErrorMsg" id="MSignUpEMPassword"></span>
+			      				<p class="modalParagraph">Re-password</p>
+			      				<input type="password" name="password" placeholder="Re-password" id="MSignUpIRePassword">
+			      				<span class="modalErrorMsg" id="MSignUpEMRePassword"></span>
+			      				<p class="modalParagraph">Email</p>
+			      				<input type="text" name="password" placeholder="Email" id="MSignUpIEmail" autocomplete="off">
+			      				<span class="modalErrorMsg" id="MSignUpEMEmail"></span>
+			      				<p id="MSingUpBLogin">already have an account?</p>
+			      			<!-- </form> -->
+			      		</div>
+			      		<div class="modal-footer">
+			        		<button type="button" class="btn btn-primary" id="MSignUpBSingUp">Login</button>
+			        		<button type="button" class="btn btn-secondary" id="MSignUpBClose">Close</button>
+			      		</div>
+			    	</div>
+					</div>
+			</div>
+			<!--Forgot password modal-->
+			<div class="modal fade" id="MForgotPassword" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+					        <h5 class="modal-title">Forgot password</h5>
+					        <button type="button" class="close" id="MForgotPasswordBCrosse" aria-label="Close">
+				          		<span aria-hidden="true">&times;</span>
+							</button>
+					    </div>
+			      		<div class="modal-body">
+			      			<from action="home.html">
+			      				<p class="modalParagraph">Username</p>
+			      				<input type="text" name="username" id="MForgotPasswordIUsername" placeholder="Username" autocomplete="off">
+			      				<span class="modalErrorMsg"></span>
+								<p class="modalParagraph">Email</p>
+			      				<input type="text" name="email" id="MForgotPasswordIEmail" placeholder="Email" autocomplete="off">
+			      				<span class="modalErrorMsg"></span>
+			      			</from>
+			      		</div>
+			      		<div class="modal-footer">
+			        		<button type="button" class="btn btn-primary" id="MForgotPasswordBForgotPassword">Login</button>
+			        		<button type="button" class="btn btn-secondary" id="MForgotPasswordBClose">Close</button>
+			      		</div>
+			    	</div>
+					</div>
+			</div>
+		</header>
+		<!--<script type="text/javascript">includeHTMLFile("header.html",document.getElementById("header"))</script>-->
 		<script src="js/header.js" type="text/javascript"></script>
+
 
 		<div class="parallax">
 		<div id="background" class="parallax__layer parallax__layer--back">
@@ -168,25 +171,32 @@
 		</div>
 		
 		
-		<div id="content" class="parallax__layer parallax__layer--base">
-			<div id="promo">
-				<div id="promoLeft">
-					<img src="img/journal.png" class="promoLogo">
-					<p class="promoText">Dit is tekst dat van zo'n hoog emotioneel kwaliteit is, dat de gebruiker niet anders kan dan op de knop hieronder te drukken</p>
-					<button class="promoButton" onclick="scrollToJournal()">Journal</button>
-				</div>
-				<div id="promoRight">
-					<img src="img/datacentre.png" class="promoLogo">
-					<p class="promoText">De kwaliteit van deze tekst is nog een stuk hoger; het zou me niet verbazen als het in de geschiedenisboeken bij MacBeth en Lord of the Rings gezet wordt</p>
-					<button class="promoButton" onclick="scrollToDatacenter()">Datacenter</button>
-				</div>
+		<div id="promo" class="parallax__layer parallax__layer--base">
+			<div id="promoLeft">
+				<img src="img/journal.png" class="promoLogo">
+				<p class="promoText">Dit is tekst dat van zo'n hoog emotioneel kwaliteit is, dat de gebruiker niet anders kan dan op de knop hieronder te drukken</p>
+				<button class="promoButton" onclick="scrollToJournal()">Journal</button>
+			</div>
+			<div id="promoRight">
+				<img src="img/datacentre.png" class="promoLogo">
+				<p class="promoText">De kwaliteit van deze tekst is nog een stuk hoger; het zou me niet verbazen als het in de geschiedenisboeken bij MacBeth en Lord of the Rings gezet wordt</p>
+				<button class="promoButton" onclick="scrollToDatacenter()">Datacenter</button>
 			</div>
 			<div id="demoJournal" class="demo">
-				<h1>Uitleg over de journal</h1>
+			<div id="journalLeft" class="demoHalves">
+			</div>
+				<div id="journalRight" class="demoHalves">
+				</div>
 			</div>
 			<div id="demoDatacenter" class="demo">
-				<h1>Uitleg over de datacenter</h1>
+				<div id="datacenterLeft" class="demoHalves">
+				</div>
+				<div id="datacenterRight" class="demoHalves">
+				</div>
 			</div>
+		</div>
+		<div class="parallax__layer parallax__layer--front" >
+			
 		</div>
 		</div>
 
@@ -195,15 +205,5 @@
 			GDPR info
 		</div>
 		<script src="js/login.js" type="text/javascript"></script>
-
-		
-		<!--
-		<div id="testa"></div>
-		<script>$(function(){
-			$("#testa").load("test2.html");
-		});
-		</script>
-		-->
-
 	</body>
 </html>
