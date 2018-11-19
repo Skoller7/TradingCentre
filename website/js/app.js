@@ -50,7 +50,7 @@ initContract: function(){
 getDeployedContractAdresses: function(){
 
   //vars hier
-  App.contracts.DataContractCreator.at('0xe08bd3d15b00490d4dbfed3fbe33c6a6c8ce5878').then(function(instance){
+  App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(function(instance){
     DataContractCreatorInstance = instance;
 
     DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
@@ -72,7 +72,7 @@ createNewContract : function(){
 
    var account = accounts[0];
    //adress verandere hier bij nieuwe ganacha load
-    App.contracts.DataContractCreator.at('0xe08bd3d15b00490d4dbfed3fbe33c6a6c8ce5878').then(function(instance){
+    App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(function(instance){
     DataContractCreatorInstance = instance;
     console.log(web3.eth.getBalance(account)); //check balance?
     DataContractCreatorInstance.createDataContract(500, {from: account}).then((r) =>
