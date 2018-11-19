@@ -1,3 +1,6 @@
+var HDWalletProvider = require("truffle-hdwallet-provider");
+
+var mnemonic = "";
 /*
  * NB: since truffle-hdwallet-provider 0.0.5 you must wrap HDWallet providers in a
  * function when declaring them. Failure to do so will cause commands to hang. ex:
@@ -20,4 +23,15 @@
     network_id: "*" // Match any network id
    }
   }
- };
+},
+
+module.exports = {
+  networks:{
+    rinkby: {
+      provider: function(){
+        return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/e1f507ef8d814286a1f1e2ea39cfe576")
+      },
+      network_id: 3
+    }
+  }
+};
