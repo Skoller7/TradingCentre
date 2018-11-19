@@ -50,7 +50,7 @@ initContract: function(){
 getDeployedContractAdresses: function(){
 
   //vars hier
-  App.contracts.DataContractCreator.at('0x8c6b7fa48b98eb807ae862a597739f1d71c14a55').then(function(instance){
+  App.contracts.DataContractCreator.at('0xe08bd3d15b00490d4dbfed3fbe33c6a6c8ce5878').then(function(instance){
     DataContractCreatorInstance = instance;
 
     DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
@@ -72,7 +72,7 @@ createNewContract : function(){
 
    var account = accounts[0];
    //adress verandere hier bij nieuwe ganacha load
-    App.contracts.DataContractCreator.at('0x8c6b7fa48b98eb807ae862a597739f1d71c14a55').then(function(instance){
+    App.contracts.DataContractCreator.at('0xe08bd3d15b00490d4dbfed3fbe33c6a6c8ce5878').then(function(instance){
     DataContractCreatorInstance = instance;
     console.log(web3.eth.getBalance(account)); //check balance?
     DataContractCreatorInstance.createDataContract(500, {from: account}).then((r) =>
@@ -111,7 +111,7 @@ requestPrice: function(){
   //tot ik zelf accs kan aanmaken.
 
 // /
-  App.contracts.DataContract.at('0x646aff21a44bc0d2ed195f3f06652e203b19b385').then(function(instance){
+  App.contracts.DataContract.at('0x1f5b97c3d86621cb452e33d526f4ab59e0738bb6').then(function(instance){
   DataContractInstance = instance;
 //  DataContractinstance = DataContractI.at("0x8737a42306d1b59169a7fc54c286b596e5eafbcb");
 
@@ -127,61 +127,62 @@ requestPrice: function(){
 },
 //can comment away from here ( written on train not tested)
 
-requestBuyersCount: function(){
+// requestBuyersCount: function(){
+//
+//   App.contracts.DataContract.at('').then(function(instance){
+//     DataContractInstance = instance;
+//
+//     DataContractInstance.buyersCount.call().then(function(){
+//       console.log(result);
+//       //$('buyersCount').text(result);
+//     }).catch(function(err){
+//       console.log(err);
+//     });
+//   });
+// },
+//
+//   isUserBacker: function(){
+//
+//     App.contracts.DataContract.at('').then(function(instance){
+//       DataContractInstance = instance;
+//
+//       DataContractInstance.backers.call(msg.sender).then(function(r){
+//         if(r === true)
+//           console.log('Person is a backeer');
+//         else console.log('Person is not a backer');
+//       }).catch(function(err){
+//         console.log(err);
+//       });
+//     });
+//   },
+//
+//   createBuyRequest: function(){
+//
+//     App.contracts.Datacontract.at('').then(function(instance){
+//       DataContractInstance = instance;
+//
+//       //hier price of data functie oproepen - klopt de requestbuy()? or gebeurt dit in send?
+//       DataContractInstance.createBuyRequest.send(requestPrice()).then(function(r){
+//         console.log(r);
+//       }).catch(function(err){
+//         console.log(err);
+//       });
+//     });
+//   },
+//
+//   changeDataContractPrice: function(){
+//
+//     App.contracts.Datacontract.at('').then(function(instance){
+//       DataContractInstance = instance;
+//
+//       DataContractInstance.changePrice(1500).send().then(function(r){
+//         console.log(r);
+//       }).catch(function(err){
+//         console.log(err);
+//       });
+//     });
+//   }
 
-  App.contracts.DataContract.at('').then(function(instance){
-    DataContractInstance = instance;
-
-    DataContractInstance.buyersCount.call().then(function(){
-      console.log(result);
-      //$('buyersCount').text(result);
-    }).catch(function(err){
-      console.log(err);
-    });
-  });
-},
-
-  isUserBacker: function(){
-
-    App.contracts.DataContract.at('').then(function(instance){
-      DataContractInstance = instance;
-
-      DataContractInstance.backers.call(msg.sender).then(function(r){
-        if(r === true)
-          console.log('Person is a backeer');
-        else console.log('Person is not a backer');
-      }).catch(function(err){
-        console.log(err);
-      });
-    });
-  },
-
-  createBuyRequest: function(){
-
-    App.contracts.Datacontract.at('').then(function(instance){
-      DataContractInstance = instance;
-
-      //hier price of data functie oproepen - klopt de requestbuy()? or gebeurt dit in send?
-      DataContractInstance.createBuyRequest.send(requestPrice()).then(function(r){
-        console.log(r);
-      }).catch(function(err){
-        console.log(err);
-      });
-    });
-  },
-
-  changeDataContractPrice: function(){
-
-    App.contracts.Datacontract.at('').then(function(instance){
-      DataContractInstance = instance;
-
-      DataContractInstance.changePrice(1500).send().then(function(r){
-        console.log(r);
-      }).catch(function(err){
-        console.log(err);
-      });
-    });
-  }
   //tot hier
 
 

@@ -1,7 +1,7 @@
 var DataContractCreator = artifacts.require("DataContractCreator");
 var DataContract = artifacts.require("DataContract");
 // module.exports = function(deployer){
-//   deployer.deploy(DataContractCreator);
+//   deployer.deploy(DataContract);
 // }
 
 //double deploy uncomment this
