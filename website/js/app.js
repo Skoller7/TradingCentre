@@ -52,7 +52,7 @@ getDeployedContractAdresses: function(){
   //vars hier
   App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(function(instance){
     DataContractCreatorInstance = instance;
-
+    console.log(web3.eth.getBalance(account));
     DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
    $('#amountOfContracts').text(r.length);
    console.log("requested amount of deployed contracts");
@@ -71,7 +71,7 @@ createNewContract : function(){
   }
 
    var account = accounts[0];
-   //adress verandere hier bij nieuwe ganacha load
+   //adress verandere hier bij nieuwe ganacha load 0xcbf9889d922f5c6096067e838dd7a52a9a52c91b
     App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(function(instance){
     DataContractCreatorInstance = instance;
     console.log(web3.eth.getBalance(account)); //check balance?

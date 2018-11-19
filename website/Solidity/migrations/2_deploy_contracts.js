@@ -5,7 +5,7 @@ module.exports = function(deployer){
   deployer.deploy(DataContractCreator);
 }
 
-// //double deploy uncomment this
+//double deploy uncomment this
 // module.exports = function(deployer) {
 //   deployer.deploy(DataContractCreator).then(function(){
 //         return deployer.deploy(DataContract, 500, DataContractCreator.address)
