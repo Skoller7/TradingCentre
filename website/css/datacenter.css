@@ -110,9 +110,14 @@
 .port3{
     color:#ff0000;
 }
+.containter-fluid{
+  background-color:#F8F9FA;
+}
+/* navigation bar */
 .navbar{
     background-color: #007bff;
     margin: 0 auto;
+    padding:0;
 }
 .navbar-expand-lg .navbar-brand {
     color: #fff;
@@ -120,15 +125,26 @@
 .navbar-expand-lg .navbar-brand:hover {
     color: #fff;
 }
-.nav-link{
-    background-color: #fff;
-    margin:1%;
-    color:#000;
+.navbar-items li{
+    float: left;
+    text-decoration: none;
+    list-style: none;
 }
-.nav-link:hover{
-    background-color: #000;
+.navbar-items{
+    display: inline-block;
+}
+.navbar-items li a{
     color: #fff;
+    border:none;
+    background-color: #25313B;
+    padding: 10px;
 }
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
-    background-color: #000;
+.navbar-items li a:hover{
+    border:none;
+}
+.header-section-rigth{
+    float:right;
+}
+.nav-link{
+    padding:0;
 }
