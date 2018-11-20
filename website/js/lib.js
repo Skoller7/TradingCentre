@@ -66,7 +66,7 @@ function getCookie(cname) {
     }
     return false;
 }
-
+//https://www.w3schools.com/js/js_cookies.asp
 function getCookieObj(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -83,6 +83,11 @@ function getCookieObj(cname) {
     return false;
 }
 
+//https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 
 //modals
 function closeAllModals(){
