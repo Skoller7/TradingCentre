@@ -50,11 +50,12 @@ initContract: function(){
 getDeployedContractAdresses: function(){
 
   //vars hier
-  App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(function(instance){
+  App.contracts.DataContractCreator.at('0xb00321c91d098f5dedebfff971c517c19d11644f').then(function(instance){
     DataContractCreatorInstance = instance;
-    console.log(web3.eth.getBalance(account));
+
     DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
    $('#amountOfContracts').text(r.length);
+
    console.log("requested amount of deployed contracts");
  });
 
@@ -64,26 +65,26 @@ getDeployedContractAdresses: function(){
 
 createNewContract : function(){
 
+  console.log('clickclick');
   //checking the user accounts.
   web3.eth.getAccounts(function(error, accounts) {
   if (error) {
     console.log(error);
   }
 
+   var gas = 1000000;
    var account = accounts[0];
-   //adress verandere hier bij nieuwe ganacha load 0xcbf9889d922f5c6096067e838dd7a52a9a52c91b
-    App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(function(instance){
+   //adress verandere hier bij nieuwe ganacha load 0x6fea428ed5b5b4804572a0df7766b71f68a44da8
+    App.contracts.DataContractCreator.at('0xb00321c91d098f5dedebfff971c517c19d11644f').then(function(instance){
     DataContractCreatorInstance = instance;
     console.log(web3.eth.getBalance(account)); //check balance?
-    DataContractCreatorInstance.createDataContract(500, {from: account}).then((r) =>
+    DataContractCreatorInstance.createDataContract(1500, {from: account, gas}).then((r) =>
  { console.log('deployment is succesfull');
-  console.log(r.address);
+  $('contractSucces').text('succes');
+  console.log(App.requestAdresses());
 });
-
   //  DataContractInstance.createDataContract(500, account);
-
 });
-
   //mogelijke oplossing = werken via .new() maar dan kan ik de gemaakte contracts
   // niet bijhouden of ?
   // misschien eens rondvragen of een contract functie wel degelijk een nieuw contract kan
@@ -103,7 +104,6 @@ createNewContract : function(){
 //   console.log(err.message);
 //   });
 });
-
 },
 requestPrice: function(){
   //hier zullen we de functie nog moeten meegeven van Het
@@ -111,7 +111,7 @@ requestPrice: function(){
   //tot ik zelf accs kan aanmaken.
 
 // /
-  App.contracts.DataContract.at('0x1f5b97c3d86621cb452e33d526f4ab59e0738bb6').then(function(instance){
+  App.contracts.DataContract.at('0xd50e4c89fa6b428bb972caca229f11c76441e1c6').then(function(instance){
   DataContractInstance = instance;
 //  DataContractinstance = DataContractI.at("0x8737a42306d1b59169a7fc54c286b596e5eafbcb");
 
@@ -125,6 +125,23 @@ requestPrice: function(){
 });
 
 },
+
+requestAdresses: function(){
+
+  App.contracts.DataContractCreator.at('0xb00321c91d098f5dedebfff971c517c19d11644f').then(function(instance){
+    DataContractCreatorInstance = instance;
+
+    DataContractCreatorInstance.getDeployedContracts.call().then(function(result){
+      console.log(result);
+      $('contract-addresses').text(result);
+        return result;
+    }).catch(function(err){
+      console.log(err);
+    });
+  });
+
+},
+
 //can comment away from here ( written on train not tested)
 
 // requestBuyersCount: function(){
@@ -220,8 +237,12 @@ $('btn-contract-isBacker').click(function(){
 $('btn-contract-buy').click(function(){
   console.log("buy contract clicked");
   App.createBuyRequest();
-
 });
+
+$('btn-contract-addresses').click(function(){
+  console.log('requesting adresses....');
+  App.requestAdresses();
+})
 
 
 
