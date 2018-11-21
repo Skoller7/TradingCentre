@@ -54,13 +54,17 @@ sidebar-portfolio
     background-color: #3a4e5f;
     color:#fff;
 }
-.fa-trash,.fa-edit{
-    color:#fff;
-    float:right;
-    padding-left:15px;
+.fa-trash,.fa-edit,.header-port{
+    color: #fff;
+    background-color: #0889C4;
+    border-radius: 20px;
+    padding: 4%;
+    margin-left:80%;
+    margin:2%;
 }
 .fa-trash:hover,.fa-edit:hover{
-    color:#FF751A ;
+    background-color:  #fff;
+    color:#0889C4;
 }
 .fa-angle-right{
     float: right;
@@ -163,16 +167,6 @@ sidebar-portfolio
     }
     #menu{
         display: block;
-    }
-}
-@media(max-width:1090px){
-    .navbar{
-        padding:10px;
-    }
-}
-@media(min-width:1091px){
-    .navbar{
-        padding:0;
     }
 }
 .content-datacenter .card{
@@ -299,7 +293,7 @@ sidebar-portfolio
 }
 .fa-bars{
     background-color: #ff751a;
-    padding:16px;
+    padding:20px;
     color:#fff;
 }
 /* 
@@ -404,15 +398,19 @@ styling modals
 notes
 */
 .notes-card{
-    width:100%;
+    width:80%;
+    padding: 5%;
+    margin: 4% auto;
     color:#000;
     background-color:#F8F9FA;
+    border-bottom: 2px solid #ff751a;
 }
 .notes-card p{
     
 }
-.notes-all{
+#notes-all{
     width:100%;
+    margin-bottom: 50%;
 }
 /*
 

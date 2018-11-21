@@ -60,7 +60,6 @@
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content" id="header-content">
             <h3 id="header-portfolio-name"></h3>
-            
         </div>
         <div class="chart-content">
            <div id="main"></div>
@@ -87,6 +86,10 @@
                               </thead>
                           </tbody>  
                         </table>
+        </div>
+        <div class="footer-port">
+                    <i id="header-port-del"></i>
+            <i id="header-port-update"></i>
         </div>
     </div>
 </div>
