@@ -2,9 +2,6 @@
 
 //console.log(document.cookie);
 
-if(getCookie("token")){
-	window.location.href  = "home.html";
-}
 
 
 if(getCookie("cooikesAllowed") == "true"){
@@ -19,7 +16,7 @@ if(getCookie("cooikesAllowed")){
 */
 //button header/test
 document.getElementById("BAllowCookies").addEventListener("click",allowCookies);
-//document.getElementById("journalImg").addEventListener("click", goToJournal);
+document.getElementById("journalImg").addEventListener("click", goToJournal);
 
 
 /*
@@ -37,6 +34,6 @@ function autoLogin(username, password){
 
 
 function allowCookies(){
-	document.cookie = "cooikesAllowed=true;  expires=Thu, 01 Jan 3000 00:00:00 UTC";
+	document.cookie = "cooikesAllowed=true";
 	document.getElementById("cookieBanner").style.display = "none";
 }
