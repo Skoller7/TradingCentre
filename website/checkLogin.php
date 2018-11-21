@@ -16,10 +16,4 @@
 			header("location: index.php");
 		}
 	}
-	/*
-	//expandlivingTime
-	if(isset($_SESSION['jwtToken'])){
-		setcookie('jwtToken',$_SESSION['jwtToken'], time() + 60*60*6);
-	}
-	*/
 ?>
