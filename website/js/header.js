@@ -182,12 +182,15 @@ function login(){
 	            window.location.href = "home.html";
 	            */
 	            var form = document.createElement("FORM");
-		        form.setAttribute("methode","POST");
-		        form.setAttribute("actoion","checkLogin.php");
+		        form.setAttribute("method","post");
+		        form.setAttribute("action","checkLogin.php");
 		        var input = document.createElement("INPUT");
 		        input.setAttribute("type","hidden");
 		        input.setAttribute("name","jwtToken");
 		        input.setAttribute("value",data.token);
+		        form.appendChild(input);
+			    document.body.appendChild(form);
+			    //console.log(form);
 		        form.submit();
 	        },
 	        error: function(data, ajaxOptions, thrownError){
@@ -266,7 +269,7 @@ function singUp(){
 		
 	for(var i = 0; i < inputList.length; i++){
 		inputList[i].classList.remove("modalError");
-		if(checkInputIsEmpty(inputList[i])){
+		if(!checkInputIsEmpty(inputList[i])){
 			errorModal(inputList[i], errorList[i], "can't be empty");
 			makeApiCall = false;
 		}
@@ -308,12 +311,15 @@ function singUp(){
 			        //date.setMilliseconds(date.getMilliseconds() + 21600000);
 			        //document.cookie = "token=" + data.token + "expires=" + date;
 			        var form = document.createElement("FORM");
-			        form.setAttribute("methode","POST");
-			        form.setAttribute("actoion","checkLogin.php");
+			        form.setAttribute("method","post");
+		        	form.setAttribute("action","checkLogin.php");
 			        var input = document.createElement("INPUT");
 			        input.setAttribute("type","hidden");
 			        input.setAttribute("name","jwtToken");
 			        input.setAttribute("value",data.token);
+			        form.appendChild(input);
+			        document.body.appendChild(form);
+			        //console.log(form);
 			        form.submit();
 		        },
 		        error: function(data, ajaxOptions, thrownError){
