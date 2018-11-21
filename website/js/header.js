@@ -5,8 +5,10 @@ modalList.push(document.getElementById("MForgotPassword"));
 //document.getElementById("menu").addEventListener("click",openMenu);
 
 //headerButton
+/*
 document.getElementById("navBJournal").addEventListener("click", goToJournal);
 document.getElementById("mavBHome").addEventListener("click", goToHome);
+*/
 //modal button.
 document.getElementById("MLoginBLogin").addEventListener("click",login);
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
