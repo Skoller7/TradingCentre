@@ -1,5 +1,7 @@
+//var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
+var token = null;
 modalList.push("MCreateNote");
-modalList.push("MCretePort");
+modalList.push("MCreatePort");
 /*        function delcard(id){
             document.getElementById(id).style.display = "block";
         }
@@ -96,7 +98,6 @@ function openSubPortfolios(){
 call get all portfolios
 */
 $(function(){
-    var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
     var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
     var ul = document.getElementById("portfolios-ul");
     var sub_port = ["Delete portfolio","Update Portfolio","Create order","Delete order"];
@@ -118,7 +119,6 @@ $(function(){
         }
         div_sub.appendChild(ul_sub);
         ul.appendChild(div_sub);
-        
     }
 });
 
@@ -129,7 +129,6 @@ var header = document.getElementById("header-content");
 document.getElementById("portfolios-ul").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id))) {
         $(function(){
-        var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id,"GET",token);
         var ul = document.getElementById("portfolios-ul");
         var header = document.getElementById("header-portfolio-name");
@@ -151,30 +150,54 @@ api call get all notes with portfolioid
 */
 $(function(){
     
-    var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
-    var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=17","GET",token); 
-   var notes = document.getElementById("notes-all");
+   // var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=17","GET",token); 
+        var notes = document.getElementById("notes-all");
         var li = document.createElement("div");
         li.setAttribute("class","notes-card");
         var content = document.createElement("div");
         content.setAttribute("class","notes-content");
         var content_del = document.createElement("i");
         var content_edit = document.createElement("i");
+        var p = document.createElement("p");
+        p.innerHTML = "ik ben wie ik ben!";
+        content.appendChild(p);
         content.appendChild(content_edit);
         content.appendChild(content_del);
+        content_del.setAttribute("id",/*data[i].NoteId*/"12");
         content_del.setAttribute("class","fa fa-trash");
+        content_edit.setAttribute("id",/*data[i].NoteId*/"133");
         content_edit.setAttribute("class","fa fa-edit");
         notes.appendChild(li);
         li.appendChild(content);
-    for(var i = 0; i < data.length;i++){
+        
+  /*  for(var i = 0; i < data.length;i++){
         var div = document.createElement("div");
         div.setAttribute("class","notes-card");
         var content = document.createElement("p");
         content.innerHTML = data[i].message;
         notes.appendChild(div);
         div.appendChild(content);
-    }
+    }*/
 });
+
+/*
+api call update note
+*/
+var fa = document.getElementsByClassName("fa-edit");
+for (var i = 0;i < fa.length;i++){
+    console.log(fa);
+    fa[i].addEventListener("click",updatenote);
+    function updatenote(){
+        console.log("dsf");
+    }
+}
+
+
+$(function(){
+  
+ var json =  {"NoteId": 12,"Message": "Hello world2"};
+  makerequest(json,"http://localhost:62382/api/note","POST",token);
+  });
 /* 
 notes
 */
@@ -210,7 +233,6 @@ document.getElementById("MCreateNoteBCreateNote").addEventListener("click",creat
 function createnote(){
      errorcontent.innerHTML = "";
    $(function(){
-    var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
     var valid =true;
     if(content.value == ""){
           errorcontent.innerHTML = "This field cannot be empty";
@@ -276,7 +298,6 @@ function createport(){
         valid = false;
     }
    $(function(){
-    var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
     if(valid){
         console.log(nameport.value);
         descport.value = "";
@@ -290,7 +311,9 @@ function createport(){
 
 
 
-
+/*
+api call get orders
+*/
 $(function(){
 var dateTo = {
         portfolioId: "17",
@@ -298,7 +321,6 @@ amount: "200",
 dateFrom: "20/02/2000",
 dateTo: "21/11/2018"
 	};
-var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
 var data = makerequest(dateTo,"http://10.3.50.6/api/order/get","GET",token);
 for(var i = 0,rowCtr = data.length; i <= rowCtr; i++){
                 var table_orders = document.getElementById("orders");
