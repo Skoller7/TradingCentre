@@ -22,9 +22,10 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<link rel="stylesheet" type="text/css" href="css/header.css">
-		<link rel="stylesheet" type="text/css" href="css/datacentre.css">
+		<link rel="stylesheet" type="text/css" href="css/datacenter.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="js/jquery.js" type="text/javascript"></script>
-		<script src="js/index.js" type="text/javascript"></script>
+		<!--<script src="js/index.js" type="text/javascript"></script>-->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	    <script src="bootstrap-4.1.3/js/bootstrap.min.js" type="text/javascript"></script>
 	    <script src="js/lib.js" type="text/javascript"></script>
@@ -36,7 +37,7 @@
 			<?php 
 				include('header.html');
 			?>
-
+			
 
 		<div class="parallax">
 			<div id="background" class="parallax__layer parallax__layer--back">
@@ -88,6 +89,6 @@
 			GDPR info
 		</div>
 		-->
-		<script src="js/login.js" type="text/javascript"></script>
+		<script src="js/index.js" type="text/javascript"></script>
 	</body>
 </html>
