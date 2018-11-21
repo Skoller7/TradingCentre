@@ -82,8 +82,8 @@
                                 <td>Price</td>
                                 <td>Qauntity</td>
                                 <td>Timeplaced</td>
-                                <td>Technique</td>
-                                <td>Image</td>
+                                <!--<td>Technique</td>
+                                <td>Image</td>!-->
                               </thead>
                           </tbody>  
                         </table>

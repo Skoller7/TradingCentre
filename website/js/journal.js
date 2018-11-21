@@ -290,16 +290,16 @@ function createport(){
 
 
 
-/*
+
 $(function(){
 var dateTo = {
-        portfolioId: "6",
+        portfolioId: "17",
 amount: "200",
 dateFrom: "20/02/2000",
-dateTo: "15/05/2018"
+dateTo: "21/11/2018"
 	};
-
-var data = makerequest(dateTo,"http://10.3.50.6/api/order/get","GET",getCookie());
+var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
+var data = makerequest(dateTo,"http://10.3.50.6/api/order/get","GET",token);
 for(var i = 0,rowCtr = data.length; i <= rowCtr; i++){
                 var table_orders = document.getElementById("orders");
                 var row = table_orders.insertRow(i);
@@ -311,7 +311,7 @@ for(var i = 0,rowCtr = data.length; i <= rowCtr; i++){
                 row.insertCell(5).innerHTML = data[i].orderQty;
                 row.insertCell(6).innerHTML = data[i].timestamp;
                
-              var div = document.createElement("div");
+            /*  var div = document.createElement("div");
                div.className = "order-type-div";
                 var array = ["Head & Shoulders","Saab","Mercades","Audi"];
                 //Create and append select list
@@ -326,10 +326,10 @@ for(var i = 0,rowCtr = data.length; i <= rowCtr; i++){
                     type.appendChild(option);
                 }
                div.appendChild(type);
-            row.insertCell(7).appendChild(div);
+            row.insertCell(7).appendChild(div);*/
             }    
-}
-*/
+});
+
 function adddoubleline(){
            var myChart = echarts.init(document.getElementById('main'),'light');
         
