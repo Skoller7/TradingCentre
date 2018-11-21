@@ -6,8 +6,7 @@
 	border: 1px solid black;
 }
 .markedText{
-	color: yellow;
-	font-style: italic;
+	background-color: #f4aa42;
 }
 .searchImg{
 	height: 64px;
