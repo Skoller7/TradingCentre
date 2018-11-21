@@ -185,10 +185,13 @@ body{
 .demo {
 <<<<<<< HEAD
 	height: 100%;
+<<<<<<< HEAD
 	min-height: 1000px;
 =======
 	padding-top: 50px;
 >>>>>>> parent of 6481edf3... Uploading (non-working) progress on github to make sure I don't lose anything
+=======
+>>>>>>> parent of d455f7f2... Added forefround parallax
 }
 
 #demoJournal {
@@ -202,39 +205,34 @@ body{
 	width: 100%;
 	height: 100%;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	background-color: white;
 	color: black;
+=======
+	background-color: black;
+	color: white;
+
+>>>>>>> parent of d455f7f2... Added forefround parallax
 }
 
 #journalLeft {
 	color: black;
 	text-align: center;
-	padding-top: 100px;
+	padding-top: 50px;
 }
 
-#journalImg {
+#journalRight {
 	background-image: url("https://www.tradervue.com/assets/feat-journal-dashboard-f67e6bd9666d7cdc7ff47144c8e4270f6eb42a62541883e7b00a37ec2667bfdc.png");
-	position: absolute;
-	width: 40%;
-	left: 55%;
-	height: 80%;
-	top: 153%;
-	box-shadow: 2px 2px 10px grey;
+	position: relative;
+}
+
+#datacenterLeft {
+
 }
 
 #datacenterRight {
 	text-align: center;
-	padding-top: 100px;
-}
-
-#datacenterImg {
-	background-image: url("https://assets.pcmag.com/media/images/514230-10-free-data-visualization-tools.jpg?thumb=y");
-	position: absolute;
-	width: 40%;
-	left: 5%;
-	height: 80%;
-	top: 295%;
-	box-shadow: -2px 2px 10px grey;
+	padding-top: 50px;
 }
 
 .demoHalves {
@@ -242,7 +240,6 @@ body{
 	border: grey 1px solid;
 	float: left;
 	height: 100%;
-	z-index: 50;
 }
 
 .parallax {
@@ -285,8 +282,11 @@ body{
 .parallax__layer--front {
     -webkit-transform: translateZ(90px) scale(.7);
     transform: translateZ(90px) scale(.7);
+<<<<<<< HEAD
     pointer-events: none;
 =======
   transform: translateZ(-2px) scale(3);
 >>>>>>> parent of 6481edf3... Uploading (non-working) progress on github to make sure I don't lose anything
+=======
+>>>>>>> parent of d455f7f2... Added forefround parallax
 }
