@@ -1,6 +1,8 @@
 modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
+//arne pls geef info
+//document.getElementById("menu").addEventListener("click",openMenu);
 
 //headerButton
 document.getElementById("navBJournal").addEventListener("click", goToJournal);
@@ -445,7 +447,7 @@ function goToHome(){
 	}
 }
 
-document.getElementById("menu").addEventListener("click",openMenu);
+
 
 function openMenu() {
   document.getElementById("navbar-overlay").style.width = "100%";

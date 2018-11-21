@@ -8,6 +8,7 @@ if(getCookie("token")){
 if(getCookie("cooikesAllowed") == "true"){
 	document.getElementById("cookieBanner").style.display = "none";	
 }
+
 /*
 if(getCookie("cooikesAllowed")){
 	if(getCookie("rememberMe")){
@@ -16,7 +17,7 @@ if(getCookie("cooikesAllowed")){
 }
 */
 //button header/test
-document.getElementById("BAllowCookies").addEventListener("click",allowCookies);
+//document.getElementById("BAllowCookies").addEventListener("click",allowCookies);
 //document.getElementById("journalImg").addEventListener("click", goToJournal);
 
 
