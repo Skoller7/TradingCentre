@@ -382,7 +382,7 @@ function forgotPassword(){
 
 }
 function search(){
-	window.location.href = "search.html";
+	window.location.href = "search.php";
 }
 
 function MLoginClose(){
