@@ -15,104 +15,84 @@ App = {
     }
   }
   // Legacy dapp browsers...
-
   // else if (window.web3) {
   //   //App.web3Provider = window.web3.currentProvider;
   // }
-
   // If no injected web3 instance is detected, fall back to Ganache
   else {
     App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
   }
   web3 = new Web3(App.web3Provider);
-
-
-    return App.initContract();
+    return App.initContract1();
   },
 
-initContract: function(){
+initContract1: function(){
 
   $.getJSON('./Solidity/build/contracts/DataContractCreator.json', function(data){
+    console.log(data);
     // Get the necessary contract artifact file and instantiate it with truffle-contract
     var DataCreatorArtifact = data;
     App.contracts.DataContractCreator = TruffleContract(DataCreatorArtifact);
-
     //set the provider for our contracts
     App.contracts.DataContractCreator.setProvider(App.web3Provider);
-
-
+        console.log(App.contracts.DataContractCreator);
     //hier nieuwe functies aan chainen als we willen dat die worden geladen bij het begin
     //van de pagina.
-    return App.getDeployedContractAdresses();
+  }),
+
+  $.getJSON('./Solidity/build/contracts/DataContract.json', function(data){
+    console.log(data);
+    var DataContractArtifact = data;
+    App.contracts.DataContract = TruffleContract(DataContractArtifact);
+    console.log(App.contracts.DataContract);
+    App.contracts.DataContract.setProvider(App.web3Provider);
+      return App.getDeployedContractAdresses();
   });
+  console.log(App.contracts.DataContract);
 },
 
 getDeployedContractAdresses: function(){
-
   //vars hier
-  App.contracts.DataContractCreator.at('0xb00321c91d098f5dedebfff971c517c19d11644f').then(function(instance){
+  App.contracts.DataContractCreator.at('0xe08bd3d15b00490d4dbfed3fbe33c6a6c8ce5878').then(function(instance){
     DataContractCreatorInstance = instance;
-
     DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
    $('#amountOfContracts').text(r.length);
-
    console.log("requested amount of deployed contracts");
  });
-
 });
-
 },
 
 createNewContract : function(){
-
-  console.log('clickclick');
+  console.log('creating new contract. . .');
   //checking the user accounts.
   web3.eth.getAccounts(function(error, accounts) {
   if (error) {
     console.log(error);
   }
-
    var gas = 1000000;
    var account = accounts[0];
    //adress verandere hier bij nieuwe ganacha load 0x6fea428ed5b5b4804572a0df7766b71f68a44da8
-    App.contracts.DataContractCreator.at('0xb00321c91d098f5dedebfff971c517c19d11644f').then(function(instance){
+    App.contracts.DataContractCreator.at('0xe08bd3d15b00490d4dbfed3fbe33c6a6c8ce5878').then(function(instance){
     DataContractCreatorInstance = instance;
     console.log(web3.eth.getBalance(account)); //check balance?
     DataContractCreatorInstance.createDataContract(1500, {from: account, gas}).then((r) =>
- { console.log('deployment is succesfull');
-  $('contractSucces').text('succes');
-  console.log(App.requestAdresses());
-});
+     { console.log('deployment is succesfull');
+      $('contractSucces').text('succes');
+      console.log(App.requestAdresses());
+     });
   //  DataContractInstance.createDataContract(500, account);
-});
-  //mogelijke oplossing = werken via .new() maar dan kan ik de gemaakte contracts
-  // niet bijhouden of ?
-  // misschien eens rondvragen of een contract functie wel degelijk een nieuw contract kan
-  // aanmaken in truffle.js
-  // - contract deployen op rinkby en via daar altijd verder werken?
-  // makkelijker om te testen?
-  // youtube guide opzoeken?
-
-  //dit weg commenten en alles werkt
-//   App.contracts.DataContractCreator.deployed().then(function(instance){
-//   DataContractCreatorInstance = instance;
-//   return DataContractCreatorInstance.createDataContract(5000, {from: account});
-// }).then(function(result){
-//   console.log("Deployment succesfull");
-//   $('#contractSucces').text("a succes!");
-// }).catch(function(err){
-//   console.log(err.message);
-//   });
+  });
 });
 },
 requestPrice: function(){
   //hier zullen we de functie nog moeten meegeven van Het
   //contract dat getoond wordt, momenteel nog niet mogelijke
   //tot ik zelf accs kan aanmaken.
-
-// /
-  App.contracts.DataContract.at('0xd50e4c89fa6b428bb972caca229f11c76441e1c6').then(function(instance){
+  // console.log("datacontract isDeployed = ");
+  // console.log(App.contracts.DataContractCreator.isDeployed());
+  App.contracts.DataContract.at('0xa1ace1bbc2c437ffd60da9b3f7e25d16dfaebc86').then(function(instance){
   DataContractInstance = instance;
+  console.log(DataContractInstance);
 //  DataContractinstance = DataContractI.at("0x8737a42306d1b59169a7fc54c286b596e5eafbcb");
 
   DataContractInstance.PriceOfData.call().then(function(result){
@@ -121,15 +101,13 @@ requestPrice: function(){
   }).catch(function(err){
     console.log(err);
   });
-
 });
-
 },
-
 requestAdresses: function(){
 
-  App.contracts.DataContractCreator.at('0xb00321c91d098f5dedebfff971c517c19d11644f').then(function(instance){
+  App.contracts.DataContractCreator.at('0xe08bd3d15b00490d4dbfed3fbe33c6a6c8ce5878').then(function(instance){
     DataContractCreatorInstance = instance;
+    console.log(DataContractCreatorInstance);
 
     DataContractCreatorInstance.getDeployedContracts.call().then(function(result){
       console.log(result);

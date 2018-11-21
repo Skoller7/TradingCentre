@@ -14,7 +14,6 @@ var mnemonic = "explain old dose cruise cost visa shove rude message valid own a
  *     gasPrice: 10000000000,
  *   },
  */
-
  module.exports = {
     networks: {
   development: {
