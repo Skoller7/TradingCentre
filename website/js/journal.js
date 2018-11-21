@@ -111,13 +111,13 @@ $(function(){
         ul.appendChild(li);
         li.setAttribute("id",data[i].portfolioId);
         li.appendChild(name);
-       /* for(var i= 0;i < sub_port.length;i++){
+       for(var i= 0;i < sub_port.length;i++){
             li_sub.appendChild(sub_port[i]);
             li_sub.appendChild("id",sub_port[i]);
             ul_sub.appendChild(li_sub);
         }
         div_sub.appendChild(ul_sub);
-        ul.appendChild(div_sub);*/
+        ul.appendChild(div_sub);
         
     }
 });

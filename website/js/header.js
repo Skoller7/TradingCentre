@@ -2,11 +2,11 @@ modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
 //arne pls geef info
-//document.getElementById("menu").addEventListener("click",openMenu);
+document.getElementById("menu").addEventListener("click",openMenu);
 
 //headerButton
-document.getElementById("navBJournal").addEventListener("click", goToJournal);
-document.getElementById("mavBHome").addEventListener("click", goToHome);
+//document.getElementById("navBJournal").addEventListener("click", goToJournal);
+//document.getElementById("mavBHome").addEventListener("click", goToHome);
 //modal button.
 document.getElementById("MLoginBLogin").addEventListener("click",login);
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
@@ -32,7 +32,7 @@ document.getElementById("Bsearch").addEventListener("click",search);
 
 
 
-//changeLoginchangeLogin();
+changeLoginchangeLogin();
 
 
 function changeLoginchangeLogin() {
