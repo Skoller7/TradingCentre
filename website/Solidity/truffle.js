@@ -14,17 +14,18 @@ var mnemonic = "explain old dose cruise cost visa shove rude message valid own a
  *     gasPrice: 10000000000,
  *   },
  */
-
  module.exports = {
     networks: {
-    development: {
+  development: {
     host: "localhost",
     port: 7545,
     network_id: "*" // Match any network id
   },
   rinkby: {
-    provider: new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/e1f507ef8d814286a1f1e2ea39cfe576"),
-    network_id: 4; // 0xcbf9889d922f5c6096067e838dd7a52a9a52c91b datacontractcreator
+    provider: function() {
+      return new HDWalletProvider(mnemonic, 'https://rinkeby.infura.io/v3/e1f507ef8d814286a1f1e2ea39cfe576')
+      },
+      network_id: '4', // 0xcbf9889d922f5c6096067e838dd7a52a9a52c91b datacontractcreator
     }
   }
 };

@@ -1,10 +1,9 @@
 pragma solidity ^0.4.17;
-
 //to test this code go to : https://remix.ethereum.org/#optimize=false&version=soljson-v0.4.24+commit.e67f0147.js
 //past the code and go to "run", chose " enviroment : javascript VM".
 //
 
- contract DataContractCreator {
+contract DataContractCreator {
     address[]public deployedDataContracts; //alle gemaakte adressen opslaan.
 
     //maakt persoonlijke contracten per gebruiker.
