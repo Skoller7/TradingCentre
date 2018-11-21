@@ -54,7 +54,7 @@ sidebar-portfolio
     background-color: #3a4e5f;
     color:#fff;
 }
-.fa-trash,.fa-edit{
+.fa-trash,.fa-edit,.header-port{
     color: #fff;
     background-color: #0889C4;
     border-radius: 20px;
@@ -400,7 +400,7 @@ notes
 .notes-card{
     width:80%;
     padding: 5%;
-    margin: 0 auto;
+    margin: 4% auto;
     color:#000;
     background-color:#F8F9FA;
     border-bottom: 2px solid #ff751a;

@@ -2,7 +2,7 @@ modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
 //arne pls geef info
-document.getElementById("menu").addEventListener("click",openMenu);
+//document.getElementById("menu").addEventListener("click",openMenu);
 
 //headerButton
 /*
@@ -58,7 +58,7 @@ function changeLoginchangeLogin() {
 	}
 	
 
-	if (getCookie("token")) {
+	if (getCookie("jwtToken")) {
 		var bt1 = document.createElement("LI");
 		bt1.classList.add("nav-item");
 		var link1 = document.createElement("A");

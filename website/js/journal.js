@@ -1,5 +1,4 @@
-//var token = getCookie("token").substring(0,getCookie("token").indexOf("expires"));
-var token = null;
+var token = getCookie("jwtToken");
 modalList.push("MCreateNote");
 modalList.push("MCreatePort");
 /*        function delcard(id){
@@ -100,31 +99,28 @@ call get all portfolios
 $(function(){
     var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
     var ul = document.getElementById("portfolios-ul");
-    var sub_port = ["Delete portfolio","Update Portfolio","Create order","Delete order"];
+    var sub_port = ["Deleteportfolio","UpdatePortfolio"];
     for(var i = 0; i < data.length;i++){
         var name = document.createTextNode(data[i].name);
         var li = document.createElement("LI");
         var div_sub = document.createElement("DIV");
         div_sub.setAttribute("id","sub-sub-port");
         var ul_sub = document.createElement("UL");
-        ul_sub.setAttribute("id","ul-sub-port")
+        ul_sub.setAttribute("id","ul-sub-port");
         var li_sub = document.createElement("LI");
         ul.appendChild(li);
         li.setAttribute("id",data[i].portfolioId);
         li.appendChild(name);
-       for(var i= 0;i < sub_port.length;i++){
-            li_sub.appendChild(sub_port[i]);
-            li_sub.appendChild("id",sub_port[i]);
+       /* for(var i= 0;i < sub_port.length;i++){
+            li_sub.innerHTML = sub_port[i];
+            li_sub.setAttribute("id",sub_port[i]);
             ul_sub.appendChild(li_sub);
         }
         div_sub.appendChild(ul_sub);
-        ul.appendChild(div_sub);
+        ul.appendChild(div_sub);*/
     }
 });
 
-/*
-api call get portfolio on id
-*/
 var header = document.getElementById("header-content");
 document.getElementById("portfolios-ul").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id))) {
@@ -135,11 +131,20 @@ if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id))) {
         var desc = document.getElementById("portfolio-description");
         var goals = document.getElementById("portfolio-goals");        
         header.innerHTML = data.name;
+        header.className = "header-port";
         desc.innerHTML = data.description;
         goals.innerHTML = data.goal;
+        var del = document.getElementById("header-port-del");
+        del.className = "fa fa-trash";
+        var update = document.getElementById("header-port-update");
+        update.className = "fa fa-edit";
         });
 }
 });
+/*
+api call get portfolio on id
+*/
+
 
 /*
 api call delete portfolio
@@ -150,39 +155,33 @@ api call get all notes with portfolioid
 */
 $(function(){
     
-   // var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=17","GET",token); 
+        var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=17","GET",token); 
         var notes = document.getElementById("notes-all");
-        var li = document.createElement("div");
+      for(var i = 0; i < data.length;i++){
+                  var li = document.createElement("div");
+
         li.setAttribute("class","notes-card");
         var content = document.createElement("div");
         content.setAttribute("class","notes-content");
         var content_del = document.createElement("i");
         var content_edit = document.createElement("i");
         var p = document.createElement("p");
-        p.innerHTML = "ik ben wie ik ben!";
+          p.innerHTML = data[i].message;
         content.appendChild(p);
         content.appendChild(content_edit);
         content.appendChild(content_del);
-        content_del.setAttribute("id",/*data[i].NoteId*/"12");
+        content_del.setAttribute("id",data[i].NoteId);
         content_del.setAttribute("class","fa fa-trash");
-        content_edit.setAttribute("id",/*data[i].NoteId*/"133");
+        content_edit.setAttribute("id",data[i].NoteId);
         content_edit.setAttribute("class","fa fa-edit");
         notes.appendChild(li);
         li.appendChild(content);
-        
-  /*  for(var i = 0; i < data.length;i++){
-        var div = document.createElement("div");
-        div.setAttribute("class","notes-card");
-        var content = document.createElement("p");
-        content.innerHTML = data[i].message;
-        notes.appendChild(div);
-        div.appendChild(content);
-    }*/
+    }
 });
 
 /*
 api call update note
-*/
+
 var fa = document.getElementsByClassName("fa-edit");
 for (var i = 0;i < fa.length;i++){
     console.log(fa);
@@ -197,7 +196,7 @@ $(function(){
   
  var json =  {"NoteId": 12,"Message": "Hello world2"};
   makerequest(json,"http://localhost:62382/api/note","POST",token);
-  });
+  });*/
 /* 
 notes
 */
@@ -299,9 +298,6 @@ function createport(){
     }
    $(function(){
     if(valid){
-        console.log(nameport.value);
-        descport.value = "";
-        goalport.value = "";
         var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value};
         var data = makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token); 
         McreateportClose();
