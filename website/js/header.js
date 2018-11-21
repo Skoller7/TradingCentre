@@ -124,13 +124,13 @@ function login(){
 
 
 	document.getElementById("MLoginIUsername").classList.remove("modalError");
-	document.getElementById("MLoginIEmail").classList.remove("modalError");
+	//document.getElementById("MLoginIEmail").classList.remove("modalError");
 	document.getElementById("MLoginIPassword").classList.remove("modalError");
 
 	document.getElementById("MLoginEMMain").style.display = "none";
 
 	document.getElementById("MLoginEMUsername").innerHTML = "";
-	document.getElementById("MLoginEMEmail").innerHTML = "";
+	//document.getElementById("MLoginEMEmail").innerHTML = "";
 	document.getElementById("MLoginEMPassword").innerHTML = "";
 	document.getElementById("MLoginEMMain").innerHTML = "";
 
@@ -139,10 +139,11 @@ function login(){
 		errorModal(document.getElementById("MLoginIUsername"), document.getElementById("MLoginEMUsername"), "Username required");
 		allowedToLogin = false;
 	}
+    /*
 	if(document.getElementById("MLoginIEmail").value == ""){
 		errorModal(document.getElementById("MLoginIEmail"), document.getElementById("MLoginEMEmail"), "Email required");
 		allowedToLogin = false;
-	}
+	}*/
 	if(document.getElementById("MLoginIPassword").value == ""){
 		errorModal(document.getElementById("MLoginIPassword"), document.getElementById("MLoginEMPassword"), "Password required");
 		allowedToLogin = false;
@@ -155,7 +156,6 @@ function login(){
 		var loginUser = {
 			username: document.getElementById("MLoginIUsername").value,
 	        password: document.getElementById("MLoginIPassword").value,
-	        email: document.getElementById("MLoginIEmail").value
 		}
 		//http://localhost:5000/api/auth/login
 		console.log(loginUser);
@@ -183,7 +183,7 @@ function login(){
 	        	console.log(data.status);
 	        	console.log(thrownError);
 	        	document.getElementById("MLoginEMMain").style.display = "block";
-	        	document.getElementById("MLoginEMMain").innerHTML = "Wrong username, email or password";
+	        	document.getElementById("MLoginEMMain").innerHTML = "Wrong username or password";
 	        	if(data.responseText != null){
 	        		console.log(data.responseText);
 	        		/*
@@ -312,11 +312,11 @@ function loginUserNameErrorHandeler(e){
 		errorModal(document.getElementById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username required");
 	}
 }
-function loginEmailErrorHandeler(e){
+/*function loginEmailErrorHandeler(e){
 	if(e == "The Email field is required."){
 		errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email required");
 	}
-}
+}*/
 function loginPasswordErrorHandeler(e){
 	if(e == "The Password field is required."){
 		errorModal(document.getElementById("MSignUpIPassword"), document.getElementById("MSignUpEMPassword"), "Password required");
@@ -401,4 +401,14 @@ function goToHome(){
 	else{
 		openMLogin();
 	}
+}
+
+document.getElementById("menu").addEventListener("click",openMenu);
+
+function openMenu() {
+  document.getElementById("navbar-overlay").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("navbar-overlay").style.width = "0%";
 }

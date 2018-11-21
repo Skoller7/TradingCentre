@@ -2,17 +2,93 @@
 #25313B dark blue
 #F8F9FA light grey
 #0889C4 blue*/ 
+body{
+    background-color: #F8F9FA;
+}
+/*
+sidebar
+*/
 .sidebar{
     height:100%;
     background-color:#25313B;
     color:#f8f9fa;
     position: fixed;
-    top: 55px;
+    top: 56px;
     bottom: 0;
     left: 0;
     z-index: 100;
     padding: 0;
+    width:25%;
+    overflow-x: hidden;
 }
+.sidebar-header{
+    width:100%;
+}
+/*
+sidebar-portfolio
+*/
+.sidebar-content-portfolios{
+    width: 100%;
+}
+.sidebar-content-portfolios ul{
+    margin-left:-40px;
+}
+.sidebar-content-portfolios li{
+    list-style: none;
+    text-decoration: none;
+    display: block;
+    padding:10px 30px 10px 20px;
+    color:#ccc;
+    cursor: pointer;
+}
+.sidebar-content-portfolios li:hover{
+    text-decoration: none;
+    background-color: #3a4e5f;
+    color:#fff;
+}
+.sidebar-content-portfolios li a{
+    color:#ccc;
+}
+.sidebar-content-portfolios li a:hover{
+    text-decoration: none;
+    background-color: #3a4e5f;
+    color:#fff;
+}
+.fa-trash,.fa-edit{
+    color:#fff;
+    float:right;
+    padding-left:15px;
+}
+.fa-trash:hover,.fa-edit:hover{
+    color:#FF751A ;
+}
+.fa-angle-right{
+    float: right;
+}
+.fa-angle-down{
+    float:right;
+}
+.port1{
+    color:#ff9900;
+}
+.port2{
+    color:#3333ff;
+}
+.port3{
+    color:#ff0000;
+}
+.porfolios-sub{
+    display: none;
+}
+/*
+
+*/
+.sidebar-content-notes{
+    width:100%;
+}
+/*
+
+*/
 .row{
     margin:0;
     display:block;
@@ -71,7 +147,6 @@
 }
 .containter-fluid{
     margin-top:55px;
-    margin-left:25%;
 }
 @media (max-width: 768px) { 
     .containter-fluid{
@@ -81,6 +156,23 @@
         position: relative;
         top:0;
         height:75%;
+        width: 100%;
+    }
+    .navbar{
+        padding:10px;
+    }
+    #menu{
+        display: block;
+    }
+}
+@media(max-width:1090px){
+    .navbar{
+        padding:10px;
+    }
+}
+@media(min-width:1091px){
+    .navbar{
+        padding:0;
     }
 }
 .content-datacenter .card{
@@ -88,36 +180,16 @@
     margin:1%;
     float:left;
 }
-.notes input[type=submit]{
-    padding:2%;
-    margin: 1%;
-    border:none;
-    background-color: #ff751a;
-}
-.notes input[type=submit]:hover{
-    background-color: #0066ff;
-}
 #main{
-    width:100%;
-    height:500px;
-}
-.port1{
-    color:#ff9900;
-}
-.port2{
-    color:#3333ff;
-}
-.port3{
-    color:#ff0000;
+    min-height:500px;
 }
 .containter-fluid{
   background-color:#F8F9FA;
 }
 /* navigation bar */
 .navbar{
-    background-color: #007bff;
+    background-color: #000;
     margin: 0 auto;
-    padding:0;
 }
 .navbar-expand-lg .navbar-brand {
     color: #fff;
@@ -131,20 +203,233 @@
     list-style: none;
 }
 .navbar-items{
-    display: inline-block;
+    display: block;
+    float:right;
 }
 .navbar-items li a{
-    color: #fff;
+    color: #9c9c9c;
     border:none;
-    background-color: #25313B;
-    padding: 10px;
+    padding: 16px 16px 16px 16px;
 }
 .navbar-items li a:hover{
-    border:none;
+    padding-bottom:13px;
+    border-bottom: 3px solid #ff751a;
+    color:#fff;
 }
 .header-section-rigth{
     float:right;
+    width: 100%;
+    margin-bottom:-16px;
 }
 .nav-link{
     padding:0;
+}
+#BLogin a{
+    color:#fff;
+    background-color:#25313B;
+    cursor: pointer; 
+}
+#BSignUp a{
+    color:#fff;
+    background-color:#ff751a;
+    cursor: pointer;
+}
+#BLogin a:hover{
+    border-bottom:3px solid #0066ff;
+    padding-bottom:13px;
+}
+#BSignUp a:hover{
+    border-bottom:3px solid #fff;
+    padding-bottom:13px;
+}
+#BSetttings a{
+    color:#fff;
+    background-color:#25313B;
+    cursor: pointer; 
+}
+#BLogout a{
+    color:#fff;
+    background-color:#ff751a;
+    cursor: pointer;
+}
+#BSetttings a:hover{
+    border-bottom:3px solid #0066ff;
+    padding-bottom:13px;
+}
+#BLogout a:hover{
+    border-bottom:3px solid #fff;
+    padding-bottom:13px;
+}
+.modalError{
+    border: 2px red solid;
+}
+.modalErrorMsg{
+    color: red;
+}
+.modalParagraph{
+    margin-bottom: 0px;
+}
+.search-container {
+  float: right;
+}
+
+.search-container input[type=text] {
+  padding: 16px;
+  border: none;
+    background-color: #000;
+    color:#fff;
+    padding-bottom:14px;
+    width:300px;
+}
+
+.search-container button {
+  float: right;
+  padding: 16px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #F8F9FA;
+}
+.navbar-toggler-icon{
+    width:inherit;
+    height:inherit;
+}
+.fa-bars{
+    background-color: #ff751a;
+    padding:16px;
+    color:#fff;
+}
+/* 
+overlay 
+*/
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color:#F8F9FA;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    background-color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+    border-bottom: 3px solid #000;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    background-color: #F8F9FA;
+}
+.overlay .closebtn:hover {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    background-color: #F8F9FA;
+}
+#menu{
+    display: none;
+}
+/* 
+
+*/
+.chart-header{
+    float:right;
+}
+/*
+styling modals
+*/
+.modal input{
+    background-color: #F8F9FA;
+    border:none;
+    width:100%;
+    padding:2%;
+}
+.modal-header{
+    background-color: #25313B;
+    color:#fff; 
+}
+#MLoginBLogin,#MCreateNoteBCreateNote,#MSignUpBSingUp,#MForgotPasswordBForgotPassword,#MCreatePortBCreatePort{
+    background-color: #ff751a;
+    border:none;
+}
+.close{
+    color:#fff;
+}
+#MLoginBLogin:hover,#MCreateNoteBCreateNote:hover,#MSignUpBSingUp:hover,#MForgotPasswordBForgotPassword:hover,#MCreatePortBCreatePort:hover{
+    background-color: #ff944d;
+    border:none;
+}
+#MLogin .modal-body input[type=checkbox]{
+    width:10%;
+}
+#MLogin #MLoginBForgotPassword, #MLogin #MLoginBSingUp, #MLogin #MLoginremember,#MSignUp #MSingUpBLogin{
+    color:#0889C4;
+    cursor: pointer;
+}
+#MLogin #MLoginBForgotPassword:hover,#MLogin #MLoginBSingUp:hover,#MSignUp #MSingUpBLogin:hover{
+    border-bottom: 1px solid #0889C4;
+}
+/*
+
+*/
+/*
+notes
+*/
+.notes-card{
+    width:100%;
+    color:#000;
+    background-color:#F8F9FA;
+}
+.notes-card p{
+    
+}
+.notes-all{
+    width:100%;
+}
+/*
+
+*/
+@media screen and (max-height: 450px) {
+  .overlay a {font-size: 20px}
+  .overlay .closebtn {
+    font-size: 40px;
+    top: 15px;
+    right: 35px;
+  }
+@media screen and (max-width: 992px){
+   .navbar{
+        padding:6px;
+    }
+    #menu{
+        float:right;
+        display: block;
+    }
 }

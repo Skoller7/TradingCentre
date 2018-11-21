@@ -82,3 +82,52 @@ function closeModal(item){
     $(item).modal('toggle');  
   }
 }
+//makes api request without parameters
+function makerequestnopar( url_api, type_api, authorization_api){
+    var data_api;
+   $.ajax({
+    	"async": false,
+  		"crossDomain": true,
+  		url: url_api,
+        type: type_api,
+        "headers": {
+    		"Content-Type": "application/json",
+            "Authorization": "Bearer " + authorization_api
+  		},
+        dataType: 'json',
+        success: function(data){
+             data_api = data;
+            },
+        error: function(xhr, ajaxOptions, thrownError){
+        	console.log(xhr.status);
+        	console.log(thrownError);
+            //console.log("error");
+        }
+    });
+    return data_api;
+}
+//makes api request with parameters
+function makerequest(jsonfile_api, url_api, type_api, authorization_api){
+    var data_api; 
+   $.ajax({
+    	"async": false,
+  		"crossDomain": true,
+  		url: url_api,
+        type: type_api,
+        "headers": {
+    		"Content-Type": "application/json",
+            "Authorization": "Bearer " + authorization_api
+  		},
+        data: JSON.stringify(jsonfile_api),
+        dataType: 'json',
+        success: function(data){
+            data_api = data;
+            },
+        error: function(xhr, ajaxOptions, thrownError){
+        	console.log(xhr.status);
+        	console.log(thrownError);
+            console.log(xhr);
+        }
+    });
+    return data_api;
+}

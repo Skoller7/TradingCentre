@@ -1,45 +1,31 @@
 <nav class="navbar navbar-expand-lg fixed-top">
-	<!--<a class="navbar-brand" href="#">
-    	<img src="img/logo.svg" width="30" height="30" class="d-inline-block align-top" alt=""> Tradingcenter
-  	</a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb" aria-controls="navb" aria-expanded="false" aria-label="Toggle navigation">
-    	<span class="navbar-toggler-icon"></span>
-  	</button>
-	<div class="collapse navbar-collapse" id="navb">
-    	<ul class="nav nav-pills mr-auto">
-      		<li class="nav-item">
-        		<a class="nav-link" href="home.html" id="mavBHome">Home</a>
-      		</li>
-      		<li class="nav-item">
-        		<a class="nav-link" id="navBJournal">Journal</a>
-      		</li>
-      		<li class="nav-item">
-	        	<a class="nav-link" href="javascript:void(0)">Datacenter</a>
-  			</li>
-    	</ul>
-    	<form class="form-inline my-2 my-lg-0">
-      		<input class="form-control mr-sm-2" type="text" placeholder="Search" size="50">
-      		<button class="btn btn-success my-2 my-sm-0" type="button" id="Bsearch">Search</button>
-    	</form>
-    	<ul class="nav nav-pills" id="rightButtonNav">
-    	</ul>
-  	</div>!-->
 <a class="navbar-brand" href="Index.html">
  Tradingcenter
 </a>
+      <span class="navbar-toggler-icon" id="menu" ><i class="fa fa-bars"></i></span>
+<div class="collapse navbar-collapse" id="navb">
     <div class="header-section-rigth">
-<ul class="navbar-items">
+<ul class="navbar-items" id="rightButtonNav" >
 <li><a href="home.html" class="nav-link">Home</a></li> 
 <li><a href="journal.php" class="nav-link">Journal</a></li>
 <li><a href="datacenteroverview.php" class="nav-link">Datacenter</a></li>
+<div class="search-container">
+<form>
+    <input type="text" placeholder="Search.." name="search">
+    <button type="button" id="Bsearch"><i class="fa fa-search"></i></button>
+</form>
+</div>
 </ul>
-        <form class="form-inline my-2 my-lg-0 navbar-items">
-      		<input class="form-control mr-sm-2" type="text" placeholder="Search" size="50">
-      		<button class="btn btn-success my-2 my-sm-0" type="button" id="Bsearch">Search</button>
-    	</form>
-<ul class="navbar-items" id="rightButtonNav" class="navbar-items">
-</ul>
-    </div>  
+</div>  
+</div>
+<div id="navbar-overlay" class="overlay">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <div class="overlay-content" id="rightButtonNav">
+    <a href="home.html">Home</a>
+    <a href="journal.php">Journal</a>
+    <a href="datacenteroverview.php">Datacenter</a>
+  </div>
+</div>
 </nav>
 <!--buttons modal demo-->
 <!--Login modal-->
@@ -58,15 +44,11 @@
       			<p class="modalParagraph">Login</p>
   				<input type="text" name="username" placeholder="Username" id="MLoginIUsername" autocomplete="off">
   				<span class="modalErrorMsg" id="MLoginEMUsername"></span>
-  				<p class="modalParagraph">Email</p>
-  				<input type="text" name="email" placeholder="email" id="MLoginIEmail" autocomplete="off">
-  				<span class="modalErrorMsg" id="MLoginEMEmail"></span>
   				<p class="modalParagraph">Password</p>
   				<input type="password" name="password" placeholder="Password" id="MLoginIPassword">
   				<span class="modalErrorMsg" id="MLoginEMPassword"></span>
   				<br>
-  				<input type="checkbox" name="remimberMe" id="CBremimberMe">
-  				Remember me
+  				<p id="MLoginremember">Remember me<input type="checkbox" name="remimberMe" id="CBremimberMe"></p>
   				<p id="MLoginBForgotPassword">Forgot password?</p>
   				<p id="MLoginBSingUp">don't have an account?</p>
       			<!--</form>-->
@@ -123,17 +105,17 @@
 				</button>
 		    </div>
       		<div class="modal-body">
-      			<from action="home.html">
+      			<form action="home.html">
       				<p class="modalParagraph">Username</p>
       				<input type="text" name="username" id="MForgotPasswordIUsername" placeholder="Username" autocomplete="off">
       				<span class="modalErrorMsg"></span>
 					<p class="modalParagraph">Email</p>
       				<input type="text" name="email" id="MForgotPasswordIEmail" placeholder="Email" autocomplete="off">
       				<span class="modalErrorMsg"></span>
-      			</from>
+      			</form>
       		</div>
       		<div class="modal-footer">
-        		<button type="button" class="btn btn-primary" id="MForgotPasswordBForgotPassword">Login</button>
+        		<button type="button" class="btn btn-primary" id="MForgotPasswordBForgotPassword">Send</button>
         		<button type="button" class="btn btn-secondary" id="MForgotPasswordBClose">Close</button>
       		</div>
     	</div>
