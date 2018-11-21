@@ -28,81 +28,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="bootstrap-4.1.3/js/bootstrap.min.js"></script>
- 
+    <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
     <script src="js/lib.js" type="text/javascript"></script>
     <?php 
       include('favicon.html');
     ?>
 	</head>
-   <style>
-       .navbar{
-            background-color: #4B77BE;
-           margin: 0 auto;
-        }
-        .navbar-expand-lg .navbar-brand {
-            color: #fff;
-        }
-        .navbar-expand-lg .navbar-brand:hover {
-            color: #fff;
-        }
-        .nav-link{
-            background-color: #fff;
-            margin:1%;
-            color:#000;
-        }
-        .nav-link:hover{
-            background-color: #000;
-            color: #fff;
-        }
-        .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
-            background-color: #000;
-        }
-        #context{
-            border:1px solid #000;
-            border-radius: 15px;
-        }
-        #context-head{
-        }
-        #context-firstrow{
-             border:1px solid #000;
-            border-radius: 15px;
-        }
-        #grey{
-            background-color:#999;
-        }
-        .navbar-toggler-icon{
-               background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255,1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-        }
-        .navbar-toggler-icon:hover{
-            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0,0,0,1)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
-        }
-        .container{
-            margin-top:65px;
-        }
-        .img-person{
-            width:20px;
-        }
-        .checked{
-            color:#ff8c1a;
-        }
-        footer{
-            background-color: #4B77BE;
-            margin-top: 1%;
-            color:#fff;
-        }
-        #footertext{
-           margin:0 auto;
-            text-align: center;
-            padding:2%;
-        }
-        .footer-ul li{
-            list-style: none;
-            text-decoration: none;
-        }
-        .footer-ul li a{
-            color: #fff;
-        }
-      </style>
 	<body>
     <?php 
       include ('header.html');
@@ -202,7 +133,7 @@ Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem
 </div>
         
   <?php 
-    include ('footer.html');
+    //include ('footer.html');
   ?>
 	</body>
 </html>
