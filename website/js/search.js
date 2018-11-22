@@ -18,7 +18,7 @@ for(var i = 0; i < results.users.length; i++){
     var e = document.createElement("DIV");
     var link = document.createElement("A");
 	e.setAttribute("class","searchResult");
-    link.setAttribute("herf","tradingCentre?user=" + results.users[i].username);
+    link.setAttribute("href","home.php?user=" + results.users[i].username);
     var img = document.createElement("IMG");
     img.setAttribute("alt","profile picture");
     img.setAttribute("src","data:image/png;base64,"+results.users[i].profilePicture);
