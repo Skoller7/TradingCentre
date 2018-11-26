@@ -90,7 +90,7 @@ requestPrice: function(){
   //tot ik zelf accs kan aanmaken.
   // console.log("datacontract isDeployed = ");
   // console.log(App.contracts.DataContractCreator.isDeployed());
-  App.contracts.DataContract.at('0xa1ace1bbc2c437ffd60da9b3f7e25d16dfaebc86').then(function(instance){
+  App.contracts.DataContract.at('0xe08bd3d15b00490d4dbfed3fbe33c6a6c8ce5878').then(function(instance){
   DataContractInstance = instance;
   console.log(DataContractInstance);
 //  DataContractinstance = DataContractI.at("0x8737a42306d1b59169a7fc54c286b596e5eafbcb");
