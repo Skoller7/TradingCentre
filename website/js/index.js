@@ -49,3 +49,6 @@ function allowCookies(){
 	document.cookie = "cooikesAllowed=true;  expires=Thu, 01 Jan 3000 00:00:00 UTC";
 	document.getElementById("cookieBanner").style.display = "none";
 }
+
+var topPosition = parseFloat($('#journalRight').position().top) * 1.5;
+$('#journalImg').css('top',topPosition + 'px');
