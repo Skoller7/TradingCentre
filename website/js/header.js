@@ -2,7 +2,7 @@ modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
 //arne pls geef info
-//document.getElementById("menu").addEventListener("click",openMenu);
+document.getElementById("menu").addEventListener("click",openMenu);
 
 //headerButton
 /*

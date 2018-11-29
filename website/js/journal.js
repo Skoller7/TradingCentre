@@ -1,4 +1,23 @@
 var token = getCookie("jwtToken");
+var activeportfolioid;
+var port = [];
+var activemodalportdel = 0;
+var content = document.getElementById("MCreateNoteContent");
+var errorcontent = document.getElementById("ErrorCreateNoteContent");
+var nameport = document.getElementById("MPortName");
+var descport = document.getElementById("MPortDesc");
+var goalport = document.getElementById("MPortGoal");
+var errorname = document.getElementById("ErrorPortName");
+var errordesc = document.getElementById("ErrorPortDesc");
+var errorgoal = document.getElementById("ErrorPortGoal");
+var desc = document.getElementById("portfolio-description");
+var goals = document.getElementById("portfolio-goals");   
+ var table_orders = document.getElementById("orders");
+var head_orders = document.getElementById("orders-port");
+var info = document.getElementById("info-content");
+var all = document.getElementById("all-orders");
+var col = ["Exchange","Symbol","Side","OrderQty","Currency","Price","Timestamp"];
+        var div = document.getElementById("col-order");
 modalList.push("MCreateNote");
 modalList.push("MCreatePort");
 /*        function delcard(id){
@@ -62,7 +81,7 @@ modalList.push("MCreatePort");
 
 /*
 menu sidebar notes
-*/
+
 document.getElementById("notes-sub").style.display = "none";
 document.getElementById("notes").addEventListener("click",openSubNotes);
 function openSubNotes(){
@@ -75,7 +94,7 @@ function openSubNotes(){
         document.getElementById("notes-sub").style.display = "block";
     }
 }
-
+*/
 
 /* 
 menu sidebar portfolios
@@ -94,75 +113,112 @@ function openSubPortfolios(){
 }
 
 /*
-call get all portfolios
+call get all portfolios in submenu portfolios
 */
-$(function(){
-    var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
-    var ul = document.getElementById("portfolios-ul");
-    var sub_port = ["Deleteportfolio","UpdatePortfolio"];
-    for(var i = 0; i < data.length;i++){
-        var name = document.createTextNode(data[i].name);
-        var li = document.createElement("LI");
-        var div_sub = document.createElement("DIV");
-        div_sub.setAttribute("id","sub-sub-port");
-        var ul_sub = document.createElement("UL");
-        ul_sub.setAttribute("id","ul-sub-port");
-        var li_sub = document.createElement("LI");
-        ul.appendChild(li);
-        li.setAttribute("id",data[i].portfolioId);
-        li.appendChild(name);
-       /* for(var i= 0;i < sub_port.length;i++){
-            li_sub.innerHTML = sub_port[i];
-            li_sub.setAttribute("id",sub_port[i]);
-            ul_sub.appendChild(li_sub);
+getport();
+function getport(){
+    port = [];
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
+        var ul = document.getElementById("portfolios-ul");
+        ul.innerHTML = "";
+        for(var i = 0; i < data.length;i++){
+            var name = document.createTextNode(data[i].name);
+            var li = document.createElement("LI");
+            ul.appendChild(li);
+            li.setAttribute("id",data[i].portfolioId + "port");
+            li.appendChild(name);
+            if(data[i].name == "default"){
+                setdefaultport(data[i].portfolioId);
+                 activeportfolioid = data[i].portfolioId;
+            }
+            var sub = document.getElementById(data[i].portfolioId + "port");
+            port.push(sub.getAttribute("id"));
         }
-        div_sub.appendChild(ul_sub);
-        ul.appendChild(div_sub);*/
-    }
-});
+}
 
+/*
+api call get portfolio on id when clicked in submenu portfolios
+*/
 var header = document.getElementById("header-content");
 document.getElementById("portfolios-ul").addEventListener("click",function(e) {
-if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id))) {
-        $(function(){
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id,"GET",token);
-        var ul = document.getElementById("portfolios-ul");
-        var header = document.getElementById("header-portfolio-name");
-        var desc = document.getElementById("portfolio-description");
-        var goals = document.getElementById("portfolio-goals");        
-        header.innerHTML = data.name;
-        header.className = "header-port";
-        desc.innerHTML = data.description;
-        goals.innerHTML = data.goal;
-        var del = document.getElementById("header-port-del");
-        del.className = "fa fa-trash";
-        var update = document.getElementById("header-port-update");
-        update.className = "fa fa-edit";
-        });
+if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.target.id.indexOf("port"))))) {
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token);
+        setupactiveport(data,e.target.id);
+        activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
+        getnotes();
+        getorders();
 }
 });
 /*
-api call get portfolio on id
+set default portfolio on loading page
 */
-
-
+function setdefaultport(id){
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ id,"GET",token);
+        setupactiveport(data,id + "port");
+        activeportfolioid = id;
+        getnotes();
+        getorders();
+}
+/*
+setup active portfolio
+*/
+function setupactiveport(data,id){
+        
+        var ul = document.getElementById("portfolios-ul");   
+        var footer = document.getElementById("footer-port");
+        footer.innerHTML = ' ';
+        desc.innerHTML = data.description;
+        goals.innerHTML = data.goal;
+        if(data.name != "default"){
+            var idel = document.createElement("i");
+            var iup = document.createElement("i");
+            idel.setAttribute("id","header-port-del");
+            iup.setAttribute("id","header-port-update");
+            idel.className = "fa fa-trash";
+            iup.className = "fa fa-edit";
+            footer.appendChild(idel);
+            footer.appendChild(iup);
+        }
+        var sub = document.getElementById(id);
+        for(var i = 0;i < port.length;i++){
+            document.getElementById(port[i]).style.borderLeft = "0px solid #FF751A";
+            document.getElementById(port[i]).style.paddingRight = "0px";
+        }
+        sub.style.borderLeft = "3px solid #FF751A";
+        sub.style.paddingRight = "-3px";
+}
 /*
 api call delete portfolio
 */
+document.getElementById("footer-port").addEventListener("click",function(e) {
+if(e.target && e.target.nodeName == "I") {
+    if(e.target.id == "header-port-del"){
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token); 
+        getport();
+    }else{
+        activemodalportdel = 1;
+        nameport.value = document.getElementById(activeportfolioid + "port").innerHTML;
+        descport.value = desc.innerHTML;
+        goalport.value = goals.innerHTML;
+        openCreateport();
+    }
+}
+});
 
 /*
 api call get all notes with portfolioid
 */
-$(function(){
-    
-        var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=17","GET",token); 
+function getnotes(){
+        var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=" + activeportfolioid,"GET",token); 
         var notes = document.getElementById("notes-all");
+        notes.innerHTML = "";
       for(var i = 0; i < data.length;i++){
-                  var li = document.createElement("div");
-
+        var li = document.createElement("div");
         li.setAttribute("class","notes-card");
+        li.setAttribute("id",data[i].noteId + "note")
         var content = document.createElement("div");
         content.setAttribute("class","notes-content");
+        content.setAttribute("id","notes-content");
         var content_del = document.createElement("i");
         var content_edit = document.createElement("i");
         var p = document.createElement("p");
@@ -170,44 +226,39 @@ $(function(){
         content.appendChild(p);
         content.appendChild(content_edit);
         content.appendChild(content_del);
-        content_del.setAttribute("id",data[i].NoteId);
+        content_del.setAttribute("id",data[i].noteId);
         content_del.setAttribute("class","fa fa-trash");
-        content_edit.setAttribute("id",data[i].NoteId);
+        content_edit.setAttribute("id",data[i].noteId);
         content_edit.setAttribute("class","fa fa-edit");
         notes.appendChild(li);
         li.appendChild(content);
-    }
-});
-
-/*
-api call update note
-
-var fa = document.getElementsByClassName("fa-edit");
-for (var i = 0;i < fa.length;i++){
-    console.log(fa);
-    fa[i].addEventListener("click",updatenote);
-    function updatenote(){
-        console.log("dsf");
-    }
+      }
 }
 
+/*
+api call delete and update note
+*/
+document.getElementById("notes-all").addEventListener("click",function(e) {
+if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
+    if(e.target.className == "fa fa-trash"){
+                makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
+                document.getElementById(e.target.id + "note").style.display = "none";
+      }else{
+               var json =  {"NoteId": e.target.id,"Message": "Hello world2"};
+                makerequest(json,"http://localhost:62382/api/note","POST",token);
+      }
+}
+});
 
-$(function(){
-  
- var json =  {"NoteId": 12,"Message": "Hello world2"};
-  makerequest(json,"http://localhost:62382/api/note","POST",token);
-  });*/
 /* 
 notes
 */
-var content = document.getElementById("MCreateNoteContent");
-var errorcontent = document.getElementById("ErrorCreateNoteContent");
 /*
 show modal create note
 */
 document.getElementById("BCreateNote").addEventListener("click",openMCreateNote);
 function openMCreateNote(){
-    content.focus();
+    document.getElementById("MCreateNoteBCreateNote").innerHTML = "Create note";
      errorcontent.innerHTML = "";
 	closeAllModals();
 	$('#MCreateNote').modal({
@@ -231,29 +282,18 @@ api call create note
 document.getElementById("MCreateNoteBCreateNote").addEventListener("click",createnote);
 function createnote(){
      errorcontent.innerHTML = "";
-   $(function(){
     var valid =true;
     if(content.value == ""){
           errorcontent.innerHTML = "This field cannot be empty";
         valid = false;
     }
     if(valid){
-        var json = {"PortfolioId": 17,"message":content.value};
+        var json = {"PortfolioId": activeportfolioid ,"message":content.value};
         var data = makerequest(json,"http://10.3.50.6/api/note","PUT",token); 
         McreateNoteClose();
+        getnotes();
     }
-}); 
 }
-/*
-
-*/
-var nameport = document.getElementById("MPortName");
-var descport = document.getElementById("MPortDesc");
-var goalport = document.getElementById("MPortGoal");
-var errorname = document.getElementById("ErrorPortName");
-var errordesc = document.getElementById("ErrorPortDesc");
-var errorgoal = document.getElementById("ErrorPortGoal");
-
 
 /*
 show modal create portfolios
@@ -263,6 +303,14 @@ function openCreateport(){
      errorname.innerHTML = "";
     errordesc.innerHTML = "";
     errorgoal.innerHTML = "";
+    if(activemodalportdel == 0){
+        document.getElementById("createporttitle").innerHTML = "Create Portfolio";
+        document.getElementById("MCreatePortBCreatePort").innerHTML = "Create Portfolio";
+
+    }else{
+          document.getElementById("createporttitle").innerHTML = "Update Portfolio";
+        document.getElementById("MCreatePortBCreatePort").innerHTML = "Update Portfolio";
+    }
 	closeAllModals();
 	$('#MCreatePort').modal({
 		backdrop: 'static'
@@ -296,57 +344,123 @@ function createport(){
         errorname.innerHTML = "This field cannot be empty";
         valid = false;
     }
-   $(function(){
-    if(valid){
-        var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value};
-        var data = makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token); 
-        McreateportClose();
+    console.log(nameport.value);
+    if(activemodalportdel == 0){
+        if(valid){
+            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value};
+            console.log(jsonfile);
+            makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token); 
+        }
+   }else{
+        if(valid){
+        var jsonfile = {"PortfolioId":activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value};
+            console.log(jsonfile);
+        makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token); 
+        }
+        activemodalportdel = 0;
     }
-}); 
+    McreateportClose();
+    getport();
 }
+
 
 
 
 /*
 api call get orders
 */
-$(function(){
-var dateTo = {
-        portfolioId: "17",
-amount: "200",
-dateFrom: "20/02/2000",
-dateTo: "21/11/2018"
-	};
-var data = makerequest(dateTo,"http://10.3.50.6/api/order/get","GET",token);
-for(var i = 0,rowCtr = data.length; i <= rowCtr; i++){
-                var table_orders = document.getElementById("orders");
-                var row = table_orders.insertRow(i);
-                row.insertCell(0).innerHTML = data[i].exchange;
-                row.insertCell(1).innerHTML = data[i].symbol;
-                row.insertCell(2).innerHTML = data[i].currency;
-                row.insertCell(3).innerHTML = data[i].side;
-                row.insertCell(4).innerHTML = data[i].price;
-                row.insertCell(5).innerHTML = data[i].orderQty;
-                row.insertCell(6).innerHTML = data[i].timestamp;
-               
-            /*  var div = document.createElement("div");
-               div.className = "order-type-div";
-                var array = ["Head & Shoulders","Saab","Mercades","Audi"];
-                //Create and append select list
-                var type = document.createElement("select");
-                type.className = "order-type";
+    for(var i=0;i < col.length;i++){
+        var option = document.createElement("input");
+        var span = document.createElement("label");
+        option.setAttribute("type","checkbox");
+        option.setAttribute("id",col[i]);
+        option.setAttribute("checked","true");
+        span.setAttribute("for",col[i]);
+        span.style.cursor = "pointer";
+        span.className = "dropdown-item";
+        span.appendChild(option);
+        span.innerHTML += col[i];
+        div.appendChild(span);
+    }
+document.getElementById("col-order").style.display = "none";
+document.getElementById("col-sel").addEventListener("click",openColOrder);
+function openColOrder(){
+     var sub = document.getElementById("col-order");
+    if(sub.style.display == "block"){
+        document.getElementById("col-arrow").className = "fa fa-angle-right";
+        sub.style.display = "none";
+    }else{
+        document.getElementById("col-arrow").className = "fa fa-angle-down";
+        document.getElementById("col-order").style.display = "block";
+    }
+    getorders();
+}
 
-                //Create and append the options
-                for (var i = 0; i < array.length; i++) {
-                    var option = document.createElement("option");
-                    option.value = array[i];
-                    option.text = array[i];
-                    type.appendChild(option);
-                }
-               div.appendChild(type);
-            row.insertCell(7).appendChild(div);*/
-            }    
-});
+function getorders(){
+        all.innerHTML = "";
+       $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		url: "http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,
+        type: "GET",
+        "headers": {
+    		"Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+  		},
+        dataType: 'json',
+        success: function(data){
+            if(data.length != 0){
+                    for(var i = 0;i<data.length; i++){
+                            setOrders(data,i);
+                    }
+            }else{
+                info.innerHTML = "No orders found";
+            }
+            },
+        error: function(xhr, ajaxOptions, thrownError){
+        	console.log(xhr.status);
+        	console.log(thrownError);
+            console.log(xhr);
+        }
+    });   
+}
+function setOrders(data,i){
+                        var div = document.createElement("div");
+                        div.setAttribute("class","card");
+                        var div_bd = document.createElement("div");
+                        div_bd.setAttribute("class","card-body");
+                        div_bd.style.padding = "0";
+                        div_bd.style.color = "#fff";
+                        div_bd.style.backgroundColor ="#25313B";
+                        div_bd.style.fontWeight = "600";
+                        var div_ord = document.createElement("div");
+                        var div_ord_us = document.createElement("div");
+                        div_ord.setAttribute("class","order-spec");
+                        div_ord_us.setAttribute("class","order-spec");
+                        div_ord.innerHTML += "<span class='spec'>"+data[i].exchange+"</span>";
+                        var color;
+                        if(data[i].side == "Buy"){
+                            color = "green";
+                        }else{
+                            color = "red";
+                        }
+                        for(var j = 0;j < col.length;j++){
+                            if(document.getElementById(col[i]).checked == true){
+                                console.log(col[i]);
+                            }
+                        }
+                        div_ord.innerHTML += "<span class='spec' style='color:"+color+"'>"+data[i].side+"</span>";
+                        div_ord.innerHTML += "<span class='spec'>"+data[i].price+ " (" +data[i].currency+")</span>";
+                        div_ord.innerHTML += "<span class='spec'>"+data[i].symbol+"</span>";
+                        div_ord.innerHTML += "<span class='spec'>"+data[i].timestamp+"</span>";
+                        div_ord_us.innerHTML += "<select class='custom-select spec' name='technique' style='width:30%;'><option selected>Choose technique</option><option value='h&s'>head&shoulders</option><option value='tech'>tech</option><option value='ddd'>ddd</option></select>";
+                        div_ord_us.innerHTML += "<div class='custom-file'  style='width:40%;margin:2%;'><input type='file' class='custom-file-input' id=" +data[i].orderId +" aria-describedby='inputGroupFileAddon04'><label class='custom-file-label' for="+data[i].orderId+">Choose image</label></div>";
+                        div_ord_us.innerHTML += "<button type='submit' id="+data[i].orderId+" class='btn btn-primary my'>Submit</button>";
+                        div_bd.appendChild(div_ord);
+                        div_bd.appendChild(div_ord_us);
+                        div.appendChild(div_bd);
+                        all.appendChild(div);
+}
 
 function adddoubleline(){
            var myChart = echarts.init(document.getElementById('main'),'light');

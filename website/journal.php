@@ -2,7 +2,7 @@
 <html>
 <head>
       <meta charset="utf-8">  
-      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/datacenter.css">
       <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">      
@@ -46,17 +46,18 @@
                         </ul>
                     </div>
                     <li id="BCreateNote">Create note</li>
-                    <li class="notes-header" id="notes"><a href="#">Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
+                    <!--<li class="notes-header" id="notes"><a href="#">All Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
                     <div id="notes-sub">
                         <ul id="notes-ul">
-                             <div id="notes-all"></div>
+                            
                         </ul>
-                    </div>
+                    </div>!-->
+                    <div id="notes-all"></div>
                 </ul>
             </div>
         </div>
     </nav>
-    <div class="col-md-3"></div>
+    <div class="col-md-3 col-sm-0 col-xs-0"></div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content" id="header-content">
             <h3 id="header-portfolio-name"></h3>
@@ -70,26 +71,18 @@
         <div id="portfolio-goals">
         
         </div>
-        <div class="info-content">
-                    <table class="table table-dark" width="100%;">
-                          <tbody id="orders">
-                            <thead>
-                              <td>Exchange</td>
-                                <td>Symbol</td>
-                                <td>Currency</td>
-                                <td>Buy/Sell</td>
-                                <td>Price</td>
-                                <td>Qauntity</td>
-                                <td>Timeplaced</td>
-                                <!--<td>Technique</td>
-                                <td>Image</td>!-->
-                              </thead>
-                          </tbody>  
-                        </table>
+        <h3>Orders</h3>
+        <div class="info-content" id="info-content">
+        <div class="dropdown">
+          <button class="btn btn-primary" id="col-sel" type="button">Select columms&nbsp;
+          <i id="col-arrow" class="fa fa-angle-right"></i></button>
+          <ul class="dropdown-menu" id="col-order">
+          </ul>
         </div>
-        <div class="footer-port">
-                    <i id="header-port-del"></i>
-            <i id="header-port-update"></i>
+        <div id="all-orders"></div>
+        </div>
+        <div class="footer-port" id="footer-port">
+
         </div>
     </div>
 </div>
@@ -122,7 +115,7 @@
 		<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-		        <h5 class="modal-title">Create portfolio</h5>
+		        <h5 class="modal-title" id="createporttitle">Create portfolio</h5>
 		        <button type="button" class="close" id="MCreatePortBCrosse" aria-label="Close">
 	          		<span aria-hidden="true">&times;</span>
 				</button>
