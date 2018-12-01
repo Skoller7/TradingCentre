@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
 <head>
-      <meta charset="utf-8">  
+      <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/datacenter.css">
       <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="bootstrap-4.1.3/js/bootstrap.min.js"></script>
       <script src="js/lib.js" type="text/javascript"></script>
@@ -30,7 +30,7 @@
 </head>
 <body>
 <?php
-  include_once("header.html");  
+  include_once("header.html");
 ?>
 <div class="containter-fluid">
 <div class="row">
@@ -60,7 +60,8 @@
         <div class="row">
         <div class="user-buy col-md-12">
             <h3>Buy data</h3>
-            <input type="submit" value="Buy now 0.5 ETH">
+            <input type="button" value="Retrieving data from the blockchain . . ." id="contractPrice" class="btn-contract-buy">
+            <span id="buying-succes"></span>
         </div>
         </div>
         </div>
@@ -71,7 +72,7 @@
         <h3>Showcase best trades #1</h3>
         </div>
         <div class="image-content">
-           <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%"> 
+           <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
         </div>
         <div class="info-content">
             <div class="image-description">
@@ -124,4 +125,8 @@
 </div>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/app.js"></script>
 </html>

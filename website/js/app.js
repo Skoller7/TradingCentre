@@ -36,7 +36,12 @@ initContract1: function(){
     App.contracts.DataContract.setProvider(App.web3Provider);
     console.log(App.getDeployedContractAdresses())
     console.log(App.contracts);
+
+    console.log("test");
+    return App.requestPrice();
   })
+
+
 },
 createBuyRequest: function(){
 
@@ -45,7 +50,7 @@ createBuyRequest: function(){
     console.log(error);
   }
   var gas = 2000000;
-  var account = accounts[1];
+  var account = accounts[0];
   App.contracts.DataContract.deployed().then(instance => {
     instance.createBuyRequest({from: account, gas, value: 1000000 }).then((r) => {
       console.log("buy request completed");
@@ -93,6 +98,7 @@ requestPrice: function(){
   }).then(priceOfData => {
     console.log("Succesfully retrieved price of data :", priceOfData);
     $('#contractPrice').text(priceOfData);
+    $('#contractPrice').val("Buy for " + priceOfData + " WEI");
   })
 },
 requestAdresses: function(){
@@ -163,7 +169,6 @@ requestBuyersCount: function(){
 
 
 }
-
 $(function() {
   $(window).load(function() {
     App.initWeb3();
