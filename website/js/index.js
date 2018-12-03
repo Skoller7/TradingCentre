@@ -33,7 +33,6 @@ function autoLogin(username, password){
 }
 */
 
-var scroll_to_demodatacenter = document.getElementById('demoDatacenter');
 
 function scrollToJournal(){
 	var scroll_to_demojournal = document.getElementById('demoJournal');
@@ -50,5 +49,15 @@ function allowCookies(){
 	document.getElementById("cookieBanner").style.display = "none";
 }
 
-var topPosition = parseFloat($('#journalRight').position().top) * 1.5;
+var journalImg = document.getElementById("journalRight");
+
+
+var topPosition = parseFloat($('#journalRight').position().top) * 3;
 $('#journalImg').css('top',topPosition + 'px');
+topPosition = parseFloat($('#datacenterLeft').position().top) * 1.95;
+$('#datacenterImg').css('top',topPosition + 'px');
+
+$('.promo').css('height',$(window).height());
+$('#demoJournal').css('margin-top',$(window).height());
+$('#demoJournal').css('height',$(window).height());
+$('#demoDatacenter').css('height',$(window).height());

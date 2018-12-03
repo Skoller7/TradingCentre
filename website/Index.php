@@ -38,7 +38,6 @@
 				include('header.html');
 			?>
 			
-
 		<div class="parallax">
 			<div id="background" class="parallax__layer parallax__layer--back">
 				<div id="leftPanel" class="showcasePanel">
@@ -50,13 +49,13 @@
 			</div>
 			
 			
-			<div id="promo" class="parallax__layer parallax__layer--base">
-				<div id="promoLeft">
+			<div class="parallax__layer parallax__layer--base">
+				<div id="promoLeft" class="promo">
 					<img src="img/journal.png" class="promoLogo">
 					<p class="promoText">Dit is tekst dat van zo'n hoog emotioneel kwaliteit is, dat de gebruiker niet anders kan dan op de knop hieronder te drukken</p>
 					<button class="promoButton" onclick="scrollToJournal()">Journal</button>
 				</div>
-				<div id="promoRight">
+				<div id="promoRight" class="promo">
 					<img src="img/datacentre.png" class="promoLogo">
 					<p class="promoText">De kwaliteit van deze tekst is nog een stuk hoger; het zou me niet verbazen als het in de geschiedenisboeken bij MacBeth en Lord of the Rings gezet wordt</p>
 					<button class="promoButton" onclick="scrollToDatacenter()">Datacenter</button>
