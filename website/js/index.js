@@ -52,12 +52,15 @@ function allowCookies(){
 var journalImg = document.getElementById("journalRight");
 
 
-var topPosition = parseFloat($('#journalRight').position().top) * 3;
+var topPosition = parseFloat($('#journalRight').position().top) * 2.95;
 $('#journalImg').css('top',topPosition + 'px');
 topPosition = parseFloat($('#datacenterLeft').position().top) * 1.95;
 $('#datacenterImg').css('top',topPosition + 'px');
 
-$('.promo').css('height',$(window).height());
-$('#demoJournal').css('margin-top',$(window).height());
-$('#demoJournal').css('height',$(window).height());
-$('#demoDatacenter').css('height',$(window).height());
+var height = $(window).height()
+
+$('.promo').css('height',height);
+
+$('#demoJournal').css('margin-top',height);
+$('#demoJournal').css('height',height);
+$('#demoDatacenter').css('height',height);

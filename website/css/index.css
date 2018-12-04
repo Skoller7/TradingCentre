@@ -1,3 +1,7 @@
+body {
+	min-width: 1050px;
+}
+
 .title{
 	margin-top: 10%;
 }
@@ -169,10 +173,28 @@
 
 .demoHalves {
 	width: 50%;
-	border: grey 1px solid;
 	float: left;
 	height: 100%;
 	z-index: 50;
+	padding: 75px;
+}
+
+.demoText {
+	background-color: #f1f1f1; height: auto; width: 100%; padding-top: 75px; padding-bottom: 75px; border-radius: 2px;
+}
+
+#horizontalDivider {
+	width: 100%;
+	background-color: white;
+	height: 2px;
+}
+
+#horizontalDivider div {
+	width: 92%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: grey;
+	height: 100%;
 }
 
 .parallax {

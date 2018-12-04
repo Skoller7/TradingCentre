@@ -62,16 +62,21 @@
 				</div>
 				<div id="demoJournal" class="demo">
 					<div id="journalLeft" class="demoHalves">
-						<p>Hier staat een uitzonderlijk boeiende tekst dat duidelijk uitlegt hoe de journal werkt.</p>
+						<div class="demoText">
+							<p>Hier staat een uitzonderlijk boeiende tekst dat duidelijk uitlegt hoe de journal werkt.</p>
+						</div>
 					</div>
 					<div id="journalRight" class="demoHalves">
 					</div>
 				</div>
+				<div id="horizontalDivider"><div></div></div>
 				<div id="demoDatacenter" class="demo">
 					<div id="datacenterLeft" class="demoHalves">
 					</div>
 					<div id="datacenterRight" class="demoHalves">
-						<p>Hier staat een uitzonderlijk boeiende tekst dat duidelijk uitlegt hoe de journal werkt.</p>
+						<div class="demoText">
+							<p>Hier staat een uitzonderlijk boeiende tekst dat duidelijk uitlegt hoe de journal werkt.</p>
+						</div>
 					</div>
 				</div>
 			</div>
