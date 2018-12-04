@@ -15,12 +15,48 @@ var goals = document.getElementById("portfolio-goals");
  var table_orders = document.getElementById("orders");
 var head_orders = document.getElementById("orders-port");
 var info = document.getElementById("info-content");
-var all = document.getElementById("all-orders");
+var all = document.getElementById("all-orders-table");
 var col = ["Exchange","Symbol","Side","OrderQty","Currency","Price","Timestamp"];
-        var div = document.getElementById("col-order");
+var div = document.getElementById("col-order");
+var myChart;
+var ex = document.getElementById("exchange");
+var si = document.getElementById("side");
+var pr = document.getElementById("price");
+var qt = document.getElementById("orderQty");
+var sy = document.getElementById("symbol");
+var ti = document.getElementById("timestamp");
+var ex_arr = document.getElementById("exchange-arrow");
+var si_arr = document.getElementById("side-arrow");
+var pr_arr = document.getElementById("price-arrow");
+var qt_arr = document.getElementById("orderQty-arrow");
+var sy_arr = document.getElementById("symbol-arrow");
+var ti_arr = document.getElementById("timestamp-arrow");
+var arraysort;
+var arrayaddorders = [];
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() +1;
+var yyyy = today.getFullYear();
+var fromdate = document.getElementById("fromdate");
+var todate = document.getElementById("todate");
+var amount = document.getElementById("amount");
+var frdate;
+var tdate;
+var ppdvar = document.getElementById("profit-port");
 modalList.push("MCreateNote");
 modalList.push("MCreatePort");
-/*        function delcard(id){
+modalList.push("Maddorder");
+if(token){
+getport();
+}
+function addzero(number){
+            if(number < 10){
+                number = "0" + number;
+            }
+            return number;
+}
+/*
+        function delcard(id){
             document.getElementById(id).style.display = "block";
         }
         function addzero(number){
@@ -30,7 +66,6 @@ modalList.push("MCreatePort");
             return number;
         }
                 function closeModal(item){
-                    //https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
                     if ($(item).is(':visible')){
                         $(item).modal('toggle');	
                     }
@@ -80,6 +115,13 @@ modalList.push("MCreatePort");
         }*/
 
 /*
+change date and amount from orders
+*/
+fromdate.addEventListener("change",getorders);
+todate.addEventListener("change",getorders);
+amount.addEventListener("change",getorders);
+
+/*
 menu sidebar notes
 
 document.getElementById("notes-sub").style.display = "none";
@@ -95,7 +137,66 @@ function openSubNotes(){
     }
 }
 */
-
+/*
+table eventlisteners
+*/
+function sort(array,prop,change){
+    if(change == 0){
+        for(var i = 0;i < array.length;i++){
+            for(var j = 0; j < array.length - i - 1; j++){
+                if(array[j][prop] > array[j + 1][prop]){
+                    var id = document.getElementById(array[j].orderId);
+                    var idplus = document.getElementById(array[j + 1].orderId);
+                    var hold = array[j];
+                    id.setAttribute("id",array[j+1].orderId);
+                    idplus.setAttribute("id",array[j].orderId);
+                    array[j] = array[j+1];
+                    array[j+1] = hold;
+                }
+            }
+        }
+    }else{
+        for(var i = 0;i < array.length;i++){
+            for(var j = 0; j < array.length - i - 1; j++){
+                if(array[j][prop] < array[j + 1][prop]){
+                    var id = document.getElementById(array[j].orderId);
+                    var idplus = document.getElementById(array[j + 1].orderId);
+                    var hold = array[j];
+                    id.setAttribute("id",array[j+1].orderId);
+                    idplus.setAttribute("id",array[j].orderId);
+                    array[j] = array[j+1];
+                    array[j+1] = hold;
+                }
+            }
+        }
+    }
+    return array;
+}
+function sortarray(){
+    var docid = document.getElementById(this.id + "-arrow");
+    if(docid.className == 'fa fa-angle-down'){
+        docid.className = "fa fa-angle-up";
+        arraysort = sort(arraysort,this.id,0);
+    }else{
+         docid.className = "fa fa-angle-down";
+        arraysort = sort(arraysort,this.id,1);
+    }
+    all.innerHTML = "";
+        if(arraysort.length == 0){
+            all.innerHTML = "No orders found";
+           }else{
+               all = document.getElementById("all-orders-table");
+                for(var j = 0;j < arraysort.length;j++){
+                    setOrders(arraysort,j);
+                }
+           }
+}
+ex.addEventListener("click",sortarray);
+si.addEventListener("click",sortarray);
+pr.addEventListener("click",sortarray);
+qt.addEventListener("click",sortarray); 
+sy.addEventListener("click",sortarray);
+ti.addEventListener("click",sortarray);
 /* 
 menu sidebar portfolios
 */
@@ -115,9 +216,8 @@ function openSubPortfolios(){
 /*
 call get all portfolios in submenu portfolios
 */
-getport();
 function getport(){
-    port = [];
+        port = [];
         var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
         var ul = document.getElementById("portfolios-ul");
         ul.innerHTML = "";
@@ -134,6 +234,81 @@ function getport(){
             var sub = document.getElementById(data[i].portfolioId + "port");
             port.push(sub.getAttribute("id"));
         }
+            ppd();
+}
+
+/*
+add order to portfolio
+*/
+/*
+show modal add order to portfolio
+*/
+document.getElementById("addorder").addEventListener("click",openaddorder);
+function openaddorder(){
+	closeAllModals();
+	$('#Maddorder').modal({
+		backdrop: 'static'
+	});
+}
+/*
+close modal add order to portfolio
+*/
+document.getElementById("btnclose").addEventListener("click",closeaddorder);
+document.getElementById("addorderBCrosse").addEventListener("click",closeaddorder);
+function closeaddorder(){
+	$('#Maddorder').modal('toggle');	
+}
+
+/*
+api call add order to portfolio
+*/
+document.getElementById("btnaddorder").addEventListener("click",addorderstoportfolio);
+function addorderstoportfolio(){
+    arrayaddorders = [];
+    var ids = document.getElementsByName("addordercheck");
+    for(var i < 0;i <ids.length;i++){
+        if(ids[i].checked){
+            arrayaddorders.push(ids[i].value);
+        }
+    }
+    for(var j = 0; j < arrayaddorders.length; j++){
+        var json = {
+            "OrderId": j[i],
+            "PortfolioId": activeportfolioid
+        };
+        var data = makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token);
+    }
+    getorders();
+}
+
+var delorders = document.getElementById("all-orders-table").addEventListener("click",function (e){
+    if(e.target.nodeName == "I") {
+        makerequest(json,"http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+        getorders(); 
+    }
+}
+
+/*
+get ppd portfolio
+*/
+function ppd(){
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token);
+    for(var i = 0;i < data.length;i++){
+        if(data[i].day == addzero(dd)+"/"+addzero(mm)+"/"+yyyy){
+            var j;
+            if(data[i].profit < 0){
+                color = "red";
+                j = "fa fa-long-arrow-down";
+            }else{
+                color = "green";
+                j = "fa fa-long-arrow-up";
+            }
+            ppdvar.style.color = color;
+            ppdvar.style.textAlign = "center";
+            ppdvar.style.fontWeight = "700";
+            ppdvar.innerHTML = "Profit of the day  " + data[i].profit;
+        }
+    }
 }
 
 /*
@@ -244,8 +419,24 @@ if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
                 makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
                 document.getElementById(e.target.id + "note").style.display = "none";
       }else{
-               var json =  {"NoteId": e.target.id,"Message": "Hello world2"};
-                makerequest(json,"http://localhost:62382/api/note","POST",token);
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                url: "http://localhost:62382/api/note",
+                type: "POST",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                data:{"NoteId": e.target.id,"Message": "Hello world2d"},
+                dataType: 'json',
+                success:function(data){},
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                    console.log(xhr);
+                }
+            });   
       }
 }
 });
@@ -364,12 +555,44 @@ function createport(){
 }
 
 
-
+/*
+api call get orders users without the orders current in the portfolio
+*/
+function getordersadd(){
+    var datum = new Date() - 7;
+    var datefromadd = datum.getDate() + "/" + (datum.getMonth + 1) + "/" + datum.getFullYear;
+    $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		url: "http://10.3.50.6/api/order/get?dateFrom="+datefromadd+",
+        type: "GET",
+        "headers": {
+    		"Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+  		},
+        dataType: 'json',
+        success: function(data){
+        all = document.getElementById("all-orders-table-add");
+            if(data.length > 0){
+                    for(var i = 0;i<data.length; i++){
+                            setOrders(data,i);
+                    }
+            }else{
+                all.innerHTML = "No orders found";
+            }
+            },
+        error: function(xhr, ajaxOptions, thrownError){
+        	console.log(xhr.status);
+        	console.log(thrownError);
+            console.log(xhr);
+        }
+    }); 
+}
 
 /*
 api call get orders
 */
-    for(var i=0;i < col.length;i++){
+   /* for(var i=0;i < col.length;i++){
         var option = document.createElement("input");
         var span = document.createElement("label");
         option.setAttribute("type","checkbox");
@@ -395,13 +618,24 @@ function openColOrder(){
     }
     getorders();
 }
+*/
 
 function getorders(){
         all.innerHTML = "";
+        if(todate.value == ""){
+            todate.value = yyyy+"-"+addzero(mm)+"-"+addzero(dd);
+            tdate = addzero(dd)+"/"+addzero(mm)+"/"+yyyy;
+        }else{
+            tdate = todate.value.substring(8,10) + "/" + todate.value.substring(5,7) + "/" + todate.value.substring(0,4);
+        }
+        if(fromdate.value == ""){
+            fromdate.value = "1970-01-01";
+        }
+        frdate = fromdate.value.substring(8,10) + "/" + fromdate.value.substring(5,7) + "/" + fromdate.value.substring(0,4);
        $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,
+  		url: "http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid+"&amount="+amount.value+"&dateFrom="+frdate+"&dateTo="+tdate,
         type: "GET",
         "headers": {
     		"Content-Type": "application/json",
@@ -409,12 +643,14 @@ function getorders(){
   		},
         dataType: 'json',
         success: function(data){
-            if(data.length != 0){
+            arraysort = data;
+            all = document.getElementById("all-orders-table");
+            if(data.length > 0){
                     for(var i = 0;i<data.length; i++){
                             setOrders(data,i);
                     }
             }else{
-                info.innerHTML = "No orders found";
+                all.innerHTML = "No orders found";
             }
             },
         error: function(xhr, ajaxOptions, thrownError){
@@ -424,44 +660,36 @@ function getorders(){
         }
     });   
 }
+/*
+set orders in the table
+*/
 function setOrders(data,i){
-                        var div = document.createElement("div");
-                        div.setAttribute("class","card");
-                        var div_bd = document.createElement("div");
-                        div_bd.setAttribute("class","card-body");
-                        div_bd.style.padding = "0";
-                        div_bd.style.color = "#fff";
-                        div_bd.style.backgroundColor ="#25313B";
-                        div_bd.style.fontWeight = "600";
-                        var div_ord = document.createElement("div");
-                        var div_ord_us = document.createElement("div");
-                        div_ord.setAttribute("class","order-spec");
-                        div_ord_us.setAttribute("class","order-spec");
-                        div_ord.innerHTML += "<span class='spec'>"+data[i].exchange+"</span>";
-                        var color;
-                        if(data[i].side == "Buy"){
-                            color = "green";
-                        }else{
-                            color = "red";
-                        }
-                        for(var j = 0;j < col.length;j++){
-                            if(document.getElementById(col[i]).checked == true){
-                                console.log(col[i]);
-                            }
-                        }
-                        div_ord.innerHTML += "<span class='spec' style='color:"+color+"'>"+data[i].side+"</span>";
-                        div_ord.innerHTML += "<span class='spec'>"+data[i].price+ " (" +data[i].currency+")</span>";
-                        div_ord.innerHTML += "<span class='spec'>"+data[i].symbol+"</span>";
-                        div_ord.innerHTML += "<span class='spec'>"+data[i].timestamp+"</span>";
-                        div_ord_us.innerHTML += "<select class='custom-select spec' name='technique' style='width:30%;'><option selected>Choose technique</option><option value='h&s'>head&shoulders</option><option value='tech'>tech</option><option value='ddd'>ddd</option></select>";
-                        div_ord_us.innerHTML += "<div class='custom-file'  style='width:40%;margin:2%;'><input type='file' class='custom-file-input' id=" +data[i].orderId +" aria-describedby='inputGroupFileAddon04'><label class='custom-file-label' for="+data[i].orderId+">Choose image</label></div>";
-                        div_ord_us.innerHTML += "<button type='submit' id="+data[i].orderId+" class='btn btn-primary my'>Submit</button>";
-                        div_bd.appendChild(div_ord);
-                        div_bd.appendChild(div_ord_us);
-                        div.appendChild(div_bd);
-                        all.appendChild(div);
+        if(data[i].side == "Buy"){
+            color = "green";
+        }else{
+           color = "red";
+        }
+        var tr = document.createElement("tr");
+        tr.innerHTML += "<td class='ex'>"+data[i].exchange+"</td>";
+        tr.innerHTML += "<td class='si' style='color:"+color+"'>"+data[i].side+"</td>";
+        tr.innerHTML += "<td class='pr'>"+data[i].price+"("+data[i].currency+")</td>";
+        tr.innerHTML += "<td class='qt'>"+data[i].orderQty+"</td>";
+        tr.innerHTML += "<td class='sy'>"+data[i].symbol+"</td>";
+        var date = data[i].timestamp;
+        tr.innerHTML += "<td class='ti'>"+date.substr(0,10)+" " + date.substr(11,11)+"</td>";
+        if(all.getAttribute("id") == "all-order-table"){
+            tr.innerHTML += "<td class='delorder'><i class='fa fa-trash' id="+data[i].orderId+"></i></td>";
+        }else{
+            tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' value="+data[i].orderId+"></td>"
+        }
+        all.appendChild(tr);
 }
-
+/* resize the chart on resize window */
+    $(window).on('resize', function(){
+        if(myChart != null && myChart != undefined){
+           myChart.resize();
+        }
+    });
 function adddoubleline(){
            var myChart = echarts.init(document.getElementById('main'),'light');
         
@@ -593,9 +821,9 @@ fetch('http://api.com/file.json')
 }
 function addbasichart(){
         // based on prepared DOM, initialize echarts instance
-        var myChart = echarts.init(document.getElementById('main'),'light');
+        myChart = echarts.init(document.getElementById('main'),'light');
 
-        // specify chart configuration item and data
+    // specify chart configuration item and data
 var base = +new Date(2018, 9, 3);
 var oneDay = 24 * 3600 * 1000;
 var date = [];
