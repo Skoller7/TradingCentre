@@ -65,7 +65,7 @@
 						<div class="demoText">
 							<p>Your journal will automatically keep track of your trades on BitMEX and generate handy charts so you can see your progress over time. 
 							Additionally, you can log your trades in custom portfolios based on goals or techniques.</p>
-							<a href="" style="text-decoration: underline;">Get started</a>
+							<a class="getStarted" style="text-decoration: underline;">Get started</a>
 						</div>
 					</div>
 					<div id="journalRight" class="demoHalves">
@@ -78,7 +78,7 @@
 					<div id="datacenterRight" class="demoHalves">
 						<div class="demoText">
 							<p>Buy expert trading data via a smartcontract on the NEO blockchain or share your own expertise by creating curated portfolios with custom notes and images paired to each trade. </p>
-							<a href="" style="text-decoration: underline;">Get started</a>
+							<a class="getStarted" style="text-decoration: underline;">Get started</a>
 						</div>
 					</div>
 				</div>
