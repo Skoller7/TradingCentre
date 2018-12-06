@@ -27,6 +27,7 @@
       <meta name="msapplication-TileColor" content="#ffffff">
       <meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
       <meta name="theme-color" content="#ffffff">
+    <title>Journal</title>
 
 </head>
 <body onload="addbasichart()">
@@ -48,8 +49,8 @@
                         <ul id="portfolios-ul">
                         </ul>
                     </div>
-                    <li id="addorder">Add order<li>
-                    <li><a href="createdataselling.php?portfolioId=">Sell portfolio</a></li>
+                    <li id="addorder">Add orders</li>
+                  <li><a href="createdataselling.php?portfolioId=">Sell portfolio</a></li>
                     <li id="BCreateNote">Create note</li>
                     <!--<li class="notes-header" id="notes"><a href="#">All Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
                     <div id="notes-sub">
