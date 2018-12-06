@@ -438,15 +438,44 @@ th:hover{
 [type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
-input [type="checkbox"]{
-    width:2%;
+.modal input[type="checkbox"]{
+    border:none;
+    
 }
-input[type="checkbox"]:hover{
-    background-color: #ccc;
+.modal input[type="checkbox"]{
+     -webkit-appearance: none;
+     -moz-appearance: none;
+     appearance: none;
+     display: inline-block;
+     position: relative;
+     background-color: #f1f1f1;
+     color: #666;
+     top: 10px;
+     height: 30px;
+     width: 30px;
+     border: 0;
+     border-radius: 50px;
+     cursor: pointer;     
+     margin-right: 7px;
+     outline: none;
 }
-
-input[type="checkbox"]:checked {
-    background-color: #2196F3;
+.modal input[type="checkbox"]:checked::before
+{
+     position: absolute;
+     font: 13px/1 'Open Sans', sans-serif;
+     left: 11px;
+     top: 7px;
+     content: '\02143';
+     transform: rotate(40deg);
+}
+.modal input[type="checkbox"]:hover
+{
+     background-color: #f7f7f7;
+}
+.modal input[type="checkbox"]:checked
+{
+    color:#fff;
+     background-color: #0889C4;
 }
 /*
 dropdown

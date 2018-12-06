@@ -265,6 +265,8 @@ api call add order to portfolio
 */
 document.getElementById("btnaddorder").addEventListener("click",addorderstoportfolio);
 function addorderstoportfolio(){
+    var valid = true;
+    document.getElementById("erroraddorder").innerHTML = "";
     arrayaddorders = [];
     var ids = document.getElementsByName("addordercheck");
     for(var i = 0;i <ids.length;i++){
@@ -278,9 +280,17 @@ function addorderstoportfolio(){
             "PortfolioId": activeportfolioid
         };
         var data = makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token);
+        console.log(data.substr(0,5));
+        if(data.substr(0,5) == "error"){
+           valid = false;
+        }
     }
-    getorders();
-    closeaddorder();
+    if(valid){
+        getorders();
+        closeaddorder();
+    }else{
+        document.getElementById("erroraddorder").innerHTML = data;
+    }
 }
 
 var delorders = document.getElementById("all-orders-table").addEventListener("click",function (e){
@@ -421,20 +431,21 @@ if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
                 makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
                 document.getElementById(e.target.id + "note").style.display = "none";
       }else{
-          console.log(e.target.id);
+          var json = {"NoteId": e.target.id,"Message": "Hello world2d"};
             $.ajax({
                 "async": true,
                 "crossDomain": true,
-                url: "http://localhost:62382/api/note",
+                url: "http://10.3.50.6/api/note",
                 type: "POST",
                 "headers": {
                     "Content-Type": "application/json",
                     "Authorization": "Bearer " + token
                 },
-                data:{"NoteId": e.target.id,"Message": "Hello world2d"},
+                data:JSON.stringify(json),
                 dataType: 'json',
                 success:function(data){},
                 error: function(xhr, ajaxOptions, thrownError){
+                    console.log(e.target.id);
                     console.log(xhr.status);
                     console.log(thrownError);
                     console.log(xhr);
@@ -672,7 +683,9 @@ function setOrders(data,i){
         }else{
            color = "red";
         }    
-        tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>"
+        if(all.className == 'all'){
+            tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>";
+        }
         tr.innerHTML += "<td class='ex'>"+data[i].exchange+"</td>";
         tr.innerHTML += "<td class='si' style='color:"+color+"'>"+data[i].side+"</td>";
         tr.innerHTML += "<td class='pr'>"+data[i].price+"("+data[i].currency+")</td>";
@@ -684,7 +697,7 @@ function setOrders(data,i){
             tr.innerHTML += "<td class='delorder'><i class='fa fa-ellipsis-v' id="+data[i].orderId+"></i></td>";
         }else{
             
-            tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' id="+data[i].orderId+" value="+data[i].orderId+"></td>"
+            tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' class='check' id="+data[i].orderId+" value="+data[i].orderId+"></td>"
         }
         all.appendChild(tr);
 }
