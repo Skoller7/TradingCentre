@@ -249,6 +249,7 @@ function openaddorder(){
 	$('#Maddorder').modal({
 		backdrop: 'static'
 	});
+    getordersadd();
 }
 /*
 close modal add order to portfolio
@@ -266,27 +267,28 @@ document.getElementById("btnaddorder").addEventListener("click",addorderstoportf
 function addorderstoportfolio(){
     arrayaddorders = [];
     var ids = document.getElementsByName("addordercheck");
-    for(var i < 0;i <ids.length;i++){
+    for(var i = 0;i <ids.length;i++){
         if(ids[i].checked){
             arrayaddorders.push(ids[i].value);
         }
     }
     for(var j = 0; j < arrayaddorders.length; j++){
         var json = {
-            "OrderId": j[i],
+            "OrderId": arrayaddorders[j],
             "PortfolioId": activeportfolioid
         };
         var data = makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token);
     }
     getorders();
+    closeaddorder();
 }
 
 var delorders = document.getElementById("all-orders-table").addEventListener("click",function (e){
     if(e.target.nodeName == "I") {
-        makerequest(json,"http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
         getorders(); 
     }
-}
+});
 
 /*
 get ppd portfolio
@@ -559,12 +561,12 @@ function createport(){
 api call get orders users without the orders current in the portfolio
 */
 function getordersadd(){
-    var datum = new Date() - 7;
-    var datefromadd = datum.getDate() + "/" + (datum.getMonth + 1) + "/" + datum.getFullYear;
+    all = document.getElementById("all-orders-table-add");
+    all.innerHTML = "";
     $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/get?dateFrom="+datefromadd+",
+  		url: "http://10.3.50.6/api/order/get?dateFrom=01/01/1970",
         type: "GET",
         "headers": {
     		"Content-Type": "application/json",
@@ -572,7 +574,6 @@ function getordersadd(){
   		},
         dataType: 'json',
         success: function(data){
-        all = document.getElementById("all-orders-table-add");
             if(data.length > 0){
                     for(var i = 0;i<data.length; i++){
                             setOrders(data,i);
@@ -621,6 +622,7 @@ function openColOrder(){
 */
 
 function getorders(){
+     all = document.getElementById("all-orders-table");
         all.innerHTML = "";
         if(todate.value == ""){
             todate.value = yyyy+"-"+addzero(mm)+"-"+addzero(dd);
@@ -644,7 +646,6 @@ function getorders(){
         dataType: 'json',
         success: function(data){
             arraysort = data;
-            all = document.getElementById("all-orders-table");
             if(data.length > 0){
                     for(var i = 0;i<data.length; i++){
                             setOrders(data,i);
@@ -664,23 +665,24 @@ function getorders(){
 set orders in the table
 */
 function setOrders(data,i){
+        var tr = document.createElement("tr");;
         if(data[i].side == "Buy"){
             color = "green";
         }else{
            color = "red";
-        }
-        var tr = document.createElement("tr");
+        }        
         tr.innerHTML += "<td class='ex'>"+data[i].exchange+"</td>";
         tr.innerHTML += "<td class='si' style='color:"+color+"'>"+data[i].side+"</td>";
         tr.innerHTML += "<td class='pr'>"+data[i].price+"("+data[i].currency+")</td>";
         tr.innerHTML += "<td class='qt'>"+data[i].orderQty+"</td>";
         tr.innerHTML += "<td class='sy'>"+data[i].symbol+"</td>";
         var date = data[i].timestamp;
-        tr.innerHTML += "<td class='ti'>"+date.substr(0,10)+" " + date.substr(11,11)+"</td>";
-        if(all.getAttribute("id") == "all-order-table"){
+        tr.innerHTML += "<td class='ti'>"+date.substr(0,10)+" " + date.substr(11,5)+"</td>";
+        if(all.className == 'all'){
             tr.innerHTML += "<td class='delorder'><i class='fa fa-trash' id="+data[i].orderId+"></i></td>";
         }else{
-            tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' value="+data[i].orderId+"></td>"
+            
+            tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' id="+data[i].orderId+" value="+data[i].orderId+"></td>"
         }
         all.appendChild(tr);
 }

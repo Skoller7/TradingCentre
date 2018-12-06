@@ -438,6 +438,16 @@ th:hover{
 [type="date"]::-webkit-calendar-picker-indicator {
   opacity: 0;
 }
+input [type="checkbox"]{
+    width:2%;
+}
+input[type="checkbox"]:hover{
+    background-color: #ccc;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #2196F3;
+}
 /*
 dropdown
 */

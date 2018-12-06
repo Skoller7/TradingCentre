@@ -111,7 +111,7 @@
                           <th>Delete</th>
                         </tr>
                     </thead>
-                    <tbody id="all-orders-table">
+                    <tbody id="all-orders-table" class="all">
                     </tbody>
                   </table>
                 </div>
@@ -127,7 +127,7 @@
 		<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-		        <h5 class="modal-title">Add order to portfolio</h5>
+		        <h5 class="modal-title">Add orders to portfolio</h5>
 		        <button type="button" class="close" id="addorderBCrosse" aria-label="Close">
 	          		<span aria-hidden="true">&times;</span>
 				</button>
@@ -154,7 +154,7 @@
       			</form>
       		</div>
       		<div class="modal-footer">
-        		<button type="button" class="btn btn-primary" id="btnaddorder">Add Order</button>
+        		<button type="button" class="btn btn-primary" id="btnaddorder">Add Orders</button>
         		<button type="button" class="btn btn-secondary" id="btnclose">Close</button>
       		</div>
     	</div>
