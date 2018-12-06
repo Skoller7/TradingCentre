@@ -48,8 +48,8 @@
                         <ul id="portfolios-ul">
                         </ul>
                     </div>
-                    <li id="uploadimage">Upload image</li>
-                    <li id="addorder">Add order</li>
+                    <li id="addorder">Add order<li>
+                    <li><a href="createdataselling.php?portfolioId=">Sell portfolio</a></li>
                     <li id="BCreateNote">Create note</li>
                     <!--<li class="notes-header" id="notes"><a href="#">All Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
                     <div id="notes-sub">
@@ -102,13 +102,14 @@
                 <table class="table table-hover">
                     <thead>
                       <tr class="head-td">
-                        <th id="exchange">Exchange<i id="exchange-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="orderId">OrderId</th>
+                            <th id="exchange">Exchange<i id="exchange-arrow" class="fa fa-angle-up"></i></th>
                           <th id="side">Side<i id="side-arrow" class="fa fa-angle-up"></i></th>
                           <th id="price">Price<i id="price-arrow" class="fa fa-angle-up"></i></th>
                           <th id="orderQty">Quantity<i id="orderQty-arrow" class="fa fa-angle-up"></i></th>
                           <th id="symbol">Symbol<i id="symbol-arrow" class="fa fa-angle-up"></i></th>
                           <th id="timestamp">Timestamp<i id="timestamp-arrow" class="fa fa-angle-up"></i></th>
-                          <th>Delete</th>
+                          <th>Options</th>
                         </tr>
                     </thead>
                     <tbody id="all-orders-table" class="all">

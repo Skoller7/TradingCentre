@@ -421,6 +421,7 @@ if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
                 makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
                 document.getElementById(e.target.id + "note").style.display = "none";
       }else{
+          console.log(e.target.id);
             $.ajax({
                 "async": true,
                 "crossDomain": true,
@@ -670,7 +671,8 @@ function setOrders(data,i){
             color = "green";
         }else{
            color = "red";
-        }        
+        }    
+        tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>"
         tr.innerHTML += "<td class='ex'>"+data[i].exchange+"</td>";
         tr.innerHTML += "<td class='si' style='color:"+color+"'>"+data[i].side+"</td>";
         tr.innerHTML += "<td class='pr'>"+data[i].price+"("+data[i].currency+")</td>";
@@ -679,7 +681,7 @@ function setOrders(data,i){
         var date = data[i].timestamp;
         tr.innerHTML += "<td class='ti'>"+date.substr(0,10)+" " + date.substr(11,5)+"</td>";
         if(all.className == 'all'){
-            tr.innerHTML += "<td class='delorder'><i class='fa fa-trash' id="+data[i].orderId+"></i></td>";
+            tr.innerHTML += "<td class='delorder'><i class='fa fa-ellipsis-v' id="+data[i].orderId+"></i></td>";
         }else{
             
             tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' id="+data[i].orderId+" value="+data[i].orderId+"></td>"
