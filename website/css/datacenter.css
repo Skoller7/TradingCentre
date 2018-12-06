@@ -1,7 +1,7 @@
 /*#FF751A orange
 #25313B dark blue
 #F8F9FA light grey
-#0889C4 blue*/ 
+#0889C4 blue*/
 body{
     background-color: #F8F9FA;
 }
@@ -136,7 +136,7 @@ sidebar-portfolio
     margin: 1%;
     border:none;
 }
-.user-buy input[type=submit]{
+.user-buy input[type=button]{
     padding:2%;
     width:100%;
     border:none;
@@ -155,7 +155,7 @@ sidebar-portfolio
 .containter-fluid{
     margin-top:55px;
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .containter-fluid{
         margin-left:0%;
     }
@@ -226,7 +226,7 @@ sidebar-portfolio
 #BLogin a{
     color:#fff;
     background-color:#25313B;
-    cursor: pointer; 
+    cursor: pointer;
 }
 #BSignUp a{
     color:#fff;
@@ -244,7 +244,7 @@ sidebar-portfolio
 #BSetttings a{
     color:#fff;
     background-color:#25313B;
-    cursor: pointer; 
+    cursor: pointer;
 }
 #BLogout a{
     color:#fff;
@@ -301,8 +301,8 @@ sidebar-portfolio
     padding:20px;
     color:#fff;
 }
-/* 
-overlay 
+/*
+overlay
 */
 .overlay {
     height: 100%;
@@ -352,7 +352,7 @@ overlay
     font-size: 60px;
     background-color: #F8F9FA;
 }
-/* 
+/*
 
 */
 .chart-header{
@@ -369,7 +369,7 @@ styling modals
 }
 .modal-header{
     background-color: #25313B;
-    color:#fff; 
+    color:#fff;
 }
 #MLoginBLogin,#MCreateNoteBCreateNote,#MSignUpBSingUp,#MForgotPasswordBForgotPassword,#MCreatePortBCreatePort{
     background-color: #ff751a;
@@ -407,7 +407,7 @@ notes
     border-bottom: 10px solid #ff751a;
 }
 .notes-card p{
-    
+
 }
 #notes-all{
     width:100%;
