@@ -103,7 +103,7 @@ requestPrice: function(){
 },
 requestAdresses: function(){
 
-  App.contracts.DataContractCreator.deployed().then(function(instance){
+  App.contracts.DataContractCreator.at('0x26f1f8228bbe9efd23fd6c90998edc9f87a0bae8').then(function(instance){
     DataContractCreatorInstance = instance;
     console.log(DataContractCreatorInstance);
 

@@ -16,17 +16,16 @@ var MNEMONIC = "suffer amazing unknown anchor cotton focus alpha elbow summer sh
  */
  module.exports = {
     networks: {
-  development: {
-    host: "localhost",
-    port: 7545,
-    network_id: "*" // Match any network id
-  },
+  // development: {
+  //   host: "localhost",
+  //   port: 7545,
+  //   network_id: "*" // Match any network id
+  // },
   ropsten: {
     provider: function() {
       return new HDWalletProvider(MNEMONIC, "https://ropsten.infura.io/v3/e1f507ef8d814286a1f1e2ea39cfe576")
     },
-    network_id: '3',
-    gas: 4000000      //make sure this gas allocation isn't over 4M, which is the max
+    network_id: '3'    //make sure this gas allocation isn't over 4M, which is the max
     }
   }
 };
