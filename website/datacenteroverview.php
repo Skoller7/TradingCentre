@@ -1,11 +1,17 @@
 <!doctype html>
+
+ <!-- menu bar meer naar links, users uit db halen & verschillende portfolio's tonen *
+- mogelijk tonen op rating/likes/follows? **
+- card een max height geven zodat deze ongeveer even zal zijn afhankelijk * * * 
+- datacenter menu bar drop down maken * * * *
+-->
 <html>
 <head>
-      <meta charset="utf-8">  
+      <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/datacenter.css">
       <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="bootstrap-4.1.3/js/bootstrap.min.js"></script>
       <script src="js/lib.js" type="text/javascript"></script>
@@ -30,7 +36,7 @@
 </head>
 <body>
 <?php
-  include_once("header.html");  
+  include_once("header.html");
 ?>
 <div class="containter-fluid">
     <nav class="sidebar">
@@ -52,15 +58,100 @@
         </div>
         <div class="content-datacenter">
             <div class="card">
-              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%"> 
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
               <div class="card-body">
                 <h5 class="card-title">Skoller</h5>
                 <p class="card-text">
-                  Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. 
+                  Master of the head & shoulder pattern.
+                  </p>
+                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+              </div>
+            </div>
+
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen.
+                  </p>
+                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+              </div>
+            </div>
+
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen.
                   </p>
                 <a href="datacenternew.php" class="btn btn-primary">Buy data</a>
               </div>
             </div>
+
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen.
+                  </p>
+                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+              </div>
+            </div>
+
+
+            <br />
+
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen.
+                  </p>
+                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+              </div>
+            </div>
+
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen.
+                  </p>
+                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+              </div>
+            </div>
+
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen.
+                  </p>
+                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+              </div>
+            </div>
+
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen.
+                  </p>
+                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+              </div>
+            </div>
+
+            <br />
+            <br />
+            <br />
+            <a href="">Show more</a> <!-- moet nog rechts komen. -->
         </div>
     </div>
 </div>

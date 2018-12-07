@@ -93,12 +93,12 @@
         </div>
         <br  />  <br  />  <br  />  <br  />
         <hr color="white"/>
-        <button type="button" class="btn btn-primary">Save this order</button><br  />
+        <button type="button" class="btn btn-primary">Save this order</button><br  /><!-- hier de order plaatsen via api in de juiste tabel -->
         <small id="priceHelp" class="form-text text-muted">*you need to have an image and a description before you can save the file</small>
-        <span>This order has been saved!</span>
+        <span>This order has been saved!</span> <!-- dit verstoppen tot dat api call succesfull was -->
         <br  /> <br  /> <br  />
         <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract : </label>
-        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> <!-- fetch orders from db --> 
           <option selected>Order #1234</option>
           <option value="2">Order #1235</option>
           <option value="3">Order #1236</option>

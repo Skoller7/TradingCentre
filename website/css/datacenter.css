@@ -18,7 +18,7 @@ sidebar
     left: 0;
     z-index: 100;
     padding: 0;
-    width:16.6%;
+    width:25%;
     overflow-x: hidden;
 }
 .sidebar-header{
@@ -71,9 +71,6 @@ sidebar-portfolio
 }
 .fa-angle-down{
     float:right;
-}
-.fa-angle-up{
-    float: right;
 }
 .port1{
     color:#ff9900;
@@ -179,7 +176,6 @@ sidebar-portfolio
 }
 #main{
     min-height:500px;
-    width: 100%;
 }
 .containter-fluid{
   background-color:#F8F9FA;
@@ -416,38 +412,16 @@ notes
 /*
 portfolio orders
 */
-.table thead th{
-    color:#fff;
-    background-color: #0889C4;
-    text-align: center;
+.spec{
     margin:2%;
-    cursor:pointer;
+    float:left;
+    padding:1%;
 }
-th:hover{
-    background-color: #0999dc;
-}
-.table tbody td{
-    text-align: center;
-}
-[type="date"] {
-  background:#fff url(https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png)  97% 50% no-repeat ;
-}
-[type="date"]::-webkit-inner-spin-button {
-  display: none;
-}
-[type="date"]::-webkit-calendar-picker-indicator {
-  opacity: 0;
-}
-input [type="checkbox"]{
-    width:2%;
-}
-input[type="checkbox"]:hover{
-    background-color: #ccc;
+.order-spec{
+    width:100%;
+    float: left;
 }
 
-input[type="checkbox"]:checked {
-    background-color: #2196F3;
-}
 /*
 dropdown
 */
