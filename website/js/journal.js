@@ -11,7 +11,7 @@ var errorname = document.getElementById("ErrorPortName");
 var errordesc = document.getElementById("ErrorPortDesc");
 var errorgoal = document.getElementById("ErrorPortGoal");
 var desc = document.getElementById("portfolio-description");
-var goals = document.getElementById("portfolio-goals");   
+var goals = document.getElementById("portfolio-goals");
  var table_orders = document.getElementById("orders");
 var head_orders = document.getElementById("orders-port");
 var info = document.getElementById("info-content");
@@ -32,7 +32,7 @@ modalList.push("MCreatePort");
                 function closeModal(item){
                     //https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
                     if ($(item).is(':visible')){
-                        $(item).modal('toggle');	
+                        $(item).modal('toggle');
                     }
                 }
      document.getElementById("createnote").addEventListener("click",onclickcreate);
@@ -46,7 +46,7 @@ modalList.push("MCreatePort");
             if(notecontent == ""){
                 document.getElementById('falsenote').style.color = "red";
                 document.getElementById('falsenote').innerHTML = '* This field cannot be empty!';
-            
+
             }else{
                 var ID = Math.random();
                 document.getElementById('falsenote').innerHTML = '';
@@ -74,7 +74,7 @@ modalList.push("MCreatePort");
                 notebody.appendChild(notedel);
                 document.getElementById("notecontent").value = "";
                 $(function(){
-                    $("#createnote").modal('toggle');	
+                    $("#createnote").modal('toggle');
                 });
             }
         }*/
@@ -96,7 +96,7 @@ function openSubNotes(){
 }
 */
 
-/* 
+/*
 menu sidebar portfolios
 */
 document.getElementById("porfolios-sub").style.display = "none";
@@ -134,6 +134,93 @@ function getport(){
             var sub = document.getElementById(data[i].portfolioId + "port");
             port.push(sub.getAttribute("id"));
         }
+            ppd();
+}
+
+/*
+add order to portfolio
+*/
+/*
+show modal add order to portfolio
+*/
+document.getElementById("addorder").addEventListener("click",openaddorder);
+function openaddorder(){
+	closeAllModals();
+	$('#Maddorder').modal({
+		backdrop: 'static'
+	});
+    getordersadd();
+}
+/*
+close modal add order to portfolio
+*/
+document.getElementById("btnclose").addEventListener("click",closeaddorder);
+document.getElementById("addorderBCrosse").addEventListener("click",closeaddorder);
+function closeaddorder(){
+	$('#Maddorder').modal('toggle');
+}
+
+/*
+api call add order to portfolio
+*/
+document.getElementById("btnaddorder").addEventListener("click",addorderstoportfolio);
+function addorderstoportfolio(){
+    var valid = true;
+    document.getElementById("erroraddorder").innerHTML = "";
+    arrayaddorders = [];
+    var ids = document.getElementsByName("addordercheck");
+    for(var i = 0;i <ids.length;i++){
+        if(ids[i].checked){
+            arrayaddorders.push(ids[i].value);
+        }
+    }
+    for(var j = 0; j < arrayaddorders.length; j++){
+        var json = {
+            "OrderId": arrayaddorders[j],
+            "PortfolioId": activeportfolioid
+        };
+        var data = makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token);
+        console.log(data.substr(0,5));
+        if(data.substr(0,5) == "error"){
+           valid = false;
+        }
+    }
+    if(valid){
+        getorders();
+        closeaddorder();
+    }else{
+        document.getElementById("erroraddorder").innerHTML = data;
+    }
+}
+
+var delorders = document.getElementById("all-orders-table").addEventListener("click",function (e){
+    if(e.target.nodeName == "I") {
+        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+        getorders();
+    }
+});
+
+/*
+get ppd portfolio
+*/
+function ppd(){
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token);
+    for(var i = 0;i < data.length;i++){
+        if(data[i].day == addzero(dd)+"/"+addzero(mm)+"/"+yyyy){
+            var j;
+            if(data[i].profit < 0){
+                color = "red";
+                j = "fa fa-long-arrow-down";
+            }else{
+                color = "green";
+                j = "fa fa-long-arrow-up";
+            }
+            ppdvar.style.color = color;
+            ppdvar.style.textAlign = "center";
+            ppdvar.style.fontWeight = "700";
+            ppdvar.innerHTML = "Profit of the day  " + data[i].profit;
+        }
+    }
 }
 
 /*
@@ -163,8 +250,8 @@ function setdefaultport(id){
 setup active portfolio
 */
 function setupactiveport(data,id){
-        
-        var ul = document.getElementById("portfolios-ul");   
+
+        var ul = document.getElementById("portfolios-ul");
         var footer = document.getElementById("footer-port");
         footer.innerHTML = ' ';
         desc.innerHTML = data.description;
@@ -193,7 +280,7 @@ api call delete portfolio
 document.getElementById("footer-port").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "I") {
     if(e.target.id == "header-port-del"){
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token); 
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token);
         getport();
     }else{
         activemodalportdel = 1;
@@ -209,7 +296,7 @@ if(e.target && e.target.nodeName == "I") {
 api call get all notes with portfolioid
 */
 function getnotes(){
-        var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=" + activeportfolioid,"GET",token); 
+        var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=" + activeportfolioid,"GET",token);
         var notes = document.getElementById("notes-all");
         notes.innerHTML = "";
       for(var i = 0; i < data.length;i++){
@@ -244,13 +331,31 @@ if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
                 makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
                 document.getElementById(e.target.id + "note").style.display = "none";
       }else{
-               var json =  {"NoteId": e.target.id,"Message": "Hello world2"};
-                makerequest(json,"http://localhost:62382/api/note","POST",token);
+          var json = {"NoteId": e.target.id,"Message": "Hello world2d"};
+            $.ajax({
+                "async": true,
+                "crossDomain": true,
+                url: "http://10.3.50.6/api/note",
+                type: "POST",
+                "headers": {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                data:JSON.stringify(json),
+                dataType: 'json',
+                success:function(data){},
+                error: function(xhr, ajaxOptions, thrownError){
+                    console.log(e.target.id);
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                    console.log(xhr);
+                }
+            });
       }
 }
 });
 
-/* 
+/*
 notes
 */
 /*
@@ -273,7 +378,7 @@ document.getElementById("MCreateNoteBCrosse").addEventListener("click",McreateNo
 function McreateNoteClose(){
     content.value = "";
      errorcontent.innerHTML = "";
-	$('#MCreateNote').modal('toggle');	
+	$('#MCreateNote').modal('toggle');
 }
 
 /*
@@ -289,7 +394,7 @@ function createnote(){
     }
     if(valid){
         var json = {"PortfolioId": activeportfolioid ,"message":content.value};
-        var data = makerequest(json,"http://10.3.50.6/api/note","PUT",token); 
+        var data = makerequest(json,"http://10.3.50.6/api/note","PUT",token);
         McreateNoteClose();
         getnotes();
     }
@@ -328,7 +433,7 @@ goalport.value = "";
 errorname.innerHTML = "";
 errordesc.innerHTML = "";
 errorgoal.innerHTML = "";
-	$('#MCreatePort').modal('toggle');	
+	$('#MCreatePort').modal('toggle');
 }
 
 /*
@@ -349,13 +454,13 @@ function createport(){
         if(valid){
             var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value};
             console.log(jsonfile);
-            makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token); 
+            makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token);
         }
    }else{
         if(valid){
         var jsonfile = {"PortfolioId":activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value};
             console.log(jsonfile);
-        makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token); 
+        makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token);
         }
         activemodalportdel = 0;
     }
@@ -422,49 +527,37 @@ function getorders(){
         	console.log(thrownError);
             console.log(xhr);
         }
-    });   
+    });
 }
 function setOrders(data,i){
-                        var div = document.createElement("div");
-                        div.setAttribute("class","card");
-                        var div_bd = document.createElement("div");
-                        div_bd.setAttribute("class","card-body");
-                        div_bd.style.padding = "0";
-                        div_bd.style.color = "#fff";
-                        div_bd.style.backgroundColor ="#25313B";
-                        div_bd.style.fontWeight = "600";
-                        var div_ord = document.createElement("div");
-                        var div_ord_us = document.createElement("div");
-                        div_ord.setAttribute("class","order-spec");
-                        div_ord_us.setAttribute("class","order-spec");
-                        div_ord.innerHTML += "<span class='spec'>"+data[i].exchange+"</span>";
-                        var color;
-                        if(data[i].side == "Buy"){
-                            color = "green";
-                        }else{
-                            color = "red";
-                        }
-                        for(var j = 0;j < col.length;j++){
-                            if(document.getElementById(col[i]).checked == true){
-                                console.log(col[i]);
-                            }
-                        }
-                        div_ord.innerHTML += "<span class='spec' style='color:"+color+"'>"+data[i].side+"</span>";
-                        div_ord.innerHTML += "<span class='spec'>"+data[i].price+ " (" +data[i].currency+")</span>";
-                        div_ord.innerHTML += "<span class='spec'>"+data[i].symbol+"</span>";
-                        div_ord.innerHTML += "<span class='spec'>"+data[i].timestamp+"</span>";
-                        div_ord_us.innerHTML += "<select class='custom-select spec' name='technique' style='width:30%;'><option selected>Choose technique</option><option value='h&s'>head&shoulders</option><option value='tech'>tech</option><option value='ddd'>ddd</option></select>";
-                        div_ord_us.innerHTML += "<div class='custom-file'  style='width:40%;margin:2%;'><input type='file' class='custom-file-input' id=" +data[i].orderId +" aria-describedby='inputGroupFileAddon04'><label class='custom-file-label' for="+data[i].orderId+">Choose image</label></div>";
-                        div_ord_us.innerHTML += "<button type='submit' id="+data[i].orderId+" class='btn btn-primary my'>Submit</button>";
-                        div_bd.appendChild(div_ord);
-                        div_bd.appendChild(div_ord_us);
-                        div.appendChild(div_bd);
-                        all.appendChild(div);
+        var tr = document.createElement("tr");;
+        if(data[i].side == "Buy"){
+            color = "green";
+        }else{
+           color = "red";
+        }
+        if(all.className == 'all'){
+            tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>";
+        }
+        tr.innerHTML += "<td class='ex'>"+data[i].exchange+"</td>";
+        tr.innerHTML += "<td class='si' style='color:"+color+"'>"+data[i].side+"</td>";
+        tr.innerHTML += "<td class='pr'>"+data[i].price+"("+data[i].currency+")</td>";
+        tr.innerHTML += "<td class='qt'>"+data[i].orderQty+"</td>";
+        tr.innerHTML += "<td class='sy'>"+data[i].symbol+"</td>";
+        var date = data[i].timestamp;
+        tr.innerHTML += "<td class='ti'>"+date.substr(0,10)+" " + date.substr(11,5)+"</td>";
+        if(all.className == 'all'){
+            tr.innerHTML += "<td class='delorder'><i class='fa fa-ellipsis-v' id="+data[i].orderId+"></i></td>";
+        }else{
+
+            tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' class='check' id="+data[i].orderId+" value="+data[i].orderId+"></td>"
+        }
+        all.appendChild(tr);
 }
 
 function adddoubleline(){
            var myChart = echarts.init(document.getElementById('main'),'light');
-        
+
         var base = +new Date(2018, 9, 3);
         var oneDay = 24 * 3600 * 1000;
         var date = [];
@@ -473,8 +566,8 @@ function adddoubleline(){
         var dataBitMex = [Math.random() * 1];
         var dataBinance = [Math.random() * 3];
 
-        
-        
+
+
         /*fetch('http://api.com/file.json')
         .then (function(response){
                return response.json();
@@ -482,8 +575,8 @@ function adddoubleline(){
         .then(function(myJson){
                 date.push([JSON.stringify(myJson)]);
 })
-        
-        
+
+
         fetch('http://api.com/file.json')
         .then (function(response){
                return response.json();
@@ -491,7 +584,7 @@ function adddoubleline(){
         .then(function(myJson){
                 dataBitMex.push([JSON.stringify(myJson)]);
 })
-       
+
 fetch('http://api.com/file.json')
         .then (function(response){
                return response.json();
@@ -499,8 +592,8 @@ fetch('http://api.com/file.json')
         .then(function(myJson){
                 dataBinance.push([JSON.stringify(myJson)]);
 })*/
-      
-        
+
+
         for (var i = base; i <= today; i += oneDay) {
             var j = 1;
             var now = new Date(base += oneDay);
@@ -519,7 +612,7 @@ fetch('http://api.com/file.json')
             legend:{
               left: 'left',
               data: ['BitMex', 'Binance'],
-              align: 'left'    
+              align: 'left'
             },
             title: {
                 left: 'center',
@@ -589,7 +682,7 @@ fetch('http://api.com/file.json')
                 }
             ]
         };
-        myChart.setOption(doubleLine); 
+        myChart.setOption(doubleLine);
 }
 function addbasichart(){
         // based on prepared DOM, initialize echarts instance
@@ -600,7 +693,7 @@ var base = +new Date(2018, 9, 3);
 var oneDay = 24 * 3600 * 1000;
 var date = [];
 var today = +new Date();
-        
+
 var data = [Math.random() * 5];
 
 /*fetch('http://api.com/file.json')
@@ -610,7 +703,7 @@ var data = [Math.random() * 5];
         .then(function(myJson){
                 date.push([JSON.stringify(myJson)]);
 })
-       
+
 fetch('http://api.com/file.json')
         .then (function(response){
                return response.json();
@@ -618,7 +711,7 @@ fetch('http://api.com/file.json')
         .then(function(myJson){
                 data.push([JSON.stringify(myJson)]);
 })*/
-                
+
 for (var i = base; i < today; i += oneDay) {
     var j = 1;
     var now = new Date(base += oneDay);
@@ -702,17 +795,17 @@ BasicChart = {
         // use configuration item and data specified to show chart
         myChart.setOption(BasicChart);
 }
-function addchart(){ 
-        // based on prepared DOM, initialize echarts instance 
+function addchart(){
+        // based on prepared DOM, initialize echarts instance
         var myChart = echarts.init(document.getElementById('main'));
 
-        // specify chart configuration item and data 
-var base = +new Date(1968, 9, 3); 
+        // specify chart configuration item and data
+var base = +new Date(1968, 9, 3);
 var base2 = +new Date(1968,9,4);
-var oneDay = 24 * 3600 * 1000; 
+var oneDay = 24 * 3600 * 1000;
 var date = [];
 var today = +new Date();
-        
+
 var data = [Math.random() * 300];
 for (var i = base2; i < today; i += oneDay) {
     var j = 1;

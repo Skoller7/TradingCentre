@@ -1,11 +1,11 @@
 <!doctype html>
 <html>
 <head>
-      <meta charset="utf-8">  
+      <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/datacenter.css">
       <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">      
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="bootstrap-4.1.3/js/bootstrap.min.js"></script>
       <script src="js/lib.js" type="text/javascript"></script>
@@ -27,6 +27,7 @@
       <meta name="msapplication-TileColor" content="#ffffff">
       <meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
       <meta name="theme-color" content="#ffffff">
+    <title>Journal</title>
 
 </head>
 <body onload="addbasichart()">
@@ -45,11 +46,13 @@
                         <ul id="portfolios-ul">
                         </ul>
                     </div>
+                    <li id="addorder">Add orders</li>
+                  <li><a href="createdataselling.php?portfolioId=">Sell portfolio</a></li>
                     <li id="BCreateNote">Create note</li>
                     <!--<li class="notes-header" id="notes"><a href="#">All Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
                     <div id="notes-sub">
                         <ul id="notes-ul">
-                            
+
                         </ul>
                     </div>!-->
                     <div id="notes-all"></div>
@@ -66,10 +69,10 @@
            <div id="main"></div>
         </div>
         <div id="portfolio-description">
-        
+
         </div>
         <div id="portfolio-goals">
-        
+
         </div>
         <h3>Orders</h3>
         <div class="info-content" id="info-content">

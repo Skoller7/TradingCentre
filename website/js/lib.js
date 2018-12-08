@@ -102,7 +102,7 @@ function closeModal(item){
 }
 //makes api request without parameters
 function makerequestnopar( url_api, type_api, authorization_api){
-    var data_api;
+    var data_api = "";
    $.ajax({
     	"async": false,
   		"crossDomain": true,
@@ -120,13 +120,15 @@ function makerequestnopar( url_api, type_api, authorization_api){
         	console.log(xhr.status);
         	console.log(thrownError);
             //console.log("error");
+            data_api += "error: ";
+            data_api +=  xhr.responseText;
         }
     });
     return data_api;
 }
 //makes api request with parameters
 function makerequest(jsonfile_api, url_api, type_api, authorization_api){
-    var data_api; 
+    var data_api = ""; 
    $.ajax({
     	"async": false,
   		"crossDomain": true,
@@ -145,6 +147,8 @@ function makerequest(jsonfile_api, url_api, type_api, authorization_api){
         	console.log(xhr.status);
         	console.log(thrownError);
             console.log(xhr);
+            data_api += "error: ";
+            data_api +=  xhr.responseText;
         }
     });
     return data_api;
