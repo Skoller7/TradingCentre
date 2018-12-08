@@ -8,7 +8,12 @@
 <ul class="navbar-items" id="rightButtonNav" >
 <li><a href="home.html" class="nav-link">Home</a></li> 
 <li><a href="journal.php" class="nav-link">Journal</a></li>
-<li><a href="datacenteroverview.php" class="nav-link">Datacenter</a></li>
+<li class="dropdown"><a href="datacenteroverview.php" class="nav-link">Datacenter</a>
+    <div class="dropdown-content">
+      <span id="boughtdata">Bought data</span>
+      <span id="solddata">Sold data</span>
+    </div>   
+</li>
 <div class="search-container">
 <form>
     <input type="text" placeholder="Search.." name="search">
@@ -23,9 +28,9 @@
   <div class="overlay-content" id="rightButtonNav">
     <a href="home.php">Home</a>
     <a href="journal.php">Journal</a>
-    <a href="datacenteroverview.php">Datacenter</a>
-  </div>
+      <a href="datacenteroverview.php">Datacenter</a>
 </div>
+    </div>
 </nav>
 <!--Login modal-->
 <div class="modal fade" id="MLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
