@@ -15,9 +15,7 @@ var goals = document.getElementById("portfolio-goals");
  var table_orders = document.getElementById("orders");
 var head_orders = document.getElementById("orders-port");
 var info = document.getElementById("info-content");
-var all = document.getElementById("all-orders");
-var col = ["Exchange","Symbol","Side","OrderQty","Currency","Price","Timestamp"];
-var div = document.getElementById("col-order");
+var all = document.getElementById("all-orders-table");
 var myChart;
 var ex = document.getElementById("exchange");
 var si = document.getElementById("side");
@@ -47,6 +45,12 @@ var refresh = document.getElementById("refreshorder");
 var defaultbool = false;
 modalList.push("MCreateNote");
 modalList.push("MCreatePort");
+        function addzero(number){
+            if(number < 10){
+                number = "0" + number;
+            }
+            return number;
+        }
 /*        function delcard(id){
             document.getElementById(id).style.display = "block";
         }
@@ -632,33 +636,6 @@ function refreshorder(){
 /*
 api call get orders
 */
-    for(var i=0;i < col.length;i++){
-        var option = document.createElement("input");
-        var span = document.createElement("label");
-        option.setAttribute("type","checkbox");
-        option.setAttribute("id",col[i]);
-        option.setAttribute("checked","true");
-        span.setAttribute("for",col[i]);
-        span.style.cursor = "pointer";
-        span.className = "dropdown-item";
-        span.appendChild(option);
-        span.innerHTML += col[i];
-        div.appendChild(span);
-    }
-document.getElementById("col-order").style.display = "none";
-document.getElementById("col-sel").addEventListener("click",openColOrder);
-function openColOrder(){
-     var sub = document.getElementById("col-order");
-    if(sub.style.display == "block"){
-        document.getElementById("col-arrow").className = "fa fa-angle-right";
-        sub.style.display = "none";
-    }else{
-        document.getElementById("col-arrow").className = "fa fa-angle-down";
-        document.getElementById("col-order").style.display = "block";
-    }
-    getorders();
-}
-
 function getorders(){
         all.innerHTML = "";
        $.ajax({
@@ -673,6 +650,7 @@ function getorders(){
         dataType: 'json',
         success: function(data){
             if(data.length != 0){
+                arraysort = data;
                     for(var i = 0;i<data.length; i++){
                             setOrders(data,i,defaultbool);
                     }

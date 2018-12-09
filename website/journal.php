@@ -76,7 +76,7 @@
         </div>
         <h3>Orders</h3>
         <div class="info-content" id="info-content">
-        <div id="all-orders">
+        <div>
             <div class="table-responsive">
                 <label>Amount</label>
                 <select id="amount">
