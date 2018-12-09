@@ -100,6 +100,7 @@
                 <input type="date" id="fromdate">
                 <label>To Date</label>
                 <input type="date" id="todate">
+                <input type="submit" class="btn btn-primary" id="refreshorder" value="Refresh orders" style="margin-left:2%;">
                 <table class="table table-hover">
                     <thead>
                       <tr class="head-td">
@@ -125,6 +126,7 @@
     </div>
 </div>
 </div>
+<!-- add order to portfolio !-->
 <div class="modal fade" id="Maddorder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 		<div class="modal-content">

@@ -43,6 +43,8 @@ var amount = document.getElementById("amount");
 var frdate;
 var tdate;
 var ppdvar = document.getElementById("profit-port");
+var refresh = document.getElementById("refreshorder");
+var defaultbool = false;
 modalList.push("MCreateNote");
 modalList.push("MCreatePort");
 modalList.push("Maddorder");
@@ -187,7 +189,7 @@ function sortarray(){
            }else{
                all = document.getElementById("all-orders-table");
                 for(var j = 0;j < arraysort.length;j++){
-                    setOrders(arraysort,j);
+                    setOrders(arraysort,j,defaultbool);
                 }
            }
 }
@@ -228,6 +230,7 @@ function getport(){
             li.setAttribute("id",data[i].portfolioId + "port");
             li.appendChild(name);
             if(data[i].name == "default"){
+                defaultbool = true;
                 setdefaultport(data[i].portfolioId);
                  activeportfolioid = data[i].portfolioId;
             }
@@ -292,13 +295,39 @@ function addorderstoportfolio(){
         document.getElementById("erroraddorder").innerHTML = data;
     }
 }
-
-var delorders = document.getElementById("all-orders-table").addEventListener("click",function (e){
+/*
+api call open options menu
+*/
+document.getElementById("all-orders-table").addEventListener("click",function (e){
     if(e.target.nodeName == "I") {
-        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
-        getorders(); 
+        openoptions(e.target.id);
     }
+    /*if(e.target.nodeName = "LI"){
+        if(e.target.className = "deleteorder"){
+            makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+            getorders(); 
+        }else{
+            
+        }
+    }*/
 });
+
+/*
+open sub menu options
+*/
+function openoptions(id){
+    var div = document.getElementById("opt"+id);
+    var classname = document.getElementsByClassName("dropdown-options");
+    for (var i = 0;i < classname.length;i++){
+        classname[i].style.display = "none";
+    }
+    if(div.style.display == "block"){
+        div.style.display = "none";
+    }else{
+        div.style.display = "block";
+    }
+    
+}
 
 /*
 get ppd portfolio
@@ -331,6 +360,11 @@ document.getElementById("portfolios-ul").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.target.id.indexOf("port"))))) {
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token);
         setupactiveport(data,e.target.id);
+        if(data.name == "default"){
+            defaultbool = true;
+        }else{
+            defaultbool = false;
+        }
         activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
         getnotes();
         getorders();
@@ -588,7 +622,7 @@ function getordersadd(){
         success: function(data){
             if(data.length > 0){
                     for(var i = 0;i<data.length; i++){
-                            setOrders(data,i);
+                            setOrders(data,i,defaultbool);
                     }
             }else{
                 all.innerHTML = "No orders found";
@@ -600,6 +634,14 @@ function getordersadd(){
             console.log(xhr);
         }
     }); 
+}
+/*
+refresh orders
+*/
+refresh.addEventListener("click",refreshorder);
+function refreshorder(){
+    makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token);
+    getorders();   
 }
 
 /*
@@ -660,7 +702,7 @@ function getorders(){
             arraysort = data;
             if(data.length > 0){
                     for(var i = 0;i<data.length; i++){
-                            setOrders(data,i);
+                            setOrders(data,i,defaultbool);
                     }
             }else{
                 all.innerHTML = "No orders found";
@@ -676,8 +718,8 @@ function getorders(){
 /*
 set orders in the table
 */
-function setOrders(data,i){
-        var tr = document.createElement("tr");;
+function setOrders(data,i,defaultbool){
+        var tr = document.createElement("tr");
         if(data[i].side == "Buy"){
             color = "green";
         }else{
@@ -694,9 +736,33 @@ function setOrders(data,i){
         var date = data[i].timestamp;
         tr.innerHTML += "<td class='ti'>"+date.substr(0,10)+" " + date.substr(11,5)+"</td>";
         if(all.className == 'all'){
-            tr.innerHTML += "<td class='delorder'><i class='fa fa-ellipsis-v' id="+data[i].orderId+"></i></td>";
+            var td = document.createElement("td");
+            td.setAttribute("class","delorder");
+            var j = document.createElement("i");
+            j.setAttribute("class","fa fa-ellipsis-v");
+            j.setAttribute("id",data[i].orderId);
+            td.appendChild(j);
+            var div = document.createElement("div");
+            var ul = document.createElement("ul");
+            var li = document.createElement("li");
+            div.setAttribute("class","dropdown-options");
+            div.setAttribute("id","opt"+data[i].orderId);
+            ul.setAttribute("class","dropdown-content-options");
+            li.setAttribute("id",data[i].orderId);
+            li.setAttribute("class","uploadimage");
+            li.innerHTML = "upload image";
+            ul.appendChild(li);
+            if(!defaultbool){
+                var lid = document.createElement("li");
+                lid.setAttribute("id",data[i].orderId);
+                lid.setAttribute("class","deleteorder");
+                lid.innerHTML = "delete";
+                ul.appendChild(lid);
+            }
+            div.appendChild(ul);
+            td.appendChild(div);
+            tr.appendChild(td);
         }else{
-            
             tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' class='check' id="+data[i].orderId+" value="+data[i].orderId+"></td>"
         }
         all.appendChild(tr);
