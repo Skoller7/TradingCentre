@@ -2,7 +2,7 @@
 
  <!-- menu bar meer naar links, users uit db halen & verschillende portfolio's tonen *
 - mogelijk tonen op rating/likes/follows? **
-- card een max height geven zodat deze ongeveer even zal zijn afhankelijk * * * 
+- card een max height geven zodat deze ongeveer even zal zijn afhankelijk * * *
 - datacenter menu bar drop down maken * * * *
 -->
 <html>
@@ -54,20 +54,21 @@
     <div class="col-md-3"></div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content">
-        <h3>Best Trades</h3>
+        <h3>Datacenter</h3>
         </div>
         <div class="content-datacenter">
             <div class="card">
               <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
               <div class="card-body">
-                <h5 class="card-title">Skoller</h5>
-                <p class="card-text">
-                  Master of the head & shoulder pattern.
-                  </p>
+                <h5 class="card-title" id="portusername">Skoller</h5>
+                <p class="card-text" id="portfoliodesc"></p>
                 <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
               </div>
             </div>
 
+        <div class="card-body" id="sell-port-all"> </div>
+
+<!--
             <div class="card">
               <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
               <div class="card-body">

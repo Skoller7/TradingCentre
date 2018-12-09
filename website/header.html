@@ -1,3 +1,6 @@
+<!--
+looks aanpassen vande dropdown menu line : 14-17
+-->
 <nav class="navbar navbar-expand-lg fixed-top">
 <a class="navbar-brand" href="Index.php">
  Tradingcenter
@@ -6,13 +9,14 @@
 <div class="collapse navbar-collapse" id="navb">
     <div class="header-section-rigth">
 <ul class="navbar-items" id="rightButtonNav" >
-<li><a href="home.html" class="nav-link">Home</a></li> 
+<li><a href="home.html" class="nav-link">Home</a></li>
 <li><a href="journal.php" class="nav-link">Journal</a></li>
 <li class="dropdown"><a href="datacenteroverview.php" class="nav-link">Datacenter</a>
     <div class="dropdown-content">
-      <span id="boughtdata">Bought data</span>
-      <span id="solddata">Sold data</span>
-    </div>   
+      <a id="boughtdata" class="dropdown-item" href="dataLibrary.php">Bought data</a>
+      <a id="solddata" class="dropdown-item">Sold data</a>
+      <a id="dataoverview" class="dropdown-item" href="yourDataOverView.php">Data overview</a>
+    </div>
 </li>
 <div class="search-container">
 <form>
@@ -21,7 +25,7 @@
 </form>
 </div>
 </ul>
-</div>  
+</div>
 </div>
 <div id="navbar-overlay" class="overlay">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>

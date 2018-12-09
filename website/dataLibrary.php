@@ -1,4 +1,10 @@
 <!doctype html>
+
+ <!-- menu bar meer naar links, users uit db halen & verschillende portfolio's tonen *
+- mogelijk tonen op rating/likes/follows? **
+- card een max height geven zodat deze ongeveer even zal zijn afhankelijk * * *
+- datacenter menu bar drop down maken * * * *
+-->
 <html>
 <head>
       <meta charset="utf-8">
@@ -32,51 +38,15 @@
 <?php
   include_once("header.html");
 ?>
-<div class="modal fade" id="buyContractModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create a Datacontract</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-row align-items-center">
-             <div class="col-auto my-1">
-               <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
-               <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                 <option selected>Default Portfolio</option>
-                 <option value="2">Portfolio 1</option>
-                 <option value="3">Portfolio 2</option>
-               </select>
-             </div>
-           </div>
-          <div class="form-group"><br  />
-            <label for="exampleInputEmail1">Contract Price</label>
-            <input type="ContractPrice" class="form-control" aria-describedby="emailHelp" placeholder="Ether price">
-            <small id="priceHelp" class="form-text text-muted">This will be the selling price of your contract</small>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Create contract</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
 <div class="containter-fluid">
     <nav class="sidebar">
         <div class="row">
-                <h3>Overview of your data</h3>
-                <br />     <br />     <br />
+                <h3>Overview</h3>
         <ul>
-            <li><a href="">Portfolio 1 </a></li>
-             <li><a href="">Portfolio 2</a></li>
-             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buyContractModal">Create a new datacontract</button>
+            <li><a href="">Best Trades</a></li>
+             <li><a href="">Best Traders</a></li>
+            <li><a href="">Type</a></li>
+            <li><a href="">Most Profit</a></li>
         </ul>
         </div>
     </nav>
@@ -84,32 +54,23 @@
     <div class="col-md-3"></div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content">
-        <h3>Portfolio 1 overview</h3><br /><br />
-
-
-          <h4>DataContract price:
-          <span id="contractPrice"></span> </h4><br />
-
-          <h4>Buyers :
-          <span id="buyers"></span></h4><br />
-
-          <h4>Profit :
-            <span id="dataProfit"></span>
-          </h4>
-
-          <h1>Hier misschien nog een graph over hoe de sales gaan???</h1>
-
-
+        <h3>Your bought portfolio's : </h3>
         </div>
         <div class="content-datacenter">
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Master of the head & shoulder pattern.
+                  </p>
+                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+              </div>
+            </div>
 
         </div>
     </div>
 </div>
 </div>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="js/web3.min.js"></script>
-<script src="js/truffle-contract.js"></script>
-<script src="js/dataOverView.js"></script>
 </html>
