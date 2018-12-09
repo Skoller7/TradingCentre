@@ -1,3 +1,5 @@
+var token = getCookie("jwtToken");
+
 App = {
   web3Provider: null,
   contracts: {},
@@ -34,14 +36,13 @@ initContract1: function(){
   }).then(DataContractArtifact => {
     App.contracts.DataContract = TruffleContract(DataContractArtifact);
     App.contracts.DataContract.setProvider(App.web3Provider);;
-
+    console.log(App.contracts);
     console.log("test");
     return App.requestPrice();
   })
-}
+},
 
 requestPrice: function(){
-
   App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
     return instance.getPrice.call()
   }).then(priceOfData => {
@@ -50,6 +51,7 @@ requestPrice: function(){
     $('#contractPrice').val("Buy for " + priceOfData + " WEI");
   })
 },
+
 
 createBuyRequest: function(){
 
@@ -62,14 +64,37 @@ createBuyRequest: function(){
   App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(instance => {
     instance.createBuyRequest({from: account, gas, value: 1000000 }).then((r) => {
       console.log("buy request completed");
+      // var jsonfile = {"portfolioid": 33} //portfolio nog zien te krijgen via globale
+      // console.log(jsonfile);
+      // makerequest(jsonfile, "http://10.3.50.6/api/purchase","POST", token);
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": "http://10.3.50.6/api/purchase",
+        "method": "POST",
+        "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        "data": "{\n\t\"portfolioId\": 33,\n}"
+        }
+        $.ajax(settings).done(function (response) {
+          console.log(response);
+        });
       $('#buying-succes').text("You succesfully bought the data!");
-    })
-  })
-})
+    });
+  });
+});
 }
 
 
 }
+
+$(function() {
+  $(window).load(function() {
+    App.initWeb3();
+  });
+});
 
 $('.btn-contract-buy').click(function(){
   console.log("buy contract clicked");
