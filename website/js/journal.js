@@ -17,7 +17,34 @@ var head_orders = document.getElementById("orders-port");
 var info = document.getElementById("info-content");
 var all = document.getElementById("all-orders");
 var col = ["Exchange","Symbol","Side","OrderQty","Currency","Price","Timestamp"];
-        var div = document.getElementById("col-order");
+var div = document.getElementById("col-order");
+var myChart;
+var ex = document.getElementById("exchange");
+var si = document.getElementById("side");
+var pr = document.getElementById("price");
+var qt = document.getElementById("orderQty");
+var sy = document.getElementById("symbol");
+var ti = document.getElementById("timestamp");
+var ex_arr = document.getElementById("exchange-arrow");
+var si_arr = document.getElementById("side-arrow");
+var pr_arr = document.getElementById("price-arrow");
+var qt_arr = document.getElementById("orderQty-arrow");
+var sy_arr = document.getElementById("symbol-arrow");
+var ti_arr = document.getElementById("timestamp-arrow");
+var arraysort;
+var arrayaddorders = [];
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() +1;
+var yyyy = today.getFullYear();
+var fromdate = document.getElementById("fromdate");
+var todate = document.getElementById("todate");
+var amount = document.getElementById("amount");
+var frdate;
+var tdate;
+var ppdvar = document.getElementById("profit-port");
+var refresh = document.getElementById("refreshorder");
+var defaultbool = false;
 modalList.push("MCreateNote");
 modalList.push("MCreatePort");
 /*        function delcard(id){
@@ -97,6 +124,66 @@ function openSubNotes(){
 */
 
 /*
+table eventlisteners
+*/
+function sort(array,prop,change){
+    if(change == 0){
+        for(var i = 0;i < array.length;i++){
+            for(var j = 0; j < array.length - i - 1; j++){
+                if(array[j][prop] > array[j + 1][prop]){
+                    var id = document.getElementById(array[j].orderId);
+                    var idplus = document.getElementById(array[j + 1].orderId);
+                    var hold = array[j];
+                    id.setAttribute("id",array[j+1].orderId);
+                    idplus.setAttribute("id",array[j].orderId);
+                    array[j] = array[j+1];
+                    array[j+1] = hold;
+                }
+            }
+        }
+    }else{
+        for(var i = 0;i < array.length;i++){
+            for(var j = 0; j < array.length - i - 1; j++){
+                if(array[j][prop] < array[j + 1][prop]){
+                    var id = document.getElementById(array[j].orderId);
+                    var idplus = document.getElementById(array[j + 1].orderId);
+                    var hold = array[j];
+                    id.setAttribute("id",array[j+1].orderId);
+                    idplus.setAttribute("id",array[j].orderId);
+                    array[j] = array[j+1];
+                    array[j+1] = hold;
+                }
+            }
+        }
+    }
+    return array;
+}
+function sortarray(){
+    var docid = document.getElementById(this.id + "-arrow");
+    if(docid.className == 'fa fa-angle-down'){
+        docid.className = "fa fa-angle-up";
+        arraysort = sort(arraysort,this.id,0);
+    }else{
+         docid.className = "fa fa-angle-down";
+        arraysort = sort(arraysort,this.id,1);
+    }
+    all.innerHTML = "";
+        if(arraysort.length == 0){
+            all.innerHTML = "No orders found";
+           }else{
+               all = document.getElementById("all-orders-table");
+                for(var j = 0;j < arraysort.length;j++){
+                    setOrders(arraysort,j,defaultbool);
+                }
+           }
+}
+ex.addEventListener("click",sortarray);
+si.addEventListener("click",sortarray);
+pr.addEventListener("click",sortarray);
+qt.addEventListener("click",sortarray); 
+sy.addEventListener("click",sortarray);
+ti.addEventListener("click",sortarray);
+/* 
 menu sidebar portfolios
 */
 document.getElementById("porfolios-sub").style.display = "none";
@@ -128,6 +215,7 @@ function getport(){
             li.setAttribute("id",data[i].portfolioId + "port");
             li.appendChild(name);
             if(data[i].name == "default"){
+                defaultbool = true;
                 setdefaultport(data[i].portfolioId);
                  activeportfolioid = data[i].portfolioId;
             }
@@ -192,13 +280,39 @@ function addorderstoportfolio(){
         document.getElementById("erroraddorder").innerHTML = data;
     }
 }
-
-var delorders = document.getElementById("all-orders-table").addEventListener("click",function (e){
+/*
+api call open options menu
+*/
+document.getElementById("all-orders-table").addEventListener("click",function (e){
     if(e.target.nodeName == "I") {
-        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
-        getorders();
+        openoptions(e.target.id);
     }
+    /*if(e.target.nodeName = "LI"){
+        if(e.target.className = "deleteorder"){
+            makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+            getorders(); 
+        }else{
+            
+        }
+    }*/
 });
+
+/*
+open sub menu options
+*/
+function openoptions(id){
+    var div = document.getElementById("opt"+id);
+    var classname = document.getElementsByClassName("dropdown-options");
+    for (var i = 0;i < classname.length;i++){
+        classname[i].style.display = "none";
+    }
+    if(div.style.display == "block"){
+        div.style.display = "none";
+    }else{
+        div.style.display = "block";
+    }
+    
+}
 
 /*
 get ppd portfolio
@@ -231,6 +345,11 @@ document.getElementById("portfolios-ul").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.target.id.indexOf("port"))))) {
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token);
         setupactiveport(data,e.target.id);
+        if(data.name == "default"){
+            defaultbool = true;
+        }else{
+            defaultbool = false;
+        }
         activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
         getnotes();
         getorders();
@@ -469,7 +588,46 @@ function createport(){
 }
 
 
-
+/*
+api call get orders users without the orders current in the portfolio
+*/
+function getordersadd(){
+    all = document.getElementById("all-orders-table-add");
+    all.innerHTML = "";
+    $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		url: "http://10.3.50.6/api/order/get?dateFrom=01/01/1970",
+        type: "GET",
+        "headers": {
+    		"Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+  		},
+        dataType: 'json',
+        success: function(data){
+            if(data.length > 0){
+                    for(var i = 0;i<data.length; i++){
+                            setOrders(data,i,defaultbool);
+                    }
+            }else{
+                all.innerHTML = "No orders found";
+            }
+            },
+        error: function(xhr, ajaxOptions, thrownError){
+        	console.log(xhr.status);
+        	console.log(thrownError);
+            console.log(xhr);
+        }
+    }); 
+}
+/*
+refresh orders
+*/
+refresh.addEventListener("click",refreshorder);
+function refreshorder(){
+    makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token);
+    getorders();   
+}
 
 /*
 api call get orders
@@ -516,7 +674,7 @@ function getorders(){
         success: function(data){
             if(data.length != 0){
                     for(var i = 0;i<data.length; i++){
-                            setOrders(data,i);
+                            setOrders(data,i,defaultbool);
                     }
             }else{
                 info.innerHTML = "No orders found";
@@ -529,8 +687,11 @@ function getorders(){
         }
     });
 }
-function setOrders(data,i){
-        var tr = document.createElement("tr");;
+/*
+set orders in the table
+*/
+function setOrders(data,i,defaultbool){
+        var tr = document.createElement("tr");
         if(data[i].side == "Buy"){
             color = "green";
         }else{
@@ -547,9 +708,33 @@ function setOrders(data,i){
         var date = data[i].timestamp;
         tr.innerHTML += "<td class='ti'>"+date.substr(0,10)+" " + date.substr(11,5)+"</td>";
         if(all.className == 'all'){
-            tr.innerHTML += "<td class='delorder'><i class='fa fa-ellipsis-v' id="+data[i].orderId+"></i></td>";
+            var td = document.createElement("td");
+            td.setAttribute("class","delorder");
+            var j = document.createElement("i");
+            j.setAttribute("class","fa fa-ellipsis-v");
+            j.setAttribute("id",data[i].orderId);
+            td.appendChild(j);
+            var div = document.createElement("div");
+            var ul = document.createElement("ul");
+            var li = document.createElement("li");
+            div.setAttribute("class","dropdown-options");
+            div.setAttribute("id","opt"+data[i].orderId);
+            ul.setAttribute("class","dropdown-content-options");
+            li.setAttribute("id",data[i].orderId);
+            li.setAttribute("class","uploadimage");
+            li.innerHTML = "upload image";
+            ul.appendChild(li);
+            if(!defaultbool){
+                var lid = document.createElement("li");
+                lid.setAttribute("id",data[i].orderId);
+                lid.setAttribute("class","deleteorder");
+                lid.innerHTML = "delete";
+                ul.appendChild(lid);
+            }
+            div.appendChild(ul);
+            td.appendChild(div);
+            tr.appendChild(td);
         }else{
-
             tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' class='check' id="+data[i].orderId+" value="+data[i].orderId+"></td>"
         }
         all.appendChild(tr);

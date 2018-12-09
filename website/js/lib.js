@@ -119,9 +119,11 @@ function makerequestnopar( url_api, type_api, authorization_api){
         error: function(xhr, ajaxOptions, thrownError){
         	console.log(xhr.status);
         	console.log(thrownError);
+            if(xhr.status != 200 || xhr.status != 201){
             //console.log("error");
             data_api += "error: ";
             data_api +=  xhr.responseText;
+            }
         }
     });
     return data_api;
@@ -147,8 +149,11 @@ function makerequest(jsonfile_api, url_api, type_api, authorization_api){
         	console.log(xhr.status);
         	console.log(thrownError);
             console.log(xhr);
+                        if(xhr.status != 200 || xhr.status != 201){
+
             data_api += "error: ";
             data_api +=  xhr.responseText;
+                        }
         }
     });
     return data_api;

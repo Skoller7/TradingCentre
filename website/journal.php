@@ -76,13 +76,40 @@
         </div>
         <h3>Orders</h3>
         <div class="info-content" id="info-content">
-        <div class="dropdown">
-          <button class="btn btn-primary" id="col-sel" type="button">Select columms&nbsp;
-          <i id="col-arrow" class="fa fa-angle-right"></i></button>
-          <ul class="dropdown-menu" id="col-order">
-          </ul>
-        </div>
-        <div id="all-orders"></div>
+        <div id="all-orders">
+            <div class="table-responsive">
+                <label>Amount</label>
+                <select id="amount">
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                    <option value="150">150</option>
+                    <option value="200">200</option>
+                </select>
+                <label>From date</label>
+                <input type="date" id="fromdate">
+                <label>To Date</label>
+                <input type="date" id="todate">
+                <input type="submit" class="btn btn-primary" id="refreshorder" value="Refresh orders" style="margin-left:2%;">
+                <table class="table table-hover">
+                    <thead>
+                      <tr class="head-td">
+                          <th id="orderId">OrderId</th>
+                            <th id="exchange">Exchange<i id="exchange-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="side">Side<i id="side-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="price">Price<i id="price-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="orderQty">Quantity<i id="orderQty-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="symbol">Symbol<i id="symbol-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="timestamp">Timestamp<i id="timestamp-arrow" class="fa fa-angle-up"></i></th>
+                          <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-orders-table" class="all">
+                    </tbody>
+                  </table>
+                </div>
+            </div>
         </div>
         <div class="footer-port" id="footer-port">
 
@@ -90,7 +117,46 @@
     </div>
 </div>
 </div>
-<!-- modal create notes!-->
+<!-- add order to portfolio !-->
+<div class="modal fade" id="Maddorder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+		        <h5 class="modal-title">Add orders to portfolio</h5>
+		        <button type="button" class="close" id="addorderBCrosse" aria-label="Close">
+	          		<span aria-hidden="true">&times;</span>
+				</button>
+		    </div>
+      		<div class="modal-body">
+      			<form>
+                <table class="table table-hover">
+                    <thead>
+                      <tr class="head-td">
+                        <th id="exchange">Exchange<i id="exchange-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="side">Side<i id="side-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="price">Price<i id="price-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="orderQty">Quantity<i id="orderQty-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="symbol">Symbol<i id="symbol-arrow" class="fa fa-angle-up"></i></th>
+                          <th id="timestamp">Timestamp<i id="timestamp-arrow" class="fa fa-angle-up"></i></th>
+                          <th>Add</th>
+                        </tr>
+                    </thead>
+                    <tbody id="all-orders-table-add">
+                        
+                    </tbody>
+                  </table>
+      				<span class="modalErrorMsg" id="erroraddorder"></span>
+      			</form>
+      		</div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-primary" id="btnaddorder">Add Orders</button>
+        		<button type="button" class="btn btn-secondary" id="btnclose">Close</button>
+      		</div>
+    	</div>
+		</div>
+</div>
+<!-- modal create notes and portfolio!-->
+
 <div class="modal fade" id="MCreateNote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 		<div class="modal-content">
