@@ -1,19 +1,14 @@
 #user{
-	/*margin-top: 10%;*/
+	margin-top: 10%;
 }
 .searchResult{
-	margin: 1% 0% 1% 0%;
+	margin: 1% 15% 1% 15%;
 	border: 1px solid black;
 }
-
 .markedText{
 	background-color: #f4aa42;
 }
-
 .searchImg{
 	height: 64px;
 	width: 64px;
-}
-#moreInfo{
-	border-left: 1px solid black;
 }
