@@ -33,7 +33,17 @@ function autoLogin(username, password){
 }
 */
 
-var scroll_to_demodatacenter = document.getElementById('demoDatacenter');
+$(document).ready(function(){
+
+
+document.getElementById('promoJournalButton').addEventListener("click", scrollToJournal);
+document.getElementById('promoDatacenterButton').addEventListener("click", scrollToDatacenter);
+setSize();
+
+
+for(var i = 0; i < document.getElementsByClassName('getStarted').length; i++){
+	document.getElementsByClassName('getStarted')[i].addEventListener("click", openMSignUp);
+}
 
 function scrollToJournal(){
 	var scroll_to_demojournal = document.getElementById('demoJournal');
@@ -49,3 +59,28 @@ function allowCookies(){
 	document.cookie = "cooikesAllowed=true;  expires=Thu, 01 Jan 3000 00:00:00 UTC";
 	document.getElementById("cookieBanner").style.display = "none";
 }
+
+$(window).resize(function() {
+	setSize();
+});
+
+
+var journalImg = document.getElementById("journalRight");
+
+function setSize(){
+
+var height = $(window).height()
+if(height < 640)
+	height = 640;
+$('.promo').css('height',height);
+
+$('#demoJournal').css('margin-top',height);
+$('#demoJournal').css('height',height);
+$('#demoDatacenter').css('height',height);
+
+var topPosition = parseFloat($('#journalRight').position().top) * 1.54;
+$('#journalImg').css('top',topPosition + 'px');
+topPosition = parseFloat($('#datacenterLeft').position().top) * 1.485;
+$('#datacenterImg').css('top',topPosition + 'px');
+}
+}); 
