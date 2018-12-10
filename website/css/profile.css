@@ -1,0 +1,325 @@
+/*#FF751A orange
+#25313B dark blue
+#F8F9FA light grey
+#0889C4 blue*/ 
+
+@media screen and (max-height: 450px) {
+    .overlay a {
+        font-size: 20px
+    }
+    .overlay .closebtn {
+        font-size: 40px;
+        top: 15px;
+        right: 35px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+   .navbar{ 
+        padding: 6px;
+    }
+    #menu {
+        float:right;
+        display: block;
+    }
+}
+
+@media (max-width: 768px) { 
+    .containter-fluid {
+        margin-left: 0%;
+    }
+    .sidebar {
+        position: relative;
+        top: 0;
+        height: 75%;
+        width: 100%;
+    }
+    .navbar {
+        padding: 10px;
+    }
+    #menu {
+        display: block;
+    }
+}
+
+body {
+    background-color: #F8F9FA;
+}
+
+/*
+sidebar
+*/
+
+.sidebar {
+    height: 100%;
+    background-color: #25313B;
+    color: #f8f9fa;
+    position: fixed;
+    top: 56px;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 0;
+    width: 25%;
+    overflow-x: hidden;
+}
+
+.row {
+    margin: 0;
+    display: block;
+}
+
+#user-image {
+    margin-top: 2%;
+    float: left;
+    color: #ff751a;
+}
+
+#user-description {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.containter-fluid {
+    margin-top: 55px;
+    background-color: #F8F9FA;
+}
+
+.header-content {
+    padding-top: 15px;
+}
+
+.content-datacenter .card{
+    width: 23%;
+    margin: 1%;
+    float: left;
+}
+
+/* navigation bar */
+.navbar {
+    background-color: #000;
+    margin: 0 auto;
+}
+
+.navbar-expand-lg .navbar-brand {
+    color: #fff;
+}
+
+.navbar-expand-lg .navbar-brand:hover {
+    color: #fff;
+}
+
+.navbar-items {
+    display: block;
+    float: right;
+}
+
+.navbar-items li {
+    float: left;
+    text-decoration: none;
+    list-style: none;
+}
+
+.navbar-items li a {
+    color: #9c9c9c;
+    border: none;
+    padding: 16px 16px 16px 16px;
+}
+
+.navbar-items li a:hover {
+    padding-bottom: 13px;
+    border-bottom: 3px solid #ff751a;
+    color: #fff;
+}
+
+.header-section-rigth {
+    float: right;
+    width: 100%;
+    margin-bottom: -16px;
+}
+
+.nav-link {
+    padding: 0;
+}
+
+#BLogin a {
+    color: #fff;
+    background-color: #25313B;
+    cursor: pointer; 
+}
+
+#BSignUp a {
+    color: #fff;
+    background-color: #ff751a;
+    cursor: pointer;
+}
+
+#BLogin a:hover {
+    border-bottom: 3px solid #0066ff;
+    padding-bottom: 13px;
+}
+
+#BSignUp a:hover {
+    border-bottom: 3px solid #fff;
+    padding-bottom: 13px;
+}
+
+#BSetttings a {
+    color: #fff;
+    background-color: #25313B;
+    cursor: pointer; 
+}
+
+#BLogout a {
+    color: #fff;
+    background-color: #ff751a;
+    cursor: pointer;
+}
+
+#BSetttings a:hover {
+    border-bottom: 3px solid #0066ff;
+    padding-bottom: 13px;
+}
+
+#BLogout a:hover {
+    border-bottom: 3px solid #fff;
+    padding-bottom: 13px;
+}
+
+.modalError {
+    border: 2px red solid;
+}
+
+.modalErrorMsg {
+    color: red;
+}
+
+.modalParagraph {
+    margin-bottom: 0px;
+}
+
+.search-container {
+  float: right;
+}
+
+.search-container input[type=text] {
+  padding: 16px;
+  border: none;
+    background-color: #000;
+    color: #fff;
+    padding-bottom: 14px;
+    width: 300px;
+}
+
+.search-container button {
+  float: right;
+  padding: 16px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.search-container button:hover {
+  background: #F8F9FA;
+}
+
+.navbar-toggler-icon{
+    width: inherit;
+    height: inherit;
+}
+
+.fa-bars {
+    background-color: #ff751a;
+    padding: 20px;
+    color: #fff;
+}
+/* 
+overlay 
+*/
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #F8F9FA;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    top: 25%;
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    background-color: #fff;
+    display: block;
+    transition: 0.3s;
+}
+
+.overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+    border-bottom: 3px solid #000;
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    background-color: #F8F9FA;
+}
+.overlay .closebtn:hover {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+    background-color: #F8F9FA;
+}
+#menu {
+    display: none;
+}
+
+/*
+styling modals
+*/
+.modal input {
+    background-color: #F8F9FA;
+    border:none;
+    width:100%;
+    padding:2%;
+}
+.modal-header {
+    background-color: #25313B;
+    color:#fff; 
+}
+#MLoginBLogin, #MCreateNoteBCreateNote, #MSignUpBSingUp, #MForgotPasswordBForgotPassword, #MCreatePortBCreatePort {
+    background-color: #ff751a;
+    border:none;
+}
+.close {
+    color:#fff;
+}
+#MLoginBLogin:hover, #MCreateNoteBCreateNote:hover, #MSignUpBSingUp:hover, #MForgotPasswordBForgotPassword:hover, #MCreatePortBCreatePort:hover {
+    background-color: #ff944d;
+    border:none;
+}
+#MLogin .modal-body input[type=checkbox] {
+    width:10%;
+}
+#MLogin #MLoginBForgotPassword, #MLogin #MLoginBSingUp, #MLogin #MLoginremember, #MSignUp #MSingUpBLogin {
+    color:#0889C4;
+    cursor: pointer;
+}
+#MLogin #MLoginBForgotPassword:hover, #MLogin #MLoginBSingUp:hover, #MSignUp #MSingUpBLogin:hover {
+    border-bottom: 1px solid #0889C4;
+}
