@@ -35,16 +35,14 @@ function autoLogin(username, password){
 
 $(document).ready(function(){
 
-
-document.getElementById('promoJournalButton').addEventListener("click", scrollToJournal);
-document.getElementById('promoDatacenterButton').addEventListener("click", scrollToDatacenter);
-setSize();
-
-
 for(var i = 0; i < document.getElementsByClassName('getStarted').length; i++){
 	document.getElementsByClassName('getStarted')[i].addEventListener("click", openMSignUp);
 }
 
+
+document.getElementById('promoJournalButton').addEventListener("click", scrollToJournal);
+document.getElementById('promoDatacenterButton').addEventListener("click", scrollToDatacenter);
+setSize();
 function scrollToJournal(){
 	var scroll_to_demojournal = document.getElementById('demoJournal');
 	scroll_to_demojournal.scrollIntoView({behavior: "smooth"});
