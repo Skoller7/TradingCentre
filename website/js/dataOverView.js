@@ -94,38 +94,35 @@ $('.btn-contract-price').click(function(){
    App.requestPrice();
 });
 
-function addbarchart() {
-    myChart = echarts.init(document.getElementById('myChart'), light);
+function addbarchart(){
+    var myChart = echarts.init(document.getElementById('main'), 'light');
     
-    barChart = {
-        tooltip: {
-            title: {
-                left: 'center',
-                text: 'Data sold'
-            },
-            toolbox: {
-                feature: {
-                    show: true,
-                    saveAsImage: {
-                        title: 'Save As Image'
-                    }
+    var option = {
+        title:{
+            text: 'Data sold per month',
+            left: 'left'
+        },
+        toolbox: {
+            feature:{
+                show: true,
+                saveAsImage: {
+                    title: 'Save As Image'
                 }
-            },
-            xAxis: {
-                type: 'category',
-                data: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-            },
-            yAxis: {
-                type: 'value',
-                boundaryGap: [0, '50%']
-            },
-            series: {
-                name: 'Data sold',
-                type: 'bar',
-                smooth: true,
-                data: [1, 5, 2, 6, 8, 10, 20, 11, 0, 12, 23, 33, 26]
             }
-        }
-    },
-        myChart.setOption(barChart);
-};
+        },
+        legend: {
+            data:['Data sold']
+        },
+        xAxis: {
+            data: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        },
+        yAxis:{},
+        series: [{
+            name:'Data sold',
+            type: 'bar',
+            data: [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15]
+        }]
+    };
+    
+        myChart.setOption(option);
+}

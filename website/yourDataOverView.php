@@ -6,7 +6,6 @@
         <link rel="stylesheet" href="css/datacenter.css">
       <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.2.0-rc.2/echarts.js"></script>
       <script src="bootstrap-4.1.3/js/bootstrap.min.js"></script>
@@ -99,7 +98,7 @@
           </h4>
 
           <h1>Hier misschien nog een graph over hoe de sales gaan???</h1>
-            <div id="myChart"></div>
+            <div id="main" ></div>
 
 
         </div>
@@ -110,6 +109,7 @@
 </div>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>
 <script src="js/dataOverView.js"></script>
