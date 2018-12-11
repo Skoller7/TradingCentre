@@ -73,10 +73,6 @@ sidebar
     width: 50%;
 }
 
-#user-name {
-
-}
-
 #user-image {
     margin-top: 2%;
     float: left;
@@ -86,6 +82,10 @@ sidebar
 #description {
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+#no-portfolio {
+    visibility: hidden;
 }
 
 .containter-fluid {

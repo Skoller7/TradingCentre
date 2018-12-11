@@ -53,20 +53,11 @@
                 </nav>
             </div>
             <div class="col-md-9 col-sm-12 col-xs-12">
-            <div class="header-content">
-                <h3>Data overview</h3>
-            </div>
-            <div class="content-datacenter">
-                <div class="card">
-                    <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%"> 
-                        <div class="card-body">
-                            <h5 class="card-title">Skoller</h5>
-                            <p class="card-text">
-                            Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. 
-                            </p>
-                            <a href="datacenternew.php" class="btn btn-primary">Buy data</a>
-                        </div>
-                    </div>
+                <div class="header-content">
+                    <h3>Data overview</h3>
+                </div>
+                <div class="content-datacenter">
+                    <p id="no-portfolio">This user currently has no portfolios for sale.</p>
                 </div>
             </div>
         </div>
