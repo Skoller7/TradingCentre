@@ -69,13 +69,21 @@ sidebar
     display: block;
 }
 
+#user-img {
+    width: 50%;
+}
+
+#user-name {
+
+}
+
 #user-image {
     margin-top: 2%;
     float: left;
     color: #ff751a;
 }
 
-#user-description {
+#description {
     margin-top: 15px;
     margin-bottom: 15px;
 }
