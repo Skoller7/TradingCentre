@@ -93,3 +93,39 @@ $('.btn-contract-price').click(function(){
   console.log("price request clicked");
    App.requestPrice();
 });
+
+function addbarchart() {
+    myChart = echarts.init(document.getElementById('myChart'), light);
+    
+    barChart = {
+        tooltip: {
+            title: {
+                left: 'center',
+                text: 'Data sold'
+            },
+            toolbox: {
+                feature: {
+                    show: true,
+                    saveAsImage: {
+                        title: 'Save As Image'
+                    }
+                }
+            },
+            xAxis: {
+                type: 'category',
+                data: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            },
+            yAxis: {
+                type: 'value',
+                boundaryGap: [0, '50%']
+            },
+            series: {
+                name: 'Data sold',
+                type: 'bar',
+                smooth: true,
+                data: [1, 5, 2, 6, 8, 10, 20, 11, 0, 12, 23, 33, 26]
+            }
+        }
+    },
+        myChart.setOption(barChart);
+};
