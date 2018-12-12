@@ -115,3 +115,36 @@ $('.btn-contract-price').click(function(){
   console.log("price request clicked");
    App.requestPrice();
 });
+
+function addbarchart(){
+    var myChart = echarts.init(document.getElementById('main'), 'light');
+    
+    var option = {
+        title:{
+            text: 'Data sold per month',
+            left: 'left'
+        },
+        toolbox: {
+            feature:{
+                show: true,
+                saveAsImage: {
+                    title: 'Save As Image'
+                }
+            }
+        },
+        legend: {
+            data:['Data sold']
+        },
+        xAxis: {
+            data: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        },
+        yAxis:{},
+        series: [{
+            name:'Data sold',
+            type: 'bar',
+            data: [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15]
+        }]
+    };
+    
+        myChart.setOption(option);
+}
