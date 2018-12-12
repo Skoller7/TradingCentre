@@ -1,7 +1,54 @@
 var token = getCookie("jwtToken");
-var activeportfolioid;
-var port = [];
-var activemodalportdel = 0;
+var cards = document.getElementById("cards");
+var high = document.getElementById("highlightcards");
+getcard();
+getcardhigh();
+function getcard(){
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token);
+    if(getstatus() == 400 || getstatus() == 401 || getstatus() == 500 || getstatus() == 501){
+        alert("Something went wrong, please try again later");
+    }else{
+        for(var i=0;i < data.length;i++){
+            setcard(data,i,true); 
+        }
+    }
+}
+function getcardhigh(){
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&userId=31","GET",token);
+    if(getstatus() == 400 || getstatus() == 401 || getstatus() == 500 || getstatus() == 501){
+        alert("Something went wrong, please try again later");
+    }else{
+        console.log(data);
+        for(var i=0;i < data.length;i++){
+            setcard(data,i,false); 
+        }
+    }
+}
+function setcard(data,i,own){
+               var card = document.createElement("div");
+                card.setAttribute("class","col-md-3 col-sm-12 card");
+                var img = document.createElement("img");
+                img.setAttribute("alt","image of trade");
+                img.setAttribute("class","img-fluid");
+                img.setAttribute("height","50%");
+                img.setAttribute("src",data[i].imgURL);
+                card.appendChild(img);
+                var cardbody = document.createElement("div");
+                cardbody.setAttribute("class","card-body");
+                if(own){
+                    cardbody.innerHTML +=  "<h5 class='card-title'>"+data[i].name+"</h5>";
+                }else{
+                    cardbody.innerHTML +=  "<h5 class='card-title'>skoller</h5>";
+                }
+                cardbody.innerHTML +=  "<p class='card-text' id='portfoliodesc'>"+data[i].description+"</p>";
+                cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show Preview</a>";
+                card.appendChild(cardbody);
+                if(own){
+                    cards.appendChild(card);
+                }else{
+                    high.appendChild(card);
+                }
+}
 
 //request portfolio Description
 

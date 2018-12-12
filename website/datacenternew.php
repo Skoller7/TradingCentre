@@ -39,24 +39,15 @@
         <div class="col-md-12">
         <div class="row">
         <div class="user-image col-md-12">
-        <h3>Skoller</h3>
-            <img src="img/indrabreind.png" alt="my girlfriends brain" class="img-fluid" style="margin: 1%; width:20%;">
+        <h3 id="username-port"></h3>
+            <img id="img-user" alt="my girlfriends brain" class="img-fluid" style="margin:1%; width:20%;">
         </div>
         </div>
         <div class="row">
-        <div class="user-description col-md-12">
+        <div class="user-description col-md-12" id="user-description">
             <h3>Description</h3>
-            Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken
         </div>
          </div>
-        <div class="row">
-        <div class="user-stats col-md-12">
-        <h3>Personal stats</h3>
-        Head  shoulder fan<br>
-        Followers: 1222<br>
-        Rating : <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><br>
-        </div>
-        </div>
         <div class="row">
         <div class="user-buy col-md-12">
             <h3>Buy data</h3>

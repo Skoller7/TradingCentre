@@ -49,15 +49,29 @@ var similar = document.createElement("div");
 similar.setAttribute("class","similar datasellers");
 var username;
 var userid;
-var aorderid;
+var pictureURL;
+var description;
 var aportfolioid = 33;
 var imgsrc = [];
 var imgdesc = [];
+var orderid = [];
 var n = 0;
-getUser();
+var sideusername = document.getElementById("username-port");
+var sideimg = document.getElementById("img-user");
+var sidedesc = document.getElementById("user-description");
+setsidebar();
 setcontentdatacenter(n);
+function setsidebar(){
+    if(getUser()){
+    sideusername.innerHTML = username;
+    sideimg.setAttribute("src",pictureURL);
+    sidedesc.innerHTML += description;
+    }else{
+        
+    }
+}
 function setcontentdatacenter(){
-  //  getorderdescandimg();
+    getorderdescandimg();
     console.log(imgsrc);
     console.log(imgdesc);
     cont.innerHTML = "";
@@ -93,21 +107,29 @@ button.addEventListener("click",function(){
         textarea.style.border = "1px solid red";
         diverror.innerHTML = "* This field is required";
     }else{
+        var json = {"OrderId": orderid[n],"Message": textarea.value}
         $.ajax({
             "async": true,
             "crossDomain": true,
-            url: "http://10.3.50.6/api/comment",
+            url: "http://10.3.50.6/api/ordercomment",
             type: "PUT",
             "headers": {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + token
             },
+            data:JSON.stringify(json),
             dataType: 'json',
             success: function(data){
                 },
             error: function(xhr, ajaxOptions, thrownError){
                 textarea.style.border = "1px solid red";
+                if(xhr.status != 200){
                 diverror.innerHTML ="Error: " + xhr.responseText;
+                }else{
+                        textarea.style.border = "0px solid red";
+    diverror.innerHTML = "";
+                    getComments();
+                }
             }
         });
     }
@@ -121,17 +143,7 @@ function updatecomments(){
 getComments();
 function getComments(){
             allcomments.innerHTML = "";
-            $.ajax({
-            "async": true,
-            "crossDomain": true,
-            url: "http://10.3.50.6/api/comment",
-            type: "GET",
-            "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            dataType: 'json',
-            success: function(data){
+            var data = makerequestnopar("http://10.3.50.6/api/ordercomment","GET",token);
                 if(data.length != 0){
                     for(var i = 0;i < data.length ; i++){
                         setComments(i,data);
@@ -139,11 +151,6 @@ function getComments(){
                 }else{
                     allcomments.innerHTML = "No comments found";
                 }
-                },
-            error: function(xhr, ajaxOptions, thrownError){
-                
-            }
-        });
 }
 
 function setComments(i,data){
@@ -158,7 +165,7 @@ function setComments(i,data){
         var j = document.createElement("i");
         j.setAttribute("class","fa fa-user");
         divhead.appendChild(j);
-        divhead.innerHTML += "  " +  data[i].userId + " <span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span>";
+        divhead.innerHTML += "  " + username + " <span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span>";
         divcontent.innerHTML = data[i].message;
         divcomment.appendChild(divhead);
         divcomment.appendChild(divcontent);
@@ -168,46 +175,23 @@ function setComments(i,data){
 function getorderdescandimg(){
         imgsrc = [];
         imgdesc = [];
-           $.ajax({
-    	"async": true,
-  		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/get?portfolioId="+aportfolioid,
-        type: "GET",
-        "headers": {
-    		"Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-  		},
-        dataType: 'json',
-        success: function(data){
+        orderid = [];
+    var data = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+aportfolioid,"GET",token);
                     for(var i = 0;i < data.length; i++){
-                        imgsrc[i] = JSON.stringify(data[i].imgURL);
-                        imgdesc[i] =  JSON.stringify(data[i].description);
+                        imgsrc[i] = data[i].imgURL;
+                        imgdesc[i] =  data[i].description;
+                        orderid[i] = data[i].orderId;
                     }
-            },
-        error: function(xhr, ajaxOptions, thrownError){
-        	console.log(xhr.status);
-        	console.log(thrownError);
-            console.log(xhr);
-        }
-    });
 }
 function getUser(){
-                $.ajax({
-            "async": true,
-            "crossDomain": true,
-            url: "http://10.3.50.6/api/user",
-            type: "GET",
-            "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            dataType: 'json',
-            success: function(data){
-                username= data.userName;
-                userid= data.userId;
-                },
-            error: function(xhr, ajaxOptions, thrownError){
-                
-            }
-        });
+    var data = makerequestnopar("http://10.3.50.6/api/user","GET",token);
+    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+        return false;
+    }else{
+        pictureURL = data.pictureURL;
+        description = data.description;
+        username= data.username;
+        userid= data.userId;
+        return true;
+    }
 }

@@ -151,9 +151,15 @@ function openupdateorder(e){
 	$('#Mupdateorder').modal({
 		backdrop: 'static'
 	});
-        errordescription.innerHTML = "";
-    errorurl.innerHTML = "";
     idupdate = e.target.id;
+    for(var i=0;i< arraysort.length;i++){
+        if(idupdate == arraysort[i].orderId){
+            descinput.value = arraysort[i].description;
+            urlinput.value = arraysort[i].imgURL;
+           }
+    }
+    errordescription.innerHTML = "";
+    errorurl.innerHTML = "";
 }
 /*
 close modal add  desc and img to image 
@@ -285,8 +291,8 @@ call get all portfolios in submenu portfolios
 getport();
 function getport(){
     port = [];
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=false","GET",token);
-    console.log(data);
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
+        
         ul.innerHTML = "";
         for(var i = 0; i < data.length;i++){
             var name = document.createTextNode(data[i].name);
@@ -297,7 +303,6 @@ function getport(){
             if(data[i].name == "default"){
                 defaultbool = true;
                 setdefaultport(data[i].portfolioId);
-                console.log(data[i].portfolioId);
                  activeportfolioid = data[i].portfolioId;
             }
             var sub = document.getElementById(data[i].portfolioId + "port");
@@ -667,6 +672,11 @@ function createport(){
         errorname.innerHTML = "This field cannot be empty";
         valid = false;
     }
+    if(!ValidURL(imgurl.value)){
+        
+        errorurlport.innerHTML = "This field must be a correct image url";
+        valid = false;
+    }
     if(activemodalportdel == 0){
         if(valid){
             var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": portadres.value};
@@ -823,8 +833,8 @@ function setOrders(data,i,defaultbool){
                 a2.addEventListener("click",deleteorder);
                 td.appendChild(a2);
             }
-             tr.innerHTML += "<td>"+data[i].description+"</td>";
              tr.innerHTML += "<td>"+data[i].imgURL+"</td>";
+             tr.innerHTML += "<td>"+data[i].description+"</td>";
             tr.appendChild(td);
         }else{
             tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' class='check' id="+data[i].orderId+" value="+data[i].orderId+"></td>"

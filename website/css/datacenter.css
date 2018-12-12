@@ -174,9 +174,10 @@ sidebar-portfolio
     }
 }
 .content-datacenter .card{
-    width: 23%;
     margin:1%;
     float:left;
+    
+    display: inline-block;
 }
 #main{
     min-height:500px;
