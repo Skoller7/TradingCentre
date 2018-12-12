@@ -13,7 +13,8 @@
 .searchImg{
 	height: 64px;
 	width: 64px;
+	border-right: 1 solid black;
 }
-#moreInfo{
-	border-left: 1px solid black;
+.searchResult:hover{
+	/*background-color: ;*/
 }
