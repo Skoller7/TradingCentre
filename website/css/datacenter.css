@@ -63,8 +63,7 @@ sidebar-portfolio
     margin:2%;
 }
 .fa-trash:hover,.fa-edit:hover{
-    background-color:  #fff;
-    color:#0889C4;
+    background-color: #0777ab;
 }
 .fa-angle-up{
     float: right;
@@ -113,6 +112,8 @@ sidebar-portfolio
 }
 .image-comment{
      background-color:#e0e0eb;
+    margin-top:2%;
+    margin-bottom:2%;
 }
 .comment-footer{
     background-color:#e0e0eb;
@@ -423,6 +424,7 @@ portfolio orders
     background-color: #0999dc;
     cursor:pointer;
     color:#fff;
+    text-align: center;
 }
 th:hover{
     background-color: #0999dc;
@@ -551,6 +553,9 @@ dropdown
 }
 #menu{
     display: none;
+}
+.errormess{
+    color:red;
 }
 /*@media screen and (max-height: 450px) {
   .overlay a {font-size: 20px}
