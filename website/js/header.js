@@ -16,7 +16,7 @@ document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
 document.getElementById("MLoginBCrosse").addEventListener("click",MLoginClose);
 document.getElementById("MLoginBForgotPassword").addEventListener("click",openMForgotPassword);
 document.getElementById("MLoginBSingUp").addEventListener("click",openMSignUp);
-document.getElementById("MSignUpBSingUp").addEventListener("click",singUp);
+document.getElementById("MSignUpBSingUp").addEventListener("click",signUp);
 document.getElementById("MSignUpBClose").addEventListener("click",MSignUpClose);
 document.getElementById("MSignUpBCrosse").addEventListener("click",MSignUpClose);
 document.getElementById("MSingUpBLogin").addEventListener("click",openMLogin);
@@ -246,7 +246,7 @@ function login(){
 	//login code
 	*/
 }
-function singUp(){
+function signUp(){
 
 	var makeApiCall = true;
 
