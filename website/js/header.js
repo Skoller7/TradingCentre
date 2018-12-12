@@ -15,8 +15,8 @@ document.getElementById("MLoginBLogin").addEventListener("click",login);
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
 document.getElementById("MLoginBCrosse").addEventListener("click",MLoginClose);
 document.getElementById("MLoginBForgotPassword").addEventListener("click",openMForgotPassword);
-document.getElementById("MLoginBSingUp").addEventListener("click",openMSignUp);
-document.getElementById("MSignUpBSingUp").addEventListener("click",singUp);
+document.getElementById("MLoginBSignUp").addEventListener("click",openMSignUp);
+document.getElementById("MSignUpBSignUp").addEventListener("click",signUp);
 document.getElementById("MSignUpBClose").addEventListener("click",MSignUpClose);
 document.getElementById("MSignUpBCrosse").addEventListener("click",MSignUpClose);
 document.getElementById("MSingUpBLogin").addEventListener("click",openMLogin);
@@ -246,7 +246,7 @@ function login(){
 	//login code
 	*/
 }
-function singUp(){
+function signUp(username, password){
 
 	var makeApiCall = true;
 
@@ -311,17 +311,8 @@ function singUp(){
 		           	//var date = new Date();
 			        //date.setMilliseconds(date.getMilliseconds() + 21600000);
 			        //document.cookie = "token=" + data.token + "expires=" + date;
-			        var form = document.createElement("FORM");
-			        form.setAttribute("method","post");
-		        	form.setAttribute("action","checkLogin.php");
-			        var input = document.createElement("INPUT");
-			        input.setAttribute("type","hidden");
-			        input.setAttribute("name","jwtToken");
-			        input.setAttribute("value",data.token);
-			        form.appendChild(input);
-			        document.body.appendChild(form);
-			        //console.log(form);
-			        form.submit();
+			        signUp();
+			        
 		        },
 		        error: function(data, ajaxOptions, thrownError){
 		        	console.log(data.status);
