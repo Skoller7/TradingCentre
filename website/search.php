@@ -19,14 +19,21 @@
 			include("header.html");
 		?>
 		<script src="js/header.js" type="text/javascript"></script>
-
+		<script>
+			
+			var search = echo '"' + htmlspecialchars($_GET['search']) + '"';
+		</script>
 
 		<div class="container">
+
+			<div class="row">
+				<div class="col-md-10" id="search"></div>
+			</div>
 			<div class="row">
 			
 			
 				<div class="col-md-1"></div>
-				<div class="col-md-8" id="user"></div>
+				<div class="col-md-10" id="user"></div>
 			</div>
 		</div>
 
