@@ -64,7 +64,7 @@ resultsText = '{"users":['
 			    var img = document.createElement("IMG");
 			    img.setAttribute("alt","profile picture");
 			    if(results[i].profilePicture == null){
-			    	img.setAttribute("src","img/defaultUser.png");
+			    	img.setAttribute("src","img/profile.png");
 			    }
 			    else{
 			    	img.setAttribute("src",results[i].username);
