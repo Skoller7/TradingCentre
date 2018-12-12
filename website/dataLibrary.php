@@ -64,7 +64,9 @@
                 <p class="card-text">
                   Master of the head & shoulder pattern.
                   </p>
-                <a href="datacenternew.php" class="btn btn-primary">Show Preview</a>
+                  <div class="btn-check" id="buyCheck">
+                <a class="btn btn-buycheck btn-primary" id="buyCheck">View data</a>
+              </div>
               </div>
             </div>
 
@@ -73,4 +75,8 @@
 </div>
 </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/datalibrary.js"></script>
 </html>
