@@ -12,7 +12,6 @@ $.ajax(settings).done(function (response) {
 });
 */
 
-        </p>
 var token = getCookie("jwtToken");
 var username;
 var description;
