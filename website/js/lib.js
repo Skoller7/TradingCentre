@@ -1,4 +1,6 @@
 var modalList = [];
+var requestsuccess = true;
+var status = 200;
 /*
 //https://www.w3schools.com/howto/howto_html_include.asp
 function includeHTML() {
@@ -51,6 +53,9 @@ function includeHTMLFile(filePath, elmnt){
 */
 
 //https://www.w3schools.com/js/js_cookies.asp
+function getstatus(){
+    return status;
+}
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -120,10 +125,14 @@ function makerequestnopar( url_api, type_api, authorization_api){
         	console.log(xhr.status);
         	console.log(thrownError);
             if(xhr.status != 200 || xhr.status != 201){
-            //console.log("error");
+            console.log("error");
             data_api += "error: ";
             data_api +=  xhr.responseText;
+            }else{
+                console.log("error");
+                requestsuccess = true;
             }
+            status = xhr.status;
         }
     });
     return data_api;
@@ -149,11 +158,12 @@ function makerequest(jsonfile_api, url_api, type_api, authorization_api){
         	console.log(xhr.status);
         	console.log(thrownError);
             console.log(xhr);
-                        if(xhr.status != 200 || xhr.status != 201){
-
+            if(xhr.status != 200 || xhr.status != 201){
+            //console.log("error");
             data_api += "error: ";
             data_api +=  xhr.responseText;
-                        }
+            }
+            status = xhr.status;
         }
     });
     return data_api;

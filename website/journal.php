@@ -40,6 +40,7 @@
         <div class="row">
             <div class="sidebar-content-portfolios">
                 <ul>
+                    <li id="ul-journal" style="display:none;"></li>
                     <li id="BCreatePort">Create portfolio</li>
                     <li class="portfolios-header" id="portfolios"><a href="#">Portfolios<i id="port-arrow" class="fa fa-angle-right"></i></a></li>
                     <div id="porfolios-sub">
@@ -47,7 +48,6 @@
                         </ul>
                     </div>
                     <li id="addorder">Add orders</li>
-                  <li><a href="createdataselling.php?portfolioId=">Sell portfolio</a></li>
                     <li id="BCreateNote">Create note</li>
                     <!--<li class="notes-header" id="notes"><a href="#">All Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
                     <div id="notes-sub">
@@ -102,6 +102,8 @@
                           <th id="orderQty">Quantity<i id="orderQty-arrow" class="fa fa-angle-up"></i></th>
                           <th id="symbol">Symbol<i id="symbol-arrow" class="fa fa-angle-up"></i></th>
                           <th id="timestamp">Timestamp<i id="timestamp-arrow" class="fa fa-angle-up"></i></th>
+                          <th>Image</th>
+                          <th>Description</th>
                           <th>Options</th>
                         </tr>
                     </thead>
@@ -116,6 +118,49 @@
         </div>
     </div>
 </div>
+</div>
+<div class="modal fade" id="yesno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+		        <h5 class="modal-title">Are you sure you want delete this</h5>
+		        <button type="button" class="close" id="yesnoBCrosse" aria-label="Close">
+	          		<span aria-hidden="true">&times;</span>
+				</button>
+		    </div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-primary" id="yess">delete order</button>
+        		<button type="button" class="btn btn-secondary" id="noo">Close</button>
+      		</div>
+    	</div>
+		</div>
+</div>
+    <!-- add description and image to url!-->
+    <div class="modal fade" id="Mupdateorder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+		        <h5 class="modal-title">Upload image and description</h5>
+		        <button type="button" class="close" id="updateorderBCrosse" aria-label="Close">
+	          		<span aria-hidden="true">&times;</span>
+				</button>
+		    </div>
+      		<div class="modal-body">
+      			<form>
+                 <p class="modalParagraph">Image url</p>
+      				<input type="text" id="urlorder" placeholder="Note" autocomplete="off">
+      				<span class="modalErrorMsg" id="errorurl"></span>
+                    <p class="modalParagraph">Description</p>
+      				<input type="text" id="descorder" placeholder="Note" autocomplete="off">
+      				<span class="modalErrorMsg" id="errordesc"></span>
+      			</form>
+      		</div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-primary" id="btnupdateorder">Update order</button>
+        		<button type="button" class="btn btn-secondary" id="btncloseupdate">Close</button>
+      		</div>
+    	</div>
+		</div>
 </div>
 <!-- add order to portfolio !-->
 <div class="modal fade" id="Maddorder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -132,12 +177,12 @@
                 <table class="table table-hover">
                     <thead>
                       <tr class="head-td">
-                        <th id="exchange">Exchange<i id="exchange-arrow" class="fa fa-angle-up"></i></th>
-                          <th id="side">Side<i id="side-arrow" class="fa fa-angle-up"></i></th>
-                          <th id="price">Price<i id="price-arrow" class="fa fa-angle-up"></i></th>
-                          <th id="orderQty">Quantity<i id="orderQty-arrow" class="fa fa-angle-up"></i></th>
-                          <th id="symbol">Symbol<i id="symbol-arrow" class="fa fa-angle-up"></i></th>
-                          <th id="timestamp">Timestamp<i id="timestamp-arrow" class="fa fa-angle-up"></i></th>
+                        <th>Exchange</th>
+                          <th >Side</th>
+                          <th >Price</th>
+                          <th>Quantity</th>
+                          <th>Symbol</th>
+                          <th>Timestamp</th>
                           <th>Add</th>
                         </tr>
                     </thead>
@@ -200,6 +245,12 @@
                     <p class="modalParagraph">Goal</p>
       				<input type="text" name="name" id="MPortGoal" placeholder="Goal" autocomplete="off">
       				<span class="modalErrorMsg" id="ErrorPortGoal"></span>
+                    <p class="modalParagraph">Image url</p>
+      				<input type="text" name="name" id="Mimgurl" placeholder="Description" autocomplete="off">
+      				<span class="modalErrorMsg" id="errorporturl"></span>
+                    <p class="modalParagraph">Address</p>
+      				<input type="text" name="name" id="Maddress" placeholder="Goal" autocomplete="off">
+      				<span class="modalErrorMsg" id="erroradres"></span>
       			</form>
       		</div>
       		<div class="modal-footer">

@@ -7,9 +7,13 @@ var errorcontent = document.getElementById("ErrorCreateNoteContent");
 var nameport = document.getElementById("MPortName");
 var descport = document.getElementById("MPortDesc");
 var goalport = document.getElementById("MPortGoal");
+var imgurl = document.getElementById("Mimgurl");
+var portadres = document.getElementById("Maddress");
 var errorname = document.getElementById("ErrorPortName");
 var errordesc = document.getElementById("ErrorPortDesc");
 var errorgoal = document.getElementById("ErrorPortGoal");
+var errorurlport = document.getElementById("errorporturl");
+var erroradres = document.getElementById("erroradres");
 var desc = document.getElementById("portfolio-description");
 var goals = document.getElementById("portfolio-goals");
  var table_orders = document.getElementById("orders");
@@ -43,8 +47,20 @@ var tdate;
 var ppdvar = document.getElementById("profit-port");
 var refresh = document.getElementById("refreshorder");
 var defaultbool = false;
+var ul = document.getElementById("portfolios-ul");
+var footer = document.getElementById("footer-port");
+var journalul = document.getElementById("ul-journal");
+var descinput = document.getElementById("descorder");
+var urlinput = document.getElementById("urlorder");
+var errorurl = document.getElementById("errorurl");
+var errordescription = document.getElementById("errordesc");
+var erroraddorder = document.getElementById("erroraddorder");
 modalList.push("MCreateNote");
 modalList.push("MCreatePort");
+modalList.push("Mupdateorder");
+fromdate.addEventListener("change",getorders);
+todate.addEventListener("change",getorders);
+amount.addEventListener("change",getorders);
         function addzero(number){
             if(number < 10){
                 number = "0" + number;
@@ -126,7 +142,67 @@ function openSubNotes(){
     }
 }
 */
+/*
+show modal add  desc and img to image 
+*/
+var idupdate = 0;
+function openupdateorder(e){
+	closeAllModals();
+	$('#Mupdateorder').modal({
+		backdrop: 'static'
+	});
+        errordescription.innerHTML = "";
+    errorurl.innerHTML = "";
+    idupdate = e.target.id;
+}
+/*
+close modal add  desc and img to image 
+*/
+document.getElementById("btncloseupdate").addEventListener("click",closeupdateorder);
+document.getElementById("updateorderBCrosse").addEventListener("click",closeupdateorder);
+function closeupdateorder(){
+	$('#Mupdateorder').modal('toggle');
+}
 
+/*
+api call add  desc and img to image 
+*/
+document.getElementById("btnupdateorder").addEventListener("click",function (){
+    var valid = true;
+    errordescription.innerHTML = "";
+    errorurl.innerHTML = "";
+    if(descinput.value == ""){
+        valid = false;
+        errordescription.innerHTML = "* This field cannot be empty";
+    }
+    if(urlinput.value == ""){
+        valid = false;
+        errorurl.innerHTML = "* This field cannot be empty";
+    }else if(urlinput.value.substr(0,28) == "https://www.tradingview.com/"){
+        valid = false;   
+        errorurl.innerHTML = "* This must be an url image from tradingview.com";
+    }
+    if(valid){
+            var json = {
+                "OrderId" : idupdate,
+                "Description" : descinput.value,
+                "ImgURL" : urlinput.value,
+                "IsSold" : 0
+            }
+        var data = makerequest(json,"http://10.3.50.6/api/order","POST",token);
+        if(getstatus() == 200 || getstatus() == 201){
+            descinput.value = "";
+            urlinput.value  ="";
+            errordescription.innerHTML = "Succesfully updated";
+            errorurl.innerHTML = "";
+            closeupdateorder();
+        }else if(getstatus() == 400){
+            errordescription.innerHTML = data;
+        }else if(getstatus() == 401){
+            errordescription.innerHTML = "* Something went wrong try again later";
+        }
+    }
+});
 /*
 table eventlisteners
 */
@@ -209,8 +285,8 @@ call get all portfolios in submenu portfolios
 getport();
 function getport(){
     port = [];
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
-        var ul = document.getElementById("portfolios-ul");
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=false","GET",token);
+    console.log(data);
         ul.innerHTML = "";
         for(var i = 0; i < data.length;i++){
             var name = document.createTextNode(data[i].name);
@@ -221,12 +297,13 @@ function getport(){
             if(data[i].name == "default"){
                 defaultbool = true;
                 setdefaultport(data[i].portfolioId);
+                console.log(data[i].portfolioId);
                  activeportfolioid = data[i].portfolioId;
             }
             var sub = document.getElementById(data[i].portfolioId + "port");
             port.push(sub.getAttribute("id"));
         }
-            ppd();
+          //  ppd();
 }
 
 /*
@@ -241,6 +318,7 @@ function openaddorder(){
 	$('#Maddorder').modal({
 		backdrop: 'static'
 	});
+   erroraddorder.innerHTML = "";
     getordersadd();
 }
 /*
@@ -258,7 +336,7 @@ api call add order to portfolio
 document.getElementById("btnaddorder").addEventListener("click",addorderstoportfolio);
 function addorderstoportfolio(){
     var valid = true;
-    document.getElementById("erroraddorder").innerHTML = "";
+    erroraddorder.innerHTML = "";
     arrayaddorders = [];
     var ids = document.getElementsByName("addordercheck");
     for(var i = 0;i <ids.length;i++){
@@ -266,44 +344,39 @@ function addorderstoportfolio(){
             arrayaddorders.push(ids[i].value);
         }
     }
+    if(arrayaddorders.length == 0){
+        valid = false;
+         erroraddorder.innerHTML = "* Check one or more orders to submit";
+    }
     for(var j = 0; j < arrayaddorders.length; j++){
         var json = {
             "OrderId": arrayaddorders[j],
             "PortfolioId": activeportfolioid
         };
         var data = makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token);
-        console.log(data.substr(0,5));
-        if(data.substr(0,5) == "error"){
+        if(getstatus() != 201){
            valid = false;
         }
     }
     if(valid){
-        getorders();
+        erroraddorder.innerHTML = "Orders succesfuly added to portfolio";
         closeaddorder();
+        all  =document.getElementById("all-orders-table");
+        getorders();
     }else{
-        document.getElementById("erroraddorder").innerHTML = data;
+        if(erroraddorder.innerHTML == ""){
+            if(getstatus() == 400){
+                erroraddorder.innerHTML = data;
+            }else if(getstatus() == 401){
+                erroraddorder.innerHTML = "* Something went wrong try again later";
+            }
+        }
     }
 }
-/*
-api call open options menu
-*/
-document.getElementById("all-orders-table").addEventListener("click",function (e){
-    if(e.target.nodeName == "I") {
-        openoptions(e.target.id);
-    }
-    /*if(e.target.nodeName = "LI"){
-        if(e.target.className = "deleteorder"){
-            makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
-            getorders(); 
-        }else{
-            
-        }
-    }*/
-});
 
 /*
 open sub menu options
-*/
+
 function openoptions(id){
     var div = document.getElementById("opt"+id);
     var classname = document.getElementsByClassName("dropdown-options");
@@ -317,11 +390,11 @@ function openoptions(id){
     }
     
 }
-
+*/
 /*
 get ppd portfolio
 */
-function ppd(){
+/*function ppd(){
     var data = makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token);
     for(var i = 0;i < data.length;i++){
         if(data[i].day == addzero(dd)+"/"+addzero(mm)+"/"+yyyy){
@@ -339,7 +412,7 @@ function ppd(){
             ppdvar.innerHTML = "Profit of the day  " + data[i].profit;
         }
     }
-}
+}*/
 
 /*
 api call get portfolio on id when clicked in submenu portfolios
@@ -349,12 +422,20 @@ document.getElementById("portfolios-ul").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.target.id.indexOf("port"))))) {
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token);
         setupactiveport(data,e.target.id);
+            activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
         if(data.name == "default"){
             defaultbool = true;
+            journalul.innerHTML = "";
+            journalul.style.display = "none";
         }else{
             defaultbool = false;
+            journalul.innerHTML ="";
+            var a = document.createElement("a");
+            a.setAttribute("href","createdataselling.php?portfolioId="+activeportfolioid);
+            journalul.appendChild(a);
+            journalul.style.display = "block";
+            a.innerHTML = "Sell portfolio";
         }
-        activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
         getnotes();
         getorders();
 }
@@ -373,9 +454,6 @@ function setdefaultport(id){
 setup active portfolio
 */
 function setupactiveport(data,id){
-
-        var ul = document.getElementById("portfolios-ul");
-        var footer = document.getElementById("footer-port");
         footer.innerHTML = ' ';
         desc.innerHTML = data.description;
         goals.innerHTML = data.goal;
@@ -407,9 +485,13 @@ if(e.target && e.target.nodeName == "I") {
         getport();
     }else{
         activemodalportdel = 1;
-        nameport.value = document.getElementById(activeportfolioid + "port").innerHTML;
-        descport.value = desc.innerHTML;
-        goalport.value = goals.innerHTML;
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=false&portfolioId="+activeportfolioid,"GET",token);
+        console.log(data);
+        nameport.value = data.name;
+        descport.value = data.description;
+        goalport.value = data.goal;
+        imgurl.value = data.imgURL;
+        portadres.value = data.address;
         openCreateport();
     }
 }
@@ -515,9 +597,13 @@ function createnote(){
           errorcontent.innerHTML = "This field cannot be empty";
         valid = false;
     }
-    if(valid){
         var json = {"PortfolioId": activeportfolioid ,"message":content.value};
         var data = makerequest(json,"http://10.3.50.6/api/note","PUT",token);
+        if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                errorcontent.innerHTML = "Something went wrong, please try again later";
+                valid = false;
+         }
+    if(valid){
         McreateNoteClose();
         getnotes();
     }
@@ -531,6 +617,8 @@ function openCreateport(){
      errorname.innerHTML = "";
     errordesc.innerHTML = "";
     errorgoal.innerHTML = "";
+errorurlport.innerHTML = "";
+erroradres.innerHTML = "";
     if(activemodalportdel == 0){
         document.getElementById("createporttitle").innerHTML = "Create Portfolio";
         document.getElementById("MCreatePortBCreatePort").innerHTML = "Create Portfolio";
@@ -556,6 +644,11 @@ goalport.value = "";
 errorname.innerHTML = "";
 errordesc.innerHTML = "";
 errorgoal.innerHTML = "";
+ imgurl.value = "";
+portadres.value = "";
+errorurlport.innerHTML = "";
+erroradres.innerHTML = "";   
+
 	$('#MCreatePort').modal('toggle');
 }
 
@@ -568,27 +661,37 @@ function createport(){
     errorname.innerHTML = "";
     errordesc.innerHTML = "";
     errorgoal.innerHTML = "";
-    if(name.value == ""){
+    errorurlport.innerHTML = "";
+    erroradres.innerHTML = "";
+    if(nameport.value == ""){
         errorname.innerHTML = "This field cannot be empty";
         valid = false;
     }
-    console.log(nameport.value);
     if(activemodalportdel == 0){
         if(valid){
-            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value};
-            console.log(jsonfile);
-            makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token);
+            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": portadres.value};
+            var data = makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token);
+             console.log(getstatus());
+            if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
+                    erroradres.innerHTML = "* Something went wrong try again later";
+                    valid = false; 
+            }
         }
    }else{
         if(valid){
-        var jsonfile = {"PortfolioId":activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value};
-            console.log(jsonfile);
-        makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token);
+            var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": portadres.value};
+        var data = makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token);
+        if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                    erroradres.innerHTML = "* Something went wrong try again later";
+                    valid = false; 
+            }
         }
         activemodalportdel = 0;
     }
+    if(valid){
     McreateportClose();
     getport();
+    }
 }
 
 
@@ -638,10 +741,20 @@ api call get orders
 */
 function getorders(){
         all.innerHTML = "";
+        if(todate.value == ""){
+            todate.value = yyyy+"-"+addzero(mm)+"-"+addzero(dd);
+            tdate = addzero(dd)+"/"+addzero(mm)+"/"+yyyy;
+        }else{
+            tdate = todate.value.substring(8,10) + "/" + todate.value.substring(5,7) + "/" + todate.value.substring(0,4);
+        }
+        if(fromdate.value == ""){
+            fromdate.value = "1970-01-01";
+        }
+        frdate = fromdate.value.substring(8,10) + "/" + fromdate.value.substring(5,7) + "/" + fromdate.value.substring(0,4);
        $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,
+  		url: "http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid+"&amount="+amount.value+"&dateFrom="+frdate+"&dateTo="+tdate,
         type: "GET",
         "headers": {
     		"Content-Type": "application/json",
@@ -651,11 +764,11 @@ function getorders(){
         success: function(data){
             if(data.length != 0){
                 arraysort = data;
-                    for(var i = 0;i<data.length; i++){
+                    for(var i = 0;i < data.length; i++){
                             setOrders(data,i,defaultbool);
                     }
             }else{
-                info.innerHTML = "No orders found";
+                all.innerHTML = "No orders found";
             }
             },
         error: function(xhr, ajaxOptions, thrownError){
@@ -687,37 +800,55 @@ function setOrders(data,i,defaultbool){
         tr.innerHTML += "<td class='ti'>"+date.substr(0,10)+" " + date.substr(11,5)+"</td>";
         if(all.className == 'all'){
             var td = document.createElement("td");
-            td.setAttribute("class","delorder");
-            var j = document.createElement("i");
-            j.setAttribute("class","fa fa-ellipsis-v");
-            j.setAttribute("id",data[i].orderId);
-            td.appendChild(j);
-            var div = document.createElement("div");
-            var ul = document.createElement("ul");
-            var li = document.createElement("li");
-            div.setAttribute("class","dropdown-options");
-            div.setAttribute("id","opt"+data[i].orderId);
-            ul.setAttribute("class","dropdown-content-options");
-            li.setAttribute("id",data[i].orderId);
-            li.setAttribute("class","uploadimage");
-            li.innerHTML = "upload image";
-            ul.appendChild(li);
+            td.setAttribute("class","dropdowndrop");
+            var a = document.createElement("a");
+            a.setAttribute("class","btn btn-primary");
+            a.setAttribute("id",data[i].orderId);
+            a.style.color = "#fff";
+            var jk = document.createElement("i");
+            jk.setAttribute("class","fa fa-edit");
+            jk.setAttribute("id",data[i].orderId);
+            a.appendChild(jk);
+            td.appendChild(a);
+            a.addEventListener("click",openupdateorder);
             if(!defaultbool){
-                var lid = document.createElement("li");
-                lid.setAttribute("id",data[i].orderId);
-                lid.setAttribute("class","deleteorder");
-                lid.innerHTML = "delete";
-                ul.appendChild(lid);
+                var a2 = document.createElement("a");
+                a2.setAttribute("class","btn btn-danger");
+                a2.setAttribute("id",data[i].orderId);
+                var kj = document.createElement("i");
+                kj.setAttribute("class","fa fa-trash");
+                kj.setAttribute("id",data[i].orderId);
+                kj.setAttribute("style","background-color:red;");
+                a2.appendChild(kj);
+                a2.addEventListener("click",deleteorder);
+                td.appendChild(a2);
             }
-            div.appendChild(ul);
-            td.appendChild(div);
+             tr.innerHTML += "<td>"+data[i].description+"</td>";
+             tr.innerHTML += "<td>"+data[i].imgURL+"</td>";
             tr.appendChild(td);
         }else{
             tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' class='check' id="+data[i].orderId+" value="+data[i].orderId+"></td>"
         }
         all.appendChild(tr);
 }
+/*
+api call delete order
+*/
+function deleteorder (e){
+            var data = makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                alert("Something went wrong, please try again later");
+                
+            }else{
+                getorders(); 
+            }
+};
 
+    $(window).on('resize', function(){
+        if(myChart != null && myChart != undefined){
+           myChart.resize();
+        }
+    });
 function adddoubleline(){
            var myChart = echarts.init(document.getElementById('main'),'light');
 
@@ -849,7 +980,7 @@ fetch('http://api.com/file.json')
 }
 function addbasichart(){
         // based on prepared DOM, initialize echarts instance
-        var myChart = echarts.init(document.getElementById('main'),'light');
+        myChart = echarts.init(document.getElementById('main'),'light');
 
         // specify chart configuration item and data
 var base = +new Date(2018, 9, 3);
