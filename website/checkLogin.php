@@ -5,8 +5,8 @@
 				//check if token is valid
 				session_start();
 				$_SESSION['jwtToken'] = $_POST['jwtToken'];
-				setcookie('jwtToken',$_POST['jwtToken'], time() + 60*60*6);
-				header("location: home.php");
+				setcookie('jwtToken',$_POST['jwtToken'], time() + 60*60*24);
+				header("location: journal.php");
 			}
 			else{
 				header("location: index.php");
