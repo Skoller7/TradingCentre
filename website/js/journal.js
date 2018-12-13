@@ -8,12 +8,10 @@ var nameport = document.getElementById("MPortName");
 var descport = document.getElementById("MPortDesc");
 var goalport = document.getElementById("MPortGoal");
 var imgurl = document.getElementById("Mimgurl");
-var portadres = document.getElementById("Maddress");
 var errorname = document.getElementById("ErrorPortName");
 var errordesc = document.getElementById("ErrorPortDesc");
 var errorgoal = document.getElementById("ErrorPortGoal");
 var errorurlport = document.getElementById("errorporturl");
-var erroradres = document.getElementById("erroradres");
 var desc = document.getElementById("portfolio-description");
 var goals = document.getElementById("portfolio-goals");
  var table_orders = document.getElementById("orders");
@@ -168,6 +166,7 @@ document.getElementById("btncloseupdate").addEventListener("click",closeupdateor
 document.getElementById("updateorderBCrosse").addEventListener("click",closeupdateorder);
 function closeupdateorder(){
 	$('#Mupdateorder').modal('toggle');
+    getorders();
 }
 
 /*
@@ -298,6 +297,7 @@ function getport(){
             var name = document.createTextNode(data[i].name);
             var li = document.createElement("LI");
             ul.appendChild(li);
+            li.setAttribute("style","background-color:#3a4e5f");
             li.setAttribute("id",data[i].portfolioId + "port");
             li.appendChild(name);
             if(data[i].name == "default"){
@@ -333,6 +333,7 @@ document.getElementById("btnclose").addEventListener("click",closeaddorder);
 document.getElementById("addorderBCrosse").addEventListener("click",closeaddorder);
 function closeaddorder(){
 	$('#Maddorder').modal('toggle');
+    getorders();
 }
 
 /*
@@ -496,7 +497,6 @@ if(e.target && e.target.nodeName == "I") {
         descport.value = data.description;
         goalport.value = data.goal;
         imgurl.value = data.imgURL;
-        portadres.value = data.address;
         openCreateport();
     }
 }
@@ -615,7 +615,7 @@ function createnote(){
 }
 
 /*
-show modal create portfolios
+show modal create & update portfolios
 */
 document.getElementById("BCreatePort").addEventListener("click",openCreateport);
 function openCreateport(){
@@ -623,7 +623,6 @@ function openCreateport(){
     errordesc.innerHTML = "";
     errorgoal.innerHTML = "";
 errorurlport.innerHTML = "";
-erroradres.innerHTML = "";
     if(activemodalportdel == 0){
         document.getElementById("createporttitle").innerHTML = "Create Portfolio";
         document.getElementById("MCreatePortBCreatePort").innerHTML = "Create Portfolio";
@@ -638,7 +637,7 @@ erroradres.innerHTML = "";
 	});
 }
 /*
-close modal create portfolios
+close modal create & update portfolios
 */
 document.getElementById("MCreatePortBClose").addEventListener("click",McreateportClose);
 document.getElementById("MCreatePortBCrosse").addEventListener("click",McreateportClose);
@@ -650,15 +649,13 @@ errorname.innerHTML = "";
 errordesc.innerHTML = "";
 errorgoal.innerHTML = "";
  imgurl.value = "";
-portadres.value = "";
 errorurlport.innerHTML = "";
-erroradres.innerHTML = "";   
 
 	$('#MCreatePort').modal('toggle');
 }
 
 /*
-api call create portfolio
+api call create portfolio and update portfolio
 */
 document.getElementById("MCreatePortBCreatePort").addEventListener("click",createport);
 function createport(){
@@ -667,7 +664,6 @@ function createport(){
     errordesc.innerHTML = "";
     errorgoal.innerHTML = "";
     errorurlport.innerHTML = "";
-    erroradres.innerHTML = "";
     if(nameport.value == ""){
         errorname.innerHTML = "This field cannot be empty";
         valid = false;
@@ -679,7 +675,7 @@ function createport(){
     }
     if(activemodalportdel == 0){
         if(valid){
-            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": portadres.value};
+            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address":null};
             var data = makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token);
              console.log(getstatus());
             if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
@@ -689,7 +685,7 @@ function createport(){
         }
    }else{
         if(valid){
-            var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": portadres.value};
+            var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": null};
         var data = makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token);
         if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
@@ -714,7 +710,7 @@ function getordersadd(){
     $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/get?dateFrom=01/01/1970",
+  		url: "http://10.3.50.6/api/order/getNotInPortfolio?portfolioId="+activeportfolioid,
         type: "GET",
         "headers": {
     		"Content-Type": "application/json",
@@ -724,7 +720,9 @@ function getordersadd(){
         success: function(data){
             if(data.length > 0){
                     for(var i = 0;i<data.length; i++){
+                        if(data[i].isSold == false){
                             setOrders(data,i,defaultbool);
+                        }
                     }
             }else{
                 all.innerHTML = "No orders found";
@@ -750,6 +748,7 @@ function refreshorder(){
 api call get orders
 */
 function getorders(){
+    all = document.getElementById("all-orders-table");
         all.innerHTML = "";
         if(todate.value == ""){
             todate.value = yyyy+"-"+addzero(mm)+"-"+addzero(dd);
@@ -833,8 +832,16 @@ function setOrders(data,i,defaultbool){
                 a2.addEventListener("click",deleteorder);
                 td.appendChild(a2);
             }
-             tr.innerHTML += "<td>"+data[i].imgURL+"</td>";
-             tr.innerHTML += "<td>"+data[i].description+"</td>";
+            if(data[i].imgURL == null || data.imgURL == ""){
+                tr.innerHTML += "<td><i class='fa fa-times' style='color:red;'></i></td>";
+            }else{
+                tr.innerHTML += "<td><i class='fa fa-check' style='color:green;'></i></td>";
+            }
+            if(data[i].description == null || data.description == ""){
+                tr.innerHTML += "<td><i class='fa fa-times' style='color:red;'></i></td>";
+            }else{
+                tr.innerHTML += "<td><i class='fa fa-check' style='color:green;'></i></td>";
+            }
             tr.appendChild(td);
         }else{
             tr.innerHTML += "<td class='addorder'><input type='checkbox' name='addordercheck' class='check' id="+data[i].orderId+" value="+data[i].orderId+"></td>"

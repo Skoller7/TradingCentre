@@ -9,7 +9,11 @@ function getcard(){
         alert("Something went wrong, please try again later");
     }else{
         for(var i=0;i < data.length;i++){
-            setcard(data,i,true); 
+            if(data[i].address == null || data[i].address == ""){
+                setcard(data,i,true);
+            }else{
+                setcard(data,i,true); 
+            }
         }
     }
 }

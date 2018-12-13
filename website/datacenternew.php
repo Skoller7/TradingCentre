@@ -60,11 +60,11 @@
     </div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class='row'>
-        <div class='col-md-1'><button type='button' id='prevorder' style='float:right;top:40%;position: absolute;'  class='btn btn-primary'><i class="fa fa-angle-left"></i></button></div>
+        <div class='col-md-1' id="btnprev"></div>
         <div class='col-md-10' id="content-sell">
 
         </div>
-        <div class='col-md-1'><button type='button' id='nextorder' style='float:right;top:40%;position: absolute;' class='btn btn-primary'><i class="fa fa-angle-right"></i></button></div>
+        <div class='col-md-1' id="btnnext"></div>
     </div>
     </div>
 </div>

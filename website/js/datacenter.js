@@ -1,3 +1,5 @@
+var btnprev = document.getElementById("btnprev");
+var btnnext = document.getElementById("btnnext");
 var prev = document.getElementById("prevorder");
 var next = document.getElementById("nextorder");
 var cont = document.getElementById("content-sell");
@@ -51,7 +53,6 @@ var username;
 var userid;
 var pictureURL;
 var description;
-var aportfolioid = 33;
 var imgsrc = [];
 var imgdesc = [];
 var orderid = [];
@@ -59,30 +60,46 @@ var n = 0;
 var sideusername = document.getElementById("username-port");
 var sideimg = document.getElementById("img-user");
 var sidedesc = document.getElementById("user-description");
-setsidebar();
-setcontentdatacenter(n);
+var urlParams = new URLSearchParams(window.location.search);
+var aportfolioid = urlParams.get('portfolioId');
+checkportissell();
+function checkportissell(){
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&portfolioId="+aportfolioid,"GET",token);
+    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+        cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
+    }else if(data.address == null || data.address == ""){
+        cont.innerHTML = "<a style='font-size:30px;margin-left:-12%;' href='createdataselling.php?portfolioId="+aportfolioid+"'>Sell your portfolio here</a>";
+    }else{
+        if(getorderdescandimg() == true){
+            console.log(imgsrc);
+            setcontentdatacenter();
+        }else{
+        cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
+        }
+    }
+                setsidebar();
+}
 function setsidebar(){
     if(getUser()){
-    sideusername.innerHTML = username;
-    sideimg.setAttribute("src",pictureURL);
-    sidedesc.innerHTML += description;
-    }else{
-        
+        sideusername.innerHTML = username;
+        sideimg.setAttribute("src",pictureURL);
+        sidedesc.innerHTML += description;
     }
 }
 function setcontentdatacenter(){
-    getorderdescandimg();
-    console.log(imgsrc);
-    console.log(imgdesc);
     cont.innerHTML = "";
     img.setAttribute("src",imgsrc[n]);
     cont.appendChild(image);
     imagedesc.innerHTML = imgdesc[n];
     cont.appendChild(info);
+    getComments();
     cont.appendChild(similar);
+    if(imgdesc.length == 0){
+        btnprev.innerHTML = "<button type='button' id='prevorder' style='float:right;top:40%;position: absolute;'  class='btn btn-primary'><i class='fa fa-angle-left'></i></button>";
+        btnnext.innerHTML = "<button type='button' id='nextorder' style='float:right;top:40%;position: absolute;' class='btn btn-primary'><i class='fa fa-angle-right'></i></button>";
+    }
 }
 prev.addEventListener("click",function(){
-    console.log(n);
     if(n == 0){
         n = imgdesc.length - 1;
     }else{
@@ -126,8 +143,8 @@ button.addEventListener("click",function(){
                 if(xhr.status != 200){
                 diverror.innerHTML ="Error: " + xhr.responseText;
                 }else{
-                        textarea.style.border = "0px solid red";
-    diverror.innerHTML = "";
+                    textarea.style.border = "0px solid red";
+                    diverror.innerHTML = "";
                     getComments();
                 }
             }
@@ -140,10 +157,12 @@ function deletecomments(){
 function updatecomments(){
     
 }
-getComments();
 function getComments(){
             allcomments.innerHTML = "";
-            var data = makerequestnopar("http://10.3.50.6/api/ordercomment","GET",token);
+            var data = makerequestnopar("http://10.3.50.6/api/order/comment?orderId="+orderid[n],"GET",token);
+            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                allcomments.innerHTML = "No comments found";
+            }else{
                 if(data.length != 0){
                     for(var i = 0;i < data.length ; i++){
                         setComments(i,data);
@@ -151,6 +170,7 @@ function getComments(){
                 }else{
                     allcomments.innerHTML = "No comments found";
                 }
+            }
 }
 
 function setComments(i,data){
@@ -176,12 +196,18 @@ function getorderdescandimg(){
         imgsrc = [];
         imgdesc = [];
         orderid = [];
-    var data = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+aportfolioid,"GET",token);
-                    for(var i = 0;i < data.length; i++){
-                        imgsrc[i] = data[i].imgURL;
-                        imgdesc[i] =  data[i].description;
-                        orderid[i] = data[i].orderId;
-                    }
+        var data = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+aportfolioid,"GET",token);
+    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+        return false;
+    }else{
+        for(var i = 0;i < data.length; i++){
+            
+            imgsrc[i] = data[i].imgURL;
+            imgdesc[i] =  data[i].description;
+            orderid[i] = data[i].orderId;
+        }
+        return true;
+    }
 }
 function getUser(){
     var data = makerequestnopar("http://10.3.50.6/api/user","GET",token);

@@ -55,7 +55,7 @@
 
                         </ul>
                     </div>!-->
-                    <div id="notes-all"></div>
+                    <div id="notes-all" ></div>
                 </ul>
             </div>
         </div>
@@ -148,10 +148,10 @@
       		<div class="modal-body">
       			<form>
                  <p class="modalParagraph">Image url</p>
-      				<input type="text" id="urlorder" placeholder="Note" autocomplete="off">
+      				<input type="text" id="urlorder" placeholder="image url" autocomplete="off">
       				<span class="modalErrorMsg" id="errorurl"></span>
                     <p class="modalParagraph">Description</p>
-      				<input type="text" id="descorder" placeholder="Note" autocomplete="off">
+      				<input type="text" id="descorder" placeholder="description" autocomplete="off">
       				<span class="modalErrorMsg" id="errordesc"></span>
       			</form>
       		</div>
@@ -246,11 +246,8 @@
       				<input type="text" name="name" id="MPortGoal" placeholder="Goal" autocomplete="off">
       				<span class="modalErrorMsg" id="ErrorPortGoal"></span>
                     <p class="modalParagraph">Image url</p>
-      				<input type="text" name="name" id="Mimgurl" placeholder="Description" autocomplete="off">
+      				<input type="text" name="name" id="Mimgurl" placeholder="image url" autocomplete="off">
       				<span class="modalErrorMsg" id="errorporturl"></span>
-                    <p class="modalParagraph">Address</p>
-      				<input type="text" name="name" id="Maddress" placeholder="Goal" autocomplete="off">
-      				<span class="modalErrorMsg" id="erroradres"></span>
       			</form>
       		</div>
       		<div class="modal-footer">
