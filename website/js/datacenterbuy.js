@@ -67,21 +67,56 @@ createBuyRequest: function(){
       // var jsonfile = {"portfolioid": 33} //portfolio nog zien te krijgen via globale
       // console.log(jsonfile);
       // makerequest(jsonfile, "http://10.3.50.6/api/purchase","POST", token);
-      var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": "http://10.3.50.6/api/purchase",
-        "method": "POST",
-        "headers": {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
-        },
-        "data": "{\n\t\"portfolioId\": 33,\n}"
-        }
-        $.ajax(settings).done(function (response) {
-          console.log(response);
-        });
+
+      // var jsondata = {"portfolioId": 33};
+      // var settings = {
+      //   "async": true,
+      //   "crossDomain": true,
+      //   "url": "http://10.3.50.6/api/purchase",
+      //   "method": "POST",
+      //   "headers": {
+      //     "Content-Type": "application/json",
+      //     "Authorization": "Bearer " + token
+      //   },
+      //   "dataType": "json",
+      //   "data": JSON.stringify(jsondata);
+      //   }
+      //   $.ajax(settings).done(function (response) {
+      //     console.log(response);
+      //   });
       $('#buying-succes').text("You succesfully bought the data!");
+
+
+      $.ajax({
+        "async": true,
+          "crossDomain": true,
+          url: "http://10.3.50.6/api/purchase?portfolioId=33",
+        type: "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+          },
+        dataType: 'json',
+        success: function(data){
+          console.log(data);
+            },
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status);
+            console.log(thrownError);
+            console.log(xhr);
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
     });
   });
 });
