@@ -3,7 +3,7 @@
  <!-- menu bar meer naar links, users uit db halen & verschillende portfolio's tonen *
 - mogelijk tonen op rating/likes/follows? **
 - card een max height geven zodat deze ongeveer even zal zijn afhankelijk * * *
-- datacenter menu bar drop down maken * * * *
+- als user toch geen backer is er voor zorgen dat link naar faq wordt getoond ( link nog aanmaken);
 -->
 <html>
 <head>
@@ -67,9 +67,9 @@
                   <div class="btn-check" id="buyCheck">
                 <a class="btn btn-buycheck btn-primary" id="buyCheck">View data</a>
               </div>
-              <div class="btn-fault" id="faultcheck">
-                <!-- <a class="btn btn-primary btn-fault">Either you are not logged in in metamask,
-                Or you are not an actual buyer of this portfolio! Click here for help</a> -->
+                <div class="btn-fault" id="faultcheck">
+              <p> Either you are not logged in in metamask,
+                Or you are not an actual buyer of this portfolio!<span><a href=""> Click here for help </a> </span></p>
               </div>
               </div>
             </div>
