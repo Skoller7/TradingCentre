@@ -38,7 +38,7 @@
 		<div class="container">
 
 			<div class="row">
-				<div class="col-md-10" id="search"></div>
+				<h1 class="col-md-10" id="search">Searched username: </h1>
 			</div>
 			<div class="row">
 			
