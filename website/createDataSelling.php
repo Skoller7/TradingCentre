@@ -98,11 +98,18 @@
         <span>This order has been saved!</span> <!-- dit verstoppen tot dat api call succesfull was -->
         <br  /> <br  /> <br  />
         <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract : </label>
-        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> <!-- fetch orders from db --> 
+        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> <!-- fetch orders from db -->
           <option selected>Order #1234</option>
           <option value="2">Order #1235</option>
           <option value="3">Order #1236</option>
         </select>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <button type="button" name="button" class="btn btn-primary btn-create-contract-request">Create Buycontract</button><a href="#"> More info?</a>
         </div>
     </nav>
     </div>
@@ -132,5 +139,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>
-<script src="js/app.js"></script>
+<script src="js/dataselling.js"></script>
 </html>
