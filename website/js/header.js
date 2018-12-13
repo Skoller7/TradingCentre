@@ -78,7 +78,7 @@ function changeLoginchangeLogin() {
 		link2.appendChild(document.createTextNode("Logout"));
 
 		bt1.setAttribute("id","BSetttings");
-		link1.setAttribute("href","settings.html");
+		link1.setAttribute("href","settings.php");
 		bt2.setAttribute("id","BLogout");
 
 		bt1.appendChild(link1);
