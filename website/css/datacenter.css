@@ -372,25 +372,25 @@ styling modals
     background-color: #25313B;
     color:#fff;
 }
-#MLoginBLogin,#MCreateNoteBCreateNote,#MSignUpBSingUp,#MForgotPasswordBForgotPassword,#MCreatePortBCreatePort{
+#MLoginBLogin,#MCreateNoteBCreateNote,#MSignUpBSignUp,#MForgotPasswordBForgotPassword,#MCreatePortBCreatePort{
     background-color: #ff751a;
     border:none;
 }
 .close{
     color:#fff;
 }
-#MLoginBLogin:hover,#MCreateNoteBCreateNote:hover,#MSignUpBSingUp:hover,#MForgotPasswordBForgotPassword:hover,#MCreatePortBCreatePort:hover{
+#MLoginBLogin:hover,#MCreateNoteBCreateNote:hover,#MSignUpBSignUp:hover,#MForgotPasswordBForgotPassword:hover,#MCreatePortBCreatePort:hover{
     background-color: #ff944d;
     border:none;
 }
 #MLogin .modal-body input[type=checkbox]{
     width:10%;
 }
-#MLogin #MLoginBForgotPassword, #MLogin #MLoginBSingUp, #MLogin #MLoginremember,#MSignUp #MSingUpBLogin{
+#MLogin #MLoginBForgotPassword, #MLogin #MLoginBSignUp, #MLogin #MLoginremember,#MSignUp #MSignUpBLogin{
     color:#0889C4;
     cursor: pointer;
 }
-#MLogin #MLoginBForgotPassword:hover,#MLogin #MLoginBSingUp:hover,#MSignUp #MSingUpBLogin:hover{
+#MLogin #MLoginBForgotPassword:hover,#MLogin #MLoginBSignUp:hover,#MSignUp #MSignUpBLogin:hover{
     border-bottom: 1px solid #0889C4;
 }
 /*

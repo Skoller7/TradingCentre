@@ -20,8 +20,19 @@
 		?>
 		<script src="js/header.js" type="text/javascript"></script>
 		<script>
-			
-			var search = echo '"' + htmlspecialchars($_GET['search']) + '"';
+			<?php
+
+				echo 'var search = "' . htmlspecialchars($_GET['search']) . '";';
+				if(isset($_SESSION['jwtToken'] )){
+					echo 'var jwtToken = "' . $_SESSION['jwtToken'] . '";';
+				}
+				else{
+					if(isset($_COOKIE['jwtToken'])){
+						echo 'var jwtToken = "' . $_COOKIE['jwtToken'] . '";';
+					}
+				}
+				
+			?>
 		</script>
 
 		<div class="container">
@@ -39,8 +50,5 @@
 
 		
 		<script src="js/search.js" type="text/javascript"></script>
-		<?php 
-			include("footer.html");
-		?>
 	</body>
 </html>
