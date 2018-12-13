@@ -7,6 +7,7 @@ getUsers(function(){
 
 
 $("#search").append(document.createTextNode(search));
+$("#search").css("margin-top","10%");
 
 function getUsers(callBack){
 	 $.ajax({
