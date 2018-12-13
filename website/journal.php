@@ -206,7 +206,7 @@
 		<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-		        <h5 class="modal-title">Create Note</h5>
+		        <h5 class="modal-title" id="notetitle">Create Note</h5>
 		        <button type="button" class="close" id="MCreateNoteBCrosse" aria-label="Close">
 	          		<span aria-hidden="true">&times;</span>
 				</button>
@@ -214,7 +214,7 @@
       		<div class="modal-body">
       			<form>
 					<p class="modalParagraph">Message</p>
-      				<input type="text" name="email" id="MCreateNoteContent" placeholder="Note" autocomplete="off">
+      				<input type="text" id="MCreateNoteContent" placeholder="Note" autocomplete="off">
       				<span class="modalErrorMsg" id="ErrorCreateNoteContent"></span>
       			</form>
       		</div>

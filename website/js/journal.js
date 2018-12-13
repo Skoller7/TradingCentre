@@ -150,14 +150,15 @@ function openupdateorder(e){
 		backdrop: 'static'
 	});
     idupdate = e.target.id;
+    errordescription.innerHTML = "";
+    errorurl.innerHTML = "";
     for(var i=0;i< arraysort.length;i++){
         if(idupdate == arraysort[i].orderId){
             descinput.value = arraysort[i].description;
             urlinput.value = arraysort[i].imgURL;
-           }
+            return;
+        }
     }
-    errordescription.innerHTML = "";
-    errorurl.innerHTML = "";
 }
 /*
 close modal add  desc and img to image 
@@ -166,7 +167,6 @@ document.getElementById("btncloseupdate").addEventListener("click",closeupdateor
 document.getElementById("updateorderBCrosse").addEventListener("click",closeupdateorder);
 function closeupdateorder(){
 	$('#Mupdateorder').modal('toggle');
-    getorders();
 }
 
 /*
@@ -200,6 +200,7 @@ document.getElementById("btnupdateorder").addEventListener("click",function (){
             urlinput.value  ="";
             errordescription.innerHTML = "Succesfully updated";
             errorurl.innerHTML = "";
+                getorders();
             closeupdateorder();
         }else if(getstatus() == 400){
             errordescription.innerHTML = data;
@@ -287,7 +288,10 @@ function openSubPortfolios(){
 /*
 call get all portfolios in submenu portfolios
 */
+
+if(token != false){
 getport();
+}
 function getport(){
     port = [];
         var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
@@ -527,43 +531,11 @@ function getnotes(){
         content_del.setAttribute("class","fa fa-trash");
         content_edit.setAttribute("id",data[i].noteId);
         content_edit.setAttribute("class","fa fa-edit");
+          content_edit.setAttribute("value",data[i].message);
         notes.appendChild(li);
         li.appendChild(content);
       }
 }
-
-/*
-api call delete and update note
-*/
-document.getElementById("notes-all").addEventListener("click",function(e) {
-if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
-    if(e.target.className == "fa fa-trash"){
-                makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
-                document.getElementById(e.target.id + "note").style.display = "none";
-      }else{
-          var json = {"NoteId": e.target.id,"Message": "Hello world2d"};
-            $.ajax({
-                "async": true,
-                "crossDomain": true,
-                url: "http://10.3.50.6/api/note",
-                type: "POST",
-                "headers": {
-                    "Content-Type": "application/json",
-                    "Authorization": "Bearer " + token
-                },
-                data:JSON.stringify(json),
-                dataType: 'json',
-                success:function(data){},
-                error: function(xhr, ajaxOptions, thrownError){
-                    console.log(e.target.id);
-                    console.log(xhr.status);
-                    console.log(thrownError);
-                    console.log(xhr);
-                }
-            });
-      }
-}
-});
 
 /*
 notes
@@ -571,9 +543,18 @@ notes
 /*
 show modal create note
 */
+var createorupdate = true;
+var noteid;
 document.getElementById("BCreateNote").addEventListener("click",openMCreateNote);
 function openMCreateNote(){
-    document.getElementById("MCreateNoteBCreateNote").innerHTML = "Create note";
+    if(content.value == ""){
+        createorupdate = true;
+        document.getElementById("MCreateNoteBCreateNote").innerHTML = "Create note";
+        document.getElementById("notetitle").innerHTML = "Create note";
+    }else{
+        document.getElementById("MCreateNoteBCreateNote").innerHTML = "Update note";
+        document.getElementById("notetitle").innerHTML = "Update note";
+    }
      errorcontent.innerHTML = "";
 	closeAllModals();
 	$('#MCreateNote').modal({
@@ -592,7 +573,7 @@ function McreateNoteClose(){
 }
 
 /*
-api call create note
+api call create and updatenote
 */
 document.getElementById("MCreateNoteBCreateNote").addEventListener("click",createnote);
 function createnote(){
@@ -602,17 +583,40 @@ function createnote(){
           errorcontent.innerHTML = "This field cannot be empty";
         valid = false;
     }
-        var json = {"PortfolioId": activeportfolioid ,"message":content.value};
-        var data = makerequest(json,"http://10.3.50.6/api/note","PUT",token);
+    if(valid){
+        if(createorupdate){
+            var json = {"PortfolioId": activeportfolioid ,"message":content.value};
+            makerequest(json,"http://10.3.50.6/api/note","PUT",token);
+        }else{
+            var json = {"NoteId": noteid,"message":content.value};
+            makerequest(json,"http://10.3.50.6/api/note","POST",token);
+        }
         if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                 errorcontent.innerHTML = "Something went wrong, please try again later";
                 valid = false;
          }
+    }
     if(valid){
         McreateNoteClose();
         getnotes();
     }
 }
+/*
+api call delete and update note
+*/
+document.getElementById("notes-all").addEventListener("click",function(e) {
+if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
+    if(e.target.className == "fa fa-trash"){
+                makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
+                document.getElementById(e.target.id + "note").style.display = "none";
+      }else{
+          content.value = e.target.getAttribute("value");
+          noteid = e.target.id;
+          createorupdate = false;
+          openMCreateNote();
+      }
+}
+});
 
 /*
 show modal create & update portfolios
