@@ -67,6 +67,10 @@
                   <div class="btn-check" id="buyCheck">
                 <a class="btn btn-buycheck btn-primary" id="buyCheck">View data</a>
               </div>
+              <div class="btn-fault" id="faultcheck">
+                <!-- <a class="btn btn-primary btn-fault">Either you are not logged in in metamask,
+                Or you are not an actual buyer of this portfolio! Click here for help</a> -->
+              </div>
               </div>
             </div>
 

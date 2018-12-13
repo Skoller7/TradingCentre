@@ -50,7 +50,7 @@ isUserBacker: function(){
     DataContractInstance.backers.call(account).then(function(r){
       if(r){
         console.log('Person is a backer');
-        $('.btn-buycheck').show();
+        $('.btn-buycheck').show;
       }
     }).catch(function(err){
         $('#buyCheck').text('Seems like you are not a backer after all');
