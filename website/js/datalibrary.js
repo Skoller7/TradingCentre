@@ -1,4 +1,5 @@
    $('.btn-buycheck').hide();
+   $('.btn-fault').hide();
 App = {
   web3Provider: null,
   contracts: {},
@@ -20,6 +21,7 @@ App = {
     App.web3Provider = window.web3.currentProvider;
   }
   // If no injected web3 instance is detected, fall back to Ganache
+  //local blockchain for developing purposes.
   else {
     App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
   }
@@ -49,11 +51,14 @@ isUserBacker: function(){
         var account = accounts[0];
     DataContractInstance.backers.call(account).then(function(r){
       if(r){
+          $('.btn-buycheck').toggle();
+          $('#buyCheck').show();
         console.log('Person is a backer');
-        $('.btn-buycheck').show;
+      }
+      else {
+          $('.btn-fault').show();
       }
     }).catch(function(err){
-        $('#buyCheck').text('Seems like you are not a backer after all');
       console.log(err);
     });
   });

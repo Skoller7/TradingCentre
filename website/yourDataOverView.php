@@ -1,3 +1,8 @@
+<!--
+TODO: via api call de datum opvragen van wanneer het verkocht is & hoe vaak.
+Dat in de tabel doen.
+-->
+
 <!doctype html>
 <html>
 <head>
