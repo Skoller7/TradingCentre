@@ -1,6 +1,6 @@
 .vertical-settings {
     height: 100%;
-    width: 15%;
+    width: 10%;
     position: fixed;
     z-index: 1;
     top: 30px;
@@ -10,33 +10,41 @@
     background-color: #25313B;
     float: left;
     color: #F8F9FA;
+    text-align: center;
+    align-items: center;
 }
 
-.vertical-settings a {
-    padding: 6px 8px 6px 60px;
+.vertical-settings button {
+    padding: 6px 8px 6px 0px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 15px;
+    background-color: inherit;
     color: #F8F9FA;
     display: block;
+    width: 100%;
+    border: none;
+    outline: none;
+    transition: 0.3s;
 }
 
-.vertical-settings a:hover {
+.vertical-settings button:hover {
     color: #FF751A;
 }
 
-.vertical-settings a.active {
+.vertical-settings button.active {
     color: #FF751A;
 }
 
-.option-settings {
+.content {
 	top: 30px;
-    margin-left: 15%;
+    margin-left: 10%;
     padding: 80px 10px;
     float: left;
     position: absolute;
+    
 }
 
-.option-settings a {
+.content a {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     color: black;

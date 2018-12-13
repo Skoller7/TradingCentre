@@ -1,49 +1,18 @@
-document.getElementById("general").addEventListener("click", showGeneral);
-
-function showGeneral() {
-    document.getElementById("general").className = "active";
-    document.getElementById("security").className = "";
-    document.getElementById("privacy").className = "";
-    document.getElementById("account").className = "";
+function openOption(evt, optionName) {
+    var i, content, tablink;
     
-    doucment.getElementById("general-option").style.visibility = "visible";
-    doucment.getElementById("security-option").style.visibility = "hidden";
-    doucment.getElementById("privacy-option").style.visibility = "hidden";
-    doucment.getElementById("account-option").style.visibility = "hidden";
+    content = document.getElementsByClassName("content");
+    for (i = 0; i < content.length; i++) {
+        content[i].style.display = "none";
+    }
+    
+    tablink = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablink.length; i++) {
+        tablink[i].className = tablink[i].className.replace(" active", "");
+    }
+    
+    document.getElementById(optionName).style.display = "block";
+    evt.currentTarget.className += " active";
 }
 
-function showSecurity() {
-    document.getElementById("general").className = "";
-    document.getElementById("security").className = "active";
-    document.getElementById("privacy").className = "";
-    document.getElementById("account").className = "";
-    
-    doucment.getElementById("general-option").style.visibility = "hidden";
-    doucment.getElementById("security-option").style.visibility = "visible";
-    doucment.getElementById("privacy-option").style.visibility = "hidden";
-    doucment.getElementById("account-option").style.visibility = "hidden";
-}
-
-function showPrivacy() {
-    document.getElementById("general").className = "";
-    document.getElementById("security").className = "";
-    document.getElementById("privacy").className = "activity";
-    document.getElementById("account").className = "";
-    
-    doucment.getElementById("general-option").style.visibility = "hidden";
-    doucment.getElementById("security-option").style.visibility = "hidden";
-    doucment.getElementById("privacy-option").style.visibility = "visible";
-    doucment.getElementById("account-option").style.visibility = "hidden";
-}
-
-function showAccount() {
-    document.getElementById("general").className = "";
-    document.getElementById("security").className = "";
-    document.getElementById("privacy").className = "";
-    document.getElementById("account").className = "active";
-    
-    doucment.getElementById("general-option").style.visibility = "hidden";
-    doucment.getElementById("security-option").style.visibility = "hidden";
-    doucment.getElementById("privacy-option").style.visibility = "hidden";
-    doucment.getElementById("account-option").style.visibility = "visible";
-}
+document.getElementById("default").click();
