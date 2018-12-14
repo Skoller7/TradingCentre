@@ -78,7 +78,7 @@
         <div class="user-description col-md-12">
             <div class="form-group">
               <label for="comment">Data Description: </label>
-              <textarea class="form-control" rows="5" id="comment" placeholder="In this data selling portfolio, I am going to teach you how to properly spot Head & shoulders, . . ."></textarea>
+              <textarea class="form-control" rows="5" id="PortfolioDescription" placeholder="In this data selling portfolio, I am going to teach you how to properly spot Head & shoulders, . . ."></textarea>
             </div>
           </div>
          </div>
@@ -98,10 +98,10 @@
         <span>This order has been saved!</span> <!-- dit verstoppen tot dat api call succesfull was -->
         <br  /> <br  /> <br  />
         <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract : </label>
-        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> <!-- fetch orders from db -->
-          <option selected>Order #1234</option>
-          <option value="2">Order #1235</option>
-          <option value="3">Order #1236</option>
+        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
+          <div class="ordersHier">
+
+          </div> <!-- fetch orders from db -->
         </select>
         <br />
         <br />
@@ -121,7 +121,7 @@
           <div class="img-fluid" style="height="50%" width="80%"">
             <!-- hier een witte box met zwarte randen tonen tot de persoon een img heeft geupload dan wordt de box vervangen door de iamge.-->
           </div>
-          <button>Upload an image </button>
+          	<input type="text" id="tradeurl" placeholder="image url" autocomplete="off">
         </div>
         <div class="info-content">
             <div class="image-description">

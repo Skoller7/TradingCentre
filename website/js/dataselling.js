@@ -38,10 +38,34 @@ App = {
       App.contracts.DataContract = TruffleContract(DataContractArtifact);
       App.contracts.DataContract.setProvider(App.web3Provider);
       console.log(App.contracts);
+      App.loadPage();
     })
 
 
   },
+
+loadPage : function(){
+
+  var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token);
+  name = data.name;
+  description = data.description;
+  goal = data.goal;
+  imgurl = data.imgURL;
+
+  $('#PortfolioDescription').text(description);
+
+  var orderdata = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token);
+
+  for(var i = 0; i < orderdata.length; i++){
+    if(i == 0){
+    $('.ordersHier').append("<option selected>orderdata[i]</option>"); }
+    else {
+    $('.ordersHier').append("<option value=i>orderdata[i]</option>"); }
+  }
+    console.log(orderdata);
+
+},
+
 
   createNewContractCheck : function(){
       //orders & description checken.
@@ -70,11 +94,18 @@ App = {
        { console.log('deployment is succesfull');
         $('#contractSucces').text('succes');
       DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
+        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token);
+        name = data.name;
+        description = data.description;
+        goal = data.goal;
+        imgurl = data.imgURL;
+        console.log(name, goal, description, imgurl);
+
         addres = r[r.length-1];
 
-        var array=[1,2,3,4];
-        var lastEl = array[array.length-1];
 
+        console.log(r);
+        console.log(addres);
         $.ajax({
           "async": true,
             "crossDomain": true,
@@ -84,8 +115,12 @@ App = {
               "Content-Type": "application/json",
               "Authorization": "Bearer " + token
             },
-            "data ":{
+            "data":{
               "PortfolioId": aportfolioid,
+              "Name": name,
+              "Description": description,
+              "Goal": goal,
+              "ImgURL": imgurl,
               "IsForSale": true,
               "Address": addres
             },
@@ -111,44 +146,29 @@ App = {
 }
 }
 
-function getorders(){
-        all.innerHTML = "";
-        if(todate.value == ""){
-            todate.value = yyyy+"-"+addzero(mm)+"-"+addzero(dd);
-            tdate = addzero(dd)+"/"+addzero(mm)+"/"+yyyy;
-        }else{
-            tdate = todate.value.substring(8,10) + "/" + todate.value.substring(5,7) + "/" + todate.value.substring(0,4);
-        }
-        if(fromdate.value == ""){
-            fromdate.value = "1970-01-01";
-        }
-        frdate = fromdate.value.substring(8,10) + "/" + fromdate.value.substring(5,7) + "/" + fromdate.value.substring(0,4);
-       $.ajax({
-    	"async": true,
-  		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/get?portfolioId="+aportfolioid+"&amount="+amount.value+"&dateFrom="+frdate+"&dateTo="+tdate,
-        type: "GET",
-        "headers": {
-    		"Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-  		},
-        dataType: 'json',
-        success: function(data){
-            if(data.length != 0){
-                arraysort = data;
-                    for(var i = 0;i < data.length; i++){
-                            setOrders(data,i,defaultbool);
-                    }
-            }else{
-                all.innerHTML = "No orders found";
-            }
-            },
-        error: function(xhr, ajaxOptions, thrownError){
-        	console.log(xhr.status);
-        	console.log(thrownError);
-            console.log(xhr);
-        }
-    });
+
+function getPortfolio(){
+  $.ajax({
+    "async": true,
+      "crossDomain": true,
+      url: "http://10.3.50.6/api/portfolio?&portfolioId=" + aportfolioid,
+    type: "POST",
+    "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+    dataType: 'json',
+    success: function(data){
+      console.log(data);
+        },
+    error: function(xhr, ajaxOptions, thrownError){
+        console.log(xhr.status);
+        console.log(thrownError);
+        console.log(xhr);
+    }
+});
+
+
 }
 
 
