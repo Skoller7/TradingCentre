@@ -10,7 +10,6 @@ function getcard(){
     }else{
         for(var i=0;i < data.length;i++){
             if(data[i].address == null || data[i].address == ""){
-                setcard(data,i,true);
             }else{
                 setcard(data,i,true); 
             }
@@ -18,11 +17,10 @@ function getcard(){
     }
 }
 function getcardhigh(){
-    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&userId=31","GET",token);
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token);
     if(getstatus() == 400 || getstatus() == 401 || getstatus() == 500 || getstatus() == 501){
         alert("Something went wrong, please try again later");
     }else{
-        console.log(data);
         for(var i=0;i < data.length;i++){
             setcard(data,i,false); 
         }

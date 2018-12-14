@@ -69,7 +69,7 @@ function changeLoginchangeLogin() {
 		var link1 = document.createElement("A");
 		link1.classList.add("nav-link");
 
-		link1.appendChild(document.createTextNode("Settings"));
+		link1.appendChild(document.createTextNode("Profile"));
 
 		var bt2 = document.createElement("LI");
 		bt2.classList.add("nav-item");
@@ -78,7 +78,7 @@ function changeLoginchangeLogin() {
 		link2.appendChild(document.createTextNode("Logout"));
 
 		bt1.setAttribute("id","BSetttings");
-		link1.setAttribute("href","settings.php");
+		link1.setAttribute("href","profile.php");
 		bt2.setAttribute("id","BLogout");
 
 		bt1.appendChild(link1);

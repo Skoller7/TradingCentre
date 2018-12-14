@@ -47,7 +47,8 @@
                         <ul id="portfolios-ul">
                         </ul>
                     </div>
-                    <li id="addorder">Add orders</li>
+                    <li id="addorder">Add orders to current portfolio</li>
+                    <li id="changedisplay">Change display journal</li>
                     <li id="BCreateNote">Create note</li>
                     <!--<li class="notes-header" id="notes"><a href="#">All Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
                     <div id="notes-sub">
@@ -62,9 +63,7 @@
     </nav>
     <div class="col-md-3 col-sm-0 col-xs-0"></div>
     <div class="col-md-9 col-sm-12 col-xs-12">
-        <div class="header-content" id="header-content">
-            <h3 id="header-portfolio-name"></h3>
-        </div>
+    <div id="content1">
         <div class="chart-content">
            <div id="main"></div>
         </div>
@@ -76,7 +75,6 @@
         </div>
         <h3>Orders</h3>
         <div class="info-content" id="info-content">
-        <div>
             <div class="table-responsive">
                 <label>Amount</label>
                 <select id="amount">
@@ -111,10 +109,13 @@
                     </tbody>
                   </table>
                 </div>
-            </div>
         </div>
         <div class="footer-port" id="footer-port">
 
+        </div>
+        </div>
+        <div id="content2">
+        
         </div>
     </div>
 </div>
@@ -150,6 +151,7 @@
                  <p class="modalParagraph">Image url</p>
       				<input type="text" id="urlorder" placeholder="image url" autocomplete="off">
       				<span class="modalErrorMsg" id="errorurl"></span>
+                    <img style='width:100%;' id='imageurl'>
                     <p class="modalParagraph">Description</p>
       				<input type="text" id="descorder" placeholder="description" autocomplete="off">
       				<span class="modalErrorMsg" id="errordesc"></span>
@@ -167,7 +169,7 @@
 		<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-		        <h5 class="modal-title">Add orders to portfolio</h5>
+		        <h5 class="modal-title">Add orders to current portfolio</h5>
 		        <button type="button" class="close" id="addorderBCrosse" aria-label="Close">
 	          		<span aria-hidden="true">&times;</span>
 				</button>
@@ -248,6 +250,7 @@
                     <p class="modalParagraph">Image url</p>
       				<input type="text" name="name" id="Mimgurl" placeholder="image url" autocomplete="off">
       				<span class="modalErrorMsg" id="errorporturl"></span>
+                    <img style='width:100%;' id='portimg'>
       			</form>
       		</div>
       		<div class="modal-footer">

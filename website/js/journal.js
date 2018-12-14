@@ -53,93 +53,33 @@ var urlinput = document.getElementById("urlorder");
 var errorurl = document.getElementById("errorurl");
 var errordescription = document.getElementById("errordesc");
 var erroraddorder = document.getElementById("erroraddorder");
+var imageurlel = document.getElementById("imageurl");
+var portimgel = document.getElementById("portimg");
 modalList.push("MCreateNote");
 modalList.push("MCreatePort");
 modalList.push("Mupdateorder");
 fromdate.addEventListener("change",getorders);
 todate.addEventListener("change",getorders);
 amount.addEventListener("change",getorders);
-        function addzero(number){
-            if(number < 10){
-                number = "0" + number;
-            }
-            return number;
-        }
-/*        function delcard(id){
-            document.getElementById(id).style.display = "block";
-        }
-        function addzero(number){
-            if(number < 10){
-                number = "0" + number;
-            }
-            return number;
-        }
-                function closeModal(item){
-                    //https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
-                    if ($(item).is(':visible')){
-                        $(item).modal('toggle');
-                    }
-                }
-     document.getElementById("createnote").addEventListener("click",onclickcreate);
-        function onclickcreate(){
-            var note = document.createElement("div");
-            var notebody = document.createElement("div");
-            var notetitle = document.createElement("h5");
-            var notetext = document.createElement("p");
-            var notedel = document.createElement("button");
-            var notecontent = document.getElementById("notecontent").value;
-            if(notecontent == ""){
-                document.getElementById('falsenote').style.color = "red";
-                document.getElementById('falsenote').innerHTML = '* This field cannot be empty!';
-
-            }else{
-                var ID = Math.random();
-                document.getElementById('falsenote').innerHTML = '';
-                note.className = "card";
-                note.setAttribute("id",ID);
-                notebody.className = "card-body";
-                notetitle.className = "card-title";
-                notetext.className = "card-text";
-                notedel.className = "btn btn-primary";
-                 //notedel.setAttribute("onclick",delcard(ID););
-                var today = new Date();
-                var dd = today.getDate();
-                var mm = today.getMonth() +1;
-                var yyyy = today.getFullYear();
-                var hh = addzero(today.getHours());
-                var MM = addzero(today.getMinutes());
-                today = dd + '/' + mm + '/' + yyyy + ' ' + hh + ':' + MM;
-                notetitle.innerHTML = today + '<br>';
-                notetext.innerHTML =  notecontent;
-                notedel.innerHTML = "X";
-                document.getElementById("notes").appendChild(note);
-                note.appendChild(notebody);
-                notebody.appendChild(notetitle);
-                notebody.appendChild(notetext);
-                notebody.appendChild(notedel);
-                document.getElementById("notecontent").value = "";
-                $(function(){
-                    $("#createnote").modal('toggle');
-                });
-            }
-        }*/
-
-/*
-menu sidebar notes
-
-document.getElementById("notes-sub").style.display = "none";
-document.getElementById("notes").addEventListener("click",openSubNotes);
-function openSubNotes(){
-     var sub = document.getElementById("notes-sub");
-    if(sub.style.display == "block"){
-        document.getElementById("notes-arrow").className = "fa fa-angle-right";
-        sub.style.display = "none";
+var changedisplay = document.getElementById("changedisplay");
+var content1 = document.getElementById("content1");
+var content2 = document.getElementById("content2");
+changedisplay.addEventListener("click",changedisplayjournal);
+function changedisplayjournal(){
+    if(content1.style.display == "block"){
+        content2.style.display = "block";
+        content1.style.display = "none";
     }else{
-        document.getElementById("notes-arrow").className = "fa fa-angle-down";
-        document.getElementById("notes-sub").style.display = "block";
+        content2.style.display = "none";
+        content1.style.display = "block";
     }
 }
-*/
+        function addzero(number){
+            if(number < 10){
+                number = "0" + number;
+            }
+            return number;
+        }
 /*
 show modal add  desc and img to image 
 */
@@ -156,9 +96,14 @@ function openupdateorder(e){
         if(idupdate == arraysort[i].orderId){
             descinput.value = arraysort[i].description;
             urlinput.value = arraysort[i].imgURL;
+             imageurlel.setAttribute("src",arraysort[i].imgURL);
             return;
         }
     }
+}
+urlinput.addEventListener("change",setimg);
+function setimg(){
+    imageurlel.setAttribute("src",urlinput.value);
 }
 /*
 close modal add  desc and img to image 
@@ -183,7 +128,7 @@ document.getElementById("btnupdateorder").addEventListener("click",function (){
     if(urlinput.value == ""){
         valid = false;
         errorurl.innerHTML = "* This field cannot be empty";
-    }else if(urlinput.value.substr(0,28) == "https://www.tradingview.com/"){
+    }else if(!ValidURL(urlinput.value)){
         valid = false;   
         errorurl.innerHTML = "* This must be an url image from tradingview.com";
     }
@@ -293,9 +238,9 @@ if(token != false){
 getport();
 }
 function getport(){
-    port = [];
+        port = [];
         var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
-        
+        console.log(data);
         ul.innerHTML = "";
         for(var i = 0; i < data.length;i++){
             var name = document.createTextNode(data[i].name);
@@ -304,7 +249,7 @@ function getport(){
             li.setAttribute("style","background-color:#3a4e5f");
             li.setAttribute("id",data[i].portfolioId + "port");
             li.appendChild(name);
-            if(data[i].name == "default"){
+            if(data[i].isDefault == true){
                 defaultbool = true;
                 setdefaultport(data[i].portfolioId);
                  activeportfolioid = data[i].portfolioId;
@@ -372,7 +317,6 @@ function addorderstoportfolio(){
         erroraddorder.innerHTML = "Orders succesfuly added to portfolio";
         closeaddorder();
         all  =document.getElementById("all-orders-table");
-        getorders();
     }else{
         if(erroraddorder.innerHTML == ""){
             if(getstatus() == 400){
@@ -433,7 +377,7 @@ if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.ta
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token);
         setupactiveport(data,e.target.id);
             activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
-        if(data.name == "default"){
+        if(data.isDefault == true){
             defaultbool = true;
             journalul.innerHTML = "";
             journalul.style.display = "none";
@@ -501,11 +445,15 @@ if(e.target && e.target.nodeName == "I") {
         descport.value = data.description;
         goalport.value = data.goal;
         imgurl.value = data.imgURL;
+        portimgel.setAttribute("src",imgurl.value);
         openCreateport();
     }
 }
 });
-
+imgurl.addEventListener("change",setimgport);
+function setimgport(){
+    portimgel.setAttribute("src",imgurl.value);
+}
 /*
 api call get all notes with portfolioid
 */
@@ -628,6 +576,7 @@ function openCreateport(){
     errorgoal.innerHTML = "";
 errorurlport.innerHTML = "";
     if(activemodalportdel == 0){
+         portimgel.setAttribute("src","");
         document.getElementById("createporttitle").innerHTML = "Create Portfolio";
         document.getElementById("MCreatePortBCreatePort").innerHTML = "Create Portfolio";
 
@@ -668,6 +617,7 @@ function createport(){
     errordesc.innerHTML = "";
     errorgoal.innerHTML = "";
     errorurlport.innerHTML = "";
+    
     if(nameport.value == ""){
         errorname.innerHTML = "This field cannot be empty";
         valid = false;
@@ -723,11 +673,15 @@ function getordersadd(){
         dataType: 'json',
         success: function(data){
             if(data.length > 0){
+                if(!defaultbool){
                     for(var i = 0;i<data.length; i++){
                         if(data[i].isSold == false){
                             setOrders(data,i,defaultbool);
                         }
                     }
+                }else{
+                    all.innerHTML = "You cannot add orders to default portfolio";
+                }
             }else{
                 all.innerHTML = "No orders found";
             }
@@ -778,7 +732,9 @@ function getorders(){
             if(data.length != 0){
                 arraysort = data;
                     for(var i = 0;i < data.length; i++){
+                        if(data[i].isSold == false){
                             setOrders(data,i,defaultbool);
+                        }
                     }
             }else{
                 all.innerHTML = "No orders found";
