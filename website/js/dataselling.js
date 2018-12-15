@@ -1,6 +1,9 @@
 var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 var token = getCookie("jwtToken");
+var orderdata = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token); //retrieving all curretn orders
+var selectedOrder;
+
 App = {
   web3Provider: null,
   contracts: {},
@@ -46,25 +49,92 @@ App = {
 
 loadPage : function(){
 
-  var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token);
+  var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token); //requesting portfolio information
+
+  //creating the variables from that information
   name = data.name;
   description = data.description;
   goal = data.goal;
   imgurl = data.imgURL;
 
+  //placing the information into the html page.
   $('#PortfolioDescription').text(description);
+  console.log(imgurl);
+  $('#tradeurl').text(imgurl);
 
-  var orderdata = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token);
+
+  $('.orderimg').attr('src', imgurl);
+  $('ordersHier').append("<select id=inlineFormCustomSelect>");
+  for(var i = 0; i < orderdata.length; i++){
+    if(i == 0){ // First order has to become the selected one.
+      console.log(orderdata[i]);
+    $('.ordersHier').append("<option selected>" + orderdata[i].orderId + "</option>");
+      //Place the selected order in the global variable.
+      selectedOrder = orderdata[i];
+    }
+    else {
+    $('.ordersHier').append("<option value=" + i + ">" + orderdata[i].orderId + " </option>"); }
+  }
 
   for(var i = 0; i < orderdata.length; i++){
     if(i == 0){
-    $('.ordersHier').append("<option selected>orderdata[i]</option>"); }
-    else {
-    $('.ordersHier').append("<option value=i>orderdata[i]</option>"); }
+      $('#inlineFormCustomSelect').append(
+        $('<option selected/>')
+            .text(orderdata[i].orderId))
+    } else {
+    $('#inlineFormCustomSelect').append(
+      $('<option />')
+          .text(orderdata[i].orderId)
+          .val(i))
   }
-    console.log(orderdata);
+  }
 
 },
+
+
+  saveOrder : function(){
+
+    var neededOrder; //order which is currently selected for editting by the user.
+
+//    retrieving the data of the order that is needed. So We know which one the user wants to edit & send back.
+  //  var i = 0; i < orderdata.length(); i++
+      for(var i = 0; i < orderdata.length; i++){
+        if(orderdata[i].orderId == selectedOrder){
+          neededOrder = orderdata[i];
+        }
+      }
+
+      //Changing the order that the user just editted.
+    $.ajax({
+      "async": true,
+        "crossDomain": true,
+        url: "http://10.3.50.6/api/order",
+      type: "POST",
+      "headers": {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        "data":{
+          "PortfolioId": aportfolioid,
+          "Name": name,
+          "Description": description,
+          "Goal": goal,
+          "ImgURL": imgurl,
+          "IsForSale": true,
+          "Address": addres
+        },
+      dataType: 'json',
+      success: function(data){
+        console.log(data);
+          },
+      error: function(xhr, ajaxOptions, thrownError){
+          console.log(xhr.status);
+          console.log(thrownError);
+          console.log(xhr);
+      }
+  });
+
+  },
 
 
   createNewContractCheck : function(){
@@ -180,4 +250,8 @@ function getPortfolio(){
 
   $('.btn-create-contract-request').click(function(){
      App.createNewContractCheck();
+  });
+
+  $('.btn-save-order').click(function(){
+    App.saveOrder();
   });

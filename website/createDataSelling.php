@@ -93,16 +93,16 @@
         </div>
         <br  />  <br  />  <br  />  <br  />
         <hr color="white"/>
-        <button type="button" class="btn btn-primary">Save this order</button><br  /><!-- hier de order plaatsen via api in de juiste tabel -->
+        <button type="button" class="btn btn-primary btn-save-order">Save this order</button><br  /><!-- hier de order plaatsen via api in de juiste tabel -->
         <small id="priceHelp" class="form-text text-muted">*you need to have an image and a description before you can save the file</small>
         <span>This order has been saved!</span> <!-- dit verstoppen tot dat api call succesfull was -->
         <br  /> <br  /> <br  />
-        <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract : </label>
-        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-          <div class="ordersHier">
-
-          </div> <!-- fetch orders from db -->
-        </select>
+        <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract: </label>
+        <!-- <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> -->
+             <select class="custom-select mr-sm-2 ordersHier" id="inlineFormCustomSelect">
+            <!--   <div class="ordersHier">
+             </div> fetch orders from db -->
+          </select>
         <br />
         <br />
         <br />
@@ -119,9 +119,14 @@
         </div>
         <div class="image-content">
           <div class="img-fluid" style="height="50%" width="80%"">
-            <!-- hier een witte box met zwarte randen tonen tot de persoon een img heeft geupload dan wordt de box vervangen door de iamge.-->
+          <img  class="orderimg img-responsive img-fluid" alt="image of this order"/>  <!-- hier een witte box met zwarte randen tonen tot de persoon een img heeft geupload dan wordt de box vervangen door de iamge.-->
           </div>
-          	<input type="text" id="tradeurl" placeholder="image url" autocomplete="off">
+          <form class="" method="post">
+            <p>Image url:
+            	<input type="text" id="tradeurl">
+              </p>
+          </form>
+
         </div>
         <div class="info-content">
             <div class="image-description">
