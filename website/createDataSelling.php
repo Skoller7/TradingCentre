@@ -97,7 +97,6 @@
             <!--   <div class="ordersHier">
              </div> fetch orders from db -->
           </select>
-          <button type="button" id="getdetails" name="button">test button</button>
         </div>
         <br  />  <br  />  <br  />  <br  />
         <hr color="white"/>
@@ -112,6 +111,8 @@
         <br />
         <br />
         <button type="button" name="button" class="btn btn-primary btn-create-contract-request">Create Buycontract</button><a href="#"> More info?</a>
+        <br />
+        <span id="errormessage"></span>
         </div>
     </nav>
     </div>

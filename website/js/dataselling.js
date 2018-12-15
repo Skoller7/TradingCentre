@@ -148,8 +148,47 @@ loadPage : function(){
 
   createNewContractCheck : function(){
       //orders & description checken.
-      // als hij er 5 heeft mag hij het portfolio verkopen.
-    App.createNewContract();
+
+
+      //Creation can only be done when user has x - requirements.
+      if(orderdata.length < 5){
+          $('#errormessage').text('You need more than 5 orders before you can sell a portfolio');
+      }
+      else {
+        var imageCount = 0;
+        for(var i = 0; i < orderdata.length; i++){
+          if(orderdata.imgURL != ""){
+            imageCount++;
+          }
+        }
+
+      if(imageCount < 5){
+        $('#errormessage').text('You need to have at least 5 images in your data');
+      }
+      else {
+
+        var descCount = 0;
+        for(var i = 0; i < orderdata.length; i++){
+          if(orderdata.description != ""){
+            descCount++;
+          }
+        }
+
+        if(descCount >= 5){
+              App.createNewContract();
+        }
+        else
+        { $('#errormessage').text('You need to have at least 5 trade descriptions'); }
+
+      }
+
+
+
+      }
+
+
+
+
   },
 
 
