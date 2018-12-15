@@ -4,6 +4,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/datacenter.css">
+        <link rel="stylesheet" href="css/dataselling.css">
       <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -86,23 +87,24 @@
         <div class="user-stats col-md-12">
         </div>
         </div>
-        <div class="row">
-        <div class="user-buy col-md-12">
+        <div class="row col-md-12">
+      <!--  <div class="user-buy col-md-12">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#choseOrderModal">Chose a new order</button>
-        </div>
+        </div> -->
+        <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract: </label>
+        <!-- <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> -->
+        <select class="custom-select mr-sm-2 ordersHier" id="inlineFormCustomSelect">
+            <!--   <div class="ordersHier">
+             </div> fetch orders from db -->
+          </select>
+          <button type="button" id="getdetails" name="button">test button</button>
         </div>
         <br  />  <br  />  <br  />  <br  />
         <hr color="white"/>
         <button type="button" class="btn btn-primary btn-save-order">Save this order</button><br  /><!-- hier de order plaatsen via api in de juiste tabel -->
         <small id="priceHelp" class="form-text text-muted">*you need to have an image and a description before you can save the file</small>
-        <span>This order has been saved!</span> <!-- dit verstoppen tot dat api call succesfull was -->
+        <span id="saveOrder">This order has been saved!</span> <!-- dit verstoppen tot dat api call succesfull was -->
         <br  /> <br  /> <br  />
-        <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract: </label>
-        <!-- <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> -->
-             <select class="custom-select mr-sm-2 ordersHier" id="inlineFormCustomSelect">
-            <!--   <div class="ordersHier">
-             </div> fetch orders from db -->
-          </select>
         <br />
         <br />
         <br />
@@ -115,7 +117,7 @@
     </div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content">
-        <h3>Trade #1</h3>
+        <h3 id="ordernummerTitel"></h3>
         </div>
         <div class="image-content">
           <div class="img-fluid" style="height="50%" width="80%"">
@@ -123,14 +125,16 @@
           </div>
           <form class="" method="post">
             <p>Image url:
-            	<input type="text" id="tradeurl">
+            	<input type="text" id="tradeurl"> <button type="button" name="button" class="btn btn-primary" id="refreshImage">Refresh image</button>
               </p>
           </form>
 
         </div>
         <div class="info-content">
             <div class="image-description">
-            <textarea class="form-control" rows="5" id="comment" placeholder="In this image I spotted an head and shoulder but decided not to play it because of the following reasons
+            <textarea class="form-control orderdescription" rows="5" id="comment" placeholder="Example description
+
+            In this image I spotted an head and shoulder but decided not to play it because of the following reasons
 
             1) ...
             2) ...

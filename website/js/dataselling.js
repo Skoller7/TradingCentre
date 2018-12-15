@@ -2,8 +2,9 @@ var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 var token = getCookie("jwtToken");
 var orderdata = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token); //retrieving all curretn orders
-var selectedOrder;
-
+var selectedOrder = orderdata[0]; //selected order == het eerste order in de lijst.
+$('#saveOrder').hide();
+var teller = 0;
 App = {
   web3Provider: null,
   contracts: {},
@@ -51,23 +52,27 @@ loadPage : function(){
 
   var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token); //requesting portfolio information
 
-  //creating the variables from that information
+  //Portfolio datamembers
   name = data.name;
   description = data.description;
   goal = data.goal;
   imgurl = data.imgURL;
 
+  //order datamembers :
+  var imgurlOrder = selectedOrder.imgURL;
+
   //placing the information into the html page.
+  $('#ordernummerTitel').text("Order " + selectedOrder.orderId);
   $('#PortfolioDescription').text(description);
-  console.log(imgurl);
-  $('#tradeurl').text(imgurl);
+  $('#tradeurl').val(imgurlOrder);
+  $('.orderimg').attr('src', selectedOrder.imgURL);
+  $('.orderdescription').text(selectedOrder.description);
 
 
-  $('.orderimg').attr('src', imgurl);
+  if(teller == 0){
   $('ordersHier').append("<select id=inlineFormCustomSelect>");
   for(var i = 0; i < orderdata.length; i++){
     if(i == 0){ // First order has to become the selected one.
-      console.log(orderdata[i]);
     $('.ordersHier').append("<option selected>" + orderdata[i].orderId + "</option>");
       //Place the selected order in the global variable.
       selectedOrder = orderdata[i];
@@ -88,7 +93,8 @@ loadPage : function(){
           .val(i))
   }
   }
-
+  teller++;
+} //end if teller == 0;
 },
 
 
@@ -104,7 +110,15 @@ loadPage : function(){
         }
       }
 
+
       //Changing the order that the user just editted.
+    var orderjsondata = {
+        "OrderId" : selectedOrder.orderId,
+        "Description": $('.orderdescription').val(),
+        "ImgURL" : $('#tradeurl').val(),
+        "IsSold" : selectedOrder.isSold
+      }
+
     $.ajax({
       "async": true,
         "crossDomain": true,
@@ -114,15 +128,7 @@ loadPage : function(){
           "Content-Type": "application/json",
           "Authorization": "Bearer " + token
         },
-        "data":{
-          "PortfolioId": aportfolioid,
-          "Name": name,
-          "Description": description,
-          "Goal": goal,
-          "ImgURL": imgurl,
-          "IsForSale": true,
-          "Address": addres
-        },
+        "data": JSON.stringify(orderjsondata),
       dataType: 'json',
       success: function(data){
         console.log(data);
@@ -133,6 +139,9 @@ loadPage : function(){
           console.log(xhr);
       }
   });
+
+    //if succesfull show the succes text :
+    $('#saveOrder').show();
 
   },
 
@@ -172,10 +181,18 @@ loadPage : function(){
         console.log(name, goal, description, imgurl);
 
         addres = r[r.length-1];
-
+        var portfolioCreationData = {
+          "PortfolioId": aportfolioid,
+          "Name": name,
+          "Description": description,
+          "Goal": goal,
+          "ImgURL": imgurl,
+          "IsForSale": true,
+          "Address": addres
+        }
 
         console.log(r);
-        console.log(addres);
+        console.log(addres); //api call to edit the newly made selling portfolio.
         $.ajax({
           "async": true,
             "crossDomain": true,
@@ -185,15 +202,7 @@ loadPage : function(){
               "Content-Type": "application/json",
               "Authorization": "Bearer " + token
             },
-            "data":{
-              "PortfolioId": aportfolioid,
-              "Name": name,
-              "Description": description,
-              "Goal": goal,
-              "ImgURL": imgurl,
-              "IsForSale": true,
-              "Address": addres
-            },
+            "data": JSON.stringify(portfolioCreationData),
           dataType: 'json',
           success: function(data){
             console.log(data);
@@ -255,3 +264,19 @@ function getPortfolio(){
   $('.btn-save-order').click(function(){
     App.saveOrder();
   });
+
+  $(".ordersHier").on("change", function() { //when we change the selected order in the <select>
+      console.log('order changed');
+      selectedOrder = $('.ordersHier').find(":selected").text();
+      for(var i = 0; i < orderdata.length; i++){
+        if(orderdata[i].orderId == selectedOrder){
+          selectedOrder = orderdata[i]
+        }
+      }
+      //functie wordt aangeroepen om de pagina te veranderen.
+      App.loadPage();
+    });
+
+    $("#refreshImage").click(function(){
+        $('.orderimg').attr('src', $('#tradeurl').val());
+    })
