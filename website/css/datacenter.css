@@ -18,7 +18,7 @@ sidebar
     left: 0;
     z-index: 100;
     padding: 0;
-    width:25%;
+    width:16%;
     overflow-x: hidden;
 }
 .sidebar-header{
@@ -54,13 +54,34 @@ sidebar-portfolio
     background-color: #3a4e5f;
     color:#fff;
 }
-#changedisplay{
+#rightbottom{
     z-index:12;
     position: fixed;
     bottom:0;
-    right:0;
+    right:0; 
+}
+#header-port-del{
+    border-radius: 0;
+    float:left;
+    background-color: red;
+    color:#fff;
+    margin:0;
+}
+#header-port-del:hover{
+    background-color: #3a4e5f;
+}
+#header-port-update{
+    border-radius: 0;
+    float:left;
+    color:#fff;
+    margin:0;
+}
+#footer-port{
+    float:left;
+}
+#changedisplay{
+    float:left;
     background-color:#25313B;
-    margin:0 auto;
 }
 #changedisplay:hover{
     background-color:#FF751A;

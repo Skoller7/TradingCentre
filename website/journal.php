@@ -48,7 +48,11 @@
                         </ul>
                     </div>
                     <li id="addorder">Add orders to current portfolio</li>
-                    <li id="changedisplay">Change display journal</li>
+                    <div id="rightbottom">
+                        <div class="footer-port" id="footer-port">
+                        </div>
+                        <li id="changedisplay" style='padding: 10px 20px 10px 20px;' class='fa fa-desktop'></li>
+                    </div>
                     <li id="BCreateNote">Create note</li>
                     <!--<li class="notes-header" id="notes"><a href="#">All Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
                     <div id="notes-sub">
@@ -61,9 +65,9 @@
             </div>
         </div>
     </nav>
-    <div class="col-md-3 col-sm-0 col-xs-0"></div>
-    <div class="col-md-9 col-sm-12 col-xs-12">
-    <div id="content1">
+    <div class="col-md-2 col-sm-0 col-xs-0"></div>
+    <div class="col-md-10 col-sm-12 col-xs-12">
+    <div id="content1" style='display:block;'>
         <div class="chart-content">
            <div id="main"></div>
         </div>
@@ -110,12 +114,17 @@
                   </table>
                 </div>
         </div>
-        <div class="footer-port" id="footer-port">
+        <div style='height:30px;'>
 
         </div>
         </div>
-        <div id="content2">
-        
+        <div id="content2" style='display:none;margin-left:10px;margin-right:10px;'>
+            <h3 id='content2-header'>Trading journal</h3>
+            <hr style='color:#000;'/>
+            <div id="content2-orders"></div>
+                    <div style='height:30px;'>
+
+        </div>
         </div>
     </div>
 </div>
@@ -124,13 +133,13 @@
 		<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-		        <h5 class="modal-title">Are you sure you want delete this</h5>
+		        <h5 class="modal-title">Are you sure you want delete this?</h5>
 		        <button type="button" class="close" id="yesnoBCrosse" aria-label="Close">
 	          		<span aria-hidden="true">&times;</span>
 				</button>
 		    </div>
       		<div class="modal-footer">
-        		<button type="button" class="btn btn-primary" id="yess">delete order</button>
+        		<button type="button" class="btn btn-primary" id="yess">delete</button>
         		<button type="button" class="btn btn-secondary" id="noo">Close</button>
       		</div>
     	</div>

@@ -64,16 +64,28 @@ amount.addEventListener("change",getorders);
 var changedisplay = document.getElementById("changedisplay");
 var content1 = document.getElementById("content1");
 var content2 = document.getElementById("content2");
+var content2orders = document.getElementById("content2-orders");
+var content2header = document.getElementById("content2-header");
+var currentid;
+/*
+change display onclick button
+*/
 changedisplay.addEventListener("click",changedisplayjournal);
 function changedisplayjournal(){
     if(content1.style.display == "block"){
         content2.style.display = "block";
         content1.style.display = "none";
+        content2header.innerHTML = "Trading journal ";
+        getorderscontent2();
     }else{
         content2.style.display = "none";
         content1.style.display = "block";
+        getorders();
     }
 }
+/*
+add zero to number smaller then 10
+*/
         function addzero(number){
             if(number < 10){
                 number = "0" + number;
@@ -101,6 +113,9 @@ function openupdateorder(e){
         }
     }
 }
+/*
+set image on change input value
+*/
 urlinput.addEventListener("change",setimg);
 function setimg(){
     imageurlel.setAttribute("src",urlinput.value);
@@ -145,7 +160,11 @@ document.getElementById("btnupdateorder").addEventListener("click",function (){
             urlinput.value  ="";
             errordescription.innerHTML = "Succesfully updated";
             errorurl.innerHTML = "";
-                getorders();
+                if(content1.style.display == "block"){
+                    getorders();
+                }else{
+                    getorderscontent2();
+                }
             closeupdateorder();
         }else if(getstatus() == 400){
             errordescription.innerHTML = data;
@@ -240,7 +259,6 @@ getport();
 function getport(){
         port = [];
         var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
-        console.log(data);
         ul.innerHTML = "";
         for(var i = 0; i < data.length;i++){
             var name = document.createTextNode(data[i].name);
@@ -282,7 +300,11 @@ document.getElementById("btnclose").addEventListener("click",closeaddorder);
 document.getElementById("addorderBCrosse").addEventListener("click",closeaddorder);
 function closeaddorder(){
 	$('#Maddorder').modal('toggle');
-    getorders();
+                if(content1.style.display == "block"){
+                    getorders();
+                }else{
+                    getorderscontent2();
+                }
 }
 
 /*
@@ -367,7 +389,9 @@ get ppd portfolio
         }
     }
 }*/
-
+journalul.addEventListener("click",function(){
+     window.location = "createdataselling.php?portfolioId="+activeportfolioid;
+});
 /*
 api call get portfolio on id when clicked in submenu portfolios
 */
@@ -379,19 +403,18 @@ if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.ta
             activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
         if(data.isDefault == true){
             defaultbool = true;
-            journalul.innerHTML = "";
             journalul.style.display = "none";
         }else{
             defaultbool = false;
-            journalul.innerHTML ="";
-            var a = document.createElement("a");
-            a.setAttribute("href","createdataselling.php?portfolioId="+activeportfolioid);
-            journalul.appendChild(a);
+            journalul.innerHTML = "Sell portfolio";
             journalul.style.display = "block";
-            a.innerHTML = "Sell portfolio";
         }
         getnotes();
-        getorders();
+        if(content1.style.display == "block"){
+            getorders();
+        }else{
+            getorderscontent2();
+        }
 }
 });
 /*
@@ -408,14 +431,16 @@ function setdefaultport(id){
 setup active portfolio
 */
 function setupactiveport(data,id){
-        footer.innerHTML = ' ';
+    footer.innerHTML = "";
         desc.innerHTML = data.description;
         goals.innerHTML = data.goal;
-        if(data.name != "default"){
-            var idel = document.createElement("i");
-            var iup = document.createElement("i");
+        if(data.isDefault != true){
+            var idel = document.createElement("li");
+            var iup = document.createElement("li");
             idel.setAttribute("id","header-port-del");
             iup.setAttribute("id","header-port-update");
+            idel.setAttribute("style","padding:10px 20px 10px 20px;");
+            iup.setAttribute("style","padding:10px 20px 10px 20px;");
             idel.className = "fa fa-trash";
             iup.className = "fa fa-edit";
             footer.appendChild(idel);
@@ -433,11 +458,11 @@ function setupactiveport(data,id){
 api call delete portfolio
 */
 document.getElementById("footer-port").addEventListener("click",function(e) {
-if(e.target && e.target.nodeName == "I") {
+if(e.target && e.target.nodeName == "LI") {
     if(e.target.id == "header-port-del"){
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token);
         getport();
-    }else{
+    }else if(e.target.id == "header-port-update"){
         activemodalportdel = 1;
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=false&portfolioId="+activeportfolioid,"GET",token);
         console.log(data);
@@ -701,12 +726,80 @@ function refreshorder(){
     makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token);
     getorders();   
 }
-
+/*
+api call get orders for content2
+*/
+function getorderscontent2(){
+        content2orders.innerHTML = "";
+       $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		url: "http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,
+        type: "GET",
+        "headers": {
+    		"Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+  		},
+        dataType: 'json',
+        success: function(data){
+            if(data.length != 0){
+                    for(var i = 0;i < data.length; i++){
+                        if(data[i].isSold == false){
+                             var date = data[i].timestamp;
+                                    if(data[i].side == "Buy"){
+                                        color = "green";
+                                    }else{
+                                       color = "red";
+                                    }
+                            if(!defaultbool){ 
+                                content2orders.innerHTML += "<div class='card' style='margin:2%;'><div class='card-body'><h4>"+date.substr(0,10)+" " + date.substr(11,5)+" - <span style='color:"+color+"'>" + data[i].side +"</span> - <a href='#' class='edit' id='"+data[i].orderId+"'>Edit order</a> - <a href='#' class='deleteorder' id='"+data[i].orderId+"'>Delete order</a></h4><img src="+data[i].imgURL+" style='width:100%;'/><div style='font-size:17px;'><u>Description:</u> "+data[i].description+"</div></div></div>";
+                            }else{
+                                 content2orders.innerHTML += "<div class='card' style='margin:2%;'><div class='card-body'><h4>"+date.substr(0,10)+" " + date.substr(11,5)+" - <span style='color:"+color+"'>" + data[i].side +"</span> - <a href='#' class='edit' id='"+data[i].orderId+"'>Edit order</a></h4><img src="+data[i].imgURL+" style='width:100%;'/><div style='font-size:17px;'><u>Description:</u> "+data[i].description+"</div></div></div>";                               
+                            }
+                        }
+                    }
+            }else{
+                content2orders.innerHTML = "No orders found";
+            }
+            
+            },
+        error: function(xhr, ajaxOptions, thrownError){
+        	console.log(xhr.status);
+        	console.log(thrownError);
+            console.log(xhr);
+        }
+    });
+}
+                /*
+                click eventlistener if link is clicked delete or update order
+                */
+                content2orders.addEventListener("click",function(e){
+                    if(e.target.className == "edit"){
+                        openupdateorder(e);
+                    }else if(e.target.className == "deleteorder"){
+                        var valid = true;
+                        console.log(currentid);
+                       if(currentid == null){
+                           currentid = e.target.id;
+                       }else{
+                           if(currentid == e.target.id){
+                               valid = false;
+                           }
+                       }
+                        if(valid){
+                            makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+                            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                                alert("Something went wrong, please try again later");
+                            }
+                        }
+                        getorderscontent2();
+                    }
+                });
 /*
 api call get orders
 */
 function getorders(){
-    all = document.getElementById("all-orders-table");
+        all = document.getElementById("all-orders-table");
         all.innerHTML = "";
         if(todate.value == ""){
             todate.value = yyyy+"-"+addzero(mm)+"-"+addzero(dd);
@@ -811,14 +904,18 @@ function setOrders(data,i,defaultbool){
 /*
 api call delete order
 */
-function deleteorder (e){
+function deleteorder(e){
             var data = makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
             if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                 alert("Something went wrong, please try again later");
-                
             }else{
-                getorders(); 
+                if(content1.style.display == "block"){
+                    getorders();
+                }else{
+                    getorderscontent2();
+                }
             }
+    return;
 };
 
     $(window).on('resize', function(){
