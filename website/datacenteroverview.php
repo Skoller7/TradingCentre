@@ -39,7 +39,7 @@
   include_once("header.html");
 ?>
 <div class="containter-fluid">
-    <nav class="sidebar" style="width:15%;">
+    <nav class="sidebar">
         <div class="row">
                 <h3>Overview</h3>
         </div>

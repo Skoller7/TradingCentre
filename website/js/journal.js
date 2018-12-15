@@ -647,8 +647,9 @@ function createport(){
         errorname.innerHTML = "This field cannot be empty";
         valid = false;
     }
+    console.log(imgurl);
     if(!ValidURL(imgurl.value)){
-        
+        console.log("e");
         errorurlport.innerHTML = "This field must be a correct image url";
         valid = false;
     }

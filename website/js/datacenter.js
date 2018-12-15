@@ -95,27 +95,37 @@ function setcontentdatacenter(){
     getComments();
     cont.appendChild(similar);
     if(imgdesc.length == 0){
-        btnprev.innerHTML = "<button type='button' id='prevorder' style='float:right;top:40%;position: absolute;'  class='btn btn-primary'><i class='fa fa-angle-left'></i></button>";
-        btnnext.innerHTML = "<button type='button' id='nextorder' style='float:right;top:40%;position: absolute;' class='btn btn-primary'><i class='fa fa-angle-right'></i></button>";
+        var btn = document.createElement("button");
+        var btn2 = document.createElement("button");
+        btn.setAttribute("type","button");
+        btn.setAttribute("style","float:right;top:40%;position: absolute;");
+        btn.setAttribute("class","btn btn-primary");
+        btn.innerHTML = "<i class='fa fa-angle-left'></i>";
+        btnprev.appendChild(btn);
+        btn2.setAttribute("type","button");
+        btn2.setAttribute("style","float:right;top:40%;position: absolute;");
+        btn2.setAttribute("class","btn btn-primary");
+        btn2.innerHTML = "<i class='fa fa-angle-right'></i>";
+        btnnext.appendChild(btn);
+        btn.addEventListener("click",function(){
+            if(n == 0){
+                n = imgdesc.length - 1;
+            }else{
+                n--;
+            }
+            setcontentdatacenter();
+        });
+        btn2.addEventListener("click",function(){
+             console.log(n);
+            if(n == imgdesc.length - 1){
+                n = 0;
+            }else{
+                n++;
+            }
+            setcontentdatacenter();
+        });
     }
 }
-prev.addEventListener("click",function(){
-    if(n == 0){
-        n = imgdesc.length - 1;
-    }else{
-        n--;
-    }
-    setcontentdatacenter();
-});
-next.addEventListener("click",function(){
-     console.log(n);
-    if(n == imgdesc.length - 1){
-        n = 0;
-    }else{
-        n++;
-    }
-setcontentdatacenter();
-});
 
 button.addEventListener("click",function(){
     diverror.innerHTML = "";

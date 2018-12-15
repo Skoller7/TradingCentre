@@ -173,9 +173,10 @@ function ValidURL(str) {
   if(!pattern.test(str)) {
     pattern = new RegExp("(http(s?):\/\/)www.tradingview.com\/x\/[A-Za-z0-9]{8}\/$");
     if(!pattern.test(str)){
+        return false;
+    }else{
         return true;
     }
-    return false;
   } else {
     return true;
   }
