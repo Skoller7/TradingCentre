@@ -186,7 +186,8 @@ function login(usernameInput, passwordInput){
 		            date.setMilliseconds(date.getMilliseconds() + 21600000);
 		            document.cookie = "token=" + data.token + "expires=" + date;
 		            window.location.href = "home.html";
-		            */
+		           	*/
+		            
 		            var form = document.createElement("FORM");
 			        form.setAttribute("method","post");
 			        form.setAttribute("action","checkLogin.php");
@@ -198,6 +199,7 @@ function login(usernameInput, passwordInput){
 				    document.body.appendChild(form);
 				    //console.log(form);
 			        form.submit();
+			        
 		        },
 		        error: function(data, ajaxOptions, thrownError){
 		        	console.log(data);
@@ -287,7 +289,7 @@ function signUp(){
 		}
 	}
 	if(inputList[1].value != inputList[2].value){
-		errorModal(inputList[1], errorList[1], "Password must be 8 characters or longer");
+		errorModal(inputList[1], errorList[1], "The passwords are not the same");
 		errorModal(inputList[2]);
 		makeApiCall = false;
 	}
@@ -295,6 +297,15 @@ function signUp(){
 	if(!validateEmail(inputList[3].value)){
 		errorModal(inputList[3], errorList[3], "Email is not valid");
 		makeApiCall = false;
+	}
+
+	if(inputList[1].length.value >= 8){
+		errorModal(inputList[1], errorList[1], "Password must be 8 characters or longer");
+	}
+
+
+	if(inputList[2].length.value >= 8){
+		errorModal(inputList[2], errorList[2], "Password must be 8 characters or longer");
 	}
 
 	console.log("makeApiCall " + makeApiCall);
