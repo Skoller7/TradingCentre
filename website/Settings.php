@@ -61,15 +61,15 @@
                 </form>
             </div>
             <div id="account" class="content" content>
-                <form>
+                <form id="accountForm" onsubmit="return validateForm()">
                     <a><label for="name">Change your profile's name: </label> 
-                    <input type="text" id="name"></a>
+                    <input type="text" id="name" name="username"></a>
                     <a><label for="img">Change your profile's foto: </label>
                     <input type="file" id="img" accept="image/*"></a>
                     <a><label for="pw">Change your password: </label>
-                    <input type="password" id="pw"></a>
+                    <input type="password" id="pw" name="password"></a>
                     <a><label for="description">Change your profile's description</label>
-                    <textarea id="description" rows="4" cols="50"></textarea></a>
+                    <textarea id="description" rows="4" cols="50" name="Description"></textarea></a>
                     <a><input type="submit"></a>
                 </form>
             </div>
