@@ -1,0 +1,30 @@
+.footer-ul {
+	text-align: center;
+	color: white;
+	list-style-type: none;
+}
+
+.footer-ul a {
+	color: white;
+}
+
+.footer-ul a:hover {
+	color: white;
+	cursor: pointer;
+
+}
+
+#footer {
+	padding-top: 20px;
+	position: absolute;
+	width: 100%;
+	background-color: #212529;
+	z-index: 1000;
+}
+
+#copyright {
+	color: white;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}

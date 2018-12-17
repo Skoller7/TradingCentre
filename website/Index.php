@@ -12,7 +12,6 @@
 			$_COOKIE['jwtToken'] = $_COOKIE['jwtToken'];
 			header('location: home.php');
 		}
-		
 	}
 ?>
 <html>
@@ -82,6 +81,9 @@
 						</div>
 					</div>
 				</div>
+				<?php 
+            		include('footer.html');
+        		?>
 			</div>
 			<div class="parallax__layer parallax__layer--front demo">
 				<div id="journalImg">
@@ -89,7 +91,9 @@
 				<div id="datacenterImg">
 				</div>
 			</div>
+			
 		</div>
+
 		<!--
 		<div id="cookieBanner">
 			<div class="button" id="BAllowCookies">Allow cookies</div>
