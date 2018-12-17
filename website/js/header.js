@@ -1,6 +1,8 @@
 modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
 modalList.push(document.getElementById("MForgotPassword"));
+modalList.push(document.getElementById("MVerificationMail"));
+modalList.push(document.getElementById("MVerificationMailAccepted"));
 //arne pls geef info
 document.getElementById("menu").addEventListener("click",openMenu);
 
@@ -25,6 +27,10 @@ document.getElementById("MSignUpBLogin").addEventListener("click",openMLogin);
 document.getElementById("MForgotPasswordBForgotPassword").addEventListener("click",forgotPassword);
 document.getElementById("MForgotPasswordBClose").addEventListener("click",MForgotPasswordClose);
 document.getElementById("MForgotPasswordBCrosse").addEventListener("click",MForgotPasswordClose);
+document.getElementById("MVerificationMailBClose").addEventListener("click",MVerificationMailClose);
+document.getElementById("MVerificationMailBCrosse").addEventListener("click",MVerificationMailClose);
+document.getElementById("MVerificationMailAcceptedBCrosse").addEventListener("click",MVerificationMailAcceptedClose);
+document.getElementById("MVerificationMailAcceptedBClose").addEventListener("click",MVerificationMailAcceptedClose);
 //modal input
 document.getElementById("MLoginIUsername").addEventListener("focusout",function(){
 	checkInputIsEmpty(document.getElementById("MLoginIUsername"))
@@ -37,10 +43,23 @@ document.getElementById("MSignUpIAccept").addEventListener("click",changeTerms);
 
 document.getElementById("Bsearch").addEventListener("click",search);
 
-
-
-
 changeLoginchangeLogin();
+
+var errorList = [];
+
+errorList[0] = document.getElementById("MSignUpEMUsername");
+errorList[1] = document.getElementById("MSignUpEMPassword");
+errorList[2] = document.getElementById("MSignUpEMRePassword");
+errorList[3] = document.getElementById("MSignUpEMEmail");
+errorList[4] = document.getElementById("MSignUpEMTermsOfService");
+
+var inputList = [];
+
+inputList[0] = document.getElementById("MSignUpIUsername");
+inputList[1] = document.getElementById("MSignUpIPassword");
+inputList[2] = document.getElementById("MSignUpIRePassword");
+inputList[3] = document.getElementById("MSignUpIEmail");
+inputList[4] = document.getElementById("MSignUpIAccept");
 
 
 function changeLoginchangeLogin() {
@@ -101,7 +120,7 @@ function changeLoginchangeLogin() {
 		var link2 = document.createElement("A");
 		link2.classList.add("nav-link");
 		//link2.appendChild(document.createTextNode("Sign up"));
-		link2.appendChild(document.createTextNode("Signup"));
+		link2.appendChild(document.createTextNode("Sign up"));
 
 		bt1.setAttribute("id","BLogin");
 		bt2.setAttribute("id","BSignUp");
@@ -157,86 +176,84 @@ function login(usernameInput, passwordInput){
 		allowedToLogin = false;
 	}
 	if(allowedToLogin){
-
-
-		$(function(){
 		
-			var loginUser = {
-				username: usernameInput,
-		        password: passwordInput,
-			}
+		var loginUser = {
+			username: usernameInput,
+	        password: passwordInput,
+		}
 
-			console.log(loginUser);
-		    $.ajax({
-		    	"async": true,
-		  		"crossDomain": true,
-		  		url: 'http://10.3.50.6/api/user/login',
-		        type: 'POST',
-		        "headers": {
-		    		"Content-Type": "application/json"
-		  		},
-		        data: JSON.stringify(loginUser),
-		        dataType: 'json',
-		        success: function(data){
-		        	/*
-		        	console.log(data);
-		            console.log(data.token);
-		            //Mon Dec 18 2023 13:00:00 GMT+0100 (Central European Standard Time)
-		            var date = new Date();
-		            date.setMilliseconds(date.getMilliseconds() + 21600000);
-		            document.cookie = "token=" + data.token + "expires=" + date;
-		            window.location.href = "home.html";
+		console.log(loginUser);
+	    $.ajax({
+	    	"async": true,
+	  		"crossDomain": true,
+	  		url: 'http://10.3.50.6/api/user/login',
+	        type: 'POST',
+	        "headers": {
+	    		"Content-Type": "application/json"
+	  		},
+	        data: JSON.stringify(loginUser),
+	        dataType: 'json',
+	        success: function(data){
+	        	/*
+	        	console.log(data);
+	            console.log(data.token);
+	            //Mon Dec 18 2023 13:00:00 GMT+0100 (Central European Standard Time)
+	            var date = new Date();
+	            date.setMilliseconds(date.getMilliseconds() + 21600000);
+	            document.cookie = "token=" + data.token + "expires=" + date;
+	            window.location.href = "home.html";
+	           	*/
+	            
+	            var form = document.createElement("FORM");
+		        form.setAttribute("method","post");
+		        form.setAttribute("action","checkLogin.php");
+		        var input = document.createElement("INPUT");
+		        input.setAttribute("type","hidden");
+		        input.setAttribute("name","jwtToken");
+		        input.setAttribute("value",data.token);
+		        form.appendChild(input);
+			    document.body.appendChild(form);
+			    //console.log(form);
+		        form.submit();
+		        
+	        },
+	        error: function(data, ajaxOptions, thrownError){
+	        	console.log(data);
+	        	console.log(data.status);
+	        	console.log(thrownError);
+	        	document.getElementById("MLoginEMMain").style.display = "block";
+	        	document.getElementById("MLoginEMMain").innerHTML = "Wrong username or password";
+	        	if(data.responseText != null){
+	        		console.log(data.responseText);
+	        		/*
+	        		if(data.responseText == "Username already exists"){
+						errorModal(document.getElementById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username already exists");
+					}
+					if(data.responseText == "Email is not valid"){
+						errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email is not valid");
+					}
+					*/
+	        	}
+	        	//console.log(JSON.parse(data.responseJSON));
+	            //console.log("error");
+	            if(data.responseJSON != null){
+	        		console.log(data.responseJSON);
+	        		/*
+
+	        		if(data.responseJSON.Username != null){
+	            	data.responseJSON.Username.forEach(loginUserNameErrorHandeler);
+		            }
+		            if(data.responseJSON.Email != null){
+		            	data.responseJSON.Email.forEach(loginEmailErrorHandeler);
+		            }
+		            if(data.responseJSON.Password != null){
+		            	data.responseJSON.Password.forEach(loginPasswordErrorHandeler);
+		            }
 		            */
-		            var form = document.createElement("FORM");
-			        form.setAttribute("method","post");
-			        form.setAttribute("action","checkLogin.php");
-			        var input = document.createElement("INPUT");
-			        input.setAttribute("type","hidden");
-			        input.setAttribute("name","jwtToken");
-			        input.setAttribute("value",data.token);
-			        form.appendChild(input);
-				    document.body.appendChild(form);
-				    //console.log(form);
-			        form.submit();
-		        },
-		        error: function(data, ajaxOptions, thrownError){
-		        	console.log(data);
-		        	console.log(data.status);
-		        	console.log(thrownError);
-		        	document.getElementById("MLoginEMMain").style.display = "block";
-		        	document.getElementById("MLoginEMMain").innerHTML = "Wrong username or password";
-		        	if(data.responseText != null){
-		        		console.log(data.responseText);
-		        		/*
-		        		if(data.responseText == "Username already exists"){
-							errorModal(document.getElementById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username already exists");
-						}
-						if(data.responseText == "Email is not valid"){
-							errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email is not valid");
-						}
-						*/
-		        	}
-		        	//console.log(JSON.parse(data.responseJSON));
-		            //console.log("error");
-		            if(data.responseJSON != null){
-		        		console.log(data.responseJSON);
-		        		/*
-
-		        		if(data.responseJSON.Username != null){
-		            	data.responseJSON.Username.forEach(loginUserNameErrorHandeler);
-			            }
-			            if(data.responseJSON.Email != null){
-			            	data.responseJSON.Email.forEach(loginEmailErrorHandeler);
-			            }
-			            if(data.responseJSON.Password != null){
-			            	data.responseJSON.Password.forEach(loginPasswordErrorHandeler);
-			            }
-			            */
-		        	}
-		            //console.log("error");
-		        }
-		   });
-	});
+	        	}
+	            //console.log("error");
+	        }
+	   });
 }
 
 	/*
@@ -251,113 +268,64 @@ function login(usernameInput, passwordInput){
 	//login code
 	*/
 }
-function signUp(){
+function signUpCall(){
 
-	var makeApiCall = true;
+	var newUserData = {
+		username: inputList[0].value,
+        password: inputList[1].value,
+        email: inputList[3].value
+	}
 
-	var errorList = [];
+    $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		url: 'http://10.3.50.6/api/user/register',
+        type: 'POST',
+        "headers": {
+    		"Content-Type": "application/json"
+  		},
+        data: JSON.stringify(newUserData),
+        dataType: 'json',
+        success: function(data){
+            //console.log(data.token);
+           	//var date = new Date();
+	        //date.setMilliseconds(date.getMilliseconds() + 21600000);
+	        //document.cookie = "token=" + data.token + "expires=" + date;
+	       	console.log(data);
+	       	//getJwtToken(inputList[0].value,inputList[1].value);
+	       	getJwtToken(data,inputList[0].value,inputList[1].value);
+
+        },
+        error: function(data, ajaxOptions, thrownError){
+        	console.log(data.status);
+        	console.log(thrownError);
+        	if(data.responseText != null){
+        		console.log(data.responseText);
+        		if(data.responseText == "Username already exists"){
+					errorModal(document.getElemgientById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username already exists");
+				}
+				if(data.responseText == "Email is not valid"){
+					errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email is not valid");
+				}
+        	}
+        	console.log(data);
+        	//console.log(JSON.parse(data.responseJSON));
+            //console.log("error");
+            if(data.responseJSON != null){
+        		console.log(data.responseJSON);
+        		if(data.responseJSON.Username != null){
+            	data.responseJSON.Username.forEach(loginUserNameErrorHandeler);
+	            }
+	            if(data.responseJSON.Email != null){
+	            	data.responseJSON.Email.forEach(loginEmailErrorHandeler);
+	            }
+	            if(data.responseJSON.Password != null){
+	            	data.responseJSON.Password.forEach(loginPasswordErrorHandeler);
+	            }
+        	}
+        }
+    });	
 	
-	errorList[0] = document.getElementById("MSignUpEMUsername");
-	errorList[1] = document.getElementById("MSignUpEMPassword");
-	errorList[2] = document.getElementById("MSignUpEMRePassword");
-	errorList[3] = document.getElementById("MSignUpEMEmail");
-	errorList[4] = document.getElementById("MSignUpEMTermsOfService");
-
-	var inputList = [];
-
-	inputList[0] = document.getElementById("MSignUpIUsername");
-	inputList[1] = document.getElementById("MSignUpIPassword");
-	inputList[2] = document.getElementById("MSignUpIRePassword");
-	inputList[3] = document.getElementById("MSignUpIEmail");
-	inputList[4] = document.getElementById("MSignUpIAccept");
-
-	for(var i = 0; i < errorList.length; i++){
-		errorList[i].innerHTML = "";
-	}
-
-	if(!terms){
-		errorModal(inputList[4],errorList[4],"You must agree with the terms of service");
-	}
-		
-	for(var i = 0; i < inputList.length; i++){
-		inputList[i].classList.remove("modalError");
-		if(!checkInputIsEmpty(inputList[i])){
-			errorModal(inputList[i], errorList[i], "can't be empty");
-			makeApiCall = false;
-		}
-	}
-	if(inputList[1].value != inputList[2].value){
-		errorModal(inputList[1], errorList[1], "Password must be 8 characters or longer");
-		errorModal(inputList[2]);
-		makeApiCall = false;
-	}
-	console.log(validateEmail(inputList[3].value));
-	if(!validateEmail(inputList[3].value)){
-		errorModal(inputList[3], errorList[3], "Email is not valid");
-		makeApiCall = false;
-	}
-
-	console.log("makeApiCall " + makeApiCall);
-	if(makeApiCall){
-		$(function(){
-
-			var newUserData = {
-				username: inputList[0].value,
-		        password: inputList[1].value,
-		        email: inputList[3].value
-			}
-
-
-		    $.ajax({
-		    	"async": true,
-		  		"crossDomain": true,
-		  		url: 'http://10.3.50.6/api/user/register',
-		        type: 'POST',
-		        "headers": {
-		    		"Content-Type": "application/json"
-		  		},
-		        data: JSON.stringify(newUserData),
-		        dataType: 'json',
-		        success: function(data){
-		            //console.log(data.token);
-		           	//var date = new Date();
-			        //date.setMilliseconds(date.getMilliseconds() + 21600000);
-			        //document.cookie = "token=" + data.token + "expires=" + date;
-			       	console.log(data);
-			       	loginCall(inputList[0].value,inputList[1].value);
-		        },
-		        error: function(data, ajaxOptions, thrownError){
-		        	console.log(data.status);
-		        	console.log(thrownError);
-		        	if(data.responseText != null){
-		        		console.log(data.responseText);
-		        		if(data.responseText == "Username already exists"){
-							errorModal(document.getElemgientById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username already exists");
-						}
-						if(data.responseText == "Email is not valid"){
-							errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email is not valid");
-						}
-		        	}
-		        	console.log(data);
-		        	//console.log(JSON.parse(data.responseJSON));
-		            //console.log("error");
-		            if(data.responseJSON != null){
-		        		console.log(data.responseJSON);
-		        		if(data.responseJSON.Username != null){
-		            	data.responseJSON.Username.forEach(loginUserNameErrorHandeler);
-			            }
-			            if(data.responseJSON.Email != null){
-			            	data.responseJSON.Email.forEach(loginEmailErrorHandeler);
-			            }
-			            if(data.responseJSON.Password != null){
-			            	data.responseJSON.Password.forEach(loginPasswordErrorHandeler);
-			            }
-		        	}
-		        }
-		    });
-		});
-	
-	}
 }
 
 function loginUserNameErrorHandeler(e){
@@ -396,6 +364,12 @@ function MSignUpClose(){
 }
 function MForgotPasswordClose(){
 	$('#MForgotPassword').modal('toggle');	
+}
+function MVerificationMailClose(){
+	$('#MVerificationMail').modal('toggle');	
+}
+function MVerificationMailAcceptedClose(){
+	$('#MVerificationMailAccepted').modal('toggle');	
 }
 function checkInputIsEmpty(e){
 	if(e.value == ""){
@@ -437,7 +411,15 @@ function openMForgotPassword() {
 		backdrop: 'static'
 	});
 }
-
+function openMVerificationMail(email){
+	closeAllModals();
+	document.getElementById("MVerificationMailPMessage").innerHTML = "We have sent you a verification e-mail to this address <br />" + email;
+	$('#MVerificationMail').modal();
+}
+function openMVerificationMailAccepted(){
+	closeAllModals();
+	$('#MVerificationMailAccepted').modal();
+}
 function goToJournal(){
 	/*
 	if(getCookie("token")){
@@ -478,86 +460,196 @@ function openMenu() {
 function closeNav() {
   document.getElementById("navbar-overlay").style.width = "0%";
 }
+/*
+function getVerificationKey(usernameInput,jwtToken){
 
-function loginCall(usernameInput, passwordInput){
+	 $.ajax({
+		"async": true,
+		"crossDomain": true,
+		url: 'http://10.3.50.6/api/user/search?username=' + usernameInput,
+		timeout : 0,
+		type: 'GET',
+		"headers": {
+		    "Content-Type": "application/json",
+		    "Authorization": "Bearer " + jwtToken,
 
-	$(function(){
-		
-			var loginUser = {
-				username: usernameInput,
-		        password: passwordInput,
-			}
-
-			console.log(loginUser);
-		    $.ajax({
-		    	"async": true,
-		  		"crossDomain": true,
-		  		url: 'http://10.3.50.6/api/user/login',
-		        type: 'POST',
-		        "headers": {
-		    		"Content-Type": "application/json"
-		  		},
-		        data: JSON.stringify(loginUser),
-		        dataType: 'json',
-		        success: function(data){
-		        	/*
-		        	console.log(data);
-		            console.log(data.token);
-		            //Mon Dec 18 2023 13:00:00 GMT+0100 (Central European Standard Time)
-		            var date = new Date();
-		            date.setMilliseconds(date.getMilliseconds() + 21600000);
-		            document.cookie = "token=" + data.token + "expires=" + date;
-		            window.location.href = "home.html";
-		            */
-		            var form = document.createElement("FORM");
-			        form.setAttribute("method","post");
-			        form.setAttribute("action","checkLogin.php");
-			        var input = document.createElement("INPUT");
-			        input.setAttribute("type","hidden");
-			        input.setAttribute("name","jwtToken");
-			        input.setAttribute("value",data.token);
-			        form.appendChild(input);
-				    document.body.appendChild(form);
-				    //console.log(form);
-			        form.submit();
-		        },
-		        error: function(data, ajaxOptions, thrownError){
-		        	console.log(data);
-		        	console.log(data.status);
-		        	console.log(thrownError);
-		        	document.getElementById("MLoginEMMain").style.display = "block";
-		        	document.getElementById("MLoginEMMain").innerHTML = "Wrong username or password";
-		        	if(data.responseText != null){
-		        		console.log(data.responseText);
-		        		/*
-		        		if(data.responseText == "Username already exists"){
-							errorModal(document.getElementById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username already exists");
-						}
-						if(data.responseText == "Email is not valid"){
-							errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email is not valid");
-						}
-						*/
-		        	}
-		        	//console.log(JSON.parse(data.responseJSON));
-		            //console.log("error");
-		            if(data.responseJSON != null){
-		        		console.log(data.responseJSON);
-		        		/*
-
-		        		if(data.responseJSON.Username != null){
-		            	data.responseJSON.Username.forEach(loginUserNameErrorHandeler);
-			            }
-			            if(data.responseJSON.Email != null){
-			            	data.responseJSON.Email.forEach(loginEmailErrorHandeler);
-			            }
-			            if(data.responseJSON.Password != null){
-			            	data.responseJSON.Password.forEach(loginPasswordErrorHandeler);
-			            }
-			            */
-		        	}
-		            //console.log("error");
-		        }
-		   });
+	  },
+	    success: function(data){
+	    	console.log(data);
+	    	hasVerivication = true;
+	    	
+	  
+	    },
+	    error: function(data, ajaxOptions, thrownError){
+	        console.log(data);
+	    	console.log(data.status);
+	    	console.log(thrownError);
+	    }
 	});
 
+}
+*/
+/*
+function getUserId(){
+	$.ajax({
+		"async": true,
+		"crossDomain": true,
+		url: 'http://10.3.50.6/api/user/search?username=' + usernameInput,
+		timeout : 0,
+		type: 'GET',
+		"headers": {
+		    "Content-Type": "application/json",
+		    "Authorization": "Bearer " + jwtToken,
+
+	  },
+	    success: function(data){
+	    	console.log(data);
+	    	return data;
+	    },
+	    error: function(data, ajaxOptions, thrownError){
+	        console.log(data);
+	    	console.log(data.status);
+	    	console.log(thrownError);
+	    }
+	});
+}
+*/
+
+function getJwtToken(dataSignUp,usernameInput, passwordInput){
+
+		
+	var loginUser = {
+		username: usernameInput,
+        password: passwordInput,
+	}
+
+	console.log(loginUser);
+    $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		url: 'http://10.3.50.6/api/user/login',
+        type: 'POST',
+        "headers": {
+    		"Content-Type": "application/json"
+  		},
+        data: JSON.stringify(loginUser),
+        dataType: 'json',
+        success: function(data){
+        	console.log(data);
+        	/*
+        	console.log(data);
+            console.log(data.token);
+            //Mon Dec 18 2023 13:00:00 GMT+0100 (Central European Standard Time)
+            var date = new Date();
+            date.setMilliseconds(date.getMilliseconds() + 21600000);
+            document.cookie = "token=" + data.token + "expires=" + date;
+            window.location.href = "home.html";
+            */
+			//var dataSignUp = signUpCall();
+			/*
+			console.log("data");
+			console.log(data);
+			console.log("dataSignUp");
+			console.log(dataSignUp);
+
+			var testt;
+			console.log(testt);
+			if(typeof data !== 'undefined'){
+				console.log("1");
+			}
+			if(typeof data === 'undefined'){
+				console.log("2");
+			}
+			if(typeof testt !== 'undefined'){
+				console.log("3");
+			}
+			if(typeof testt === 'undefined'){
+				console.log("4");
+			}
+			*/
+			
+			if(typeof data !== 'undefined' && typeof dataSignUp !== 'undefined'){
+				//console.log(data);
+				//console.log(dataSignUp);
+				var form = document.createElement("FORM");
+		        form.setAttribute("method","post");
+		        form.setAttribute("action","checkLogin.php");
+		        var inputJwtToken = document.createElement("INPUT");
+		        inputJwtToken.setAttribute("type","hidden");
+		        inputJwtToken.setAttribute("name","jwtToken");
+		        inputJwtToken.setAttribute("value",data.token);
+		        var verificationKey = document.createElement("INPUT");
+		        verificationKey.setAttribute("type","hidden");
+		        verificationKey.setAttribute("name","verificationKey");
+		        verificationKey.setAttribute("value",dataSignUp.verificationKey);
+		        var email = document.createElement("INPUT");
+		        email.setAttribute("type","hidden");
+		        email.setAttribute("name","email");
+		        email.setAttribute("value",dataSignUp.email);
+
+		        form.appendChild(inputJwtToken);
+		        form.appendChild(verificationKey);
+		        form.appendChild(email);
+			    document.body.appendChild(form);
+			    //console.log(form);
+			    form.submit();
+			}
+        },
+        error: function(data, ajaxOptions, thrownError){
+        	console.log(data);
+        	console.log(data.status);
+        	console.log(thrownError);
+        }
+   });
+
+}
+
+
+function checkSignUp(){
+	var makeApiCall = true;
+
+	for(var i = 0; i < errorList.length; i++){
+		errorList[i].innerHTML = "";
+	}
+
+	if(!terms){
+		errorModal(inputList[4],errorList[4],"You must agree with the terms of service");
+	}
+		
+	for(var i = 0; i < inputList.length; i++){
+		inputList[i].classList.remove("modalError");
+		if(!checkInputIsEmpty(inputList[i])){
+			errorModal(inputList[i], errorList[i], "can't be empty");
+			makeApiCall = false;
+		}
+	}
+	if(inputList[1].value != inputList[2].value){
+		errorModal(inputList[1], errorList[1], "The passwords are not the same");
+		errorModal(inputList[2]);
+		makeApiCall = false;
+	}
+	
+	if(!validateEmail(inputList[3].value)){
+		errorModal(inputList[3], errorList[3], "Email is not valid");
+		makeApiCall = false;
+	}
+
+	if(inputList[1].length >= 8){
+		errorModal(inputList[1], errorList[1], "Password must be 8 characters or longer");
+	}
+
+
+	if(inputList[2].length >= 8){
+		errorModal(inputList[2], errorList[2], "Password must be 8 characters or longer");
+	}
+
+	console.log("makeApiCall " + makeApiCall);
+	return makeApiCall;
+
+}
+
+function signUp(){
+	if(checkSignUp()){
+		signUpCall();
+	}
 }

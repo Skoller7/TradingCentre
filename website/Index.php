@@ -100,6 +100,14 @@
 			GDPR info
 		</div>
 		-->
-		
+		<script>
+			
+			var verificationKey = "";
+		</script>
+		<?php 
+			if(isset($_GET['verificationKey'])){
+				echo '<script>verificationKey = "'. $_GET['verificationKey'] .'";verifieEmail();</script>';
+			}
+		?>		
 	</body>
 </html>
