@@ -82,3 +82,25 @@ topPosition = parseFloat($('#datacenterLeft').position().top) * 1.485;
 $('#datacenterImg').css('top',topPosition + 'px');
 }
 }); 
+
+function verifieEmail(){
+	 $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		"url": "http://10.3.50.6/api/user/validate/" + ,
+		"method": "POST",
+		"timeout": 0,
+		"headers": {
+			"Content-Type": "application/json",
+		},
+        success: function(data){
+        	console.log(data);
+  			openMVerificationMailAccepted();
+        },
+        error: function(data, ajaxOptions, thrownError){
+        	console.log(data);
+        	console.log(data.status);
+        	console.log(thrownError);
+        }
+   });
+}
