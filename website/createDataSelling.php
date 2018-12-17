@@ -150,4 +150,5 @@
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>
 <script src="js/dataselling.js"></script>
+<script src="js/lib.js"></script>
 </html>

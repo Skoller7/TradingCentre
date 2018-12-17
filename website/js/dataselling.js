@@ -148,8 +148,6 @@ loadPage : function(){
 
   createNewContractCheck : function(){
       //orders & description checken.
-
-
       //Creation can only be done when user has x - requirements.
       if(orderdata.length < 5){
           $('#errormessage').text('You need more than 5 orders before you can sell a portfolio');
@@ -181,14 +179,7 @@ loadPage : function(){
         { $('#errormessage').text('You need to have at least 5 trade descriptions'); }
 
       }
-
-
-
       }
-
-
-
-
   },
 
 
@@ -255,7 +246,7 @@ loadPage : function(){
 
     })
 
-
+    
        });
     //  DataContractInstance.createDataContract(500, account);
     });
