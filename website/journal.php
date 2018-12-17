@@ -1,5 +1,6 @@
 <?php 
   session_start();
+  $showEmailVerificationModal = false;
   if(isset($_SESSION['verificationKey']) && isset($_SESSION['email'])){
     $email = $_SESSION['email'];
     $emailHeader = 'verification TradingCentre';
