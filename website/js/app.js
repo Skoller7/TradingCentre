@@ -26,6 +26,7 @@ App = {
     return App.initContract1();
   },
 
+//retrieving the contracts from the json file.
 initContract1: function(){
   $.getJSON('./Solidity/build/contracts/DataContractCreator.json').then(DataCreatorArtifact => {
     App.contracts.DataContractCreator = TruffleContract(DataCreatorArtifact);
@@ -45,13 +46,17 @@ initContract1: function(){
 },
 createBuyRequest: function(){
 
+  //retrieving the user accounts.
   web3.eth.getAccounts(function(error, accounts) {
   if(error) {
     console.log(error);
   }
-  //callback(error, result){ ... }
+  //setting a default variable for the gas payment ( cost to make a transaction)
   var gas = 2000000;
+  //We automatically select the first account.
   var account = accounts[0];
+  //In our app we take the contract that we created in initContract1, specifiy its adres on the blockchain and then put it in an instance
+  //then we call a function and send the gas, account and order value with it.
   App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(instance => {
     instance.createBuyRequest({from: account, gas, value: 1000000 }).then((r) => {
       console.log("buy request completed");
@@ -121,8 +126,6 @@ requestAdresses: function(){
   });
 
 },
-
-//can comment away from here ( written on train not tested)
 
 requestBuyersCount: function(){
 
