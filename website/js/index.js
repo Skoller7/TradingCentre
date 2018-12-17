@@ -87,7 +87,7 @@ function verifieEmail(){
 	 $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		"url": "http://10.3.50.6/api/user/validate/" + ,
+  		"url": "http://10.3.50.6/api/user/validate/" + verificationKey,
 		"method": "POST",
 		"timeout": 0,
 		"headers": {

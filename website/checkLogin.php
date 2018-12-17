@@ -11,10 +11,9 @@
 				if(isset($_POST['verificationKey']) && $_POST['email']){
 					$_SESSION['verificationKey'] = $_POST['verificationKey'];
 					$_SESSION['email'] = $_POST['email'];
+
 				}
-				else{
-					header("location: journal.php");
-				}
+				header("location: journal.php");
 			}
 			else{
 				header('location: index.php');

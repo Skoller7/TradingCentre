@@ -1,7 +1,11 @@
 <?php 
+  session_start();
   if(isset($_SESSION['verificationKey']) && isset($_SESSION['email'])){
-    $email = $_SESSION['email']);
-    //mail()
+    $email = $_SESSION['email'];
+    $emailHeader = 'verification TradingCentre';
+    $emailBody = 'https://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=' . $_SESSION['verificationKey'];
+    mail($email,$emailHeader,$emailBody);    
+    $showEmailVerificationModal = true;
   }
 ?>
 <!doctype html>
@@ -17,7 +21,7 @@
   <script src="js/lib.js" type="text/javascript"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.2.0-rc.2/echarts.js"></script>
   <?php
-    include('favicon.php');
+    include('favicon.html');
   ?>
   <title>Journal</title>
 
@@ -254,8 +258,8 @@
 </div>
     <script type="text/javascript" src="js/journal.js"></script>
     <?php
-      if(isset($_SESSION['verificationKey']) && isset($_SESSION['email'])){
-        echo '<script>openMVerificationMail('.$email.')</script>';
+      if($showEmailVerificationModal){
+        echo '<script>openMVerificationMail("'.$email.'");</script>';
       }
     ?>
 </body>
