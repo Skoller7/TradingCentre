@@ -19,7 +19,7 @@
 ?>
    
             <div class="vertical-settings">
-                <button class="tablink" onclick="openOption(event, 'general')" id="default" >General</button>
+                <button class="tablink" onclick="openOption(event, 'general')" id="default">General</button>
                 <button class="tablink" onclick="openOption(event, 'security')">Security</button>
                 <button class="tablink" onclick="openOption(event, 'privacy')">Privacy</button>
                 <button class="tablink" onclick="openOption(event, 'account')">Account</button>
@@ -53,23 +53,31 @@
                     <a><input type="submit"></a>
                 </form>
             </div>
-            <div id="privacy" class="content" content>
+            <div id="privacy" class="content">
                 <form>
                     <a><label for="public">Do you want your profile to be public? If it is not public, your data will not be able to be sold!</label>
                     <input type="text" id="public"></a><br>
                     <a><input type="submit"></a>
                 </form>
             </div>
-            <div id="account" class="content" content>
+            <div id="account" class="content">
                 <form id="accountForm" onsubmit="return validateForm()">
-                    <a><label for="name">Change your profile's name: </label> 
-                    <input type="text" id="name" name="username"></a>
-                    <a><label for="img">Change your profile's foto: </label>
-                    <input type="file" id="img" accept="image/*"></a>
+                    <a><label for="name">Change your first name: </label> 
+                    <input type="text" id="fname" name="firstName"></a>
+                    <a><label for="name">Change your last name: </label> 
+                    <input type="text" id="lname" name="lastName"></a>
+                    <a><label for="name">Change your e-mail: </label> 
+                    <input type="email" id="email" name="email"></a>
+                    <a><label for="name">Change your user name: </label> 
+                    <input type="text" id="uname" name="username"></a>
+                    <a><label for="pw">Change your phone number: </label>
+                    <input type="number" id="pn" name="phone"></a>
                     <a><label for="pw">Change your password: </label>
                     <input type="password" id="pw" name="password"></a>
+                    <a><label for="img">Change your profile's foto: </label>
+                    <input type="file" id="img" accept="image/*"></a>
                     <a><label for="description">Change your profile's description</label>
-                    <textarea id="description" rows="4" cols="50" name="Description"></textarea></a>
+                    <textarea id="description" rows="4" cols="50" name="description"></textarea></a>
                     <a><input type="submit"></a>
                 </form>
             </div>
