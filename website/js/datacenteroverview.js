@@ -1,29 +1,72 @@
 var token = getCookie("jwtToken");
 var cards = document.getElementById("cards");
 var high = document.getElementById("highlightcards");
+var seemoreother = document.getElementById("see-more-other");
+var arrayforsale;
+var arrayforsaleown;
+var n_own = 0;
+var max_own = 6;
+var n_other = 0;
+var max_other = 6;
 getcard();
 getcardhigh();
 function getcard(){
     var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token);
-    if(getstatus() == 400 || getstatus() == 401 || getstatus() == 500 || getstatus() == 501){
-        alert("Something went wrong, please try again later");
+    if(getstatus() == 401){
+        openMLogin();
     }else{
-        for(var i=0;i < data.length;i++){
-            if(data[i].address == null || data[i].address == ""){
-            }else{
-                setcard(data,i,true); 
-            }
+        if(getstatus() == 400 || getstatus() == 500 || getstatus() == 501){
+            alert("Something went wrong, please try again later");
+        }else{
+            arrayforsaleown = data;
+            setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
         }
     }
 }
 function getcardhigh(){
-    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token);
-    if(getstatus() == 400 || getstatus() == 401 || getstatus() == 500 || getstatus() == 501){
-        alert("Something went wrong, please try again later");
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio/forsale","GET",token);
+    if(getstatus() == 401){
+        openMLogin();
     }else{
-        for(var i=0;i < data.length;i++){
-            setcard(data,i,false); 
+        if(getstatus() == 400 || getstatus() == 500 || getstatus() == 501){
+            alert("Something went wrong, please try again later");
+        }else{
+            arrayforsale = data;
+            setcontentcards(arrayforsale,"see-more-other",false,max_other,n_other);
         }
+    }
+}
+function setcontentcards(arrayport,seemoreid,boolown,max,n){
+    var seemore = document.getElementById(seemoreid);
+    var lengtharray = arrayport.length / 6;
+    lengtharray = lengtharray.toFixed(0);
+    if(lengtharray == 1 || lengtharray == 0){
+        max = arrayport.length;
+    }
+    for(var i = n; i < max;i++){
+            if(arrayport[i].address != null && arrayport[i].address != ""){
+                    setcard(arrayport,i,boolown);
+            }
+    }
+    lengtharray--;
+    seemore.style.display = "none";
+    seemore.innerHTML = "";
+    if(lengtharray > 0){
+            var a = document.createElement("a");
+            a.setAttribute("href","#");
+            a.setAttribute("style","margin:0 auto;");
+            a.innerHTML = "See more";
+            a.addEventListener("click",function(){
+                n = max;
+                if(lengtharray > 1){
+                    max = max + 6;
+                }else{
+                    max = arrayport.length;
+                }
+                setcontentcards(arrayport,seemoreid,boolown,max,n);
+            });
+            seemore.style.display = "block";
+            seemore.appendChild(a);
     }
 }
 function setcard(data,i,own){

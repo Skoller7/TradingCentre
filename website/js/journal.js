@@ -67,6 +67,45 @@ var content2 = document.getElementById("content2");
 var content2orders = document.getElementById("content2-orders");
 var content2header = document.getElementById("content2-header");
 var currentid;
+var deletebool;
+/*
+show modal yes or no for delete
+*/
+function openyesno(){
+	closeAllModals();
+	$('#yesno').modal({
+		backdrop: 'static'
+	});
+document.getElementById("yess").addEventListener("click",function (e){
+	$('#yesno').modal('toggle');
+    if(e.target.id == "yess"){
+        return true;
+    }else{
+        return false;
+    }
+});
+document.getElementById("noo").addEventListener("click",function (e){
+	$('#yesno').modal('toggle');
+    if(e.target.id == "yess"){
+        return true;
+    }else{
+        return false;
+    }
+});
+}
+/*
+close modal yes or no for delete
+
+document.getElementById("yess").addEventListener("click",closeyesno);
+document.getElementById("noo").addEventListener("click",closeyesno);
+function closeyesno(e){
+	$('#yesno').modal('toggle');
+    if(e.target.id == "yess"){
+        deletebool =  true;
+    }else{
+        deletebool =  false;
+    }
+}
 /*
 change display onclick button
 */
@@ -906,14 +945,17 @@ function setOrders(data,i,defaultbool){
 api call delete order
 */
 function deleteorder(e){
-            var data = makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
-            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-                alert("Something went wrong, please try again later");
-            }else{
-                if(content1.style.display == "block"){
-                    getorders();
+            console.log(openyesno());
+            if(deletebool){
+                var data = makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+                if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                    alert("Something went wrong, please try again later");
                 }else{
-                    getorderscontent2();
+                    if(content1.style.display == "block"){
+                        getorders();
+                    }else{
+                        getorderscontent2();
+                    }
                 }
             }
     return;

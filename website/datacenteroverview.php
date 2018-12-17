@@ -54,10 +54,12 @@
         <div class="content-datacenter" id="cards">
             
         </div>
+        <div id="see-more-own" class='card' style='width:100%;float:left;text-align:center;'></div>
         <h4 style='width:100%;float:left;'> Other selling portfolios</h4>
         <div class="content-datacenter" id="highlightcards">
             
         </div>
+         <div id="see-more-other" class='card' style='width:100%;float:left;text-align:center;'></div>
     </div>
 </div>
 </div>

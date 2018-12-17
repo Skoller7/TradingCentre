@@ -134,13 +134,10 @@
 		<div class="modal-content">
 			<div class="modal-header">
 		        <h5 class="modal-title">Are you sure you want delete this?</h5>
-		        <button type="button" class="close" id="yesnoBCrosse" aria-label="Close">
-	          		<span aria-hidden="true">&times;</span>
-				</button>
 		    </div>
       		<div class="modal-footer">
-        		<button type="button" class="btn btn-primary" id="yess">delete</button>
-        		<button type="button" class="btn btn-secondary" id="noo">Close</button>
+        		<button type="button" class="btn btn-primary" id="yess">Yes</button>
+        		<button type="button" class="btn btn-secondary" id="noo">No</button>
       		</div>
     	</div>
 		</div>
