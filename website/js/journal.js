@@ -1,7 +1,22 @@
+/*
+token from current user
+*/
 var token = getCookie("jwtToken");
+/*
+active portfolio id
+*/
 var activeportfolioid;
+/*
+all portfolios from current user
+*/
 var port = [];
+/*
+bool create or update portfolio
+*/
 var activemodalportdel = 0;
+/*
+elements for display content 
+*/
 var content = document.getElementById("MCreateNoteContent");
 var errorcontent = document.getElementById("ErrorCreateNoteContent");
 var nameport = document.getElementById("MPortName");
@@ -18,7 +33,6 @@ var goals = document.getElementById("portfolio-goals");
 var head_orders = document.getElementById("orders-port");
 var info = document.getElementById("info-content");
 var all = document.getElementById("all-orders-table");
-var myChart;
 var ex = document.getElementById("exchange");
 var si = document.getElementById("side");
 var pr = document.getElementById("price");
@@ -31,20 +45,11 @@ var pr_arr = document.getElementById("price-arrow");
 var qt_arr = document.getElementById("orderQty-arrow");
 var sy_arr = document.getElementById("symbol-arrow");
 var ti_arr = document.getElementById("timestamp-arrow");
-var arraysort;
-var arrayaddorders = [];
-var today = new Date();
-var dd = today.getDate();
-var mm = today.getMonth() +1;
-var yyyy = today.getFullYear();
 var fromdate = document.getElementById("fromdate");
 var todate = document.getElementById("todate");
 var amount = document.getElementById("amount");
-var frdate;
-var tdate;
 var ppdvar = document.getElementById("profit-port");
 var refresh = document.getElementById("refreshorder");
-var defaultbool = false;
 var ul = document.getElementById("portfolios-ul");
 var footer = document.getElementById("footer-port");
 var journalul = document.getElementById("ul-journal");
@@ -55,56 +60,60 @@ var errordescription = document.getElementById("errordesc");
 var erroraddorder = document.getElementById("erroraddorder");
 var imageurlel = document.getElementById("imageurl");
 var portimgel = document.getElementById("portimg");
-modalList.push("MCreateNote");
-modalList.push("MCreatePort");
-modalList.push("Mupdateorder");
-fromdate.addEventListener("change",getorders);
-todate.addEventListener("change",getorders);
-amount.addEventListener("change",getorders);
 var changedisplay = document.getElementById("changedisplay");
 var content1 = document.getElementById("content1");
 var content2 = document.getElementById("content2");
 var content2orders = document.getElementById("content2-orders");
 var content2header = document.getElementById("content2-header");
-var currentid;
-var deletebool;
+var myChart;
 /*
-show modal yes or no for delete
+all orders from current portfolio
 */
-function openyesno(){
+var arraysort;
+/*
+array with all checked orders to add to current portfolio
+*/
+var arrayaddorders = [];
+/*
+bool if portfolio is default or not
+*/
+var defaultbool = false;
+var frdate;
+var tdate;
+/*
+date from today
+*/
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth() +1;
+var yyyy = today.getFullYear();
+/*
+push modals into the modallist
+*/
+modalList.push("MCreateNote");
+modalList.push("MCreatePort");
+modalList.push("Mupdateorder");
+/*
+event listener if input fields change 
+*/
+fromdate.addEventListener("change",getorders);
+todate.addEventListener("change",getorders);
+amount.addEventListener("change",getorders);
+/*
+show modal yes or no for delete and delete item if clicked yes
+*/
+function openyesno(functiondelete){
 	closeAllModals();
 	$('#yesno').modal({
 		backdrop: 'static'
 	});
 document.getElementById("yess").addEventListener("click",function (e){
 	$('#yesno').modal('toggle');
-    if(e.target.id == "yess"){
-        return true;
-    }else{
-        return false;
-    }
+    functiondelete();
 });
 document.getElementById("noo").addEventListener("click",function (e){
 	$('#yesno').modal('toggle');
-    if(e.target.id == "yess"){
-        return true;
-    }else{
-        return false;
-    }
 });
-}
-/*
-close modal yes or no for delete
-
-document.getElementById("yess").addEventListener("click",closeyesno);
-document.getElementById("noo").addEventListener("click",closeyesno);
-function closeyesno(e){
-	$('#yesno').modal('toggle');
-    if(e.target.id == "yess"){
-        deletebool =  true;
-    }else{
-        deletebool =  false;
-    }
 }
 /*
 change display onclick button
@@ -390,44 +399,8 @@ function addorderstoportfolio(){
 }
 
 /*
-open sub menu options
-
-function openoptions(id){
-    var div = document.getElementById("opt"+id);
-    var classname = document.getElementsByClassName("dropdown-options");
-    for (var i = 0;i < classname.length;i++){
-        classname[i].style.display = "none";
-    }
-    if(div.style.display == "block"){
-        div.style.display = "none";
-    }else{
-        div.style.display = "block";
-    }
-    
-}
+onclick sell portfolio go to create selling portfolio page
 */
-/*
-get ppd portfolio
-*/
-/*function ppd(){
-    var data = makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token);
-    for(var i = 0;i < data.length;i++){
-        if(data[i].day == addzero(dd)+"/"+addzero(mm)+"/"+yyyy){
-            var j;
-            if(data[i].profit < 0){
-                color = "red";
-                j = "fa fa-long-arrow-down";
-            }else{
-                color = "green";
-                j = "fa fa-long-arrow-up";
-            }
-            ppdvar.style.color = color;
-            ppdvar.style.textAlign = "center";
-            ppdvar.style.fontWeight = "700";
-            ppdvar.innerHTML = "Profit of the day  " + data[i].profit;
-        }
-    }
-}*/
 journalul.addEventListener("click",function(){
      window.location = "createdataselling.php?portfolioId="+activeportfolioid;
 });
@@ -457,7 +430,7 @@ if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.ta
 }
 });
 /*
-set default portfolio on loading page
+set default portfolio from current user on loading page
 */
 function setdefaultport(id){
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ id,"GET",token);
@@ -494,13 +467,15 @@ function setupactiveport(data,id){
         sub.style.paddingRight = "-3px";
 }
 /*
-api call delete portfolio
+api call delete or update portfolio
 */
 document.getElementById("footer-port").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI") {
     if(e.target.id == "header-port-del"){
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token);
-        getport();
+        openyesno(function(){
+            var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token);
+            getport();
+        });
     }else if(e.target.id == "header-port-update"){
         activemodalportdel = 1;
         var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=false&portfolioId="+activeportfolioid,"GET",token);
@@ -585,7 +560,7 @@ function McreateNoteClose(){
 }
 
 /*
-api call create and updatenote
+api call create and update note
 */
 document.getElementById("MCreateNoteBCreateNote").addEventListener("click",createnote);
 function createnote(){
@@ -614,13 +589,15 @@ function createnote(){
     }
 }
 /*
-api call delete and update note
+api call delete and open update note modal
 */
 document.getElementById("notes-all").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
     if(e.target.className == "fa fa-trash"){
+            openyesno(function(){
                 makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
-                document.getElementById(e.target.id + "note").style.display = "none";
+                document.getElementById(e.target.id + "note").style.display = "none"; 
+            });
       }else{
           content.value = e.target.getAttribute("value");
           noteid = e.target.id;
@@ -817,22 +794,13 @@ function getorderscontent2(){
                     if(e.target.className == "edit"){
                         openupdateorder(e);
                     }else if(e.target.className == "deleteorder"){
-                        var valid = true;
-                        console.log(currentid);
-                       if(currentid == null){
-                           currentid = e.target.id;
-                       }else{
-                           if(currentid == e.target.id){
-                               valid = false;
-                           }
-                       }
-                        if(valid){
-                            makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
-                            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-                                alert("Something went wrong, please try again later");
-                            }
-                        }
-                        getorderscontent2();
+                            openyesno(function(){
+                                    makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
+                                    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                                        alert("Something went wrong, please try again later");
+                                    }
+                                getorderscontent2();
+                            });
                     }
                 });
 /*
@@ -945,8 +913,7 @@ function setOrders(data,i,defaultbool){
 api call delete order
 */
 function deleteorder(e){
-            console.log(openyesno());
-            if(deletebool){
+    openyesno(function(){
                 var data = makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
                 if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                     alert("Something went wrong, please try again later");
@@ -956,10 +923,9 @@ function deleteorder(e){
                     }else{
                         getorderscontent2();
                     }
-                }
-            }
-    return;
-};
+                } 
+    });
+}
 
     $(window).on('resize', function(){
         if(myChart != null && myChart != undefined){

@@ -1,15 +1,33 @@
+/*
+token from current use
+*/
 var token = getCookie("jwtToken");
+/*
+elements for changing content
+*/
 var cards = document.getElementById("cards");
 var high = document.getElementById("highlightcards");
 var seemoreother = document.getElementById("see-more-other");
+/*
+array with all for sale portfolios from other users
+*/
 var arrayforsale;
+/*
+array with all for sale portfolios from current user
+*/
 var arrayforsaleown;
+/*
+begin and max for arrays to show, the function setcontentcards will change the value if see more is clicked
+*/
 var n_own = 0;
 var max_own = 6;
 var n_other = 0;
 var max_other = 6;
 getcard();
 getcardhigh();
+/*
+get for sale portfolios from current user
+*/
 function getcard(){
     var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token);
     if(getstatus() == 401){
@@ -23,6 +41,9 @@ function getcard(){
         }
     }
 }
+/*
+get for sale portfolios from other users
+*/
 function getcardhigh(){
     var data = makerequestnopar("http://10.3.50.6/api/portfolio/forsale","GET",token);
     if(getstatus() == 401){
@@ -36,6 +57,9 @@ function getcardhigh(){
         }
     }
 }
+/*
+see more button, set content on screen
+*/
 function setcontentcards(arrayport,seemoreid,boolown,max,n){
     var seemore = document.getElementById(seemoreid);
     var lengtharray = arrayport.length / 6;
@@ -69,6 +93,9 @@ function setcontentcards(arrayport,seemoreid,boolown,max,n){
             seemore.appendChild(a);
     }
 }
+/*
+display card on screen 
+*/
 function setcard(data,i,own){
                var card = document.createElement("div");
                 card.setAttribute("class","col-md-3 col-sm-12 card");
@@ -94,76 +121,3 @@ function setcard(data,i,own){
                     high.appendChild(card);
                 }
 }
-
-//request portfolio Description
-
-// function getPortfolioDesc(){
-//   var data = makerequestnopar("http://10.3.50.6/api/portfolio/comment?portfolioId=15","GET",token);
-//   var description = document.getElementById("sell-port-all");
-//   description.innerHTML = "";
-//   for(var i = 0; i < data.length;i++){
-//     var li = document.createElement("div");
-//     li.setAttribute("class", "card-body");
-//     var content = document.createElement("h5");
-//     content.setAttribute("class", "card-title");
-//   }
-// }
-
-
-//request to get the portfolios
-// function getportfolios(){
-//         var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=" + activeportfolioid,"GET",token);
-//         var notes = document.getElementById("notes-all");
-//         notes.innerHTML = "";
-//       for(var i = 0; i < data.length;i++){
-//         var li = document.createElement("div");
-//         li.setAttribute("class","notes-card");
-//         li.setAttribute("id",data[i].noteId + "note")
-//         var content = document.createElement("div");
-//         content.setAttribute("class","notes-content");
-//         content.setAttribute("id","notes-content");
-//         var content_del = document.createElement("i");
-//         var content_edit = document.createElement("i");
-//         var p = document.createElement("p");
-//           p.innerHTML = data[i].message;
-//         content.appendChild(p);
-//         content.appendChild(content_edit);
-//         content.appendChild(content_del);
-//         content_del.setAttribute("id",data[i].noteId);
-//         content_del.setAttribute("class","fa fa-trash");
-//         content_edit.setAttribute("id",data[i].noteId);
-//         content_edit.setAttribute("class","fa fa-edit");
-//         notes.appendChild(li);
-//         li.appendChild(content);
-//       }
-// }
-//
-// document.getElementById("notes-all").addEventListener("click",function(e) {
-// if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
-//     if(e.target.className == "fa fa-trash"){
-//                 makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
-//                 document.getElementById(e.target.id + "note").style.display = "none";
-//       }else{
-//           var json = {"NoteId": e.target.id,"Message": "Hello world2d"};
-//             $.ajax({
-//                 "async": true,
-//                 "crossDomain": true,
-//                 url: "http://10.3.50.6/api/note",
-//                 type: "POST",
-//                 "headers": {
-//                     "Content-Type": "application/json",
-//                     "Authorization": "Bearer " + token
-//                 },
-//                 data:JSON.stringify(json),
-//                 dataType: 'json',
-//                 success:function(data){},
-//                 error: function(xhr, ajaxOptions, thrownError){
-//                     console.log(e.target.id);
-//                     console.log(xhr.status);
-//                     console.log(thrownError);
-//                     console.log(xhr);
-//                 }
-//             });
-//       }
-// }
-// });

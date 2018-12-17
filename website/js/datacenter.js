@@ -1,3 +1,6 @@
+/*
+elements for display content 
+*/
 var btnprev = document.getElementById("btnprev");
 var btnnext = document.getElementById("btnnext");
 var prev = document.getElementById("prevorder");
@@ -49,21 +52,55 @@ info.appendChild(imagedesc);
 info.appendChild(imagecomments);
 var similar = document.createElement("div");
 similar.setAttribute("class","similar datasellers");
+var sideusername = document.getElementById("username-port");
+var sideimg = document.getElementById("img-user");
+var sidedesc = document.getElementById("user-description");
+/*
+user information variables
+*/
 var username;
 var userid;
 var pictureURL;
 var description;
+/*
+arrays with order info
+*/
 var imgsrc = [];
 var imgdesc = [];
 var orderid = [];
+/*
+array with all purchased portfolios from current user
+*/
 var purchases = [];
+/*
+bool if current portfolio is purchased
+*/
 var purchased = false;
+/*
+position in arrays
+*/
 var n = 0;
-var sideusername = document.getElementById("username-port");
-var sideimg = document.getElementById("img-user");
-var sidedesc = document.getElementById("user-description");
+/*
+get parameter from url
+*/
 var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
+/*
+delete yes or no
+*/
+function openyesno(functiondelete){
+	closeAllModals();
+	$('#yesorno').modal({
+		backdrop: 'static'
+	});
+document.getElementById("yess").addEventListener("click",function (e){
+	$('#yesorno').modal('toggle');
+    functiondelete();
+});
+document.getElementById("noo").addEventListener("click",function (e){
+	$('#yesorno').modal('toggle');
+});
+}
 checkportissell();
 /*
 check if portfolio is purchased
@@ -111,7 +148,7 @@ function setsidebar(){
         sidedesc.innerHTML += description;
 }
 /*
-set buttons left and right
+set buttons left and right only if user purchased portfolio
 */
 function setbtn(){
         var btn = document.createElement("button");
@@ -156,7 +193,7 @@ function setcontentdatacenter(){
     cont.appendChild(similar);
 }
 /*
-adds comment to order
+adds comment to portfolio if user not purchased the current portfolio otherwise comment will be added to order
 */
 button.addEventListener("click",function(){
     diverror.innerHTML = "";
@@ -203,16 +240,55 @@ button.addEventListener("click",function(){
     }
 });
 /*
-delete comment from order
+delete comment from portfolio if purchased from the order
 */
-function deletecomments(){
-    
+function deletecomments(e){
+    if(purchased){
+        openyesno(function(){
+            makerequestnopar("http://10.3.50.6/api/ordercomment?commentId="+e.target.id,"DELETE",token);
+        });
+    }else{
+        openyesno(function(){
+            makerequestnopar("http://10.3.50.6/api/portfoliocomment?commentId="+e.target.id,"DELETE",token);
+        });
+    }
+    if(getstatus() == 200){
+        getComments();
+    }
 }
 /*
-update comment from order
+update comment from portfolio if purchased from the order
 */
-function updatecomments(){
-    
+function updatecomments(e){
+    var comment = document.getElementById("comment"+e.target.id);
+    var textcontent = "<textarea id='comment-text-update' style='resize:none;width:100%;'>"+comment.innerHTML+"</textarea>";
+    comment.innerHTML = "";
+    comment.innerHTML = textcontent;
+    var btn = document.createElement("button");
+    btn.setAttribute("type","button");
+    btn.setAttribute("id",e.target.id);
+    btn.setAttribute("style","float:right;margin:2%;");
+    btn.setAttribute("class","btn btn-primary");
+    btn.innerHTML = "update comment";
+    comment.appendChild(btn);
+    btn.addEventListener("click",function(e){
+        var text = document.getElementById("comment-text-update");
+        if(text.value == ""){    
+            text.style.border = "1px solid red";
+            text.setAttribute("placeholder","This field is required");
+        }else{
+            if(purchased){
+                var json = {"CommentId": e.target.id,"Message": text.value};
+                makerequest(json,"http://10.3.50.6/api/ordercomment","POST",token);
+            }else{
+                 var json = {"CommentId": e.target.id,"Message": text.value};
+                makerequest(json,"http://10.3.50.6/api/portfoliocomment","POST",token);
+            }
+            if(getstatus() == 200){
+                getComments();
+            }
+        }
+    });
 }
 /*
 get all purchases from current user
@@ -226,7 +302,7 @@ function getpurchases(){
     return true;
 }
 /*
-get comments from order with orderid
+get comments from portfolio if portfolio is not purchased else commments form order
 */
 function getComments(){
             allcomments.innerHTML = "";
@@ -253,7 +329,7 @@ display comments on screen
 */
 function setComments(i,data){
         var cardcomment = document.createElement("div");
-        cardcomment.setAttribute("style","width:100%;float:left;margin:1%;");
+        cardcomment.setAttribute("style","width:100%;float:left;margin:1%;margin-left:0%;");
         cardcomment.className = "card";
         var comment = document.createElement("div");
         comment.className = "card-body";
@@ -262,15 +338,35 @@ function setComments(i,data){
         image.setAttribute("style","width:8%;float:left;margin:1%;");
         image.innerHTML = "<img src="+pictureURL+" style='width:100%;'>";
         var divcomment = document.createElement("div");
-        divcomment.setAttribute("style","width:90%;float:left;")
+        divcomment.setAttribute("style","width:90%;float:left;");
         var divhead = document.createElement("div");
         divhead.setAttribute("class","comment-head");
         var divcontent = document.createElement("div");
         divcontent.setAttribute("class","comment-content");
-        divhead.innerHTML += "    " + username + " <span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span>";
+        divcontent.setAttribute("id","comment"+data[i].commentId);
+        divhead.innerHTML +=  username + " <span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span> ";
+        var divfooter = document.createElement("div");
+        if(data[i].userId == getuserid()){
+            var editcom = document.createElement("a");
+            editcom.setAttribute("href","#");
+            editcom.setAttribute("id",data[i].commentId);
+            editcom.addEventListener("click",updatecomments);
+            editcom.setAttribute("class",data[i].message);
+            editcom.innerHTML = " update ";
+            var del = document.createElement("a");
+            del.setAttribute("href","#");
+            del.setAttribute("id",data[i].commentId);
+            del.addEventListener("click",deletecomments);
+            del.setAttribute("class",data[i].message);
+            del.innerHTML = " delete ";
+            divfooter.setAttribute("style","float:right;font-size:11px;width:100%;text-align:right;");
+            divfooter.appendChild(editcom);
+            divfooter.appendChild(del);
+        }
         divcontent.innerHTML = data[i].message;
         divcomment.appendChild(divhead);
         divcomment.appendChild(divcontent);
+        divcomment.appendChild(divfooter);
         comment.appendChild(image);
         comment.appendChild(divcomment);
         cardcomment.appendChild(comment);
@@ -299,7 +395,17 @@ function getorderdescandimg(){
     }
 }
 /*
-get user information
+get userid from current logged in user
+*/
+function getuserid(){
+        var data = makerequestnopar("http://10.3.50.6/api/user","GET",token);
+        if(getstatus() == 200 ){
+            return data.userId;
+        }
+        return false;
+}
+/*
+get user information on user id
 */
 function getUser(userid){
     var data = makerequestnopar("http://10.3.50.6/api/user?userId="+userid,"GET",token);

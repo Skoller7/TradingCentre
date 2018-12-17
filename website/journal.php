@@ -128,6 +128,7 @@
     </div>
 </div>
 </div>
+    <!-- delete yes or no-->
 <div class="modal fade" id="yesno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -141,6 +142,7 @@
     	</div>
 		</div>
 </div>
+    
     <!-- add description and image to url!-->
     <div class="modal fade" id="Mupdateorder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
