@@ -90,20 +90,20 @@ Dat in de tabel doen.
     <div class="col-md-3"></div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content">
-        <h3>Portfolio 1 overview</h3><br /><br />
+
+
+
+          <div class="datacontent panel panel-info"></div>
 
 
           <h4>DataContract price:
-          <span id="contractPrice"></span> </h4><br />
-
+          <span id="contractPrice"></span> </h4>
           <h4>Buyers :
-          <span id="buyers"></span></h4><br />
-
+          <span id="buyers"></span></h4>
           <h4>Profit :
             <span id="dataProfit"></span>
-          </h4>
 
-          <h1>Hier misschien nog een graph over hoe de sales gaan???</h1>
+            <br />
             <div id="main" ></div>
 
 

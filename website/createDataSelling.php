@@ -98,21 +98,21 @@
              </div> fetch orders from db -->
           </select>
         </div>
-        <br  />  <br  />  <br  />  <br  />
-        <hr color="white"/>
+         <br  />  <br  />
+         <div class="row col-md-12">
         <button type="button" class="btn btn-primary btn-save-order">Save this order</button><br  /><!-- hier de order plaatsen via api in de juiste tabel -->
         <small id="priceHelp" class="form-text text-muted">*you need to have an image and a description before you can save the file</small>
         <span id="saveOrder">This order has been saved!</span> <!-- dit verstoppen tot dat api call succesfull was -->
-        <br  /> <br  /> <br  />
+      </div>
+        <hr color="white"/>
         <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
+         <div class="row col-md-12">
+        <br /><p>Contract Price :<br />
+        <input type="text" id="contractPricing"> </input>WEI<br /><br /></p>
         <button type="button" name="button" class="btn btn-primary btn-create-contract-request">Create Buycontract</button><a href="#"> More info?</a>
         <br />
         <span id="errormessage"></span>
+      </div>
         </div>
     </nav>
     </div>
@@ -126,7 +126,7 @@
           </div>
           <form class="" method="post">
             <p>Image url:
-            	<input type="text" id="tradeurl"> <button type="button" name="button" class="btn btn-primary" id="refreshImage">Refresh image</button>
+            	<input type="text" id="tradeurl"> <button type="button" name="button" class="btn btn-primary" id="refreshImage">Refresh image</button></input>
               </p>
           </form>
 

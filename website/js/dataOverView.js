@@ -1,3 +1,8 @@
+var token = getCookie("jwtToken");
+var userId = makerequestnopar("http://10.3.50.6/api/user" , "GET" , token);
+
+var portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true" , "GET" , token);
+console.log(portfolios);
 App = {
   web3Provider: null,
   contracts: {},
@@ -35,15 +40,64 @@ initContract1: function(){
     App.contracts.DataContract = TruffleContract(DataContractArtifact);
     App.contracts.DataContract.setProvider(App.web3Provider);
     console.log(App.contracts);
-    App.requestPrice();
-    App.requestBuyersCount();
-    App.calcProfit();
+    App.requestData();
+    // App.requestPrice();
+    // App.requestBuyersCount();
+    // App.calcProfit();
   })
 },
 
-requestBuyersCount: function(){
 
-  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
+
+
+// <div class="card" style="width: 18rem;">
+//   <div class="card-body">
+//     <h5 class="card-title">Card title</h5>
+//     <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+//     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+//     <a href="#" class="card-link">Card link</a>
+//     <a href="#" class="card-link">Another link</a>
+//   </div>
+// </div>
+
+requestData: function(){
+
+  for(var i = 1; i <= portfolios.length; i++){
+  //  console.log(portfolios[i-1].address);
+
+    var buyersCountf;
+    var pricef;
+    var profitf;
+
+    //getting data from the blockchain.
+    App.contracts.DataContract.at(portfolios[i - 1].address).then(function(instance){
+      DataContractInstance = instance;
+
+      DataContractInstance.getBuyersCount.call().then(function(r){
+        var buyersCountf = r;
+        DataContractInstance.getPrice.call().then(function(r2){
+        profitf = buyersCountf * r2;
+        pricef = r2;
+        var content = "<div class='card' style='width: 18rem;'> <div class='card-body'> <h4> Portfolio " + i + ": </h4> <h6> Buyers : " + buyersCountf + "</h6> <h6> Sell Price: " + pricef + "</h6> <h6> Total Profit: " + profitf + "</h6></div></div>"; // grootte mss aanpassen?
+         $('.datacontent').append(content);
+
+        })
+      })
+    })
+    //converting data into html cards.
+    // $('.datacontent').append("<div class='card-body'>");
+    // $('.datacontent').append("<h4> Portfolio " + i + ": </h4>");
+    // $('.datacontent').append("<h6> Buyers : " + buyersCountf + "</h6>");
+    // $('.datacontent').append("<h6> Sell Price: " + pricef + "</h6>");
+    // $('.datacontent').append("<h6> Total Profit: " + profitf + "</h6>");
+
+  }
+
+},
+
+requestBuyersCount: function(adrespara){
+
+  App.contracts.DataContract.at(adrespara).then(function(instance){
     DataContractInstance = instance;
 
     DataContractInstance.getBuyersCount.call().then(function(result){
@@ -73,7 +127,10 @@ calcProfit: function(){
 
 requestPrice: function(){
 
-  App.contracts.DataContract.deployed().then(function(instance){
+
+  //retrieve the data from the database (which porfolio's he owns).
+
+  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
     return instance.getPrice.call()
   }).then(priceOfData => {
     console.log("Succesfully retrieved price of data :", priceOfData);
@@ -118,7 +175,7 @@ $('.btn-contract-price').click(function(){
 
 function addbarchart(){
     var myChart = echarts.init(document.getElementById('main'), 'light');
-    
+
     var option = {
         title:{
             text: 'Data sold per month',
@@ -145,6 +202,6 @@ function addbarchart(){
             data: [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15]
         }]
     };
-    
+
         myChart.setOption(option);
 }

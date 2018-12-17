@@ -2,7 +2,13 @@ var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 var token = getCookie("jwtToken");
 var orderdata = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token); //retrieving all curretn orders
+
+var isSold = orderdata.IsForSale;
+console.log(orderdata.IsForSale);
+console.log(isSold);
+
 var selectedOrder = orderdata[0]; //selected order == het eerste order in de lijst.
+
 $('#saveOrder').hide();
 var teller = 0;
 App = {
@@ -195,11 +201,12 @@ loadPage : function(){
      var gas = 1000000;
      var account = accounts[0];
      var addres;
+     var contractPrice = $('#contractPricing').val();   //--------------------------------------------------------------------------------------------------------
      //adress verandere hier bij nieuwe ganacha load 0x6fea428ed5b5b4804572a0df7766b71f68a44da8
       App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(instance =>{
             console.log("voorbij de instance");
       DataContractCreatorInstance = instance;
-      DataContractCreatorInstance.createDataContract(1500, {from: account, gas}).then((r) =>
+      DataContractCreatorInstance.createDataContract(contractPrice, {from: account, gas}).then((r) =>
        { console.log('deployment is succesfull');
         $('#contractSucces').text('succes');
       DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
@@ -211,6 +218,7 @@ loadPage : function(){
         console.log(name, goal, description, imgurl);
 
         addres = r[r.length-1];
+        $('#errormessage').text('your contract is located on :' + addres);
         var portfolioCreationData = {
           "PortfolioId": aportfolioid,
           "Name": name,
@@ -246,7 +254,7 @@ loadPage : function(){
 
     })
 
-    
+
        });
     //  DataContractInstance.createDataContract(500, account);
     });

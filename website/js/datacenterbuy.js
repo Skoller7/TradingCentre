@@ -1,4 +1,6 @@
 var token = getCookie("jwtToken");
+var urlParams = new URLSearchParams(window.location.search);
+var aportfolioid = urlParams.get('portfolioId');
 
 App = {
   web3Provider: null,
@@ -49,6 +51,9 @@ requestPrice: function(){
     console.log("Succesfully retrieved price of data :", priceOfData);
     $('#contractPrice').text(priceOfData);
     $('#contractPrice').val("Buy for " + priceOfData + " WEI");
+
+     makerequestnopar("http://10.3.50.6/api/purchase?portfolioId=" + aportfolioid , "POST" , token);
+
   })
 },
 
