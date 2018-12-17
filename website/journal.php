@@ -5,6 +5,8 @@
     $email = $_SESSION['email'];
     $emailHeader = 'verification TradingCentre';
     $emailBody = 'https://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=' . $_SESSION['verificationKey'];
+    unset($_SESSION['email']);
+    unset($_SESSION['verificationKey']);
     mail($email,$emailHeader,$emailBody);    
     $showEmailVerificationModal = true;
   }
