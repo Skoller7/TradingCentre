@@ -1,6 +1,6 @@
 modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
-modalList.push(document.getElementById("MForgotPassword"));
+//modalList.push(document.getElementById("MForgotPassword"));
 modalList.push(document.getElementById("MVerificationMail"));
 modalList.push(document.getElementById("MVerificationMailAccepted"));
 //arne pls geef info
@@ -18,15 +18,15 @@ document.getElementById("MLoginBLogin").addEventListener("click",function(){
 });
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
 document.getElementById("MLoginBCrosse").addEventListener("click",MLoginClose);
-document.getElementById("MLoginBForgotPassword").addEventListener("click",openMForgotPassword);
+//document.getElementById("MLoginBForgotPassword").addEventListener("click",openMForgotPassword);
 document.getElementById("MLoginBSignUp").addEventListener("click",openMSignUp);
 document.getElementById("MSignUpBSignUp").addEventListener("click",signUp);
 document.getElementById("MSignUpBClose").addEventListener("click",MSignUpClose);
 document.getElementById("MSignUpBCrosse").addEventListener("click",MSignUpClose);
 document.getElementById("MSignUpBLogin").addEventListener("click",openMLogin);
-document.getElementById("MForgotPasswordBForgotPassword").addEventListener("click",forgotPassword);
-document.getElementById("MForgotPasswordBClose").addEventListener("click",MForgotPasswordClose);
-document.getElementById("MForgotPasswordBCrosse").addEventListener("click",MForgotPasswordClose);
+//document.getElementById("MForgotPasswordBForgotPassword").addEventListener("click",forgotPassword);
+//document.getElementById("MForgotPasswordBClose").addEventListener("click",MForgotPasswordClose);
+//document.getElementById("MForgotPasswordBCrosse").addEventListener("click",MForgotPasswordClose);
 document.getElementById("MVerificationMailBClose").addEventListener("click",MVerificationMailClose);
 document.getElementById("MVerificationMailBCrosse").addEventListener("click",MVerificationMailClose);
 document.getElementById("MVerificationMailAcceptedBCrosse").addEventListener("click",MVerificationMailAcceptedClose);
@@ -348,10 +348,11 @@ function loginPasswordErrorHandeler(e){
 		errorModal(document.getElementById("MSignUpIRePassword"));
 	}
 }
-
+/*
 function forgotPassword(){
 
 }
+*/
 function search(){
 	document.getElementById("FSearch").submit();
 }
@@ -362,9 +363,11 @@ function MLoginClose(){
 function MSignUpClose(){
 	$('#MSignUp').modal('toggle');	
 }
+/*
 function MForgotPasswordClose(){
 	$('#MForgotPassword').modal('toggle');	
 }
+*/
 function MVerificationMailClose(){
 	$('#MVerificationMail').modal('toggle');	
 }
@@ -405,12 +408,14 @@ function openMSignUp(){
 		backdrop: 'static'
 	});
 }
+/*
 function openMForgotPassword() {
 	closeAllModals();
 	$('#MForgotPassword').modal({
 		backdrop: 'static'
 	});
 }
+*/
 function openMVerificationMail(email){
 	closeAllModals();
 	document.getElementById("MVerificationMailPMessage").innerHTML = "We have sent you a verification e-mail to this address <br />" + email;
