@@ -1,23 +1,24 @@
 .vertical-settings {
     height: 100%;
-    width: 10%;
+    width: 8%;
     position: fixed;
     z-index: 1;
-    top: 30px;
-    left: 0;
     overflow-x: hidden;
-    padding-top: 20px;
+    padding-top: 7%;
     background-color: #25313B;
     float: left;
     color: #F8F9FA;
     text-align: center;
     align-items: center;
+    
 }
 
 .vertical-settings button {
-    padding: 6px 8px 6px 0px;
+    padding: 60px 8px 6px 0px;
+    left: 0%;
+    top: 30%;
     text-decoration: none;
-    font-size: 15px;
+    font-size: 18px;
     background-color: inherit;
     color: #F8F9FA;
     display: block;
@@ -36,17 +37,59 @@
 }
 
 .content {
-	top: 30px;
-    margin-left: 10%;
-    padding: 80px 10px;
-    float: left;
-    position: absolute;
-    
+    margin: 0;
+    padding: 10%;
+    display: table;
+    width: 100%
 }
 
-.content a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    color: black;
+.myForm {
+    margin: 0 auto;
+    width: 25%;
+}
+/*https://www.sanwebe.com/2014/08/css-html-forms-designs*/
+.content input[type="text"],
+.content input[type="email"],
+.content input[type="number"],
+.content input[type="password"],
+.content input[type="url"],
+.content textarea,
+.content select {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
     display: block;
+    width: 100%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+    height: 45px;
 } 
+
+.content textarea {
+    resize: none;
+    overflow: hidden;
+}
+.content input[type="submit"] {
+    -moz-box-shadow: inset 0px 1px 0px 0px #FF751A;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #FF751A;
+    box-shadow: inset 0px 1px 0px 0px #FF751A;
+    background-color: #FF751A;
+    border: 1px solid #FF751A;
+    display: inline-block;
+    cursor: pointer;
+    color: #F8F9FA;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.content input[type="submit"]:hover {
+    background: linear-gradient(to bottom, #FF751A 1%, #FF751A 100%);
+    background-color: #FF751A;
+    color: #25313B;
+}

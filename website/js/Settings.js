@@ -36,14 +36,9 @@ function validateForm(){
         window.alert("At least one of the fields has to be filled in to submit!")
     }*/
     
-    var isEmpty = false;
-    $('input').each(function(){
-        if(isEmpty === false && $.trim( this.value ) === ""){
-            isEmpty = true;
-        }
-    });
+    var isEmpty = validation();
 
-    if(isEmpty === true) {
+    if(isEmpty === false) {
         window.alert("At least one of the fields has to be filled in to submit!");
     }
     
@@ -60,7 +55,7 @@ function validateForm(){
         copyValue(user, "accountForm", "textarea");
         
     }
-    /*$.ajax({
+    $.ajax({
         "async": true,
         "crossDomain": true,
         url: "http://10.3.50.6/api/user",
@@ -73,14 +68,15 @@ function validateForm(){
         dataType: 'json',
         succes: function(data){
             console.log(data);
+            window.alert("Your data has been changed!");
         },
         error: function(xhr, ajaxOptions, thrownError){
             console.log(xhr.status);
             console.log(thrownError);
             console.log(xhr);
         }
-    });*/
-    //window.alert("Your data has been changed!")
+    });
+   
      return false;
 }
 
@@ -103,7 +99,7 @@ function copyValue(user, idelement, tagelement) {
     console.log(user);
 }
 
-function validation(idelement, tagelement) {
+function validation() {
     /*var form = document.getElementById(idelement)
     var elements = form.getElementsByTagName(tagelement);
     var count = 0;
@@ -123,4 +119,26 @@ function validation(idelement, tagelement) {
         return false;
         
     }*/
+    
+    var fields = ["fname", "lname", "email", "uname", "pn", "pw", "img", "description"];
+    
+    var i, l = fields.length;
+    var fieldname, count = 0;
+    for (i = 0; i < l; i++) {
+        fieldname = fields[i];
+        if (document.forms["accountForm"][fieldname].value === "") {
+            count++;
+        }
+        else {
+            count--;
+        }
+    }
+    if (count === i) {
+        return false;
+    }
+}
+
+function adjust_textarea(h) {
+    h.style.height = "20px";
+    h.style.height = (h.scrollHeight)+"px";
 }
