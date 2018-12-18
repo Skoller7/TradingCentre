@@ -16,7 +16,7 @@
 ?>
 <html>
 	<head>
-		<title>Tradingcentre</title>
+		<title>Tradingcenter</title>
 		<link rel="stylesheet" type="text/css" href="bootstrap-4.1.3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 		<link rel="stylesheet" type="text/css" href="css/index.css">

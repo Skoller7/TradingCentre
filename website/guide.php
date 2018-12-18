@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>Frequently Asked Questions</title>
+    <title>Guide</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="css/guides.css">
@@ -23,26 +23,8 @@
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6 col-sm-12 col-xs-12" id="guideContent">
-			<h2 class="guideTitle">Account</h2>
-            <button class="collapsible">How do I add a BitMEX account to Tradingcenter?</button>
-            <div class="collapsibleContent">
-                <p>Lorem ipsum...</p>
-            </div>
-            <button class="collapsible">How do I change my username?</button>
-            <div class="collapsibleContent">
-                <p>Lorem ipsum...</p>
-            </div>
-
-            <h2 class="guideTitle">General</h2>
-            <button class="collapsible">What is the difference between datacenter and journal?</button>
-            <div class="collapsibleContent">
-                <p>Lorem ipsum...</p>
-            </div>
-            <button class="collapsible">How do I sell my data?</button>
-            <div class="collapsibleContent">
-                <p>Lorem ipsum...</p>
-            </div>
-
+			<h2 class="guideTitle">Guide titel</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas ipsum quis quam viverra tincidunt. Sed vel ex vitae ligula vestibulum mollis vel ac nisl. Aenean in nulla id leo convallis imperdiet id vel enim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam a consequat quam, rutrum pellentesque elit. Curabitur laoreet varius quam, non mollis elit sagittis non. Pellentesque vel mollis felis, ac aliquam felis. Integer vel neque vestibulum, congue lorem semper, interdum lectus. Vivamus eget turpis vitae eros finibus venenatis nec nec odio. Nam lacus eros, luctus id porttitor a, cursus sed turpis. Aenean ornare luctus cursus. Integer magna libero, luctus eleifend velit eget, fermentum auctor mauris. Donec risus dolor, dapibus at nisl in, malesuada convallis justo. Suspendisse volutpat, nunc id scelerisque ornare, lectus enim sollicitudin velit, vitae consequat felis diam eu metus.</p>
 		</div>
 		<div class="col-md-3"></div>
 	</div>
