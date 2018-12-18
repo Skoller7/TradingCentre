@@ -969,8 +969,8 @@ fetch('http://api.com/file.json')
         .then(function(myJson){
                 dataBinance.push([JSON.stringify(myJson)]);
 })*/
-
-
+      
+        
         for (var i = base; i <= today; i += oneDay) {
             var j = 1;
             var now = new Date(base += oneDay);
@@ -989,7 +989,7 @@ fetch('http://api.com/file.json')
             legend:{
               left: 'left',
               data: ['BitMex', 'Binance'],
-              align: 'left'
+              align: 'left'    
             },
             title: {
                 left: 'center',
@@ -1059,45 +1059,17 @@ fetch('http://api.com/file.json')
                 }
             ]
         };
-        myChart.setOption(doubleLine);
+        myChart.setOption(doubleLine); 
 }
 function addbasichart(){
-        // based on prepared DOM, initialize echarts instance
-        myChart = echarts.init(document.getElementById('main'),'light');
-
-        // specify chart configuration item and data
-var base = +new Date(2018, 9, 3);
-var oneDay = 24 * 3600 * 1000;
-var date = [];
-var today = +new Date();
-
-var data = [Math.random() * 5];
-
-/*fetch('http://api.com/file.json')
-        .then (function(response){
-               return response.json();
-               })
-        .then(function(myJson){
-                date.push([JSON.stringify(myJson)]);
-})
-
-fetch('http://api.com/file.json')
-        .then (function(response){
-               return response.json();
-               })
-        .then(function(myJson){
-                data.push([JSON.stringify(myJson)]);
-})*/
-
-for (var i = base; i < today; i += oneDay) {
-    var j = 1;
-    var now = new Date(base += oneDay);
-    date.push([now.getFullYear(), now.getMonth() , now.getDate()].join('/'));
-    data.push(Math.round((Math.random() - 0.5) * 20 + data[j-1]));
-    j++;
-}
-
+        test();
+        
+        var millisecondsToWait = 500;
+        setTimeout(function() {
 BasicChart = {
+    dataset: {
+        source: data
+    },
     tooltip: {
         trigger: 'axis',
         position: function (pt) {
@@ -1123,16 +1095,15 @@ BasicChart = {
     xAxis: {
         type: 'category',
         boundaryGap: false,
-        data: date
     },
     yAxis: {
         type: 'value',
-        boundaryGap: [0, '100%']
+        boundaryGap: [0, '50%'],
     },
     dataZoom: [{
         type: 'inside',
         start: 0,
-        end: 10
+        end: 100
     }, {
         start: 0,
         end: 10,
@@ -1150,7 +1121,7 @@ BasicChart = {
         {
             name:'Profit/Loss',
             type:'line',
-            smooth:true,
+            smooth:'true',
             symbol: 'diamond',
             sampling: 'average',
             itemStyle: {
@@ -1165,24 +1136,64 @@ BasicChart = {
                     color: 'rgb(255, 70, 131)'
                 }])
             },
-            data: data
+           encode: {
+            x: 'day',
+            y: 'profit'
+            }
         }
     ]
 },
+        myChart.setOption(BasicChart, {
+                dataset: {
+                source: data
+                },
+                series:[{
+                    name:'Profit/Loss',
+                    encode: {
+                    x: 'day',
+                    y: 'profit'
+                    }
+                }]
+        });
+            
         // use configuration item and data specified to show chart
-        myChart.setOption(BasicChart);
-}
-function addchart(){
+myChart.setOption(BasicChart);        
+        }, millisecondsToWait);
+        
         // based on prepared DOM, initialize echarts instance
+        myChart = echarts.init(document.getElementById('main'),'light');
+
+        var data = [];
+        
+function test(){
+     $(function(){
+     $.ajax({
+        "async": true,
+        "crossDomain": true,
+        "url": "http://10.3.50.6/api/portfolio/profit?portfolioId=33",
+        "method": "GET",
+        "headers": {
+            "Authorization": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDQ3MjA1NTksImV4cCI6MTU0NDgwNjk1OSwiaWF0IjoxNTQ0NzIwNTU5fQ.Q572_drxUeDKYq1P9hmY2uzgmaTDuuIB7iysZUm5jruJ0_1WjyXTnb3zRfV0MDYWyVILPs_v_mG3FItsGgD6-w",
+            "Content-Type": "application/json"
+        },
+        success: function(obj){
+            data = obj;
+        }
+    });
+});
+}
+}
+function addchart(){ 
+        // based on prepared DOM, initialize echarts instance 
         var myChart = echarts.init(document.getElementById('main'));
 
-        // specify chart configuration item and data
-var base = +new Date(1968, 9, 3);
+        // specify chart configuration item and data 
+var base = +new Date(1968, 9, 3); 
 var base2 = +new Date(1968,9,4);
-var oneDay = 24 * 3600 * 1000;
+var oneDay = 24 * 3600 * 1000; 
 var date = [];
 var today = +new Date();
-
+        
 var data = [Math.random() * 300];
 for (var i = base2; i < today; i += oneDay) {
     var j = 1;
