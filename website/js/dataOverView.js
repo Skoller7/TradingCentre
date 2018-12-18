@@ -2,7 +2,7 @@ var token = getCookie("jwtToken");
 var userId = makerequestnopar("http://10.3.50.6/api/user" , "GET" , token);
 
 var portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true" , "GET" , token);
-console.log(portfolios);
+console.log(portfolios[0].portfolioId);
 App = {
   web3Provider: null,
   contracts: {},
@@ -62,7 +62,7 @@ initContract1: function(){
 
 requestData: function(){
 
-  for(var i = 1; i <= portfolios.length; i++){
+  for(var i = 0; i < portfolios.length; i++){
   //  console.log(portfolios[i-1].address);
 
     var buyersCountf;
@@ -70,7 +70,7 @@ requestData: function(){
     var profitf;
 
     //getting data from the blockchain.
-    App.contracts.DataContract.at(portfolios[i - 1].address).then(function(instance){
+    App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
       DataContractInstance = instance;
 
       DataContractInstance.getBuyersCount.call().then(function(r){
@@ -78,8 +78,10 @@ requestData: function(){
         DataContractInstance.getPrice.call().then(function(r2){
         profitf = buyersCountf * r2;
         pricef = r2;
-        var content = "<div class='card' style='width: 18rem;'> <div class='card-body'> <h4> Portfolio " + i + ": </h4> <h6> Buyers : " + buyersCountf + "</h6> <h6> Sell Price: " + pricef + "</h6> <h6> Total Profit: " + profitf + "</h6></div></div>"; // grootte mss aanpassen?
+
+        var content = "<div class='col-md-3 col-sm-12 card'> <div class='card-body main-card'> <h4> Portfolio: </h4> <h6> Buyers : " + buyersCountf + "</h6> <h6> Sell Price: " + pricef + "</h6> <h6> Total Profit: " + profitf + "</h6></div></div>"; // grootte mss aanpassen?
          $('.datacontent').append(content);
+
 
         })
       })
@@ -92,6 +94,8 @@ requestData: function(){
     // $('.datacontent').append("<h6> Total Profit: " + profitf + "</h6>");
 
   }
+
+       $('.main-card').css("margin: 1%, float:left, display: inline-block");
 
 },
 

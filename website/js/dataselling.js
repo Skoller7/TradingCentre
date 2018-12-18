@@ -2,7 +2,7 @@ var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 var token = getCookie("jwtToken");
 var orderdata = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token); //retrieving all curretn orders
-
+console.log(orderdata);
 var isSold = orderdata.IsForSale;
 console.log(orderdata.IsForSale);
 console.log(isSold);

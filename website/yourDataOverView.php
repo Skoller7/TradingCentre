@@ -95,15 +95,6 @@ Dat in de tabel doen.
 
           <div class="datacontent panel panel-info"></div>
 
-
-          <h4>DataContract price:
-          <span id="contractPrice"></span> </h4>
-          <h4>Buyers :
-          <span id="buyers"></span></h4>
-          <h4>Profit :
-            <span id="dataProfit"></span>
-
-            <br />
             <div id="main" ></div>
 
 
