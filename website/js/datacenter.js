@@ -69,10 +69,6 @@ var imgsrc = [];
 var imgdesc = [];
 var orderid = [];
 /*
-array with all purchased portfolios from current user
-*/
-var purchases = [];
-/*
 bool if current portfolio is purchased
 */
 var purchased = false;
@@ -87,7 +83,7 @@ var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 /*
 delete yes or no
-*/
+
 function openyesno(functiondelete){
 	closeAllModals();
 	$('#yesorno').modal({
@@ -100,44 +96,62 @@ document.getElementById("yess").addEventListener("click",function (e){
 document.getElementById("noo").addEventListener("click",function (e){
 	$('#yesorno').modal('toggle');
 });
-}
+}*/
 checkportissell();
-/*
-check if portfolio is purchased
-*/
-function checkportispur(){
-    getpurchases();
-    for(var i = 0;i < purchases.length;i++){
-        if(aportfolioid == purchases[i].portfolioId){
-            purchased = true;
-            return;
-        }
-    }
-}
 /*
 check if portfolio is for sale
 */
 function checkportissell(){
-    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&portfolioId="+aportfolioid,"GET",token);
-    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-        cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
-    }else if(data.address == null || data.address == ""){
-        cont.innerHTML = "<a style='font-size:30px;margin-left:-12%;' href='createdataselling.php?portfolioId="+aportfolioid+"'>Sell your portfolio here</a>";
-    }else{
-        if(getorderdescandimg() == true){
-            checkportispur();
-            if(purchased){
-                if(imgdesc.length > 1){
-                    setbtn();
-                }
+    makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&portfolioId="+aportfolioid,"GET",token,function(data){
+            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                    cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
+                }else if(data.address == null || data.address == ""){
+                    cont.innerHTML = "<a style='font-size:30px;margin-left:-12%;' href='createdataselling.php?portfolioId="+aportfolioid+"'>Sell your portfolio here</a>";
+                }else{
+                    imgsrc = [];
+                    imgdesc = [];
+                    orderid = [];
+                    makerequestnopar("http://10.3.50.6/api/purchase","GET",token,function(purchase){
+                            if(purchase.length != 0){
+                            for(var i = 0;i < purchase.length;i++){
+                                if(aportfolioid == purchase[i].portfolioId){
+                                    purchased = true;
+                                }
+                            }
+                            }else{
+                                purchased = false;
+                            }
+                             console.log(purchased);
+                    if(purchased){
+                        makerequestnopar("http://10.3.50.6/api/portfolio/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
+                            console.log(order);
+                            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                                 cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
+                            }else{
+                                if(order.length != 0){
+                                    for(var i = 0;i < order.length; i++){     
+                                        imgsrc[i] = order[i].imgURL;
+                                        imgdesc[i] =  order[i].description;
+                                        orderid[i] = order[i].orderId;
+                                    }
+                                        if(imgdesc.length > 1){
+                                            setbtn();
+                                        }
+                                    getUser(data.userId);
+                                    setcontentdatacenter();
+                                }
+                            }
+                        });
+                    }else{
+                        imgsrc[0] = data.imgURL;
+                        imgdesc[0] =  data.description;
+                        orderid[0] = data.orderId;
+                        getUser(data.userId);
+                        setcontentdatacenter();
+                    }
+                });
             }
-            getUser(data.userId);
-            setcontentdatacenter();
-        }else{
-        cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
-        }
-    }
-        setsidebar();
+    });
 }
 /*
 set sidebar with user information
@@ -204,38 +218,24 @@ button.addEventListener("click",function(){
     }else{
         if(purchased){
         var json = {"OrderId": orderid[n],"Message": textarea.value};
-        $.ajax({
-            "async": true,
-            "crossDomain": true,
-            url: "http://10.3.50.6/api/ordercomment",
-            type: "PUT",
-            "headers": {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + token
-            },
-            data:JSON.stringify(json),
-            dataType: 'json',
-            success: function(data){
-                getComments();
-                },
-            error: function(xhr, ajaxOptions, thrownError){
+        makerequest(json,"http://10.3.50.6/api/ordercomment","PUT",token,function(data){
+            if(getstatus() != 200){
                 textarea.style.border = "1px solid red";
-                if(xhr.status != 200){
-                    diverror.innerHTML ="Error: " + xhr.responseText;
-                }else{
-                    textarea.style.border = "0px solid red";
-                    diverror.innerHTML = "";
-                    textarea.value = "";
-                    getComments();
-                }
+                 diverror.innerHTML ="Error: " + xhr.responseText;
+            }else{
+                getComments();
+                textarea.style.border = "0px solid red";
+                diverror.innerHTML = "";
+                textarea.value = "";
             }
         });
         }else{
             var json = {"PortfolioId": aportfolioid,"Message": textarea.value};
-            makerequest(json,"http://10.3.50.6/api/portfoliocomment","PUT",token);
-            if(getstatus() == 200){
-                getComments();
-            }
+            makerequest(json,"http://10.3.50.6/api/portfoliocomment","PUT",token,function(data){
+                            if(getstatus() == 200){
+                                getComments();
+                            }
+            });
         }
     }
 });
@@ -244,16 +244,21 @@ delete comment from portfolio if purchased from the order
 */
 function deletecomments(e){
     if(purchased){
-        openyesno(function(){
-            makerequestnopar("http://10.3.50.6/api/ordercomment?commentId="+e.target.id,"DELETE",token);
+       // openyesno(function(){
+            makerequestnopar("http://10.3.50.6/api/ordercomment?commentId="+e.target.id,"DELETE",token,function(data){
+                    if(getstatus() == 200){
+                        getComments();
+                    }
+           // });
         });
     }else{
-        openyesno(function(){
-            makerequestnopar("http://10.3.50.6/api/portfoliocomment?commentId="+e.target.id,"DELETE",token);
-        });
-    }
-    if(getstatus() == 200){
-        getComments();
+       // openyesno(function(){
+            makerequestnopar("http://10.3.50.6/api/portfoliocomment?commentId="+e.target.id,"DELETE",token,function(data){
+                    if(getstatus() == 200){
+                        getComments();
+                    }
+            });
+      //  });
     }
 }
 /*
@@ -279,49 +284,55 @@ function updatecomments(e){
         }else{
             if(purchased){
                 var json = {"CommentId": e.target.id,"Message": text.value};
-                makerequest(json,"http://10.3.50.6/api/ordercomment","POST",token);
+                makerequest(json,"http://10.3.50.6/api/ordercomment","POST",token,function(data){
+                    if(getstatus() == 200){
+                            getComments();
+                        }
+                });
             }else{
                  var json = {"CommentId": e.target.id,"Message": text.value};
-                makerequest(json,"http://10.3.50.6/api/portfoliocomment","POST",token);
-            }
-            if(getstatus() == 200){
-                getComments();
+                makerequest(json,"http://10.3.50.6/api/portfoliocomment","POST",token,function(data){
+                              if(getstatus() == 200){
+                                getComments();
+                            }  
+                });
             }
         }
     });
-}
-/*
-get all purchases from current user
-*/
-function getpurchases(){
-     var data = makerequestnopar("http://10.3.50.6/api/purchase","GET",token);
-    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-        return false;
-    }
-    purchases = data;
-    return true;
 }
 /*
 get comments from portfolio if portfolio is not purchased else commments form order
 */
 function getComments(){
             allcomments.innerHTML = "";
-            var data;
             if(purchased){
-                data = makerequestnopar("http://10.3.50.6/api/order/comment?orderId="+orderid[n],"GET",token);
+                makerequestnopar("http://10.3.50.6/api/order/comment?orderId="+orderid[n],"GET",token,function(data){
+                    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                            allcomments.innerHTML = "No comments found";
+                        }else{
+                            if(data.length != 0){
+                                for(var i = 0; i < data.length; i++){
+                                    setComments(i,data);
+                                }
+                            }else{
+                                allcomments.innerHTML = "No comments found";
+                            }
+                        }
+                });
             }else{
-                data = makerequestnopar("http://10.3.50.6/api/portfolio/comment?portfolioId="+aportfolioid,"GET",token);
-            }
-            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-                allcomments.innerHTML = "No comments found";
-            }else{
-                if(data.length != 0){
-                    for(var i = 0; i < data.length; i++){
-                        setComments(i,data);
-                    }
-                }else{
-                    allcomments.innerHTML = "No comments found";
-                }
+                makerequestnopar("http://10.3.50.6/api/portfolio/comment?portfolioId="+aportfolioid,"GET",token,function(data){
+                    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                            allcomments.innerHTML = "No comments found";
+                        }else{
+                            if(data.length != 0){
+                                for(var i = 0; i < data.length; i++){
+                                    setComments(i,data);
+                                }
+                            }else{
+                                allcomments.innerHTML = "No comments found";
+                            }
+                        }
+                });
             }
 }
 /*
@@ -339,76 +350,53 @@ function setComments(i,data){
         image.innerHTML = "<img src="+pictureURL+" style='width:100%;'>";
         var divcomment = document.createElement("div");
         divcomment.setAttribute("style","width:90%;float:left;");
+        divcomment.setAttribute("id","divcomment");
         var divhead = document.createElement("div");
         divhead.setAttribute("class","comment-head");
         var divcontent = document.createElement("div");
         divcontent.setAttribute("class","comment-content");
         divcontent.setAttribute("id","comment"+data[i].commentId);
         divhead.innerHTML +=  username + " <span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span> ";
-        var divfooter = document.createElement("div");
-        if(data[i].userId == getuserid()){
-            var editcom = document.createElement("a");
-            editcom.setAttribute("href","#");
-            editcom.setAttribute("id",data[i].commentId);
-            editcom.addEventListener("click",updatecomments);
-            editcom.setAttribute("class",data[i].message);
-            editcom.innerHTML = " update ";
-            var del = document.createElement("a");
-            del.setAttribute("href","#");
-            del.setAttribute("id",data[i].commentId);
-            del.addEventListener("click",deletecomments);
-            del.setAttribute("class",data[i].message);
-            del.innerHTML = " delete ";
-            divfooter.setAttribute("style","float:right;font-size:11px;width:100%;text-align:right;");
-            divfooter.appendChild(editcom);
-            divfooter.appendChild(del);
-        }
         divcontent.innerHTML = data[i].message;
         divcomment.appendChild(divhead);
         divcomment.appendChild(divcontent);
-        divcomment.appendChild(divfooter);
         comment.appendChild(image);
         comment.appendChild(divcomment);
         cardcomment.appendChild(comment);
         allcomments.appendChild(cardcomment);
-}
-/*
-get description, image and orderid from selling portfolio
-*/
-function getorderdescandimg(){
-        imgsrc = [];
-        imgdesc = [];
-        orderid = [];
-        var data = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+aportfolioid,"GET",token);
-    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-        return false;
-    }else{
-        if(data.length == 0){
-            return false;
-        }
-        for(var i = 0;i < data.length; i++){     
-            imgsrc[i] = data[i].imgURL;
-            imgdesc[i] =  data[i].description;
-            orderid[i] = data[i].orderId;
-        }
-        return true;
-    }
+        getuserid(data[i].userId,data[i].commentId);
 }
 /*
 get userid from current logged in user
 */
-function getuserid(){
-        var data = makerequestnopar("http://10.3.50.6/api/user","GET",token);
-        if(getstatus() == 200 ){
-            return data.userId;
-        }
-        return false;
+function getuserid(userid,commentid){
+        makerequestnopar("http://10.3.50.6/api/user","GET",token,function(data){
+            if(getstatus() == 200 ){
+                if(userid = data.userId){
+                        var divfooter = document.createElement("div");
+                        var editcom = document.createElement("a");
+                        editcom.setAttribute("href","#");
+                        editcom.setAttribute("id",commentid);
+                        editcom.addEventListener("click",updatecomments);
+                        editcom.innerHTML = " update ";
+                        var del = document.createElement("a");
+                        del.setAttribute("href","#");
+                        del.setAttribute("id",commentid);
+                        del.addEventListener("click",deletecomments);
+                        del.innerHTML = " delete ";
+                        divfooter.setAttribute("style","float:right;font-size:11px;width:100%;text-align:right;");
+                        divfooter.appendChild(editcom);
+                        divfooter.appendChild(del);
+                        document.getElementById("divcomment").appendChild(divfooter);
+                }
+            }
+        });
 }
 /*
 get user information on user id
 */
 function getUser(userid){
-    var data = makerequestnopar("http://10.3.50.6/api/user?userId="+userid,"GET",token);
+    makerequestnopar("http://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
         return false;
     }else{
@@ -416,6 +404,7 @@ function getUser(userid){
         description = data.description;
         username= data.username;
         userid= data.userId;
-        return true;
+        setsidebar();
     }
+    });
 }

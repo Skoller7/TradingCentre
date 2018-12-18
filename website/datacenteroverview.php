@@ -50,12 +50,12 @@
         <div class="header-content">
         <h3>Datacenter</h3>
         </div>
-        <h4 style='width:100%;float:left;'>Own selling portfolios</h4>
+        <h4 style='width:100%;float:left;' id='titleown'>Own selling portfolios</h4>
         <div class="content-datacenter" id="cards">
             
         </div>
         <div id="see-more-own" class='card' style='width:100%;float:left;text-align:center;'></div>
-        <h4 style='width:100%;float:left;'> Other selling portfolios</h4>
+        <h4 style='width:100%;float:left;' id="titleother"> Other selling portfolios</h4>
         <div class="content-datacenter" id="highlightcards">
             
         </div>

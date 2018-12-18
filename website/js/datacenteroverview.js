@@ -1,5 +1,5 @@
 /*
-token from current use
+token from current logged in user
 */
 var token = getCookie("jwtToken");
 /*
@@ -29,7 +29,7 @@ getcardhigh();
 get for sale portfolios from current user
 */
 function getcard(){
-    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token);
+    makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token,function(data){
     if(getstatus() == 401){
         openMLogin();
     }else{
@@ -37,25 +37,37 @@ function getcard(){
             alert("Something went wrong, please try again later");
         }else{
             arrayforsaleown = data;
-            setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
+            if(arrayforsaleown.length == 0){
+                document.getElementById("titleown").style.display = "none";
+            }else{
+                document.getElementById("titleown").style.display = "block";
+                setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
+            }
         }
     }
+    });
 }
 /*
 get for sale portfolios from other users
 */
 function getcardhigh(){
-    var data = makerequestnopar("http://10.3.50.6/api/portfolio/forsale","GET",token);
-    if(getstatus() == 401){
-        openMLogin();
-    }else{
-        if(getstatus() == 400 || getstatus() == 500 || getstatus() == 501){
-            alert("Something went wrong, please try again later");
-        }else{
-            arrayforsale = data;
-            setcontentcards(arrayforsale,"see-more-other",false,max_other,n_other);
-        }
-    }
+    makerequestnopar("http://10.3.50.6/api/portfolio/forsale","GET",token,function(data){
+           if(getstatus() == 401){
+                openMLogin();
+            }else{
+                if(getstatus() == 400 || getstatus() == 500 || getstatus() == 501){
+                    alert("Something went wrong, please try again later");
+                }else{
+                    arrayforsale = data;
+                    if(arrayforsale.length == 0){
+                        document.getElementById("titleother").style.display = "none";
+                    }else{
+                        document.getElementById("titleother").style.display = "block";
+                        setcontentcards(arrayforsale,"see-more-other",false,max_other,n_other);
+                    }
+                }
+            } 
+    });
 }
 /*
 see more button, set content on screen
