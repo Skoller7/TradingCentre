@@ -136,12 +136,9 @@ function validation() {
     if (count === i) {
         return false;
     }
-<<<<<<< HEAD
 }
 
 function adjust_textarea(h) {
     h.style.height = "20px";
     h.style.height = (h.scrollHeight)+"px";
-=======
->>>>>>> 7f51de1b04fa0cce7845bc86590401689d106011
 }
