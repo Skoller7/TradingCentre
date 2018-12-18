@@ -39,17 +39,6 @@
   include_once("header.html");
 ?>
 <div class="containter-fluid">
-    <nav class="sidebar">
-        <div class="row">
-                <h3>Overview</h3>
-        <ul>
-            <li><a href="">Best Trades</a></li>
-             <li><a href="">Best Traders</a></li>
-            <li><a href="">Type</a></li>
-            <li><a href="">Most Profit</a></li>
-        </ul>
-        </div>
-    </nav>
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-9 col-sm-12 col-xs-12">

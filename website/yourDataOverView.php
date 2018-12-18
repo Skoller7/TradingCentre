@@ -33,44 +33,9 @@
 <?php
   include_once("header.html");
 ?>
-<div class="modal fade" id="buyContractModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create a Datacontract</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-row align-items-center">
-             <div class="col-auto my-1">
-               <label class="mr-sm-2" for="inlineFormCustomSelect">Preference</label>
-               <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-                 <option selected>Default Portfolio</option>
-                 <option value="2">Portfolio 1</option>
-                 <option value="3">Portfolio 2</option>
-               </select>
-             </div>
-           </div>
-          <div class="form-group"><br  />
-            <label for="exampleInputEmail1">Contract Price</label>
-            <input type="ContractPrice" class="form-control" aria-describedby="emailHelp" placeholder="Ether price">
-            <small id="priceHelp" class="form-text text-muted">This will be the selling price of your contract</small>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Create contract</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 
 <div class="containter-fluid">
-    <nav class="sidebar">
+    <!-- <nav class="sidebar">
         <div class="row">
                 <h3>Overview of your data</h3>
         <ul>
@@ -79,20 +44,45 @@
              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#buyContractModal">Create a new datacontract</button>
         </ul>
         </div>
-    </nav>
-<div class="row">
+    </nav> -->
+<div class="">
     <div class="col-md-3"></div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content">
 
 
+          <!-- Modal if user has no data yet -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">No sell portfolios found.</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Hello there!<br />
+                  Looks like you don't have any datacontract yet. So the data that you are shown in this page is mere dummy data!
+                  Feel free to head over to our <a href="#">FAQ</a> or <a href="journal.php">journal page</a> to create your own selling portfolio.
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <h1>Your data overview</h1>
+
+          <button type="button" class="btn btn-primary makemodal" data-toggle="modal" data-target="#exampleModalCenter"></button>
+          <div class="content-datacenter" id="cards">
+          <div id="see-more-own" class='card' style='width:100%;float:left;text-align:center;'></div>
           <div class="datacontent panel panel-info"></div>
 
-            <div id="main" ></div>
-
-
         </div>
+
+          <div id="main" ></div>
         <div class="content-datacenter">
 
         </div>
