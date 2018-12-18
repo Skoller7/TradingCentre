@@ -15,9 +15,9 @@ App = {
     }
   }
   // Legacy dapp browsers...
-  else if (window.web3) {
-    App.web3Provider = window.web3.currentProvider;
-  }
+  // else if (window.web3) {
+  //   //App.web3Provider = window.web3.currentProvider;
+  // }
   // If no injected web3 instance is detected, fall back to Ganache
   else {
     App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
@@ -43,7 +43,7 @@ initContract1: function(){
 
 requestBuyersCount: function(){
 
-  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
+  App.contracts.DataContract.deployed().then(function(instance){
     DataContractInstance = instance;
 
     DataContractInstance.getBuyersCount.call().then(function(result){
@@ -57,7 +57,7 @@ requestBuyersCount: function(){
 
 calcProfit: function(){
 
-  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
+  App.contracts.DataContract.deployed().then(function(instance){
     DataContractInstance = instance;
 
     DataContractInstance.getBuyersCount.call().then(function(r){
@@ -81,28 +81,6 @@ requestPrice: function(){
     $('#contractPrice').val("Buy for " + priceOfData + " WEI");
   })
 }
-}
-
-var token = getCookie("jwtToken");
-function getport(){
-    port = [];
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
-        var ul = document.getElementById("portfolios-ul");
-        ul.innerHTML = "";
-        for(var i = 0; i < data.length;i++){
-            var name = document.createTextNode(data[i].name);
-            var li = document.createElement("LI");
-            ul.appendChild(li);
-            li.setAttribute("id",data[i].portfolioId + "port");
-            li.appendChild(name);
-            if(data[i].name == "default"){
-                setdefaultport(data[i].portfolioId);
-                 activeportfolioid = data[i].portfolioId;
-            }
-            var sub = document.getElementById(data[i].portfolioId + "port");
-            port.push(sub.getAttribute("id"));
-        }
-            ppd();
 }
 
 $(function() {

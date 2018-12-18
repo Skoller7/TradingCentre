@@ -1,8 +1,3 @@
-<!--
-TODO: via api call de datum opvragen van wanneer het verkocht is & hoe vaak.
-Dat in de tabel doen.
--->
-
 <!doctype html>
 <html>
 <head>
@@ -78,7 +73,6 @@ Dat in de tabel doen.
     <nav class="sidebar">
         <div class="row">
                 <h3>Overview of your data</h3>
-                <br />     <br />     <br />
         <ul>
             <li><a href="">Portfolio 1 </a></li>
              <li><a href="">Portfolio 2</a></li>
