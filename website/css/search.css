@@ -13,7 +13,11 @@
 .searchImg{
 	height: 64px;
 	width: 64px;
+	border-right: 1px solid black;
 }
-#moreInfo{
-	border-left: 1px solid black;
+.searchResult:hover{
+	background-color: #ff751a;
+}
+.search{
+	margin-top: 10%;
 }

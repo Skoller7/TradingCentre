@@ -15,9 +15,9 @@ App = {
     }
   }
   // Legacy dapp browsers...
-  // else if (window.web3) {
-  //   //App.web3Provider = window.web3.currentProvider;
-  // }
+  else if (window.web3) {
+    App.web3Provider = window.web3.currentProvider;
+  }
   // If no injected web3 instance is detected, fall back to Ganache
   else {
     App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
@@ -26,6 +26,7 @@ App = {
     return App.initContract1();
   },
 
+//retrieving the contracts from the json file.
 initContract1: function(){
   $.getJSON('./Solidity/build/contracts/DataContractCreator.json').then(DataCreatorArtifact => {
     App.contracts.DataContractCreator = TruffleContract(DataCreatorArtifact);
@@ -45,13 +46,18 @@ initContract1: function(){
 },
 createBuyRequest: function(){
 
+  //retrieving the user accounts.
   web3.eth.getAccounts(function(error, accounts) {
-  if (error) {
+  if(error) {
     console.log(error);
   }
+  //setting a default variable for the gas payment ( cost to make a transaction)
   var gas = 2000000;
+  //We automatically select the first account.
   var account = accounts[0];
-  App.contracts.DataContract.deployed().then(instance => {
+  //In our app we take the contract that we created in initContract1, specifiy its adres on the blockchain and then put it in an instance
+  //then we call a function and send the gas, account and order value with it.
+  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(instance => {
     instance.createBuyRequest({from: account, gas, value: 1000000 }).then((r) => {
       console.log("buy request completed");
       $('#buying-succes').text("You succesfully bought the data!");
@@ -61,7 +67,7 @@ createBuyRequest: function(){
 },
 
 getDeployedContractAdresses: function(){
-  App.contracts.DataContractCreator.deployed().then(instance => {
+  App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(instance => {
     return instance.getDeployedContracts.call()
   }).then(deployedContracts => {
     console.log("requested amount of deployed contracts:", deployedContracts.length)
@@ -74,14 +80,16 @@ createNewContract : function(){
   //checking the user accounts.
   web3.eth.getAccounts(function(error, accounts) {
   if (error) {
+    console.log("bug is bij de if error");
     console.log(error);
   }
+  else {
    var gas = 1000000;
    var account = accounts[0];
    //adress verandere hier bij nieuwe ganacha load 0x6fea428ed5b5b4804572a0df7766b71f68a44da8
-    App.contracts.DataContractCreator.deployed().then(function(instance){
+    App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(instance =>{
+          console.log("voorbij de instance");
     DataContractCreatorInstance = instance;
-    console.log(web3.eth.getBalance(account)); //check balance?
     DataContractCreatorInstance.createDataContract(1500, {from: account, gas}).then((r) =>
      { console.log('deployment is succesfull');
       $('#contractSucces').text('succes');
@@ -89,11 +97,12 @@ createNewContract : function(){
      });
   //  DataContractInstance.createDataContract(500, account);
   });
+}
 });
 },
 requestPrice: function(){
 
-  App.contracts.DataContract.deployed().then(function(instance){
+  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
     return instance.getPrice.call()
   }).then(priceOfData => {
     console.log("Succesfully retrieved price of data :", priceOfData);
@@ -103,7 +112,7 @@ requestPrice: function(){
 },
 requestAdresses: function(){
 
-  App.contracts.DataContractCreator.deployed().then(function(instance){
+  App.contracts.DataContractCreator.at('0xcbf9889d922f5c6096067e838dd7a52a9a52c91b').then(function(instance){
     DataContractCreatorInstance = instance;
     console.log(DataContractCreatorInstance);
 
@@ -118,11 +127,9 @@ requestAdresses: function(){
 
 },
 
-//can comment away from here ( written on train not tested)
-
 requestBuyersCount: function(){
 
-  App.contracts.DataContract.deployed().then(function(instance){
+  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
     DataContractInstance = instance;
 
     DataContractInstance.getBuyersCount.call().then(function(result){
@@ -136,7 +143,7 @@ requestBuyersCount: function(){
 //
   isUserBacker: function(){
 
-    App.contracts.DataContract.deployed().then(function(instance){
+    App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
       DataContractInstance = instance;
 
         web3.eth.getAccounts(function(error, accounts) {
@@ -154,7 +161,7 @@ requestBuyersCount: function(){
 //
   changeDataContractPrice: function(){
 
-    App.contracts.Datacontract.deployed().then(function(instance){
+    App.contracts.Datacontract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
       DataContractInstance = instance;
 
       DataContractInstance.changePrice(1500).send().then(function(r){

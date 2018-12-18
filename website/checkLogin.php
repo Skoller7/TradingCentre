@@ -5,15 +5,22 @@
 				//check if token is valid
 				session_start();
 				$_SESSION['jwtToken'] = $_POST['jwtToken'];
-				setcookie('jwtToken',$_POST['jwtToken'], time() + 60*60*6);
-				header("location: home.php");
+				$_SESSION['jwtToken'] = time() + 60*60*24;
+				setcookie('jwtToken',$_POST['jwtToken'], time() + 60*60*24);
+				
+				if(isset($_POST['verificationKey']) && $_POST['email']){
+					$_SESSION['verificationKey'] = $_POST['verificationKey'];
+					$_SESSION['email'] = $_POST['email'];
+
+				}
+				header("location: journal.php");
 			}
 			else{
-				header("location: index.php");
+				header('location: index.php');
 			}
 		}
 		else{
-			header("location: index.php");
+			header('location: index.php');
 		}
 	}
 ?>

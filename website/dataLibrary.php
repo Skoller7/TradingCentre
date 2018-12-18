@@ -3,7 +3,7 @@
  <!-- menu bar meer naar links, users uit db halen & verschillende portfolio's tonen *
 - mogelijk tonen op rating/likes/follows? **
 - card een max height geven zodat deze ongeveer even zal zijn afhankelijk * * *
-- datacenter menu bar drop down maken * * * *
+- als user toch geen backer is er voor zorgen dat link naar faq wordt getoond ( link nog aanmaken);
 -->
 <html>
 <head>
@@ -42,27 +42,45 @@
     <nav class="sidebar">
         <div class="row">
                 <h3>Overview</h3>
+        <ul>
+            <li><a href="">Best Trades</a></li>
+             <li><a href="">Best Traders</a></li>
+            <li><a href="">Type</a></li>
+            <li><a href="">Most Profit</a></li>
+        </ul>
         </div>
     </nav>
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-10 col-sm-12 col-xs-12">
+    <div class="col-md-3"></div>
+    <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content">
-        <h3>Datacenter</h3>
+        <h3>Your bought portfolio's : </h3>
         </div>
-        <h4 style='width:100%;float:left;'>Own selling portfolios</h4>
-        <div class="content-datacenter" id="cards">
-            
+        <div class="content-datacenter">
+            <div class="card">
+              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
+              <div class="card-body">
+                <h5 class="card-title">Skoller</h5>
+                <p class="card-text">
+                  Master of the head & shoulder pattern.
+                  </p>
+                  <div class="btn-check" id="buyCheck">
+                <a class="btn btn-buycheck btn-primary" id="buyCheck">View data</a>
+              </div>
+                <div class="btn-fault" id="faultcheck">
+              <p> Either you are not logged in in metamask,
+                Or you are not an actual buyer of this portfolio!<span><a href=""> Click here for help </a> </span></p>
+              </div>
+              </div>
+            </div>
+
         </div>
-        <div id="see-more-own" class='card' style='width:100%;float:left;text-align:center;'></div>
-        <h4 style='width:100%;float:left;'> Other selling portfolios</h4>
-        <div class="content-datacenter" id="highlightcards">
-            
-        </div>
-         <div id="see-more-other" class='card' style='width:100%;float:left;text-align:center;'></div>
     </div>
 </div>
 </div>
 </body>
-<script src="js/datacenteroverview.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/datalibrary.js"></script>
 </html>

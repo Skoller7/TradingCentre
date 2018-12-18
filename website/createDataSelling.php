@@ -4,6 +4,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/datacenter.css">
+        <link rel="stylesheet" href="css/dataselling.css">
       <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -78,7 +79,7 @@
         <div class="user-description col-md-12">
             <div class="form-group">
               <label for="comment">Data Description: </label>
-              <textarea class="form-control" rows="5" id="comment" placeholder="In this data selling portfolio, I am going to teach you how to properly spot Head & shoulders, . . ."></textarea>
+              <textarea class="form-control" rows="5" id="PortfolioDescription" placeholder="In this data selling portfolio, I am going to teach you how to properly spot Head & shoulders, . . ."></textarea>
             </div>
           </div>
          </div>
@@ -86,39 +87,55 @@
         <div class="user-stats col-md-12">
         </div>
         </div>
-        <div class="row">
-        <div class="user-buy col-md-12">
+        <div class="row col-md-12">
+      <!--  <div class="user-buy col-md-12">
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#choseOrderModal">Chose a new order</button>
-        </div>
+        </div> -->
+        <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract: </label>
+        <!-- <select class="custom-select mr-sm-2" id="inlineFormCustomSelect"> -->
+        <select class="custom-select mr-sm-2 ordersHier" id="inlineFormCustomSelect">
+            <!--   <div class="ordersHier">
+             </div> fetch orders from db -->
+          </select>
         </div>
         <br  />  <br  />  <br  />  <br  />
         <hr color="white"/>
-        <button type="button" class="btn btn-primary">Save this order</button><br  />
+        <button type="button" class="btn btn-primary btn-save-order">Save this order</button><br  /><!-- hier de order plaatsen via api in de juiste tabel -->
         <small id="priceHelp" class="form-text text-muted">*you need to have an image and a description before you can save the file</small>
-        <span>This order has been saved!</span>
+        <span id="saveOrder">This order has been saved!</span> <!-- dit verstoppen tot dat api call succesfull was -->
         <br  /> <br  /> <br  />
-        <label class="mr-sm-2" for="inlineFormCustomSelect">Current orders in the datacontract : </label>
-        <select class="custom-select mr-sm-2" id="inlineFormCustomSelect">
-          <option selected>Order #1234</option>
-          <option value="2">Order #1235</option>
-          <option value="3">Order #1236</option>
-        </select>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <button type="button" name="button" class="btn btn-primary btn-create-contract-request">Create Buycontract</button><a href="#"> More info?</a>
+        <br />
+        <span id="errormessage"></span>
         </div>
     </nav>
     </div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content">
-        <h3>Trade #1</h3>
+        <h3 id="ordernummerTitel"></h3>
         </div>
         <div class="image-content">
           <div class="img-fluid" style="height="50%" width="80%"">
-            <!-- hier een witte box met zwarte randen tonen tot de persoon een img heeft geupload dan wordt de box vervangen door de iamge.-->
+          <img  class="orderimg img-responsive img-fluid" alt="image of this order"/>  <!-- hier een witte box met zwarte randen tonen tot de persoon een img heeft geupload dan wordt de box vervangen door de iamge.-->
           </div>
-          <button>Upload an image </button>
+          <form class="" method="post">
+            <p>Image url:
+            	<input type="text" id="tradeurl"> <button type="button" name="button" class="btn btn-primary" id="refreshImage">Refresh image</button>
+              </p>
+          </form>
+
         </div>
         <div class="info-content">
             <div class="image-description">
-            <textarea class="form-control" rows="5" id="comment" placeholder="In this image I spotted an head and shoulder but decided not to play it because of the following reasons
+            <textarea class="form-control orderdescription" rows="5" id="comment" placeholder="Example description
+
+            In this image I spotted an head and shoulder but decided not to play it because of the following reasons
 
             1) ...
             2) ...
@@ -132,5 +149,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>
-<script src="js/app.js"></script>
+<script src="js/dataselling.js"></script>
+<script src="js/lib.js"></script>
 </html>

@@ -1,6 +1,10 @@
 .vertical-settings {
     height: 100%;
+<<<<<<< HEAD
     width: 8%;
+=======
+    width: 10%;
+>>>>>>> 7f51de1b04fa0cce7845bc86590401689d106011
     position: fixed;
     z-index: 1;
     overflow-x: hidden;
@@ -10,6 +14,7 @@
     color: #F8F9FA;
     text-align: center;
     align-items: center;
+<<<<<<< HEAD
     
 }
 
@@ -19,6 +24,14 @@
     top: 30%;
     text-decoration: none;
     font-size: 18px;
+=======
+}
+
+.vertical-settings button {
+    padding: 120px 8px 6px 0px;
+    text-decoration: none;
+    font-size: 15px;
+>>>>>>> 7f51de1b04fa0cce7845bc86590401689d106011
     background-color: inherit;
     color: #F8F9FA;
     display: block;
@@ -37,6 +50,7 @@
 }
 
 .content {
+<<<<<<< HEAD
     margin: 0;
     padding: 10%;
     display: table;
@@ -93,3 +107,22 @@
     background-color: #FF751A;
     color: #25313B;
 }
+=======
+	top: 40px;
+    margin-left: 10%;
+    padding: 80px 10x;
+    float: left;
+    position: absolute;
+    padding-left: 30%;
+    
+}
+
+.content a {
+    padding: 40px 8px 6px 16px;
+    text-decoration: none;
+    color: black;
+    display: block;
+    align-items: center;
+    text-align: center;
+} 
+>>>>>>> 7f51de1b04fa0cce7845bc86590401689d106011

@@ -35,16 +35,14 @@ function autoLogin(username, password){
 
 $(document).ready(function(){
 
-
-document.getElementById('promoJournalButton').addEventListener("click", scrollToJournal);
-document.getElementById('promoDatacenterButton').addEventListener("click", scrollToDatacenter);
-setSize();
-
-
 for(var i = 0; i < document.getElementsByClassName('getStarted').length; i++){
 	document.getElementsByClassName('getStarted')[i].addEventListener("click", openMSignUp);
 }
 
+
+document.getElementById('promoJournalButton').addEventListener("click", scrollToJournal);
+document.getElementById('promoDatacenterButton').addEventListener("click", scrollToDatacenter);
+setSize();
 function scrollToJournal(){
 	var scroll_to_demojournal = document.getElementById('demoJournal');
 	scroll_to_demojournal.scrollIntoView({behavior: "smooth"});
@@ -84,3 +82,25 @@ topPosition = parseFloat($('#datacenterLeft').position().top) * 1.485;
 $('#datacenterImg').css('top',topPosition + 'px');
 }
 }); 
+
+function verifieEmail(){
+	 $.ajax({
+    	"async": true,
+  		"crossDomain": true,
+  		"url": "http://10.3.50.6/api/user/validate/" + verificationKey,
+		"method": "POST",
+		"timeout": 0,
+		"headers": {
+			"Content-Type": "application/json",
+		},
+        success: function(data){
+        	console.log(data);
+  			openMVerificationMailAccepted();
+        },
+        error: function(data, ajaxOptions, thrownError){
+        	console.log(data);
+        	console.log(data.status);
+        	console.log(thrownError);
+        }
+   });
+}

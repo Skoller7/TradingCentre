@@ -33,100 +33,51 @@
   include_once("header.html");
 ?>
 <div class="containter-fluid">
-<div class="row">
-    <div class="col-md-3">
     <nav class="sidebar">
-        <div class="col-md-12">
-        <div class="row">
         <div class="user-image col-md-12">
-        <h3>Skoller</h3>
-            <img src="img/indrabreind.png" alt="my girlfriends brain" class="img-fluid" style="margin: 1%; width:20%;">
+        <h3 id="username-port"></h3>
+            <img id="img-user" alt="my girlfriends brain" class="img-fluid" style="margin:1%; width:20%;">
         </div>
-        </div>
-        <div class="row">
-        <div class="user-description col-md-12">
+        <div class="user-description col-md-12" id="user-description">
             <h3>Description</h3>
-            Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken
         </div>
-         </div>
-        <div class="row">
-        <div class="user-stats col-md-12">
-        <h3>Personal stats</h3>
-        Head  shoulder fan<br>
-        Followers: 1222<br>
-        Rating : <span class="fa fa-star checked"></span><span class="fa fa-star checked"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><span class="fa fa-star"></span><br>
-        </div>
-        </div>
-        <div class="row">
         <div class="user-buy col-md-12">
             <h3>Buy data</h3>
             <input type="button" value="Retrieving data from the blockchain . . ." id="contractPrice" class="btn-contract-buy">
             <span id="buying-succes"></span>
         </div>
-        </div>
-        </div>
     </nav>
+    <div class="row">
+    <div class='col-md-2'></div>
+    <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class='row'>
+        <div class='col-md-1' id="btnprev"></div>
+        <div class='col-md-10' id="content-sell">
+
+        </div>
+        <div class='col-md-1' id="btnnext"></div>
     </div>
-    <div class="col-md-9 col-sm-12 col-xs-12">
-        <div class="header-content">
-        <h3>Showcase best trades #1</h3>
-        </div>
-        <div class="image-content">
-           <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
-        </div>
-        <div class="info-content">
-            <div class="image-description">
-            Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren '60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.
-            </div>
-            <div class="image-like">
-            <input type="submit" value="Like">
-            <input type="submit" value="Dislike">
-            </div>
-            <div class="image-comments">
-                <div class="image-comment">
-                    <div class="comment-head">
-                    <i class="fa fa-user"></i> Skoller
-                    </div>
-                    <div class="comment-content">
-                    Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken
-                    </div>
-                    <div class="comment-footer">
-                        <span class="comment-date">14/11/2018 18:55</span>
-                        <span class="comment-links"><a href="">Like</a><a href="">Dislike</a><a href="">Reply</a></span>
-                    </div>
-                </div>
-                <div class="comment-add">
-                <form method="post" class="form-add-comment">
-                    <label>Comment</label>
-                    <input type="text">
-                    <input type="submit" value="Add comment">
-                </form>
-                </div>
-            </div>
-        </div>
-        <div class="similar datasellers">
-            <h3>Similar datasellers</h3>
-            <div class="row">
-                <div class="user-image col-md-2">
-        <h3>Skoller</h3>
-            <img src="img/indrabreind.png" alt="my girlfriends brain" class="img-fluid" style="margin: 1%; width:20%;">
-        </div>
-                    <div class="user-image col-md-2">
-        <h3>Skoller</h3>
-            <img src="img/indrabreind.png" alt="my girlfriends brain" class="img-fluid" style="margin: 1%; width:20%;">
-        </div>
-                    <div class="user-image col-md-2">
-        <h3>Skoller</h3>
-            <img src="img/indrabreind.png" alt="my girlfriends brain" class="img-fluid" style="margin: 1%; width:20%;">
-        </div>
-            </div>
-        </div>
     </div>
 </div>
+</div>
+        <!-- delete yes or no-->
+<div class="modal fade" id="yesorno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+		        <h5 class="modal-title">Are you sure you want delete this?</h5>
+		    </div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-primary" id="yess">Yes</button>
+        		<button type="button" class="btn btn-secondary" id="noo">No</button>
+      		</div>
+    	</div>
+		</div>
 </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>
-<script src="js/app.js"></script>
+<script src="js/datacenterbuy.js"></script>
+<script src="js/datacenter.js"></script>
 </html>
