@@ -1,6 +1,6 @@
 var modalList = [];
 var requestsuccess = true;
-var status = 200;
+var statuscall = 200;
 /*
 //https://www.w3schools.com/howto/howto_html_include.asp
 function includeHTML() {
@@ -54,7 +54,7 @@ function includeHTMLFile(filePath, elmnt){
 
 //https://www.w3schools.com/js/js_cookies.asp
 function getstatus(){
-    return status;
+    return statuscall;
 }
 function getCookie(cname) {
     var name = cname + "=";
@@ -106,10 +106,9 @@ function closeModal(item){
   }
 }
 //makes api request without parameters
-function makerequestnopar( url_api, type_api, authorization_api){
-    var data_api = "";
-   $.ajax({
-    	"async": false,
+function makerequestnopar(url_api, type_api, authorization_api,success,async){
+    var ajax = $.ajax({
+    	"async": async,
   		"crossDomain": true,
   		url: url_api,
         type: type_api,
@@ -117,31 +116,23 @@ function makerequestnopar( url_api, type_api, authorization_api){
     		"Content-Type": "application/json",
             "Authorization": "Bearer " + authorization_api
   		},
-        dataType: 'json',
-        success: function(data){
-             data_api = data;
-            },
-        error: function(xhr, ajaxOptions, thrownError){
-        	console.log(xhr.status);
-        	console.log(thrownError);
-            if(xhr.status != 200 || xhr.status != 201){
-            console.log("error");
-            data_api += "error: ";
-            data_api +=  xhr.responseText;
-            }else{
-                console.log("error");
-                requestsuccess = true;
-            }
-            status = xhr.status;
-        }
-    });
-    return data_api;
+        dataType: 'json'
+       });
+        ajax.done(function(data) {
+            statuscall = ajax.status;
+            success(data);
+        });
+
+        ajax.fail(function(status, error,xhr) {
+            statuscall = ajax.status;
+            success(xhr.responseText);
+        });
 }
+
 //makes api request with parameters
-function makerequest(jsonfile_api, url_api, type_api, authorization_api){
-    var data_api = ""; 
-   $.ajax({
-    	"async": false,
+function makerequest(jsonfile_api, url_api, type_api, authorization_api,success){
+   var ajax = $.ajax({
+    	"async": true,
   		"crossDomain": true,
   		url: url_api,
         type: type_api,
@@ -151,22 +142,16 @@ function makerequest(jsonfile_api, url_api, type_api, authorization_api){
   		},
         data: JSON.stringify(jsonfile_api),
         dataType: 'json',
-        success: function(data){
-            data_api = data;
-            },
-        error: function(xhr, ajaxOptions, thrownError){
-        	console.log(xhr.status);
-        	console.log(thrownError);
-            console.log(xhr);
-            if(xhr.status != 200 || xhr.status != 201){
-            //console.log("error");
-            data_api += "error: ";
-            data_api +=  xhr.responseText;
-            }
-            status = xhr.status;
-        }
+   });
+    ajax.done(function(data) {
+            statuscall = ajax.status;
+            success(data);
     });
-    return data_api;
+    ajax.fail(function(status, error,xhr) {
+            statuscall = ajax.status;
+            success(xhr.responseText);
+    });   
+
 }
 function ValidURL(str) {
   var pattern = new RegExp("(http(s?):\\\/\\\/)www.tradingview.com\\\/x\\\/[A-Za-z0-9]{8}\\\/$");

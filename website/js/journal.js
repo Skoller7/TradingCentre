@@ -202,23 +202,24 @@ document.getElementById("btnupdateorder").addEventListener("click",function (){
                 "ImgURL" : urlinput.value,
                 "IsSold" : 0
             }
-        var data = makerequest(json,"http://10.3.50.6/api/order","POST",token);
-        if(getstatus() == 200 || getstatus() == 201){
-            descinput.value = "";
-            urlinput.value  ="";
-            errordescription.innerHTML = "Succesfully updated";
-            errorurl.innerHTML = "";
-                if(content1.style.display == "block"){
-                    getorders();
-                }else{
-                    getorderscontent2();
-                }
-            closeupdateorder();
-        }else if(getstatus() == 400){
-            errordescription.innerHTML = data;
-        }else if(getstatus() == 401){
-            errordescription.innerHTML = "* Something went wrong try again later";
-        }
+        makerequest(json,"http://10.3.50.6/api/order","POST",token,function(data){
+                  if(getstatus() == 200 || getstatus() == 201){
+                        descinput.value = "";
+                        urlinput.value  ="";
+                        errordescription.innerHTML = "Succesfully updated";
+                        errorurl.innerHTML = "";
+                            if(content1.style.display == "block"){
+                                getorders();
+                            }else{
+                                getorderscontent2();
+                            }
+                        closeupdateorder();
+                    }else if(getstatus() == 400){
+                        errordescription.innerHTML = data;
+                    }else if(getstatus() == 401){
+                        errordescription.innerHTML = "* Something went wrong try again later";
+                    }  
+        });
     }
 });
 /*
@@ -300,29 +301,29 @@ function openSubPortfolios(){
 /*
 call get all portfolios in submenu portfolios
 */
-
 if(token != false){
 getport();
 }
 function getport(){
         port = [];
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio","GET",token);
-        ul.innerHTML = "";
-        for(var i = 0; i < data.length;i++){
-            var name = document.createTextNode(data[i].name);
-            var li = document.createElement("LI");
-            ul.appendChild(li);
-            li.setAttribute("style","background-color:#3a4e5f");
-            li.setAttribute("id",data[i].portfolioId + "port");
-            li.appendChild(name);
-            if(data[i].isDefault == true){
-                defaultbool = true;
-                setdefaultport(data[i].portfolioId);
-                 activeportfolioid = data[i].portfolioId;
+        makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
+            ul.innerHTML = "";
+            for(var i = 0; i < data.length;i++){
+                var name = document.createTextNode(data[i].name);
+                var li = document.createElement("LI");
+                ul.appendChild(li);
+                li.setAttribute("style","background-color:#3a4e5f");
+                li.setAttribute("id",data[i].portfolioId + "port");
+                li.appendChild(name);
+                if(data[i].isDefault == true){
+                    defaultbool = true;
+                    setdefaultport(data[i].portfolioId);
+                     activeportfolioid = data[i].portfolioId;
+                }
+                var sub = document.getElementById(data[i].portfolioId + "port");
+                port.push(sub.getAttribute("id"));
             }
-            var sub = document.getElementById(data[i].portfolioId + "port");
-            port.push(sub.getAttribute("id"));
-        }
+        });
           //  ppd();
 }
 
@@ -378,23 +379,24 @@ function addorderstoportfolio(){
             "OrderId": arrayaddorders[j],
             "PortfolioId": activeportfolioid
         };
-        var data = makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token);
-        if(getstatus() != 201){
-           valid = false;
-        }
-    }
-    if(valid){
-        erroraddorder.innerHTML = "Orders succesfuly added to portfolio";
-        closeaddorder();
-        all  =document.getElementById("all-orders-table");
-    }else{
-        if(erroraddorder.innerHTML == ""){
-            if(getstatus() == 400){
-                erroraddorder.innerHTML = data;
-            }else if(getstatus() == 401){
-                erroraddorder.innerHTML = "* Something went wrong try again later";
-            }
-        }
+        makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token,function(data){
+                    if(getstatus() != 201){
+                           valid = false;
+                        }
+                    if(valid && j == arrayaddorders.length){
+                        erroraddorder.innerHTML = "Orders succesfuly added to portfolio";
+                        all = document.getElementById("all-orders-table");
+                        closeaddorder();
+                    }else{
+                        if(erroraddorder.innerHTML == ""){
+                            if(getstatus() == 400){
+                                erroraddorder.innerHTML = data;
+                            }else if(getstatus() == 401){
+                                openMLogin();
+                            }
+                        }
+                    }
+        });
     }
 }
 
@@ -410,34 +412,36 @@ api call get portfolio on id when clicked in submenu portfolios
 var header = document.getElementById("header-content");
 document.getElementById("portfolios-ul").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.target.id.indexOf("port"))))) {
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token);
-        setupactiveport(data,e.target.id);
-            activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
-        if(data.isDefault == true){
-            defaultbool = true;
-            journalul.style.display = "none";
-        }else{
-            defaultbool = false;
-            journalul.innerHTML = "Sell portfolio";
-            journalul.style.display = "block";
-        }
-        getnotes();
-        if(content1.style.display == "block"){
-            getorders();
-        }else{
-            getorderscontent2();
-        }
+        makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token,function(data){
+                    setupactiveport(data,e.target.id);
+                        activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
+                    if(data.isDefault == true){
+                        defaultbool = true;
+                        journalul.style.display = "none";
+                    }else{
+                        defaultbool = false;
+                        journalul.innerHTML = "Sell portfolio";
+                        journalul.style.display = "block";
+                    }
+                    getnotes();
+                    if(content1.style.display == "block"){
+                        getorders();
+                    }else{
+                        getorderscontent2();
+                    }
+        },true);
 }
 });
 /*
 set default portfolio from current user on loading page
 */
 function setdefaultport(id){
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ id,"GET",token);
-        setupactiveport(data,id + "port");
-        activeportfolioid = id;
-        getnotes();
-        getorders();
+        makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ id,"GET",token,function(data){
+                   setupactiveport(data,id + "port");
+                    activeportfolioid = id;
+                    getnotes();
+                    getorders(); 
+        },true);
 }
 /*
 setup active portfolio
@@ -473,19 +477,20 @@ document.getElementById("footer-port").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI") {
     if(e.target.id == "header-port-del"){
         openyesno(function(){
-            var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token);
-            getport();
+            makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token,function(data){
+                getport();
+            },true);
         });
     }else if(e.target.id == "header-port-update"){
         activemodalportdel = 1;
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=false&portfolioId="+activeportfolioid,"GET",token);
-        console.log(data);
-        nameport.value = data.name;
-        descport.value = data.description;
-        goalport.value = data.goal;
-        imgurl.value = data.imgURL;
-        portimgel.setAttribute("src",imgurl.value);
-        openCreateport();
+        makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=false&portfolioId="+activeportfolioid,"GET",token,function(data){
+                    nameport.value = data.name;
+                    descport.value = data.description;
+                    goalport.value = data.goal;
+                    imgurl.value = data.imgURL;
+                    portimgel.setAttribute("src",imgurl.value);
+                    openCreateport();
+        },true);
     }
 }
 });
@@ -497,31 +502,32 @@ function setimgport(){
 api call get all notes with portfolioid
 */
 function getnotes(){
-        var data = makerequestnopar("http://10.3.50.6/api/note?portfolioId=" + activeportfolioid,"GET",token);
-        var notes = document.getElementById("notes-all");
-        notes.innerHTML = "";
-      for(var i = 0; i < data.length;i++){
-        var li = document.createElement("div");
-        li.setAttribute("class","notes-card");
-        li.setAttribute("id",data[i].noteId + "note")
-        var content = document.createElement("div");
-        content.setAttribute("class","notes-content");
-        content.setAttribute("id","notes-content");
-        var content_del = document.createElement("i");
-        var content_edit = document.createElement("i");
-        var p = document.createElement("p");
-          p.innerHTML = data[i].message;
-        content.appendChild(p);
-        content.appendChild(content_edit);
-        content.appendChild(content_del);
-        content_del.setAttribute("id",data[i].noteId);
-        content_del.setAttribute("class","fa fa-trash");
-        content_edit.setAttribute("id",data[i].noteId);
-        content_edit.setAttribute("class","fa fa-edit");
-          content_edit.setAttribute("value",data[i].message);
-        notes.appendChild(li);
-        li.appendChild(content);
-      }
+        makerequestnopar("http://10.3.50.6/api/note?portfolioId=" + activeportfolioid,"GET",token,function(data){
+                    var notes = document.getElementById("notes-all");
+                    notes.innerHTML = "";
+                  for(var i = 0; i < data.length;i++){
+                    var li = document.createElement("div");
+                    li.setAttribute("class","notes-card");
+                    li.setAttribute("id",data[i].noteId + "note")
+                    var content = document.createElement("div");
+                    content.setAttribute("class","notes-content");
+                    content.setAttribute("id","notes-content");
+                    var content_del = document.createElement("i");
+                    var content_edit = document.createElement("i");
+                    var p = document.createElement("p");
+                      p.innerHTML = data[i].message;
+                    content.appendChild(p);
+                    content.appendChild(content_edit);
+                    content.appendChild(content_del);
+                    content_del.setAttribute("id",data[i].noteId);
+                    content_del.setAttribute("class","fa fa-trash");
+                    content_edit.setAttribute("id",data[i].noteId);
+                    content_edit.setAttribute("class","fa fa-edit");
+                      content_edit.setAttribute("value",data[i].message);
+                    notes.appendChild(li);
+                    li.appendChild(content);
+                  }
+        },true);
 }
 
 /*
@@ -573,19 +579,29 @@ function createnote(){
     if(valid){
         if(createorupdate){
             var json = {"PortfolioId": activeportfolioid ,"message":content.value};
-            makerequest(json,"http://10.3.50.6/api/note","PUT",token);
+            makerequest(json,"http://10.3.50.6/api/note","PUT",token,function(data){
+                        if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                                errorcontent.innerHTML = "Something went wrong, please try again later";
+                                valid = false;
+                         }
+                    if(valid){
+                        McreateNoteClose();
+                        getnotes();
+                    }
+            });
         }else{
             var json = {"NoteId": noteid,"message":content.value};
-            makerequest(json,"http://10.3.50.6/api/note","POST",token);
+            makerequest(json,"http://10.3.50.6/api/note","POST",token,function(data){
+                        if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                            errorcontent.innerHTML = "Something went wrong, please try again later";
+                            valid = false;
+                     }
+                    if(valid){
+                        McreateNoteClose();
+                        getnotes();
+                    }
+            });
         }
-        if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-                errorcontent.innerHTML = "Something went wrong, please try again later";
-                valid = false;
-         }
-    }
-    if(valid){
-        McreateNoteClose();
-        getnotes();
     }
 }
 /*
@@ -593,10 +609,14 @@ api call delete and open update note modal
 */
 document.getElementById("notes-all").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
+    var id = e.target.id;
     if(e.target.className == "fa fa-trash"){
-            openyesno(function(){
-                makerequestnopar("http://10.3.50.6/api/note?noteId=" + e.target.id,"DELETE",token);
-                document.getElementById(e.target.id + "note").style.display = "none"; 
+            openyesno(function(e){
+                makerequestnopar("http://10.3.50.6/api/note?noteId=" +id,"DELETE",token,function(data){
+                    if(getstatus() == 200){
+                        getnotes();
+                    }
+                },true);
             });
       }else{
           content.value = e.target.getAttribute("value");
@@ -663,30 +683,29 @@ function createport(){
         errorname.innerHTML = "This field cannot be empty";
         valid = false;
     }
-    console.log(imgurl);
     if(!ValidURL(imgurl.value)){
-        console.log("e");
         errorurlport.innerHTML = "This field must be a correct image url";
         valid = false;
     }
     if(activemodalportdel == 0){
         if(valid){
             var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address":null};
-            var data = makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token);
-             console.log(getstatus());
-            if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
+            makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token,function(data){
+                if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
                     valid = false; 
-            }
+                }
+            });
         }
    }else{
         if(valid){
             var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": null};
-        var data = makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token);
-        if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+            makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token,function(data){
+                    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
                     valid = false; 
-            }
+                    }
+            });
         }
         activemodalportdel = 0;
     }
@@ -703,18 +722,8 @@ api call get orders users without the orders current in the portfolio
 function getordersadd(){
     all = document.getElementById("all-orders-table-add");
     all.innerHTML = "";
-    $.ajax({
-    	"async": true,
-  		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/getNotInPortfolio?portfolioId="+activeportfolioid,
-        type: "GET",
-        "headers": {
-    		"Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-  		},
-        dataType: 'json',
-        success: function(data){
-            if(data.length > 0){
+    makerequestnopar("http://10.3.50.6/api/order/getNotInPortfolio?portfolioId="+activeportfolioid,"GET",token,function(data){
+        if(data.length > 0){
                 if(!defaultbool){
                     for(var i = 0;i<data.length; i++){
                         if(data[i].isSold == false){
@@ -727,39 +736,24 @@ function getordersadd(){
             }else{
                 all.innerHTML = "No orders found";
             }
-            },
-        error: function(xhr, ajaxOptions, thrownError){
-        	console.log(xhr.status);
-        	console.log(thrownError);
-            console.log(xhr);
-        }
-    }); 
+    },true);
 }
 /*
 refresh orders
 */
 refresh.addEventListener("click",refreshorder);
 function refreshorder(){
-    makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token);
-    getorders();   
+    makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token,function(data){
+        getorders(); 
+    },true);
 }
 /*
 api call get orders for content2
 */
 function getorderscontent2(){
         content2orders.innerHTML = "";
-       $.ajax({
-    	"async": true,
-  		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,
-        type: "GET",
-        "headers": {
-    		"Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-  		},
-        dataType: 'json',
-        success: function(data){
-            if(data.length != 0){
+        makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,"GET",token,function(data){
+                if(data.length != 0){
                     for(var i = 0;i < data.length; i++){
                         if(data[i].isSold == false){
                              var date = data[i].timestamp;
@@ -778,31 +772,22 @@ function getorderscontent2(){
             }else{
                 content2orders.innerHTML = "No orders found";
             }
-            
-            },
-        error: function(xhr, ajaxOptions, thrownError){
-        	console.log(xhr.status);
-        	console.log(thrownError);
-            console.log(xhr);
-        }
-    });
+        },true);
 }
-                /*
-                click eventlistener if link is clicked delete or update order
-                */
-                content2orders.addEventListener("click",function(e){
-                    if(e.target.className == "edit"){
-                        openupdateorder(e);
-                    }else if(e.target.className == "deleteorder"){
-                            openyesno(function(){
-                                    makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
-                                    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-                                        alert("Something went wrong, please try again later");
-                                    }
-                                getorderscontent2();
-                            });
-                    }
-                });
+/*
+click eventlistener if link is clicked delete or update order
+*/
+content2orders.addEventListener("click",function(e){
+    if(e.target.className == "edit"){
+        openupdateorder(e);
+    }else if(e.target.className == "deleteorder"){
+            openyesno(function(){
+                makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token,function(data){
+                    getorderscontent2();
+                },true);
+            });
+    }
+});
 /*
 api call get orders
 */
@@ -819,17 +804,7 @@ function getorders(){
             fromdate.value = "1970-01-01";
         }
         frdate = fromdate.value.substring(8,10) + "/" + fromdate.value.substring(5,7) + "/" + fromdate.value.substring(0,4);
-       $.ajax({
-    	"async": true,
-  		"crossDomain": true,
-  		url: "http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid+"&amount="+amount.value+"&dateFrom="+frdate+"&dateTo="+tdate,
-        type: "GET",
-        "headers": {
-    		"Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-  		},
-        dataType: 'json',
-        success: function(data){
+    makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid+"&amount="+amount.value+"&dateFrom="+frdate+"&dateTo="+tdate,"GET",token,function(data){
             if(data.length != 0){
                 arraysort = data;
                     for(var i = 0;i < data.length; i++){
@@ -840,13 +815,7 @@ function getorders(){
             }else{
                 all.innerHTML = "No orders found";
             }
-            },
-        error: function(xhr, ajaxOptions, thrownError){
-        	console.log(xhr.status);
-        	console.log(thrownError);
-            console.log(xhr);
-        }
-    });
+    },true);
 }
 /*
 set orders in the table
@@ -912,18 +881,28 @@ function setOrders(data,i,defaultbool){
 /*
 api call delete order
 */
+var ids = [];
+var current;
 function deleteorder(e){
     openyesno(function(){
-                var data = makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token);
-                if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-                    alert("Something went wrong, please try again later");
-                }else{
-                    if(content1.style.display == "block"){
-                        getorders();
-                    }else{
-                        getorderscontent2();
+                var valid = true;
+                current = e.target.id;
+                for(var i = 0; i < ids.length;i++){
+                    if(ids[i] == current){
+                      valid =false;   
                     }
-                } 
+                }
+                
+                    if(valid){
+                        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
+                                                if(content1.style.display == "block" ){
+                                                    getorders();
+                                                }else{
+                                                    getorderscontent2();
+                                                }
+                        },true);
+                        ids.push(current);
+                    }
     });
 }
 
@@ -1063,7 +1042,6 @@ fetch('http://api.com/file.json')
 }
 function addbasichart(){
         test();
-        
         var millisecondsToWait = 500;
         setTimeout(function() {
 BasicChart = {
@@ -1173,7 +1151,7 @@ function test(){
         "url": "http://10.3.50.6/api/portfolio/profit?portfolioId=33",
         "method": "GET",
         "headers": {
-            "Authorization": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDQ3MjA1NTksImV4cCI6MTU0NDgwNjk1OSwiaWF0IjoxNTQ0NzIwNTU5fQ.Q572_drxUeDKYq1P9hmY2uzgmaTDuuIB7iysZUm5jruJ0_1WjyXTnb3zRfV0MDYWyVILPs_v_mG3FItsGgD6-w",
+            "Authorization": "Bearer " + token,
             "Content-Type": "application/json"
         },
         success: function(obj){
