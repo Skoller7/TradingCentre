@@ -3,7 +3,6 @@ $(document).ready(function(){
 if(parseInt($('#footer').css('top'), 10) < $(window).height()){
 	$('#footer').css('top',$(window).height() + 10);
 }
-	console.log($('#footer').offset().top);
 	window.scrollTo(0,0);
 	for(var i = 0; i < document.getElementsByClassName('footerSignup').length; i++){
 		document.getElementsByClassName('footerSignup')[i].addEventListener("click", openMSignUp);

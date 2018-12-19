@@ -1,3 +1,7 @@
+.footer-ul-container {
+	float: left;
+}
+
 .footer-ul {
 	text-align: center;
 	color: white;
