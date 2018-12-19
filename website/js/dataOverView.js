@@ -2,8 +2,8 @@ var token = getCookie("jwtToken");
 var userId = makerequestnopar("http://10.3.50.6/api/user" , "GET" , token);
 var portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true" , "GET" , token);
 var i = 0; //declared this variable here because getting data from the blockchain takes time. And thus if you'd place it in a normal for loop the numbers wouldn't be correct.
-var dataDatum; //variable for the default settings of the data graph.
-var dataInput; //variable for the default settings of the data graph.
+var dataDatum; //= ["January", "February", "March", "April", "May", "Jun", "Jule", "August", "September", "October", "November", "December"]; //variable for the default settings of the data graph.
+var dataInput; // = ["1", "2", "3", "8", "12", "13", "18", "25", "30", "35", "40", "45"];//variable for the default settings of the data graph.
 var cards = document.getElementById("cards");
 var seemoreother = document.getElementById("see-more-other");
 $('.makemodal').hide();
@@ -32,8 +32,6 @@ for(var i = 0; i < portfolios.length; i++) //I have to declare the portfolio id'
   portfolioid[i] = portfolios[i].portfolioId;
 }
 console.log(portfolioid);
-
-getcard();
 console.log(portfolios);
 
 
@@ -75,6 +73,7 @@ initContract1: function(){
     App.contracts.DataContract.setProvider(App.web3Provider);
     console.log(App.contracts);
     App.requestData();
+  //  App.getcard();
   })
 },
 
@@ -92,47 +91,16 @@ requestData: function(){
     dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];
 
     var content;
-
     $('datacontent').append()
   }
   else {
-    console.log('enter if statement');
-  for(i; i < portfolios.length; i++){
-  //  console.log(portfolios[i-1].address);
-
-    //getting data from the blockchain.
-    App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
-      DataContractInstance = instance;
-
-      DataContractInstance.getBuyersCount.call().then(function(r){
-        var buyersCountf = r;
-        DataContractInstance.getPrice.call().then(function(r2){
-        profitf = buyersCountf * r2;
-        pricef = r2;
-
-        var content = "<div class='col-md-3 col-sm-12 card'> <div class='card-body main-card'> <h4> Portfolio: </h4>" + i+ " <h6> Buyers : " + buyersCountf + "</h6> <h6> Sell Price: " + pricef + "</h6> <h6> Total Profit: " + profitf + "</h6></div></div>"; // grootte mss aanpassen?
-         $('.datacontent').append(content);
-
-
-        })
-      })
-    })
-    //converting data into html cards.
-    // $('.datacontent').append("<div class='card-body'>");
-    // $('.datacontent').append("<h4> Portfolio " + i + ": </h4>");
-    // $('.datacontent').append("<h6> Buyers : " + buyersCountf + "</h6>");
-    // $('.datacontent').append("<h6> Sell Price: " + pricef + "</h6>");
-    // $('.datacontent').append("<h6> Total Profit: " + profitf + "</h6>");
-
+    App.getcard();
   }
 
-       $('.main-card').css("margin: 1%, float:left, display: inline-block");
-     }
 },
 
 
 requestContractData : function(adrespara){
-
   App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
     DataContractInstance = instance;
 
@@ -144,7 +112,6 @@ requestContractData : function(adrespara){
       })
     })
   })
-
 
 },
 
@@ -191,16 +158,9 @@ requestPrice: function(){
     $('#contractPrice').text(priceOfData);
     $('#contractPrice').val("Buy for " + priceOfData + " WEI");
   })
-}
-}
+},
 
-$(function() {
-  $(window).load(function() {
-    App.initWeb3();
-  });
-});
-
-function getcard(){console.warn();
+getcard: function(){console.warn();
     var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token);
     if(getstatus() == 401){
         openMLogin();
@@ -209,12 +169,14 @@ function getcard(){console.warn();
             alert("Something went wrong, please try again later");
         }else{
             arrayforsaleown = data;
-            setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
+            App.setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
         }
     }
-}
+},
 
-function setcontentcards(arrayport,seemoreid,boolown,max,n){
+
+
+setcontentcards: function(arrayport,seemoreid,boolown,max,n){
     var seemore = document.getElementById(seemoreid);
     var lengtharray = arrayport.length / 6;
     lengtharray = lengtharray.toFixed(0);
@@ -223,7 +185,7 @@ function setcontentcards(arrayport,seemoreid,boolown,max,n){
     }
     for(var i = n; i < max;i++){
             if(arrayport[i].address != null && arrayport[i].address != ""){
-                    setcard(arrayport,i,boolown);
+                    App.setcard(arrayport,i,boolown);
             }
     }
     lengtharray--;
@@ -241,16 +203,15 @@ function setcontentcards(arrayport,seemoreid,boolown,max,n){
                 }else{
                     max = arrayport.length;
                 }
-                setcontentcards(arrayport,seemoreid,boolown,max,n);
+                App.setcontentcards(arrayport,seemoreid,boolown,max,n);
             });
             seemore.style.display = "block";
             seemore.appendChild(a);
     }
-}
-/*
-display card on screen
-*/
-function setcard(data,i,own){
+},
+
+
+setcard: function(data,i,own){
                var card = document.createElement("div");
                 card.setAttribute("class","col-md-3 col-sm-12 card");
                 var img = document.createElement("img");
@@ -267,27 +228,47 @@ function setcard(data,i,own){
                     cardbody.innerHTML +=  "<h5 class='card-title'>skoller</h5>";
                 }
 
-                // App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
-                //   DataContractInstance = instance;
-                //
-                //   DataContractInstance.getBuyersCount.call().then(function(r){
-                //     buyersCountf = r;
-                //     DataContractInstance.getPrice.call().then(function(r2){
-                //     profitf = buyersCountf * r2;
-                //     pricef = r2;
-                //
-                // })
-                //   })
-                // })
+                App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
+                  DataContractInstance = instance;
+                  console.log("inside instance");
+                  DataContractInstance.getBuyersCount.call().then(function(r){
+                    buyersCountf = r;
+                    DataContractInstance.getPrice.call().then(function(r2){
+                    profitf = buyersCountf * r2;
+                    pricef = r2;
+                    console.log(buyersCountf, pricef, profitf);
 
+                  cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count: "+ buyersCountf +"<br />Profit made: " + profitf +"</p>";
+                  cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
+                  card.appendChild(cardbody);
 
-                cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count:"+ buyersCountf +"<br />Profit made: " + profitf +"</p>";
-                cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
-                card.appendChild(cardbody);
+                  })
+                })
+              })
                 if(own){
                     cards.appendChild(card);
                 }
 }
+
+
+
+
+
+
+
+}
+
+$(function() {
+  $(window).load(function() {
+    App.initWeb3();
+  });
+});
+
+
+/*
+display card on screen
+*/
+
 
 
 
