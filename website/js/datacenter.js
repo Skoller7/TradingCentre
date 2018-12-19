@@ -62,6 +62,8 @@ var username;
 var userid;
 var pictureURL;
 var description;
+var currentusername;
+var currentuserid;
 /*
 arrays with order info
 */
@@ -98,6 +100,7 @@ document.getElementById("noo").addEventListener("click",function (e){
 });
 }*/
 checkportissell();
+getcurrentuser();
 /*
 check if portfolio is for sale
 */
@@ -124,7 +127,7 @@ function checkportissell(){
                              console.log(purchased);
                     if(purchased){
                         makerequestnopar("http://10.3.50.6/api/portfolio/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
-                            console.log(order);
+                            console.log(getstatus());
                             if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                                  cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                             }else{
@@ -141,7 +144,7 @@ function checkportissell(){
                                     setcontentdatacenter();
                                 }
                             }
-                        });
+                        },true);
                     }else{
                         imgsrc[0] = data.imgURL;
                         imgdesc[0] =  data.description;
@@ -149,9 +152,9 @@ function checkportissell(){
                         getUser(data.userId);
                         setcontentdatacenter();
                     }
-                });
+                },true);
             }
-    });
+    },true);
 }
 /*
 set sidebar with user information
@@ -249,15 +252,15 @@ function deletecomments(e){
                     if(getstatus() == 200){
                         getComments();
                     }
-           // });
-        });
+           },true);
+       // });
     }else{
        // openyesno(function(){
             makerequestnopar("http://10.3.50.6/api/portfoliocomment?commentId="+e.target.id,"DELETE",token,function(data){
                     if(getstatus() == 200){
                         getComments();
                     }
-            });
+            },true);
       //  });
     }
 }
@@ -318,7 +321,7 @@ function getComments(){
                                 allcomments.innerHTML = "No comments found";
                             }
                         }
-                });
+                },true);
             }else{
                 makerequestnopar("http://10.3.50.6/api/portfolio/comment?portfolioId="+aportfolioid,"GET",token,function(data){
                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
@@ -332,7 +335,7 @@ function getComments(){
                                 allcomments.innerHTML = "No comments found";
                             }
                         }
-                });
+                },true);
             }
 }
 /*
@@ -350,13 +353,20 @@ function setComments(i,data){
         image.innerHTML = "<img src="+pictureURL+" style='width:100%;'>";
         var divcomment = document.createElement("div");
         divcomment.setAttribute("style","width:90%;float:left;");
-        divcomment.setAttribute("id","divcomment");
+        divcomment.setAttribute("id","divcomment"+data[i].commentId);
         var divhead = document.createElement("div");
         divhead.setAttribute("class","comment-head");
         var divcontent = document.createElement("div");
         divcontent.setAttribute("class","comment-content");
         divcontent.setAttribute("id","comment"+data[i].commentId);
-        divhead.innerHTML +=  username + " <span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span> ";
+        var user;
+        if(data[i].userId == currentuserid){
+            user = currentusername;
+        }else{
+            console.log(getusername(data[i].userId));
+            user = getusername(data[i].userId);
+        }
+        divhead.innerHTML +=   user + " <span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span> ";
         divcontent.innerHTML = data[i].message;
         divcomment.appendChild(divhead);
         divcomment.appendChild(divcontent);
@@ -364,7 +374,9 @@ function setComments(i,data){
         comment.appendChild(divcomment);
         cardcomment.appendChild(comment);
         allcomments.appendChild(cardcomment);
-        getuserid(data[i].userId,data[i].commentId);
+        if(data[i].userId == currentuserid){
+            getuserid(data[i].userId,data[i].commentId);
+        }
 }
 /*
 get userid from current logged in user
@@ -387,10 +399,29 @@ function getuserid(userid,commentid){
                         divfooter.setAttribute("style","float:right;font-size:11px;width:100%;text-align:right;");
                         divfooter.appendChild(editcom);
                         divfooter.appendChild(del);
-                        document.getElementById("divcomment").appendChild(divfooter);
+                        document.getElementById("divcomment"+commentid).appendChild(divfooter);
                 }
             }
-        });
+        },true);
+}
+/*
+get current user
+*/
+function getcurrentuser(){
+    makerequestnopar("http://10.3.50.6/api/user","GET",token,function(data){
+        currentuserid = data.userId;
+        currentusername = data.username;
+    },false);
+}
+/*
+get username comment
+*/
+function getusername(userid){
+    var user;
+    makerequestnopar("http://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
+        user = data.username;
+    },false);
+    return user;
 }
 /*
 get user information on user id
@@ -406,5 +437,5 @@ function getUser(userid){
         userid= data.userId;
         setsidebar();
     }
-    });
+    },true);
 }

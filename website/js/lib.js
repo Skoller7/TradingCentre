@@ -106,9 +106,9 @@ function closeModal(item){
   }
 }
 //makes api request without parameters
-function makerequestnopar(url_api, type_api, authorization_api,success){
+function makerequestnopar(url_api, type_api, authorization_api,success,async){
     var ajax = $.ajax({
-    	"async": true,
+    	"async": async,
   		"crossDomain": true,
   		url: url_api,
         type: type_api,

@@ -383,10 +383,10 @@ function addorderstoportfolio(){
                     if(getstatus() != 201){
                            valid = false;
                         }
-                    if(valid){
+                    if(valid && j == arrayaddorders.length){
                         erroraddorder.innerHTML = "Orders succesfuly added to portfolio";
-                        closeaddorder();
                         all = document.getElementById("all-orders-table");
+                        closeaddorder();
                     }else{
                         if(erroraddorder.innerHTML == ""){
                             if(getstatus() == 400){
@@ -429,7 +429,7 @@ if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.ta
                     }else{
                         getorderscontent2();
                     }
-        });
+        },true);
 }
 });
 /*
@@ -441,7 +441,7 @@ function setdefaultport(id){
                     activeportfolioid = id;
                     getnotes();
                     getorders(); 
-        });
+        },true);
 }
 /*
 setup active portfolio
@@ -479,7 +479,7 @@ if(e.target && e.target.nodeName == "LI") {
         openyesno(function(){
             makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token,function(data){
                 getport();
-            });
+            },true);
         });
     }else if(e.target.id == "header-port-update"){
         activemodalportdel = 1;
@@ -490,7 +490,7 @@ if(e.target && e.target.nodeName == "LI") {
                     imgurl.value = data.imgURL;
                     portimgel.setAttribute("src",imgurl.value);
                     openCreateport();
-        });
+        },true);
     }
 }
 });
@@ -527,7 +527,7 @@ function getnotes(){
                     notes.appendChild(li);
                     li.appendChild(content);
                   }
-        });
+        },true);
 }
 
 /*
@@ -616,7 +616,7 @@ if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
                     if(getstatus() == 200){
                         getnotes();
                     }
-                });
+                },true);
             });
       }else{
           content.value = e.target.getAttribute("value");
@@ -736,15 +736,16 @@ function getordersadd(){
             }else{
                 all.innerHTML = "No orders found";
             }
-    });
+    },true);
 }
 /*
 refresh orders
 */
 refresh.addEventListener("click",refreshorder);
 function refreshorder(){
-    makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token);
-    getorders();   
+    makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token,function(data){
+        getorders(); 
+    },true);
 }
 /*
 api call get orders for content2
@@ -771,7 +772,7 @@ function getorderscontent2(){
             }else{
                 content2orders.innerHTML = "No orders found";
             }
-        });
+        },true);
 }
 /*
 click eventlistener if link is clicked delete or update order
@@ -783,7 +784,7 @@ content2orders.addEventListener("click",function(e){
             openyesno(function(){
                 makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token,function(data){
                     getorderscontent2();
-                });
+                },true);
             });
     }
 });
@@ -814,7 +815,7 @@ function getorders(){
             }else{
                 all.innerHTML = "No orders found";
             }
-    });
+    },true);
 }
 /*
 set orders in the table
@@ -880,15 +881,28 @@ function setOrders(data,i,defaultbool){
 /*
 api call delete order
 */
+var ids = [];
+var current;
 function deleteorder(e){
     openyesno(function(){
-                makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
-                                        if(content1.style.display == "block"){
-                                            getorders();
-                                        }else{
-                                            getorderscontent2();
-                                        }
-                });
+                var valid = true;
+                current = e.target.id;
+                for(var i = 0; i < ids.length;i++){
+                    if(ids[i] == current){
+                      valid =false;   
+                    }
+                }
+                
+                    if(valid){
+                        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
+                                                if(content1.style.display == "block" ){
+                                                    getorders();
+                                                }else{
+                                                    getorderscontent2();
+                                                }
+                        },true);
+                        ids.push(current);
+                    }
     });
 }
 
