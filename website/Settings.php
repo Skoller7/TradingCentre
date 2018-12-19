@@ -22,7 +22,8 @@
                 <button class="tablink" onclick="openOption(event, 'general')">General</button>
                 <button class="tablink" onclick="openOption(event, 'security')">Security</button>
                 <button class="tablink" onclick="openOption(event, 'privacy')">Privacy</button>
-                <button class="tablink" onclick="openOption(event, 'account')" id="default">Account</button>
+                <button class="tablink" onclick="openOption(event, 'account')">Account</button>
+                <button class="tablink" onclick="openOption(event, 'profile')" id="default">Profile</button>
             </div>
             <div id="general" class="content">
                 <form class="myForm">
@@ -63,18 +64,36 @@
                     <input type="submit">
                 </form>
             </div>
+    
             <div id="account" class="content">
-                
-                <form id="accountForm" onsubmit="return validateForm()" class="myForm">
+                <form class="myForm" id="deleteUser">
+                    <h2>Delete your Account</h2>
+                    <label>Important: If you delete your account, all the data related to this user will be deleted. After it is deleted, we won't be able to get any of the data back!</label>
+                    <input type="password" id="dltpw" name="password" placeholder="Fill in your password before submitting">
+                    <button id="delete" onclick="return validateToDelete()">Delete Account</button>
+                    
+                    <!--<div id="modalDelete" class="modald">
+                        <span class="close" title="Close">&times;</span>
+                        <div class="md-content">
+                            <label>If you delete your user, we will not be able to bring all your information back!</label>
+                            <button type="submit" id="confirm">I'm sure I want to delete</button>
+                        </div>
+                    </div>-->
+                </form>
+            </div>
+    
+            <div id="profile" class="content">
+                <form id="profileForm" onsubmit="return validateForm()" class="myForm">
                     <input type="text" id="fname" name="firstName" placeholder="First name">
                     <input type="text" id="lname" name="lastName" placeholder="Last name">
                     <input type="email" id="email" name="email" placeholder="E-mail">
                     <input type="text" id="uname" name="username" placeholder="Username">
                     <input type="number" id="pn" name="phone" placeholder="Phone number">
-                    <input type="password" id="pw" name="Password" placeholder="Password">
-                    <input type="url" id="img" name="image" placeholder="Image URL">
+                    <input type="password" id="pw" name="password" placeholder="Password">
+                    <input type="url" id="img" name="pictureURL" placeholder="Image URL">
                     <textarea id="description" name="description" placeholder="Description" onkeyup="adjust_textarea(this)"></textarea>
-                    <a><input type="submit"></a>
+                    <input type="submit">
+                    <img style="display: none" id="imageUrl" onerror="errorCallback()" onload="loadCallback()">
                 </form>
             </div>
     <script src="js/Settings.js" type="text/javascript"></script>
