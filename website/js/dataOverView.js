@@ -22,6 +22,9 @@ var n_own = 0;
 var max_own = 6;
 var n_other = 0;
 var max_other = 6;
+var buyersCountf; //data voor contracts -> html
+var pricef;
+var profitf;
 getcard();
 console.log(portfolios);
 
@@ -63,64 +66,80 @@ initContract1: function(){
     App.contracts.DataContract = TruffleContract(DataContractArtifact);
     App.contracts.DataContract.setProvider(App.web3Provider);
     console.log(App.contracts);
-  //  App.requestData();
+    App.requestData();
   })
 },
 
 
-// requestData: function(){
-//
-//
-//   if(portfolios.length ==  0){
-//     console.log('enter if statement');
-//   //  $('#exampleModalCenter').show();
-//     $('.makemodal').click();
-//
-//     //default values.
-//     dataDatum = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-//     dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];
-//
-//     var content;
-//
-//     $('datacontent').append()
-//   }
-//
-//   for(i; i < portfolios.length; i++){
-//   //  console.log(portfolios[i-1].address);
-//
-//     var buyersCountf;
-//     var pricef;
-//     var profitf;
-//
-//     //getting data from the blockchain.
-//     App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
-//       DataContractInstance = instance;
-//
-//       DataContractInstance.getBuyersCount.call().then(function(r){
-//         var buyersCountf = r;
-//         DataContractInstance.getPrice.call().then(function(r2){
-//         profitf = buyersCountf * r2;
-//         pricef = r2;
-//
-//         var content = "<div class='col-md-3 col-sm-12 card'> <div class='card-body main-card'> <h4> Portfolio: </h4>" + i + " <h6> Buyers : " + buyersCountf + "</h6> <h6> Sell Price: " + pricef + "</h6> <h6> Total Profit: " + profitf + "</h6></div></div>"; // grootte mss aanpassen?
-//          $('.datacontent').append(content);
-//
-//
-//         })
-//       })
-//     })
-//     //converting data into html cards.
-//     // $('.datacontent').append("<div class='card-body'>");
-//     // $('.datacontent').append("<h4> Portfolio " + i + ": </h4>");
-//     // $('.datacontent').append("<h6> Buyers : " + buyersCountf + "</h6>");
-//     // $('.datacontent').append("<h6> Sell Price: " + pricef + "</h6>");
-//     // $('.datacontent').append("<h6> Total Profit: " + profitf + "</h6>");
-//
-//   }
-//
-//        $('.main-card').css("margin: 1%, float:left, display: inline-block");
-//
-// },
+requestData: function(){
+
+
+  if(portfolios.length ==  0){
+    console.log('enter if statement');
+    $('#exampleModalCenter').show();
+    $('.makemodal').click();
+
+    //default values.
+    dataDatum = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];
+
+    var content;
+
+    $('datacontent').append()
+  }
+
+  for(i; i < portfolios.length; i++){
+  //  console.log(portfolios[i-1].address);
+
+
+    //getting data from the blockchain.
+    App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
+      DataContractInstance = instance;
+
+      DataContractInstance.getBuyersCount.call().then(function(r){
+        var buyersCountf = r;
+        DataContractInstance.getPrice.call().then(function(r2){
+        profitf = buyersCountf * r2;
+        pricef = r2;
+
+        var content = "<div class='col-md-3 col-sm-12 card'> <div class='card-body main-card'> <h4> Portfolio: </h4>" + i + " <h6> Buyers : " + buyersCountf + "</h6> <h6> Sell Price: " + pricef + "</h6> <h6> Total Profit: " + profitf + "</h6></div></div>"; // grootte mss aanpassen?
+         $('.datacontent').append(content);
+
+
+        })
+      })
+    })
+    //converting data into html cards.
+    // $('.datacontent').append("<div class='card-body'>");
+    // $('.datacontent').append("<h4> Portfolio " + i + ": </h4>");
+    // $('.datacontent').append("<h6> Buyers : " + buyersCountf + "</h6>");
+    // $('.datacontent').append("<h6> Sell Price: " + pricef + "</h6>");
+    // $('.datacontent').append("<h6> Total Profit: " + profitf + "</h6>");
+
+  }
+
+       $('.main-card').css("margin: 1%, float:left, display: inline-block");
+
+},
+
+
+requestContractData : function(adrespara){
+
+  App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
+    DataContractInstance = instance;
+
+    DataContractInstance.getBuyersCount.call().then(function(r){
+      buyersCountf = r;
+      DataContractInstance.getPrice.call().then(function(r2){
+      profitf = buyersCountf * r2;
+      pricef = r2;
+      })
+    })
+  })
+
+
+},
+
 
 requestBuyersCount: function(adrespara){
 
@@ -138,7 +157,7 @@ requestBuyersCount: function(adrespara){
 
 calcProfit: function(){
 
-  App.contracts.DataContract.deployed().then(function(instance){
+  App.contracts.DataContract.at(adrespara).then(function(instance){
     DataContractInstance = instance;
 
     DataContractInstance.getBuyersCount.call().then(function(r){
@@ -239,8 +258,11 @@ function setcard(data,i,own){
                 }else{
                     cardbody.innerHTML +=  "<h5 class='card-title'>skoller</h5>";
                 }
-                cardbody.innerHTML +=  "<p class='card-text' id='portfoliodesc'>"+data[i].description+"</p>";
-                cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show Preview</a>";
+                var buyersCountf;
+                var pricef;
+                var profitf;
+                cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count:"+ buyersCountf +"<br />Profit made: " + profitf +"</p>";
+                cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
                 card.appendChild(cardbody);
                 if(own){
                     cards.appendChild(card);

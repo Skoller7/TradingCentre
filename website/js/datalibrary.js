@@ -58,7 +58,7 @@ isUserBacker: function(){
       web3.eth.getAccounts(function(error, accounts) {
         var account = accounts[0];
     DataContractInstance.backers.call(account).then(function(r){
-      if(r){
+      if(r == false){
           $('.btn-buycheck').show();
           $('#buyCheck').show();
         console.log('Person is a backer');
