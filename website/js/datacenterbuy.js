@@ -2,6 +2,11 @@ var token = getCookie("jwtToken");
 var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 
+var cportfolio = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ aportfolioid , "GET" , token); //retrieving the data of this portfolio.
+console.log(cportfolio);
+var caddress = cportfolio.address; //placing the adres in a variable.
+console.log(caddress);
+
 App = {
   web3Provider: null,
   contracts: {},
@@ -45,14 +50,12 @@ initContract1: function(){
 },
 
 requestPrice: function(){
-  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(function(instance){
+  App.contracts.DataContract.at(caddress).then(function(instance){
     return instance.getPrice.call()
   }).then(priceOfData => {
     console.log("Succesfully retrieved price of data :", priceOfData);
     $('#contractPrice').text(priceOfData);
     $('#contractPrice').val("Buy for " + priceOfData + " WEI");
-
-     makerequestnopar("http://10.3.50.6/api/purchase?portfolioId=" + aportfolioid , "POST" , token);
 
   })
 },
@@ -66,31 +69,32 @@ createBuyRequest: function(){
   }
   var gas = 2000000;
   var account = accounts[0];
-  App.contracts.DataContract.at('0x15781269bc3516278309224ad450a88e1de01fad').then(instance => {
+  App.contracts.DataContract.at(caddress).then(instance => {
     instance.createBuyRequest({from: account, gas, value: 1000000 }).then((r) => {
       console.log("buy request completed");
       $('#buying-succes').text("You succesfully bought the data!");
 
+      makerequestnopar("http://10.3.50.6/api/purchase?portfolioId=" + aportfolioid , "POST" , token);
 
-      $.ajax({
-        "async": true,
-          "crossDomain": true,
-          url: "http://10.3.50.6/api/purchase?portfolioId=33",
-        type: "POST",
-        "headers": {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token
-          },
-        dataType: 'json',
-        success: function(data){
-          console.log(data);
-            },
-        error: function(xhr, ajaxOptions, thrownError){
-            console.log(xhr.status);
-            console.log(thrownError);
-            console.log(xhr);
-        }
-    });
+    //   $.ajax({
+    //     "async": true,
+    //       "crossDomain": true,
+    //       url: "http://10.3.50.6/api/purchase?portfolioId=" + aportfolioid,
+    //     type: "POST",
+    //     "headers": {
+    //         "Content-Type": "application/json",
+    //         "Authorization": "Bearer " + token
+    //       },
+    //     dataType: 'json',
+    //     success: function(data){
+    //       console.log(data);
+    //         },
+    //     error: function(xhr, ajaxOptions, thrownError){
+    //         console.log(xhr.status);
+    //         console.log(thrownError);
+    //         console.log(xhr);
+    //     }
+    // });
     });
   });
 });
