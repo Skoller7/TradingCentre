@@ -7,6 +7,7 @@ var dataInput; //variable for the default settings of the data graph.
 var cards = document.getElementById("cards");
 var seemoreother = document.getElementById("see-more-other");
 $('.makemodal').hide();
+console.log(portfolios);
 /*
 array with all for sale portfolios from other users
 */
@@ -25,6 +26,13 @@ var max_other = 6;
 var buyersCountf; //data voor contracts -> html
 var pricef;
 var profitf;
+var portfolioid = [];
+for(var i = 0; i < portfolios.length; i++) //I have to declare the portfolio id's here because else in the App function it will always give the last portfolio id.
+{
+  portfolioid[i] = portfolios[i].portfolioId;
+}
+console.log(portfolioid);
+
 getcard();
 console.log(portfolios);
 
@@ -75,7 +83,7 @@ requestData: function(){
 
 
   if(portfolios.length ==  0){
-    console.log('enter if statement');
+
     $('#exampleModalCenter').show();
     $('.makemodal').click();
 
@@ -87,10 +95,10 @@ requestData: function(){
 
     $('datacontent').append()
   }
-
+  else {
+    console.log('enter if statement');
   for(i; i < portfolios.length; i++){
   //  console.log(portfolios[i-1].address);
-
 
     //getting data from the blockchain.
     App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
@@ -102,7 +110,7 @@ requestData: function(){
         profitf = buyersCountf * r2;
         pricef = r2;
 
-        var content = "<div class='col-md-3 col-sm-12 card'> <div class='card-body main-card'> <h4> Portfolio: </h4>" + i + " <h6> Buyers : " + buyersCountf + "</h6> <h6> Sell Price: " + pricef + "</h6> <h6> Total Profit: " + profitf + "</h6></div></div>"; // grootte mss aanpassen?
+        var content = "<div class='col-md-3 col-sm-12 card'> <div class='card-body main-card'> <h4> Portfolio: </h4>" + i+ " <h6> Buyers : " + buyersCountf + "</h6> <h6> Sell Price: " + pricef + "</h6> <h6> Total Profit: " + profitf + "</h6></div></div>"; // grootte mss aanpassen?
          $('.datacontent').append(content);
 
 
@@ -119,7 +127,7 @@ requestData: function(){
   }
 
        $('.main-card').css("margin: 1%, float:left, display: inline-block");
-
+     }
 },
 
 
@@ -258,9 +266,21 @@ function setcard(data,i,own){
                 }else{
                     cardbody.innerHTML +=  "<h5 class='card-title'>skoller</h5>";
                 }
-                var buyersCountf;
-                var pricef;
-                var profitf;
+
+                // App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
+                //   DataContractInstance = instance;
+                //
+                //   DataContractInstance.getBuyersCount.call().then(function(r){
+                //     buyersCountf = r;
+                //     DataContractInstance.getPrice.call().then(function(r2){
+                //     profitf = buyersCountf * r2;
+                //     pricef = r2;
+                //
+                // })
+                //   })
+                // })
+
+
                 cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count:"+ buyersCountf +"<br />Profit made: " + profitf +"</p>";
                 cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
                 card.appendChild(cardbody);

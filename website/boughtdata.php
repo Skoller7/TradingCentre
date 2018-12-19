@@ -1,10 +1,4 @@
 <!doctype html>
-
- <!-- menu bar meer naar links, users uit db halen & verschillende portfolio's tonen *
-- mogelijk tonen op rating/likes/follows? **
-- card een max height geven zodat deze ongeveer even zal zijn afhankelijk * * *
-- als user toch geen backer is er voor zorgen dat link naar faq wordt getoond ( link nog aanmaken);
--->
 <html>
 <head>
       <meta charset="utf-8">
@@ -39,37 +33,51 @@
   include_once("header.html");
 ?>
 <div class="containter-fluid">
-<div class="row">
-    <div class="col-md-3"></div>
-    <div class="col-md-9 col-sm-12 col-xs-12">
-        <div class="header-content">
-        <h3>Your bought portfolio's : </h3>
+    <nav class="sidebar">
+        <div class="user-image col-md-12">
+        <h3 id="username-port"></h3>
+            <img id="img-user" alt="my girlfriends brain" class="img-fluid" style="margin:1%; width:20%;">
         </div>
-        <div class="content-datacenter">
-            <div class="card">
-              <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
-              <div class="card-body">
-                <h5 class="card-title">Skoller</h5>
-                <p class="card-text">
-                  Master of the head & shoulder pattern.
-                  </p>
-                  <div class="btn-check" id="buyCheck">
-                <a class="btn btn-buycheck btn-primary" id="buyCheck" href="boughtdata.php">View data</a>
-              </div>
-                <div class="btn-fault" id="faultcheck">
-              <p> Either you are not logged in in metamask,
-                Or you are not an actual buyer of this portfolio!<span><a href=""> Click here for help </a> </span></p>
-              </div>
-              </div>
-            </div>
+        <div class="user-description col-md-12" id="user-description">
+            <h3>Description</h3>
+        </div>
+        <div class="user-buy col-md-12">
+            <h3>Buy data</h3>
+            <input type="button" value="Retrieving data from the blockchain . . ." id="contractPrice" class="btn-contract-buy">
+            <span id="buying-succes"></span>
+        </div>
+    </nav>
+    <div class="row">
+    <div class='col-md-2'></div>
+    <div class="col-md-10 col-sm-12 col-xs-12">
+        <div class='row'>
+        <div class='col-md-1' id="btnprev"></div>
+        <div class='col-md-10' id="content-sell">
 
         </div>
+        <div class='col-md-1' id="btnnext"></div>
+    </div>
     </div>
 </div>
+</div>
+        <!-- delete yes or no-->
+<div class="modal fade" id="yesorno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+		        <h5 class="modal-title">Are you sure you want delete this?</h5>
+		    </div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-primary" id="yess">Yes</button>
+        		<button type="button" class="btn btn-secondary" id="noo">No</button>
+      		</div>
+    	</div>
+		</div>
 </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/web3.min.js"></script>
 <script src="js/truffle-contract.js"></script>
-<script src="js/datalibrary.js"></script>
+<script src="js/datacenterbuy.js"></script>
+<script src="js/datacenter.js"></script>
 </html>
