@@ -8,6 +8,7 @@ $(document).ready(function() {
 
 	$("#search").append(document.createTextNode(search));
 	$("#search").css("margin-top","10%");
+	
 
 	function getUsers(callBack){
 		 $.ajax({
@@ -112,8 +113,6 @@ $(document).ready(function() {
 			div.appendChild(document.createTextNode("No search results found, try again."));
 			document.getElementById("user").appendChild(div);
 		}
-
-
+		document.getElementById('footer').style.top = null;
 	}
-
 });
