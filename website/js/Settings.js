@@ -145,42 +145,49 @@ function validateToDelete() {
     user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
     var form = document.getElementById("deleteUser");
     var elements = form.getElementsByTagName("input");
-    
+    var b = false;
     console.log(user);
     
     for(i = 0; i < elements.length; i++) {
         var el = elements[i];
-        if(el.value === user.password) {
+        
             if (confirm("Are you sure you want to delete your account? This can not be undone.")) {
-                $.ajax({
-                    "async": true,
-                    "crossDomain": true,
-                    url: "http://10.3.50.6/api/user",
-                    type: "DELETE",
-                    "headers": {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + token
-                    },
-                    succes: function(data){
-                        console.log(data);
-                    },
-                    error: function(xhr, ajaxOptions, thrownError){
-                        console.log(xhr.status);
-                        console.log(thrownError);
-                        console.log(xhr);
-                    }
-                });
-                window.alert("Good Bye!");
+                b = function deleteCall(){
+                    $.ajax({
+                        "async": true,
+                        "crossDomain": true,
+                        url: "http://10.3.50.6/api/user",
+                        type: "DELETE",
+                        "headers": {
+                            "Content-Type": "application/json",
+                            "Authorization": "Bearer " + token
+                        },
+                        "data": JSON.stringify(el.value),
+                        dataType: 'json',
+                        succes: function(data){
+                            console.log(data);
+                            return true;
+                        },
+                        error: function(xhr, ajaxOptions, thrownError){
+                            console.log(xhr.status);
+                            console.log(thrownError);
+                            console.log(xhr);
+                            return false;
+                        }
+                    });
+                }
+                if (b === true) {
+                    window.alert("Your account has been deleted, we hope to see you again!");
+                }
+                else {
+                    window.alert("Your data has not been deleted, perhaps your password is incorrect.");
+                    el.value = "";
+                    el.focus();
+                }
             }
             else {
                 window.alert("Thanks for staying with us!");
             }
-        }
-        else {
-            window.alert("Your password is not correct, try again.");
-            el.value = "";
-            el.focus;
-        }
     }
     return false;
 }
