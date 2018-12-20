@@ -123,7 +123,6 @@ function checkportissell(){
                             }else{
                                 purchased = false;
                             }
-                            if(purchased){
                                 makerequestnopar("http://10.3.50.6/api/order/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
                                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                                          cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
@@ -150,13 +149,6 @@ function checkportissell(){
                                             setcontentdatacenter();
                                     }
                                 },true);
-                            }else{
-                                imgsrc[0] = data.imgURL;
-                                imgdesc[0] =  data.description;
-                                orderid[0] = data.orderId;
-                                getUser(data.userId);
-                                setcontentdatacenter();
-                            }
                 },true);
             }
     },true);

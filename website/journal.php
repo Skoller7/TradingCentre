@@ -115,7 +115,7 @@
                           <th id="timestamp">Timestamp<i id="timestamp-arrow" class="fa fa-angle-up"></i></th>
                           <th>Image</th>
                           <th>Description</th>
-                          <th>Options</th>
+                          <th id='optionstable'>Options</th>
                         </tr>
                     </thead>
                     <tbody id="all-orders-table" class="all">
@@ -196,6 +196,7 @@
                 <table class="table table-hover">
                     <thead>
                       <tr class="head-td">
+                        <th>OrderId</th>
                         <th>Exchange</th>
                           <th >Side</th>
                           <th >Price</th>

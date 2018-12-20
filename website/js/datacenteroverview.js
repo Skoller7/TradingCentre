@@ -118,11 +118,10 @@ function setcard(data,i){
                 var img = document.createElement("img");
                 img.setAttribute("alt","image of trade");
                 img.setAttribute("class","img-fluid");
-                img.setAttribute("height","50%");
                 img.setAttribute("src",data[i].imgURL);
-                card.appendChild(img);
                 var cardbody = document.createElement("div");
                 cardbody.setAttribute("class","card-body");
+                card.appendChild(img);
                 cardbody.innerHTML +=  "<h5 class='card-title' id='usernamecard"+data[i].portfolioId+"'></h5>";
                 cardbody.innerHTML +=  "<p class='card-text' id='portfoliodesc'>"+data[i].description+"</p>";
                 cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show Preview</a>";

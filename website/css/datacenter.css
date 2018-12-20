@@ -5,6 +5,9 @@
 body{
     background-color: #F8F9FA;
 }
+/*.card{
+    height:300px;
+}*/
 /*
 sidebar
 */
@@ -189,7 +192,7 @@ sidebar-portfolio
 .content-datacenter .card{
     margin:1%;
     float:left;
-    
+     height:300px;
     display: inline-block;
 }
 #main{

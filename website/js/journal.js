@@ -78,6 +78,10 @@ var arrayaddorders = [];
 bool if portfolio is default or not
 */
 var defaultbool = false;
+/*
+bool if portfolio is for sale
+*/
+var forsale = true;
 var frdate;
 var tdate;
 /*
@@ -309,7 +313,6 @@ function getport(){
         makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
             ul.innerHTML = "";
             for(var i = 0; i < data.length;i++){
-                if(data[i].isForSale == false){
                     var name = document.createTextNode(data[i].name);
                     var li = document.createElement("LI");
                     ul.appendChild(li);
@@ -319,12 +322,12 @@ function getport(){
                     if(data[i].isDefault == true){
                         defaultbool = true;
                         setdefaultport(data[i].portfolioId);
+                        forsale = false;
                          activeportfolioid = data[i].portfolioId;
                     }
                     var sub = document.getElementById(data[i].portfolioId + "port");
                     port.push(sub.getAttribute("id"));
                 }
-            }
         });
           //  ppd();
 }
@@ -442,6 +445,11 @@ function setdefaultport(id){
 setup active portfolio
 */
 function setupactiveport(data,id){
+    if(data.isForSale){
+        forsale = true;
+    }else{
+        forsale = false;
+    }
     footer.innerHTML = "";
         desc.innerHTML = data.description;
         goals.innerHTML = data.goal;
@@ -850,9 +858,7 @@ function setOrders(data,i,defaultbool){
         }else{
            color = "red";
         }
-        if(all.className == 'all'){
-            tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>";
-        }
+        tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>";
         tr.innerHTML += "<td class='ex'>"+data[i].exchange+"</td>";
         tr.innerHTML += "<td class='si' style='color:"+color+"'>"+data[i].side+"</td>";
         tr.innerHTML += "<td class='pr'>"+data[i].price+"("+data[i].currency+")</td>";
@@ -871,19 +877,24 @@ function setOrders(data,i,defaultbool){
             jk.setAttribute("class","fa fa-edit");
             jk.setAttribute("id",data[i].orderId);
             a.appendChild(jk);
-            td.appendChild(a);
-            a.addEventListener("click",openupdateorder);
-            if(!defaultbool){
-                var a2 = document.createElement("a");
-                a2.setAttribute("class","btn btn-danger");
-                a2.setAttribute("id",data[i].orderId);
-                var kj = document.createElement("i");
-                kj.setAttribute("class","fa fa-trash");
-                kj.setAttribute("id",data[i].orderId);
-                kj.setAttribute("style","background-color:red;");
-                a2.appendChild(kj);
-                a2.addEventListener("click",deleteorder);
-                td.appendChild(a2);
+            if(!forsale){
+             document.getElementById('optionstable');  
+            }
+            if(!forsale || defaultbool){
+                td.appendChild(a);
+                a.addEventListener("click",openupdateorder);
+                if(!defaultbool){
+                    var a2 = document.createElement("a");
+                    a2.setAttribute("class","btn btn-danger");
+                    a2.setAttribute("id",data[i].orderId);
+                    var kj = document.createElement("i");
+                    kj.setAttribute("class","fa fa-trash");
+                    kj.setAttribute("id",data[i].orderId);
+                    kj.setAttribute("style","background-color:red;");
+                    a2.appendChild(kj);
+                    a2.addEventListener("click",deleteorder);
+                    td.appendChild(a2);
+                }
             }
             if(data[i].imgURL == null || data.imgURL == ""){
                 tr.innerHTML += "<td><i class='fa fa-times' style='color:red;'></i></td>";
@@ -1170,7 +1181,7 @@ function test(){
                   activeportfolioid = id[i].portfolioId;
                 }
             }
-            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
+            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId=33","GET",token,function(obj){
                 data = obj;
             });
     });
