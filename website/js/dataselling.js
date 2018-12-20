@@ -1,7 +1,10 @@
 var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 var token = getCookie("jwtToken");
-var orderdata = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token); //retrieving all curretn orders
+var orderdata;
+makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(a){
+  orderdata = a;
+}, false); //retrieving all curretn orders
 console.log(orderdata);
 var isSold = orderdata.IsForSale;
 console.log(orderdata.IsForSale);
@@ -56,7 +59,9 @@ App = {
 
 loadPage : function(){
 
-  var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token); //requesting portfolio information
+ makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token, function(data){
+
+//requesting portfolio information
 
   //Portfolio datamembers
   name = data.name;
@@ -101,6 +106,7 @@ loadPage : function(){
   }
   teller++;
 } //end if teller == 0;
+}, true);
 },
 
 
@@ -210,7 +216,9 @@ loadPage : function(){
        { console.log('deployment is succesfull');
         $('#contractSucces').text('succes');
       DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
-        var data = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token);
+       makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token, function(data){
+
+
         name = data.name;
         description = data.description;
         goal = data.goal;
@@ -252,8 +260,7 @@ loadPage : function(){
           }
       });
 
-      var orderdata2 = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token);
-
+    makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(orderdata2){
       for(var x = 0; x < orderdata2.length; x++){
       var orderjsondata = {
           "OrderId" : orderdata2[x].orderId,
@@ -284,7 +291,10 @@ loadPage : function(){
     });
 
   }
+      }, true);
+
     })
+      }, true);
 
 
 

@@ -1,6 +1,12 @@
 var token = getCookie("jwtToken");
-var userId = makerequestnopar("http://10.3.50.6/api/user" , "GET" , token);
-var portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true" , "GET" , token);
+var userId;
+makerequestnopar("http://10.3.50.6/api/user" , "GET" , token, function(a){
+  userId = a;
+}, false);
+var portfolios;
+makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true" , "GET" , token, function(a){
+  portfolios = a
+}, false);
 var i = 0; //declared this variable here because getting data from the blockchain takes time. And thus if you'd place it in a normal for loop the numbers wouldn't be correct.
 var dataDatum; //= ["January", "February", "March", "April", "May", "Jun", "Jule", "August", "September", "October", "November", "December"]; //variable for the default settings of the data graph.
 var dataInput; // = ["1", "2", "3", "8", "12", "13", "18", "25", "30", "35", "40", "45"];//variable for the default settings of the data graph.
@@ -163,17 +169,19 @@ calcProfit: function(){
 // },
 
 getcard: function(){console.warn();
-    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token);
-    if(getstatus() == 401){
-        openMLogin();
-    }else{
-        if(getstatus() == 400 || getstatus() == 500 || getstatus() == 501){
-            alert("Something went wrong, please try again later");
-        }else{
-            arrayforsaleown = data;
-            App.setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
-        }
-    }
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token, function(data)
+    {
+      if(getstatus() == 401){
+          openMLogin();
+      }else{
+          if(getstatus() == 400 || getstatus() == 500 || getstatus() == 501){
+              alert("Something went wrong, please try again later");
+          }else{
+              arrayforsaleown = data;
+              App.setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
+          }
+      }
+    }, true);
 },
 
 
