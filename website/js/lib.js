@@ -1,61 +1,12 @@
+//array of all the modals of the current page(including header)
 var modalList = [];
 var requestsuccess = true;
 var statuscall = 200;
-/*
-//https://www.w3schools.com/howto/howto_html_include.asp
-function includeHTML() {
-  var z, i, elmnt, file, xhttp;
-  //loop through a collection of all HTML elements:
-  z = document.getElementsByTagName("*");
-  for (i = 0; i < z.length; i++) {
-    elmnt = z[i];
-    //search for elements with a certain atrribute:
-    file = elmnt.getAttribute("w3-include-html");
-    if (file) {
-      //make an HTTP request using the attribute value as the file name:
-      xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-          //remove the attribute, and call this function once more:
-          elmnt.removeAttribute("w3-include-html");
-          includeHTML();
-        }
-      }      
-      xhttp.open("GET", file, true);
-      xhttp.send();
-      //exit the function:
-      return;
-    }
-  }
-};
 
-//includeHTMLFile("test.html");
-
-function includeHTMLFile(filePath, elmnt){
- 
-
-  //make an HTTP request using the attribute value as the file name:
-      xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {
-          if (this.status == 200) {elmnt.innerHTML = this.responseText;}
-          if (this.status == 404) {elmnt.innerHTML = "Page not found.";}
-          //remove the attribute, and call this function once more:
-          //elmnt.removeAttribute("w3-include-html");
-          //includeHTML();
-        }
-      }      
-      xhttp.open("GET", filePath, true);
-      xhttp.send();
-}
-*/
-
-//https://www.w3schools.com/js/js_cookies.asp
 function getstatus(){
     return statuscall;
 }
+//https://www.w3schools.com/js/js_cookies.asp
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -94,15 +45,16 @@ function validateEmail(email) {
     return re.test(String(email).toLowerCase());
 }
 
-//modals
+//close all the modals that are active on screen
 function closeAllModals(){
   modalList.forEach(closeModal);  
 }
 
-function closeModal(item){
-  //https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
-  if ($(item).is(':visible')){
-    $(item).modal('toggle');  
+//close the given modal
+//https://stackoverflow.com/questions/19506672/how-to-check-if-bootstrap-modal-is-open-so-i-can-use-jquery-validate
+function closeModal(modal){
+  if ($(modal).is(':visible')){
+    $(modal).modal('toggle');  
   }
 }
 //makes api request without parameters
