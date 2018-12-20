@@ -1,8 +1,10 @@
 var token = getCookie("jwtToken");
 var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
-
-var cportfolio = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ aportfolioid , "GET" , token); //retrieving the data of this portfolio.
+var cportfolio;
+makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ aportfolioid , "GET" , token, function(a){
+  cportfolio = a;
+}, false); //retrieving the data of this portfolio.
 console.log(cportfolio);
 var caddress = cportfolio.address; //placing the adres in a variable.
 console.log(caddress);

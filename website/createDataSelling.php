@@ -67,8 +67,7 @@
 
 <div class="containter-fluid">
 <div class="row">
-    <div class="col-md-3">
-    <nav class="sidebar">
+    <nav class="sidebar" style='width:30%;'>
         <div class="col-md-12">
         <div class="row">
         <div class="user-image col-md-12">
@@ -108,25 +107,26 @@
         <br />
          <div class="row col-md-12">
         <br /><p>Contract Price :<br />
-        <input type="text" id="contractPricing"> </input>WEI<br /><br /></p>
+        <input type="text" id="contractPricing" placeholder="WEI" class="form-control">
         <button type="button" name="button" class="btn btn-primary btn-create-contract-request">Create Buycontract</button><a href="#"> More info?</a>
         <br />
         <span id="errormessage"></span>
       </div>
         </div>
     </nav>
-    </div>
-    <div class="col-md-9 col-sm-12 col-xs-12">
+    <div class="col-md-4"></div>
+    
+    <div class="col-md-8 col-sm-12 col-xs-12">
         <div class="header-content">
         <h3 id="ordernummerTitel"></h3>
         </div>
         <div class="image-content">
-          <div class="img-fluid" style="height="50%" width="80%"">
+          <div class="img-fluid" style="height:50%;" width="80%">
           <img  class="orderimg img-responsive img-fluid" alt="image of this order"/>  <!-- hier een witte box met zwarte randen tonen tot de persoon een img heeft geupload dan wordt de box vervangen door de iamge.-->
           </div>
           <form class="" method="post">
             <p>Image url:
-            	<input type="text" id="tradeurl"> <button type="button" name="button" class="btn btn-primary" id="refreshImage">Refresh image</button></input>
+            	<input type="text" id="tradeurl"/> <button type="button" name="button" class="btn btn-primary" id="refreshImage">Refresh image</button>
               </p>
           </form>
 

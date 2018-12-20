@@ -4,7 +4,7 @@
     <title>Guide</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/guides.css">
+    <link rel="stylesheet" href="css/guide.css">
     <link rel="stylesheet" href="css/datacenter.css">
     <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -23,8 +23,10 @@
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6 col-sm-12 col-xs-12" id="guideContent">
-			<h2 class="guideTitle">Guide titel</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas ipsum quis quam viverra tincidunt. Sed vel ex vitae ligula vestibulum mollis vel ac nisl. Aenean in nulla id leo convallis imperdiet id vel enim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam a consequat quam, rutrum pellentesque elit. Curabitur laoreet varius quam, non mollis elit sagittis non. Pellentesque vel mollis felis, ac aliquam felis. Integer vel neque vestibulum, congue lorem semper, interdum lectus. Vivamus eget turpis vitae eros finibus venenatis nec nec odio. Nam lacus eros, luctus id porttitor a, cursus sed turpis. Aenean ornare luctus cursus. Integer magna libero, luctus eleifend velit eget, fermentum auctor mauris. Donec risus dolor, dapibus at nisl in, malesuada convallis justo. Suspendisse volutpat, nunc id scelerisque ornare, lectus enim sollicitudin velit, vitae consequat felis diam eu metus.</p>
+			<h1 class="guideTitle">Guides</h1>
+            <h3 class="guideSubtitle">Metamask</h3>
+            <p>Before you can buy other's trading data, you need to add the <a href="https://metamask.io">Metamask</a> extension to your browser and create an account.<br/>
+            Currently we are using the Ropsten testnet on this site, so you will need to switch over to that network, but this allows you to add funds to your account by using a Ropsten faucet, such as <a href="https://faucet.ropsten.be">this</a> one.</p>
 		</div>
 		<div class="col-md-3"></div>
 	</div>

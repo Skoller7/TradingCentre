@@ -89,7 +89,7 @@
                 <select id="amount">
                     <option value="10">10</option>
                     <option value="25">25</option>
-                    <option value="50">50</option>
+                    <option value="50" selected>50</option>
                     <option value="100">100</option>
                     <option value="150">150</option>
                     <option value="200">200</option>
@@ -111,7 +111,7 @@
                           <th id="timestamp">Timestamp<i id="timestamp-arrow" class="fa fa-angle-up"></i></th>
                           <th>Image</th>
                           <th>Description</th>
-                          <th>Options</th>
+                          <th id='optionstable'>Options</th>
                         </tr>
                     </thead>
                     <tbody id="all-orders-table" class="all">
@@ -192,6 +192,7 @@
                 <table class="table table-hover">
                     <thead>
                       <tr class="head-td">
+                        <th>OrderId</th>
                         <th>Exchange</th>
                           <th >Side</th>
                           <th >Price</th>
@@ -273,6 +274,7 @@
     	</div>
 		</div>
 </div>
+    <?php include("footer.html"); ?>
     <script type="text/javascript" src="js/journal.js"></script>
     <?php
       if($showEmailVerificationModal){

@@ -42,20 +42,34 @@ function URLContainsParam(){
 //Retrieves user data
 function getUserData(){
 	if(URLContainsParam())
-		var data = makerequestnopar("http://10.3.50.6/api/user?userID=" + userID, "GET", token);
+		makerequestnopar("http://10.3.50.6/api/user?userID=" + userID, "GET", token, function(data){
+			username = data.username;
+				description = data.description;
+				pictureURL = data.pictureURL;
+				setContent();
+			}, true);
 	else
-		var data = makerequestnopar("http://10.3.50.6/api/user", "GET", token);
-	username = data.username;
-	description = data.description;
-	pictureURL = data.pictureURL;
+		makerequestnopar("http://10.3.50.6/api/user", "GET", token, function(data){
+				username = data.username;
+				description = data.description;
+				pictureURL = data.pictureURL;
+				setContent();
+		},true);
+
 }
 
 //Retrieves selling portfolios
 function getUserPortfolios(){
 	if(URLContainsParam())
-		portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&userId=" + userID, "GET", token);
+		makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&userId=" + userID, "GET", token, function(data){
+			portfolios = data;
+			setPortfolios();
+		}, true);
 	else
-		portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true", "GET", token);
+		makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true", "GET", token, function(data){
+			portfolios = data;
+			setPortfolios();
+		}, true);
 }
 
 //Shows portfolios on the site
@@ -63,11 +77,11 @@ function addPortfolioCards(portfolioData){
 	 var portCardsHTML = $('.content-datacenter').html();
 	 portCardsHTML += `
 	 <div class="card">
-    	<img src="${portfolioData.imgURL}" alt="${portfolioData.name}" class="img-fluid" height="50%"> 
+    	<img src="${portfolioData.imgURL}" alt="${portfolioData.name}" class="img-fluid" height="50%">
     	<div class="card-body">
         	<h5 class="card-title">${portfolioData.name}</h5>
         	<p class="card-text">
-        	${portfolioData.description} 
+        	${portfolioData.description}
         	</p>
         	<a href="datacenternew.php?portfolioId=${portfolioData.portfolioId}" class="btn btn-primary">Buy data</a>
     	</div>
@@ -83,8 +97,8 @@ function setContent(){
 		$('#user-name').text(defaultUsername);
 
 	if(description)
-		$('#user-description').text(description);	
-	else 
+		$('#user-description').text(description);
+	else
 		$('#user-description').text(defaultDescription);
 
 	if(pictureURL){
@@ -95,14 +109,17 @@ function setContent(){
 		$('#user-img').attr("src", "img/profile.png");
 		$('#user-img').attr("alt", "default profile picture");
 	}
+}
 
+function setPortfolios(){
 	if(portfolios.length && portfolios != "error: ")
 		for(var i = 0; i < portfolios.length; i++)
 			addPortfolioCards(portfolios[i]);
 	else
 		$('#no-portfolio').css("visibility", "visible");
+
 }
 
 $(document).ready(function() {
-	setContent();
+
 });

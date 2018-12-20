@@ -118,3 +118,11 @@ function ValidURL(str) {
     return true;
   }
 }
+function checkFooterPosition(){
+		document.getElementById('footer').style.top = null;
+		if(parseInt($('#footer').css('top'), 10) < $(window).height()){
+			$('#footer').css('top',$(window).height() + 10);
+			//Setting an element's position below the screen causes the browser to scroll to said location, this scrolls back up
+			window.scrollTo(0,0);
+		}
+}

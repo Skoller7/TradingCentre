@@ -32,7 +32,7 @@
       <meta name="msapplication-TileColor" content="#ffffff">
       <meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
       <meta name="theme-color" content="#ffffff">
-
+        <title>Datacenteroverview</title>
 </head>
 <body>
 <?php
@@ -50,11 +50,6 @@
         <div class="header-content">
         <h3>Datacenter</h3>
         </div>
-        <h4 style='width:100%;float:left;' id='titleown'>Own selling portfolios</h4>
-        <div class="content-datacenter" id="cards">
-            
-        </div>
-        <div id="see-more-own" class='card' style='width:100%;float:left;text-align:center;'></div>
         <h4 style='width:100%;float:left;' id="titleother"> Other selling portfolios</h4>
         <div class="content-datacenter" id="highlightcards">
             
@@ -63,6 +58,7 @@
     </div>
 </div>
 </div>
+    <?php include("footer.html"); ?>
 </body>
 <script src="js/datacenteroverview.js"></script>
 </html>

@@ -322,7 +322,7 @@ function openMSignUp(){
 //open login modal
 function openMVerificationMail(email){
 	closeAllModals();
-	document.getElementById("MVerificationMailPMessage").innerHTML = "We have sent you a verification e-mail to this address <br />" + email;
+	document.getElementById("MVerificationMailPMessage").innerHTML = "We have sent a verification email to this address <br />" + email + "<br /> Please make sure to check your spam folder, as the email may appear in there";
 	$('#MVerificationMail').modal();
 }
 //open login modal
