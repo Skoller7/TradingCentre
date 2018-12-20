@@ -75,6 +75,10 @@ bool if current portfolio is purchased
 */
 var purchased = false;
 /*
+bool if user want to see overview from the portfolio
+*/
+var overview = true;
+/*
 position in arrays
 */
 var n = 0;
@@ -83,22 +87,6 @@ get parameter from url
 */
 var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
-/*
-delete yes or no
-*/
-function openyesno(functiondelete){
-	closeAllModals();
-	$('#yesorno').modal({
-		backdrop: 'static'
-	});
-document.getElementById("yess").addEventListener("click",function (e){
-	$('#yesorno').modal('toggle');
-    functiondelete();
-});
-document.getElementById("noo").addEventListener("click",function (e){
-	$('#yesorno').modal('toggle');
-});
-}
 checkportissell();
 /*
 check if portfolio is for sale
@@ -113,18 +101,8 @@ function checkportissell(){
                     imgsrc = [];
                     imgdesc = [];
                     orderid = [];
-                    makerequestnopar("http://10.3.50.6/api/purchase","GET",token,function(purchase){
-                            if(purchase.length != 0){
-                            for(var i = 0;i < purchase.length;i++){
-                                if(aportfolioid == purchase[i].portfolioId){
-                                    purchased = true;
-                                }
-                            }
-                            }else{
-                                purchased = false;
-                            }
+                    if(overview){
                                 makerequestnopar("http://10.3.50.6/api/order/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
-                                    console.log(order);
                                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                                          cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                                     }else if(getstatus() == 404){
@@ -135,24 +113,40 @@ function checkportissell(){
                                                 imgdesc[i] =  order[i].description;
                                                 orderid[i] = order[i].orderId;
                                             }
-                                        if(imgdesc.length > 1){
-                                            setbtn();
-                                        }
                                         getUser(data.userId);
                                         setcontentdatacenter();
                                     }
                                 },true);
-                },true);
-            }
+                }else{
+                    imgsrc.push(data.imgURL);
+                    imgdesc.push(data.description);
+                    setcontentdatacenter();
+                }
+                }
     },true);
 }
 /*
 set sidebar with user information
 */
 function setsidebar(){
-        sideusername.innerHTML = username;
-        sideimg.setAttribute("src",pictureURL);
-        sidedesc.innerHTML += description;
+        if(description == null){
+            document.getElementById("user-description").style.display = "none";
+        }else{
+            sidedesc.innerHTML = description;
+            document.getElementById("user-description").style.display = "block";
+        }
+        if(username == null){
+            document.getElementById("username-port").style.display = "none";
+        }else{
+            sideusername.innerHTML = username;
+            document.getElementById("username-port").style.display = "block";
+        }
+        if(pictureURL == null){
+            document.getElementById("img-user").style.display = "none";
+        }else{
+            document.getElementById("img-user").style.display = "block";
+            sideimg.setAttribute("src",pictureURL); 
+        }
 }
 /*
 set buttons left and right only if user purchased portfolio
@@ -161,12 +155,12 @@ function setbtn(){
         var btn = document.createElement("button");
         var btn2 = document.createElement("button");
         btn.setAttribute("type","button");
-        btn.setAttribute("style","float:right;top:300px;position: absolute;");
+        btn.setAttribute("style","float:right;top:300px;position: sticky;");
         btn.setAttribute("class","btn btn-primary");
         btn.innerHTML = "<i class='fa fa-angle-left'></i>";
         btnprev.appendChild(btn);
         btn2.setAttribute("type","button");
-        btn2.setAttribute("style","float:right;top:300px;position: absolute;");
+        btn2.setAttribute("style","float:right;top:300px;position: sticky;");
         btn2.setAttribute("class","btn btn-primary");
         btn2.innerHTML = "<i class='fa fa-angle-right'></i>";
         btnnext.appendChild(btn2);
@@ -194,14 +188,21 @@ set content datacenter with image, description and comments from one order
 */
 function setcontentdatacenter(){
     cont.innerHTML = "";
+    btnprev.innerHTML = "";
+    btnnext.innerHTML = "";
+    if(overview){
+        document.getElementById("portoverview").innerHTML = "Review portfolio";
+    }else{
+        document.getElementById("portoverview").innerHTML = "Back to orders";
+    }
+    if(imgdesc.length > 1){
+        setbtn();
+    }
     img.setAttribute("src",imgsrc[n]);
     cont.appendChild(image);
     imagedesc.innerHTML = imgdesc[n];
     cont.appendChild(info);
-    if(purchased){
-        getComments();
-    }
-    console.log(n);
+    getComments();
     cont.appendChild(similar);
 }
 /*
@@ -214,7 +215,7 @@ button.addEventListener("click",function(){
         textarea.style.border = "1px solid red";
         diverror.innerHTML = "* This field is required";
     }else{
-        if(purchased){
+        if(overview){
         var json = {"OrderId": orderid[n],"Message": textarea.value};
         makerequest(json,"http://10.3.50.6/api/ordercomment","PUT",token,function(data){
             if(getstatus() != 200){
@@ -244,22 +245,18 @@ button.addEventListener("click",function(){
 delete comment from portfolio if purchased from the order
 */
 function deletecomments(e){
-    if(purchased){
-        openyesno(function(){
+    if(overview){
             makerequestnopar("http://10.3.50.6/api/ordercomment?commentId="+e.target.id,"DELETE",token,function(data){
                     if(getstatus() == 200){
                         getComments();
                     }
            },true);
-       });
     }else{
-        openyesno(function(){
             makerequestnopar("http://10.3.50.6/api/portfoliocomment?commentId="+e.target.id,"DELETE",token,function(data){
                     if(getstatus() == 200){
                         getComments();
                     }
             },true);
-        });
     }
 }
 /*
@@ -293,7 +290,7 @@ function updatecomments(e){
             text.style.border = "1px solid red";
             text.setAttribute("placeholder","This field is required");
         }else{
-            if(purchased){
+            if(overview){
                 var json = {"CommentId": e.target.id,"Message": text.value};
                 makerequest(json,"http://10.3.50.6/api/ordercomment","POST",token,function(data){
                     if(getstatus() == 200){
@@ -316,7 +313,7 @@ get comments from portfolio if portfolio is not purchased else commments form or
 */
 function getComments(){
             allcomments.innerHTML = "";
-            if(purchased){
+            if(overview){
                 makerequestnopar("http://10.3.50.6/api/order/comment?orderId="+orderid[n],"GET",token,function(data){
                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                             allcomments.innerHTML = "No comments found";
@@ -416,6 +413,14 @@ function getuserid(userid,commentid){
             }
         },true);
 }
+document.getElementById("portoverview").addEventListener("click",function(){
+    if(overview){
+        overview = false;
+    }else{
+        overview = true;
+    }
+    checkportissell();
+});
 /*
 get current user
 */

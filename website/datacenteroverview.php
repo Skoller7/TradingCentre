@@ -28,14 +28,8 @@
   include_once("header.html");
 ?>
 <div class="containter-fluid">
-    <nav class="sidebar">
-        <div class="row">
-                <h3>Overview</h3>
-        </div>
-    </nav>
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-10 col-sm-12 col-xs-12">
+    <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="header-content">
         <h3>Datacenter</h3>
         </div>
