@@ -43,17 +43,18 @@ function URLContainsParam(){
 function getUserData(){
 	if(URLContainsParam())
 		makerequestnopar("http://10.3.50.6/api/user?userID=" + userID, "GET", token, function(data){
+			$("#profileSettings").css("visibility","hidden");
 			username = data.username;
-				description = data.description;
-				pictureURL = data.pictureURL;
-				setContent();
-			}, true);
+			description = data.description;
+			pictureURL = data.pictureURL;
+			setContent();
+		}, true);
 	else
 		makerequestnopar("http://10.3.50.6/api/user", "GET", token, function(data){
-				username = data.username;
-				description = data.description;
-				pictureURL = data.pictureURL;
-				setContent();
+			username = data.username;
+			description = data.description;
+			pictureURL = data.pictureURL;
+			setContent();
 		},true);
 
 }

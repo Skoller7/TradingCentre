@@ -38,6 +38,7 @@
                             <div class="col-md-12" id="description">
                                 <h3>Description</h3>
                                 <p id="user-description"></p>
+                                <a href="settings.php" id="profileSettings">Settings</a>
                             </div>
                         </div>
                     </div>
