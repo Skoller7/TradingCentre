@@ -1,5 +1,10 @@
 var token = getCookie("jwtToken");
+//var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUzMTIzMDIsImV4cCI6MTU0NTM5ODcwMiwiaWF0IjoxNTQ1MzEyMzAyfQ.0QnL1lW_NTNYcIXIERfB5OB0oLCT3c8PvIKHSq5SMtkJ2Cu-_-A1uwNjvrm6LpTf5i1J7YUSWZFX_n6QD8DGQw";
 var user = [];
+
+makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token, function(data){
+                user = data;
+            }, true);
 
 function openOption(evt, optionName) {
     var i, content, tablink;
@@ -43,12 +48,6 @@ function validateForm(){
     
     else {
         
-        if (document.getElementById("img").value) {
-                testImage();
-            }
-        
-        user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
-        
         console.log(user);
         
 
@@ -56,9 +55,10 @@ function validateForm(){
         copyValue(user, "profileForm", "textarea");
         
     }
+    
     $.ajax({
         "async": true,
-        "crossDomain": true,
+        "crossDomain": false,
         url: "http://10.3.50.6/api/user",
         type: "POST",
         "headers": {
@@ -119,9 +119,9 @@ function validation() {
             document.forms["profileForm"][fieldname].value = "";
         }
         
-        else if (fieldname === "img") {
+        /*else if (fieldname === "img") {
             testImage();
-        }
+        }*/
         
         else {
             count--;
@@ -140,7 +140,7 @@ function adjust_textarea(h) {
 }
 
 function validateToDelete() {
-    user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
+        
     var form = document.getElementById("deleteUser");
     var elements = form.getElementsByTagName("input");
     var b = false;
@@ -153,14 +153,13 @@ function validateToDelete() {
                 b = function deleteCall(){
                     $.ajax({
                         "async": true,
-                        "crossDomain": true,
+                        "crossDomain": false,
                         url: "http://10.3.50.6/api/user",
                         type: "DELETE",
                         "headers": {
                             "Content-Type": "application/json",
                             "Authorization": "Bearer " + token
                         },
-                        "data": JSON.stringify(el.value),
                         dataType: 'json',
                         succes: function(data){
                             console.log(data);
@@ -190,7 +189,7 @@ function validateToDelete() {
     return false;
 }
 
-function testImage() {
+/*function testImage() {
         document.getElementById("imageUrl").src = document.getElementById("img").value;
 }
 
@@ -204,11 +203,10 @@ function errorCallback() {
 
 function loadCallback() {
     window.alert("Image URL is valid, you can proceed.");
-}
+}*/
 
 
 function isVerified() {
-    user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
     
     var v = user.IsVerified.value;
     
@@ -217,7 +215,7 @@ function isVerified() {
     }
     
     else {
-        document.getElementsByTagName("p").innerHTML = "not erified"
+        document.getElementsByTagName("p").innerHTML = "not verified"
     }
 }
 /*var modal = document.querySelector(".modald");
