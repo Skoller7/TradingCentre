@@ -186,7 +186,7 @@ setcard: function(data,i){
                   var acheck = document.createElement("a");
                   acheck.setAttribute("class", "btn btn-buycheck btn-primary");
                   acheck.setAttribute("id", "buyCheck");
-                  acheck.setAttribute("href", "boughtdata.php");
+                  acheck.setAttribute("href", "datacenternew.php?portfolioId="+data[i].portfolioId);
                   acheck.innerHTML = "View Data";
 
                   btncheck.appendChild(acheck);

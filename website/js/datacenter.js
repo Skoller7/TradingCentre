@@ -124,30 +124,17 @@ function checkportissell(){
                                 purchased = false;
                             }
                                 makerequestnopar("http://10.3.50.6/api/order/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
+                                    console.log(order);
                                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                                          cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                                     }else if(getstatus() == 404){
                                         cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: no orders found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                                     }else{
-                                        var booluser = false;
-                                        makerequestnopar("http://10.3.50.6/api/user","GET",token,function(user){
-                                                if(data.userId == user.userId){
-                                                    booluser = true;
-                                                }
-                                            },false);
-                                    if(purchased || booluser){
                                             for(var i = 0;i < order.length; i++){     
                                                 imgsrc[i] = order[i].imgURL;
                                                 imgdesc[i] =  order[i].description;
                                                 orderid[i] = order[i].orderId;
                                             }
-                                    }else{
-                                            for(var i = 0;i < order.length; i++){     
-                                                imgsrc[i] = order[i].imgURL;
-                                                imgdesc[i] =  order[i].description;
-                                                orderid[i] = order[i].orderId;
-                                            }
-                                    }
                                         if(imgdesc.length > 1){
                                             setbtn();
                                         }
@@ -214,6 +201,7 @@ function setcontentdatacenter(){
     if(purchased){
         getComments();
     }
+    console.log(n);
     cont.appendChild(similar);
 }
 /*
