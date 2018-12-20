@@ -3,20 +3,16 @@
   $showEmailVerificationModal = false;
   if(isset($_SESSION['verificationKey']) && isset($_SESSION['email']) && isset($_SESSION['username'])){
     if(!empty($_SESSION['verificationKey']) && !empty($_SESSION['email']) && !empty($_SESSION['username'])){
-      /*
       $headers[] = 'MIME-Version: 1.0';
       $headers[] = 'Content-type: text/html; charset=iso-8859-1';
-      $headers[] = 'From: TradingCenter <birthday@example.com>';
-      */
+      $headers[] = 'From: TradingCenter <TradingCenter@gmail.com>';
       $email = $_SESSION['email'];
-      $emailHeader = 'verification TradingCentre';
-      //$emailBody = "Dear ".$_SESSION['username'].",\r\n\r\nYou have regently made an account on <a href='www.google.com'>TradingCenter</a> with this email address.\r\nCan you please comfirnm that this is your email address by clinking this link.\r\nhttps://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey'];
-      $emailBody = "Dear ".$_SESSION['username'].",\r\n\r\nYou have regently made an account on TradingCenter with this email address.\r\nCan you please comfirnm that this is your email address by clinking this link.\r\nhttps://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey'];
+      $emailHeader = 'verification TradingCenter';
+      $emailBody = "Dear ".$_SESSION['username'].",<br><br>You have recently made an account on <a href='https://dtprojecten.ehb.be/TradingCenter/index.php'>TradingCenter</a> with this email address.<br>Can you please confirm that this is your email address by clicking this link.<br><a href='https://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey']."'>Confirm email adrress</a><br>With kind regards, the TradingCenter team";
       unset($_SESSION['email']);
       unset($_SESSION['verificationKey']);
       unset($_SESSION['username']);
-      mail($email,$emailHeader,$emailBody);  
-      //mail($email,$emailHeader,$emailBody,implode("\r\n", $headers));    
+      mail($email,$emailHeader,$emailBody,implode("\r\n", $headers));    
       $showEmailVerificationModal = true;
     }
   }

@@ -8,7 +8,7 @@
 				$expireTime = time() + 60*60*24;
 				$_SESSION['jwtTokenExpireTime'] = $expireTime;
 				setcookie('jwtToken',$_POST['jwtToken'], $expireTime);
-				
+				setcookie('jwtTokenExpireTime', $expireTime, $expireTime);
 				if(isset($_POST['verificationKey']) && isset($_POST['email']) && isset($_POST['username'])){
 					if(!empty($_POST['verificationKey']) && !empty($_POST['email']) && !empty($_POST['username'])){
 						$_SESSION['verificationKey'] = $_POST['verificationKey'];
