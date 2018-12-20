@@ -17,7 +17,7 @@ $(document).ready(function() {
 		 $.ajax({
 			"async": true,
 			"crossDomain": true,
-			url: 'https://10.3.50.6/api/user/search?username=' + search,
+			url: 'http://10.3.50.6/api/user/search?username=' + search,
 			timeout : 0,
 			type: 'GET',
 			"headers": {

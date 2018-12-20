@@ -1,11 +1,11 @@
 var token = getCookie("jwtToken");
 console.log(token);
 var userId;
-makerequestnopar("https://10.3.50.6/api/user" , "GET" , token, function(a){
+makerequestnopar("http://10.3.50.6/api/user" , "GET" , token, function(a){
   userId = a;
 }, false);
 var portfolios;
-makerequestnopar("https://10.3.50.6/api/portfolio?soldOnly=true" , "GET" , token, function(a){
+makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true" , "GET" , token, function(a){
   portfolios = a
 }, false);
 var i = 0; //declared this variable here because getting data from the blockchain takes time. And thus if you'd place it in a normal for loop the numbers wouldn't be correct.
@@ -197,7 +197,7 @@ calcProfit: function(){
 
 getcard: function(){console.warn();
 
-  makerequestnopar("https://10.3.50.6/api/portfolio/sold?portfolioId=4", "GET", token, function(a){
+  makerequestnopar("http://10.3.50.6/api/portfolio/sold?portfolioId=4", "GET", token, function(a){
     // dataDatum = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     // dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];
     console.log(a);
@@ -212,7 +212,7 @@ getcard: function(){console.warn();
   console.log(dataDatum);
   console.log(dataInput);
 
-    var data = makerequestnopar("https://10.3.50.6/api/portfolio?soldOnly=true","GET",token, function(data)
+    var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token, function(data)
     {
       if(getstatus() == 401){
           openMLogin();

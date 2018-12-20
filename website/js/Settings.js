@@ -2,7 +2,7 @@ var token = getCookie("jwtToken");
 //var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUzMTIzMDIsImV4cCI6MTU0NTM5ODcwMiwiaWF0IjoxNTQ1MzEyMzAyfQ.0QnL1lW_NTNYcIXIERfB5OB0oLCT3c8PvIKHSq5SMtkJ2Cu-_-A1uwNjvrm6LpTf5i1J7YUSWZFX_n6QD8DGQw";
 var user = [];
 
-makerequestnopar("https://10.3.50.6/api/user?userId=0", "GET", token, function(data){
+makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token, function(data){
                 user = data;
             }, true);
 
@@ -59,7 +59,7 @@ function validateForm(){
     $.ajax({
         "async": true,
         "crossDomain": false,
-        url: "https://10.3.50.6/api/user",
+        url: "http://10.3.50.6/api/user",
         type: "POST",
         "headers": {
             "Content-Type": "application/json",
@@ -154,7 +154,7 @@ function validateToDelete() {
                     $.ajax({
                         "async": true,
                         "crossDomain": false,
-                        url: "https://10.3.50.6/api/user",
+                        url: "http://10.3.50.6/api/user",
                         type: "DELETE",
                         "headers": {
                             "Content-Type": "application/json",

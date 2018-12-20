@@ -164,7 +164,7 @@ document.getElementById("changekey").addEventListener("click",function(){
 /*
 check if user has api keys
 */
-makerequestnopar("https://10.3.50.6/api/key?name=BitMEX","GET",token,function(data){
+makerequestnopar("http://10.3.50.6/api/key?name=BitMEX","GET",token,function(data){
     if(data.length == 0){
         openapikey();
     }
@@ -256,7 +256,7 @@ document.getElementById("btnupdateorder").addEventListener("click",function (){
                 "ImgURL" : urlinput.value,
                 "IsSold" : 0
             }
-        makerequest(json,"https://10.3.50.6/api/order","POST",token,function(data){
+        makerequest(json,"http://10.3.50.6/api/order","POST",token,function(data){
                   if(getstatus() == 200 || getstatus() == 201){
                         descinput.value = "";
                         urlinput.value  ="";
@@ -360,7 +360,7 @@ getport();
 }
 function getport(){
         port = [];
-        makerequestnopar("https://10.3.50.6/api/portfolio","GET",token,function(data){
+        makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
             ul.innerHTML = "";
             for(var i = 0; i < data.length;i++){
                     var name = document.createTextNode(data[i].name);
@@ -435,7 +435,7 @@ function addorderstoportfolio(){
             "OrderId": arrayaddorders[j],
             "PortfolioId": activeportfolioid
         };
-        makerequest(json,"https://10.3.50.6/api/portfolio/order","PUT",token,function(data){
+        makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token,function(data){
                 tel++;
                 if( tel == arrayaddorders.length){
                     if(getstatus() == 201){
@@ -460,7 +460,7 @@ api call get portfolio on id when clicked in submenu portfolios
 var header = document.getElementById("header-content");
 document.getElementById("portfolios-ul").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.target.id.indexOf("port"))))) {
-        makerequestnopar("https://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token,function(data){
+        makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token,function(data){
                     setupactiveport(data,e.target.id);
                         activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
                         myChart = null;
@@ -490,7 +490,7 @@ if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.ta
 set default portfolio from current user on loading page
 */
 function setdefaultport(id){
-        makerequestnopar("https://10.3.50.6/api/portfolio?portfolioId="+ id,"GET",token,function(data){
+        makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ id,"GET",token,function(data){
                    setupactiveport(data,id + "port");
                     activeportfolioid = id;
                     getnotes();
@@ -548,7 +548,7 @@ if(e.target && e.target.nodeName == "LI") {
                 }
             }
             if(valid){
-                makerequestnopar("https://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token,function(data){
+                makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token,function(data){
                     getport();
                 },true);
                 portids.push(activeportfolioid);
@@ -556,7 +556,7 @@ if(e.target && e.target.nodeName == "LI") {
         });
     }else if(e.target.id == "header-port-update"){
         activemodalportdel = 1;
-        makerequestnopar("https://10.3.50.6/api/portfolio?soldOnly=false&portfolioId="+activeportfolioid,"GET",token,function(data){
+        makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=false&portfolioId="+activeportfolioid,"GET",token,function(data){
                     nameport.value = data.name;
                     descport.value = data.description;
                     goalport.value = data.goal;
@@ -575,7 +575,7 @@ function setimgport(){
 api call get all notes with portfolioid
 */
 function getnotes(){
-        makerequestnopar("https://10.3.50.6/api/note?portfolioId=" + activeportfolioid,"GET",token,function(data){
+        makerequestnopar("http://10.3.50.6/api/note?portfolioId=" + activeportfolioid,"GET",token,function(data){
                     var notes = document.getElementById("notes-all");
                     notes.innerHTML = "";
                   for(var i = 0; i < data.length;i++){
@@ -651,7 +651,7 @@ function createnote(){
     if(valid){
         if(createorupdate){
             var json = {"PortfolioId": activeportfolioid ,"message":content.value};
-            makerequest(json,"https://10.3.50.6/api/note","PUT",token,function(data){
+            makerequest(json,"http://10.3.50.6/api/note","PUT",token,function(data){
                         if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                                 errorcontent.innerHTML = "Something went wrong, please try again later";
                                 valid = false;
@@ -663,7 +663,7 @@ function createnote(){
             });
         }else{
             var json = {"NoteId": noteid,"message":content.value};
-            makerequest(json,"https://10.3.50.6/api/note","POST",token,function(data){
+            makerequest(json,"http://10.3.50.6/api/note","POST",token,function(data){
                         if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                             errorcontent.innerHTML = "Something went wrong, please try again later";
                             valid = false;
@@ -694,7 +694,7 @@ if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
                        }
                 }
                 if(valid){
-                    makerequestnopar("https://10.3.50.6/api/note?noteId=" +id,"DELETE",token,function(data){
+                    makerequestnopar("http://10.3.50.6/api/note?noteId=" +id,"DELETE",token,function(data){
                         if(getstatus() == 200){
                             getnotes();
                         }
@@ -773,7 +773,7 @@ function createport(){
     if(document.getElementById("createporttitle").innerHTML == "Create Portfolio"){
         if(valid){
             var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": false,"Address":null};
-            makerequest(jsonfile,"https://10.3.50.6/api/portfolio","PUT",token,function(data){
+            makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token,function(data){
                 if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
                     valid = false; 
@@ -783,7 +783,7 @@ function createport(){
    }else{
         if(valid){
             var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": false,"Address": null};
-            makerequest(jsonfile,"https://10.3.50.6/api/portfolio","POST",token,function(data){
+            makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token,function(data){
                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
                     valid = false; 
@@ -804,7 +804,7 @@ api call get orders users without the orders current in the portfolio
 function getordersadd(){
     all = document.getElementById("all-orders-table-add");
     all.innerHTML = "";
-    makerequestnopar("https://10.3.50.6/api/order/getNotInPortfolio?portfolioId="+activeportfolioid,"GET",token,function(data){
+    makerequestnopar("http://10.3.50.6/api/order/getNotInPortfolio?portfolioId="+activeportfolioid,"GET",token,function(data){
         console.log(defaultbool);
         if(data.length > 0){
                 if(!defaultbool){
@@ -826,7 +826,7 @@ refresh orders
 */
 refresh.addEventListener("click",refreshorder);
 function refreshorder(){
-    makerequestnopar("https://10.3.50.6/api/order/refresh","GET",token,function(data){
+    makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token,function(data){
         getorders(); 
     },true);
 }
@@ -835,7 +835,7 @@ api call get orders for content2
 */
 function getorderscontent2(){
         content2orders.innerHTML = "";
-        makerequestnopar("https://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,"GET",token,function(data){
+        makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,"GET",token,function(data){
                 if(data.length != 0){
                     for(var i = 0;i < data.length; i++){
                              var date = data[i].timestamp;
@@ -873,7 +873,7 @@ content2orders.addEventListener("click",function(e){
                     }
                 }
                     if(valid){
-                        makerequestnopar("https://10.3.50.6/api/portfolio/order?orderId="+current2+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
+                        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current2+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
                         getorderscontent2();
                         },true);
                         ids2.push(current2);
@@ -897,7 +897,7 @@ function getorders(){
             fromdate.value = "1970-01-01";
         }
         frdate = fromdate.value.substring(8,10) + "/" + fromdate.value.substring(5,7) + "/" + fromdate.value.substring(0,4);
-    makerequestnopar("https://10.3.50.6/api/order/get?portfolioId="+activeportfolioid+"&amount="+amount.value+"&dateFrom="+frdate+"&dateTo="+tdate,"GET",token,function(data){
+    makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid+"&amount="+amount.value+"&dateFrom="+frdate+"&dateTo="+tdate,"GET",token,function(data){
             if(data.length != 0){
                 arraysort = data;
                     for(var i = 0;i < data.length; i++){
@@ -993,7 +993,7 @@ function deleteorder(e){
                 }
                 
                     if(valid){
-                        makerequestnopar("https://10.3.50.6/api/portfolio/order?orderId="+current+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
+                        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
                             getorders();
                         },true);
                         ids.push(current);
@@ -1240,18 +1240,18 @@ myChart.setOption(BasicChart);
     test();
 function test(){
     if(activeportfolioid == null){
-    makerequestnopar("https://10.3.50.6/api/portfolio","GET",token,function(id){
+    makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(id){
             for(var i = 0; i < id.length;i++){
                 if(id[i].isDefault == true){
                   activeportfolioid = id[i].portfolioId;
                 }
             }
-            makerequestnopar("https://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
+            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
                 data = obj;
             },false);
     },false);
     }else{
-        makerequestnopar("https://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
+        makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
                 data = obj;
         },false); 
     }

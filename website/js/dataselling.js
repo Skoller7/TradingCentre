@@ -2,7 +2,7 @@ var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 var token = getCookie("jwtToken");
 var orderdata;
-makerequestnopar("https://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(a){
+makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(a){
   orderdata = a;
 }, false); //retrieving all curretn orders
 console.log(orderdata);
@@ -62,7 +62,7 @@ App = {
 
 loadPage : function(){
 
- makerequestnopar("https://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token, function(data){
+ makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token, function(data){
 
 //requesting portfolio information
 
@@ -150,7 +150,7 @@ loadPage : function(){
     $.ajax({
       "async": true,
         "crossDomain": true,
-        url: "https://10.3.50.6/api/order",
+        url: "http://10.3.50.6/api/order",
       type: "POST",
       "headers": {
           "Content-Type": "application/json",
@@ -160,7 +160,7 @@ loadPage : function(){
       dataType: 'json',
       success: function(data){
         console.log(data);
-        makerequestnopar("https://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(a){
+        makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(a){
           orderdata = a;
         }, false);
         console.log(orderdata);
@@ -237,7 +237,7 @@ loadPage : function(){
        { console.log('deployment is succesfull');
         $('#contractSucces').text('succes');
       DataContractCreatorInstance.getDeployedContracts.call().then((r) => {
-       makerequestnopar("https://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token, function(data){
+       makerequestnopar("http://10.3.50.6/api/portfolio?portfolioID=" + aportfolioid, "GET", token, function(data){
 
 
         name = data.name;
@@ -263,7 +263,7 @@ loadPage : function(){
         $.ajax({
           "async": true,
             "crossDomain": true,
-            url: "https://10.3.50.6/api/portfolio",
+            url: "http://10.3.50.6/api/portfolio",
           type: "POST",
           "headers": {
               "Content-Type": "application/json",
@@ -281,7 +281,7 @@ loadPage : function(){
           }
       });
 
-    makerequestnopar("https://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(orderdata2){
+    makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(orderdata2){
       for(var x = 0; x < orderdata2.length; x++){
       var orderjsondata = {
           "OrderId" : orderdata2[x].orderId,
@@ -293,7 +293,7 @@ loadPage : function(){
       $.ajax({
         "async": true,
           "crossDomain": true,
-          url: "https://10.3.50.6/api/order",
+          url: "http://10.3.50.6/api/order",
         type: "POST",
         "headers": {
             "Content-Type": "application/json",
@@ -332,7 +332,7 @@ function getPortfolio(){
   $.ajax({
     "async": true,
       "crossDomain": true,
-      url: "https://10.3.50.6/api/portfolio?&portfolioId=" + aportfolioid,
+      url: "http://10.3.50.6/api/portfolio?&portfolioId=" + aportfolioid,
     type: "POST",
     "headers": {
         "Content-Type": "application/json",
