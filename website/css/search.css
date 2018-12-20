@@ -7,7 +7,7 @@
 	background-color: #d8d8d8;
 }
 .markedText{
-	background-color: #ff751a;
+	background-color: #ffa66b;
 }
 .searchImg{
 	height: 64px;
@@ -17,8 +17,8 @@
 .searchResult:hover{
 	background-color: #c2c2c2;
 }
-.search{
-	margin-top: 10%;
+#searchContent{
+	padding-top: 10%;
 }
 .searchLink{
 	color: black;
@@ -33,5 +33,5 @@
 	color: black;
 }
 .noResultsText{
-	
+	font-size: 1.5rem;
 }
