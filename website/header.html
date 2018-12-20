@@ -1,6 +1,4 @@
-<!--
-looks aanpassen vande dropdown menu line : 14-17
--->
+<!--header nav-->
 <nav class="navbar navbar-expand-lg fixed-top">
   <a class="navbar-brand" href="Index.php" id="nav-title">Tradingcenter</a>
   <div class="navbar-toggler-icon" id="menu"><i class="fa fa-bars"></i></div>
@@ -27,7 +25,6 @@ looks aanpassen vande dropdown menu line : 14-17
   <div id="navbar-overlay" class="overlay">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div class="overlay-content" id="rightButtonNav">
-      <!--<a href="home.php">Home</a>-->
       <a href="journal.php">Journal</a>
       <a href="datacenteroverview.php">Datacenter</a>
     </div>
@@ -44,7 +41,6 @@ looks aanpassen vande dropdown menu line : 14-17
   			  </button>
         </div>
     		<div class="modal-body">
-    			<!--<form action="Home.html">-->
     			<p class="modalParagraph modalErrorMsg" id="MLoginEMMain" style="display: none;"></p>
     			<p class="modalParagraph">Login</p>
   				<input type="text" name="username" placeholder="Username" id="MLoginIUsername" autocomplete="off">
@@ -53,10 +49,7 @@ looks aanpassen vande dropdown menu line : 14-17
   				<input type="password" name="password" placeholder="Password" id="MLoginIPassword">
   				<span class="modalErrorMsg" id="MLoginEMPassword"></span>
   				<br>
-  				<!--<p id="MLoginremember">Remember me<input type="checkbox" name="remimberMe" id="CBremimberMe"></p>-->
-  				<!--<p id="MLoginBForgotPassword">Forgot password?</p>-->
   				<p id="MLoginBSignUp">don't have an account?</p>
-    			<!--</form>-->
       		</div>
       		<div class="modal-footer">
         		<button type="button" class="btn btn-primary" id="MLoginBLogin">Login</button>
@@ -76,7 +69,6 @@ looks aanpassen vande dropdown menu line : 14-17
 				</button>
 	    </div>
   		<div class="modal-body">
-  			<!-- <form action="Home.html"> -->
 				<p class="modalParagraph">Login</p>
 				<input type="text" name="username" placeholder="Username" id="MSignUpIUsername" autocomplete="off">
 				<span class="modalErrorMsg" id="MSignUpEMUsername"></span>
@@ -92,7 +84,6 @@ looks aanpassen vande dropdown menu line : 14-17
         <p>Accept <a href="" class="terms">terms of service</a><input type="checkbox" class="nav-checkbox" name="accept" id="MSignUpIAccept"></p>
         <span class="modalErrorMsg" id="MSignUpEMTermsOfService"></span>
 				<p id="MSignUpBLogin">already have an account?</p>
-  			<!-- </form> -->
   		</div>
   		<div class="modal-footer">
     		<button type="button" class="btn btn-primary" id="MSignUpBSignUp">Sign up</button>
@@ -101,39 +92,6 @@ looks aanpassen vande dropdown menu line : 14-17
   	</div>
 	</div>
 </div>
-<!--Forgot password modal-->
-<!--
-<div class="modal fade" id="MForgotPassword" tabindex="-1" role="dialog" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-        <h5 class="modal-title">Forgot password</h5>
-        <button type="button" class="close" id="MForgotPasswordBCrosse" aria-label="Close">
-      		<span aria-hidden="true">&times;</span>
-				</button>
-	    </div>
-  		<div class="modal-body">
-      -->
-			<!--<form action="home.html">-->
-        <!--
-				<p class="modalParagraph">Username</p>
-				<input type="text" name="username" id="MForgotPasswordIUsername" placeholder="Username" autocomplete="off">
-				<span class="modalErrorMsg"></span>
-        <p class="modalParagraph">Email</p>
-				<input type="text" name="email" id="MForgotPasswordIEmail" placeholder="Email" autocomplete="off">
-				<span class="modalErrorMsg"></span>
-        -->
-			<!--</form> -->
-      <!--
-		  </div>
-		  <div class="modal-footer">
-    		<button type="button" class="btn btn-primary" id="MForgotPasswordBForgotPassword">Send</button>
-    		<button type="button" class="btn btn-secondary" id="MForgotPasswordBClose">Close</button>
-  		</div>
-  	</div>
-	</div>
-</div>
--->
 <!--verification mail modal-->
 <div class="modal fade" id="MVerificationMail" tabindex="-1" role="dialog" aria-labelledby="verificationMailModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
