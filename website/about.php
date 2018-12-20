@@ -23,8 +23,10 @@
 	<div class="row">
 		<div class="col-md-3"></div>
 		<div class="col-md-6 col-sm-12 col-xs-12" id="guideContent">
-			<h2 class="guideTitle">About us</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus egestas ipsum quis quam viverra tincidunt. Sed vel ex vitae ligula vestibulum mollis vel ac nisl. Aenean in nulla id leo convallis imperdiet id vel enim. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nam a consequat quam, rutrum pellentesque elit. Curabitur laoreet varius quam, non mollis elit sagittis non. Pellentesque vel mollis felis, ac aliquam felis. Integer vel neque vestibulum, congue lorem semper, interdum lectus. Vivamus eget turpis vitae eros finibus venenatis nec nec odio. Nam lacus eros, luctus id porttitor a, cursus sed turpis. Aenean ornare luctus cursus. Integer magna libero, luctus eleifend velit eget, fermentum auctor mauris. Donec risus dolor, dapibus at nisl in, malesuada convallis justo. Suspendisse volutpat, nunc id scelerisque ornare, lectus enim sollicitudin velit, vitae consequat felis diam eu metus.</p>
+			
+            <img src="img/erasmus.png" style="width: 100%;">
+            <h2 class="guideTitle">About us</h2>
+            <p>We are second-year students at the Erasmus University College Brussels studying Applied Computer Sciences. <br> We created this site as part of our second Software Project, though our desire to create this site has existed long before the assignment. We were fed up with using spreadsheets to keep track of our trades on exchanges, and there was no good product available that could fulfull our wishes, so the assignment was as good of a reason as any to start building this site. <br> In the end, we are proud of what we have achieved, and we have learned a lot during the process.</p>
 		</div>
 		<div class="col-md-3"></div>
 	</div>

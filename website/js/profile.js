@@ -20,6 +20,7 @@ var defaultDescription = "This is where a description would appear if the user s
 var pictureURL;
 var portfolios = [];
 
+//Tries to put a URL parameter in a variable
 var urlParams = new URLSearchParams(window.location.search);
 var userID = urlParams.get('userID');
 if(!userID)
@@ -31,12 +32,14 @@ var validParam = /^\d+$/.test(userID);
 getUserData();
 getUserPortfolios();
 
+//Checks if the URL contains valid a parameter
 function URLContainsParam(){
 	if(window.location.href.indexOf("?userID=") + 1 && userID && validParam)
 		return true;
 	return false;
 }
 
+//Retrieves user data
 function getUserData(){
 	if(URLContainsParam())
 		var data = makerequestnopar("http://10.3.50.6/api/user?userID=" + userID, "GET", token);
@@ -47,6 +50,7 @@ function getUserData(){
 	pictureURL = data.pictureURL;
 }
 
+//Retrieves selling portfolios
 function getUserPortfolios(){
 	if(URLContainsParam())
 		portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&userId=" + userID, "GET", token);
@@ -54,8 +58,8 @@ function getUserPortfolios(){
 		portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true", "GET", token);
 }
 
+//Shows portfolios on the site
 function addPortfolioCards(portfolioData){
-	console.log(portfolioData);
 	 var portCardsHTML = $('.content-datacenter').html();
 	 portCardsHTML += `
 	 <div class="card">
@@ -71,6 +75,7 @@ function addPortfolioCards(portfolioData){
 	$('.content-datacenter').html(portCardsHTML);
 }
 
+//Puts a user's information on the screen
 function setContent(){
 	if(username)
 		$('#user-name').text(username);
