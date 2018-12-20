@@ -11,7 +11,7 @@
       $email = $_SESSION['email'];
       $emailHeader = 'verification TradingCentre';
       //$emailBody = "Dear ".$_SESSION['username'].",\r\n\r\nYou have regently made an account on <a href='www.google.com'>TradingCenter</a> with this email address.\r\nCan you please comfirnm that this is your email address by clinking this link.\r\nhttps://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey'];
-      $emailBody = "Dear ".$_SESSION['username'].",\r\n\r\nYou have regently made an account on TradingCenter with this email address.\r\nCan you please comfirnm that this is your email address by clinking this link.\r\nhttps://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey'];
+      $emailBody = "Dear ".$_SESSION['username'].",\r\n\r\nYou have recently made an account on TradingCenter with this email address.\r\nPlease comfirm that this is your email address by clicking this link.\r\nhttps://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey'];
       unset($_SESSION['email']);
       unset($_SESSION['verificationKey']);
       unset($_SESSION['username']);
