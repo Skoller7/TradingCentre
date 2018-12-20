@@ -769,7 +769,6 @@ function getorderscontent2(){
         makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,"GET",token,function(data){
                 if(data.length != 0){
                     for(var i = 0;i < data.length; i++){
-                        if(data[i].isSold == false){
                              var date = data[i].timestamp;
                                     if(data[i].side == "Buy"){
                                         color = "green";
@@ -781,7 +780,6 @@ function getorderscontent2(){
                             }else{
                                  content2orders.innerHTML += "<div class='card' style='margin:2%;'><div class='card-body'><h4>"+date.substr(0,10)+" " + date.substr(11,5)+" - <span style='color:"+color+"'>" + data[i].side +"</span> - <a href='#' class='edit' id='"+data[i].orderId+"'>Edit order</a></h4><img src="+data[i].imgURL+" style='width:100%;'/><div style='font-size:17px;'><u>Description:</u> "+data[i].description+"</div></div></div>";                               
                             }
-                        }
                     }
             }else{
                 content2orders.innerHTML = "No orders found";
@@ -807,7 +805,7 @@ content2orders.addEventListener("click",function(e){
                 }
                     if(valid){
                         makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current2+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
-                                                    getorderscontent2();
+                        getorderscontent2();
                         },true);
                         ids2.push(current2);
                     }
@@ -834,9 +832,7 @@ function getorders(){
             if(data.length != 0){
                 arraysort = data;
                     for(var i = 0;i < data.length; i++){
-                        if(data[i].isSold == false){
                             setOrders(data,i,defaultbool);
-                        }
                     }
             }else{
                 all.innerHTML = "No orders found";
