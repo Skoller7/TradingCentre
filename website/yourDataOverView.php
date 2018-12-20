@@ -56,7 +56,7 @@
                   Feel free to head over to our <a href="#">FAQ</a> or <a href="journal.php">journal page</a> to create your own selling portfolio.
                 </div>
                 <div class="modal-footer">
-                  <button type="button" name="button" class="btn btn-primary"> <a href=""></a> </button>
+                  <button type="button" name="button" class="btn btn-primary"> <a href="#"></a> </button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
@@ -64,6 +64,8 @@
           </div>
 
           <h1>Your data overview</h1>
+          <div id="main" ></div>
+
 
           <div class="datacontent panel panel-info" id="datacontent"></div>
           <button type="button" class="btn btn-primary makemodal" data-toggle="modal" data-target="#exampleModalCenter"></button>
@@ -72,8 +74,6 @@
 
 
         </div>
-
-          <div id="main" ></div>
         <div class="content-datacenter">
 
         </div>
