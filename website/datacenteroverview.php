@@ -33,7 +33,6 @@
         <div class="header-content">
         <h3>Datacenter</h3>
         </div>
-        <h4 style='width:100%;float:left;' id="titleother"> Other selling portfolios</h4>
         <div class="content-datacenter" id="highlightcards">
             
         </div>
