@@ -73,7 +73,7 @@ for(var i = 0; i < signUpInputList.length; i++){
 //header
 document.getElementById("Bsearch").addEventListener("click",search);
 document.getElementById("menu").addEventListener("click",openMenu);
-document.getElementById("BAllowCookies").addEventListener("click",allowCookies);
+document.getElementById("cookieButton").addEventListener("click",allowCookies);
 //modal button
 //login modal
 document.getElementById("MLoginBLogin").addEventListener("click",function(){
@@ -97,6 +97,7 @@ document.getElementById("MVerificationMailAcceptedBClose").addEventListener("cli
 
 changeLoginchangeLogin();
 checkAllowCookies();
+
 
 
 //creates 2 buttons
@@ -508,11 +509,14 @@ function signUp(){
 //makes a cookie when the user agrees to allow cookies
 function allowCookies(){
 	document.cookie = "allowCookies=true";
-	$('#banner').css('display','none');
+	$('#banner').css('display','');
 }
 //removes the cookie banner when the user agrees with cookies
 function checkAllowCookies(){
-	if(getCookie('allowCookies')){
-		$('#banner').css('display','none');
+	if(!getCookie('allowCookies')){
+		$('#banner').css('visibility','visible');
+	}
+	else{
+		$('#banner').css('visibility','hidden');	
 	}
 }
