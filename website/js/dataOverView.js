@@ -398,7 +398,7 @@ dummy portfolio
 //
 
 
-
+//https://ecomfe.github.io/echarts-doc/public/en/index.html
 function addbarchart(){
   setTimeout(function() {
   option = {
