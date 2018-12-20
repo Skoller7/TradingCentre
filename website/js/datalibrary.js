@@ -1,5 +1,13 @@
    $('.btn-buycheck').hide();
    $('.btn-fault').hide();
+   var urlParams = new URLSearchParams(window.location.search);
+   var aportfolioid = urlParams.get('portfolioId');
+   var token = getCookie("jwtToken");
+   var data = makerequestnopar("http://10.3.50.6/api/purchase", "GET", token);
+
+   console.log(data);
+
+
 App = {
   web3Provider: null,
   contracts: {},
@@ -50,8 +58,8 @@ isUserBacker: function(){
       web3.eth.getAccounts(function(error, accounts) {
         var account = accounts[0];
     DataContractInstance.backers.call(account).then(function(r){
-      if(r){
-          $('.btn-buycheck').toggle();
+      if(r == false){
+          $('.btn-buycheck').show();
           $('#buyCheck').show();
         console.log('Person is a backer');
       }
@@ -76,5 +84,5 @@ $(function() {
 
 $('.btn-buycheck').click(function(){
   console.log("buy check clicked");
-  App.buyCheck();
+  App.isUserBacker();
 });
