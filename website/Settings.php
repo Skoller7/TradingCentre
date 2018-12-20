@@ -19,7 +19,7 @@
     ?>
     <title>Settings</title>
 </head>
-<body>
+<body onload="isVerified()">
 <?php
     include_once("header.html");
 ?>
@@ -27,7 +27,7 @@
             <div class="vertical-settings">
                 <button class="tablink" onclick="openOption(event, 'general')">General</button>
                 <button class="tablink" onclick="openOption(event, 'security')">Security</button>
-                <button class="tablink" onclick="openOption(event, 'privacy')">Privacy</button>
+                <button class="tablink" onclick="openOption(event, 'verificate')">Verificate</button>
                 <button class="tablink" onclick="openOption(event, 'account')">Account</button>
                 <button class="tablink" onclick="openOption(event, 'profile')" id="default">Profile</button>
             </div>
@@ -59,15 +59,10 @@
                     <input type="submit">
                 </form>
             </div>
-            <div id="privacy" class="content">
+            <div id="verificate" class="content">
                 <form class="myForm">
-                    <label for="public">Do you want your profile to be public?
-                        If it is not public, your data will not be able to be sold!</label><br>
-                    <select id="public">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                    <input type="submit">
+                    <label id="VerifiedOrNot">Your Account is: <p id="isVer"></p></label>
+                    <button id="verify">Send again a e-mail to verificate</button>
                 </form>
             </div>
     

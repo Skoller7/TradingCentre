@@ -1,8 +1,6 @@
 var token = getCookie("jwtToken");
 //var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUzMTIzMDIsImV4cCI6MTU0NTM5ODcwMiwiaWF0IjoxNTQ1MzEyMzAyfQ.0QnL1lW_NTNYcIXIERfB5OB0oLCT3c8PvIKHSq5SMtkJ2Cu-_-A1uwNjvrm6LpTf5i1J7YUSWZFX_n6QD8DGQw";
 var user = [];
-//var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUzMTIzMDIsImV4cCI6MTU0NTM5ODcwMiwiaWF0IjoxNTQ1MzEyMzAyfQ.0QnL1lW_NTNYcIXIERfB5OB0oLCT3c8PvIKHSq5SMtkJ2Cu-_-A1uwNjvrm6LpTf5i1J7YUSWZFX_n6QD8DGQw";
-
 
 makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token, function(data){
                 user = data;
@@ -49,12 +47,6 @@ function validateForm(){
     }
     
     else {
-
-        if (document.getElementById("img").value) {
-                testImage();
-            }
-        
-        user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
         
         console.log(user);
         
@@ -127,9 +119,9 @@ function validation() {
             document.forms["profileForm"][fieldname].value = "";
         }
         
-        /*else if (fieldname === "img") {
+        else if (fieldname === "img") {
             testImage();
-        }*/
+        }
         
         else {
             count--;
@@ -197,7 +189,7 @@ function validateToDelete() {
     return false;
 }
 
-/*function testImage() {
+function testImage() {
         document.getElementById("imageUrl").src = document.getElementById("img").value;
 }
 
@@ -211,22 +203,23 @@ function errorCallback() {
 
 function loadCallback() {
     window.alert("Image URL is valid, you can proceed.");
-}*/
+}
 
 
 function isVerified() {
-
-    user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
-
+    var v = "isVerified"
     
-    var v = user.IsVerified.value;
     
-    if (v === 0) {
-        document.getElementsByTagName("p").innerHTML = "verified";
+    console.log(user[v]);
+    
+    if (user[v] === false) {
+        document.getElementById("isVer").innerHTML = "not verified";
+        document.getElementById("verify").style.display = "block";
     }
     
     else {
-        document.getElementsByTagName("p").innerHTML = "not verified"
+        document.getElementById("isVer").innerHTML = "verified";
+        document.getElementById("verify").style.display = "none";
     }
 }
 /*var modal = document.querySelector(".modald");
