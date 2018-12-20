@@ -42,20 +42,34 @@ function URLContainsParam(){
 //Retrieves user data
 function getUserData(){
 	if(URLContainsParam())
-		var data = makerequestnopar("http://10.3.50.6/api/user?userID=" + userID, "GET", token);
+		makerequestnopar("http://10.3.50.6/api/user?userID=" + userID, "GET", token, function(data){
+			username = data.username;
+				description = data.description;
+				pictureURL = data.pictureURL;
+				setContent();
+			}, true);
 	else
-		var data = makerequestnopar("http://10.3.50.6/api/user", "GET", token);
-	username = data.username;
-	description = data.description;
-	pictureURL = data.pictureURL;
+		makerequestnopar("http://10.3.50.6/api/user", "GET", token, function(data){
+				username = data.username;
+				description = data.description;
+				pictureURL = data.pictureURL;
+				setContent();
+		},true);
+
 }
 
 //Retrieves selling portfolios
 function getUserPortfolios(){
 	if(URLContainsParam())
-		portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&userId=" + userID, "GET", token);
+		makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&userId=" + userID, "GET", token, function(data){
+			portfolios = data;
+			setContent();
+		}, true);
 	else
-		portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true", "GET", token);
+		portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true", "GET", token, function(data){
+			portfolios = data;
+			setContent();
+		}, true);
 }
 
 //Shows portfolios on the site
@@ -104,5 +118,5 @@ function setContent(){
 }
 
 $(document).ready(function() {
-	setContent();
+
 });
