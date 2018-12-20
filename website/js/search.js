@@ -26,15 +26,11 @@ $(document).ready(function() {
 
 		  },
 		    success: function(data){
-		    	console.log(data);
 		    	results = data;
 		  		callBack();
 		  
 		    },
 		    error: function(data, ajaxOptions, thrownError){
-		        console.log(data);
-		    	console.log(data.status);
-		    	console.log(thrownError);
 		    	noResults();
 		    }
 		});
