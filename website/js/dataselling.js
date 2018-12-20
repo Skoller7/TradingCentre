@@ -144,6 +144,10 @@ loadPage : function(){
       dataType: 'json',
       success: function(data){
         console.log(data);
+        makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token, function(a){
+          orderdata = a;
+        }, false);
+        console.log(orderdata);
           },
       error: function(xhr, ajaxOptions, thrownError){
           console.log(xhr.status);
@@ -151,6 +155,7 @@ loadPage : function(){
           console.log(xhr);
       }
   });
+
 
     //if succesfull show the succes text :
     $('#saveOrder').show();
