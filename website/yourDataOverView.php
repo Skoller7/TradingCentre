@@ -56,7 +56,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">No sell portfolios found.</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">Data is already for sale</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -67,6 +67,7 @@
                   Feel free to head over to our <a href="#">FAQ</a> or <a href="journal.php">journal page</a> to create your own selling portfolio.
                 </div>
                 <div class="modal-footer">
+                  <button type="button" name="button" class="btn btn-primary"> <a href=""></a> </button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>

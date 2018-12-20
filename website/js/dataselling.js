@@ -6,9 +6,12 @@ makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "
   orderdata = a;
 }, false); //retrieving all curretn orders
 console.log(orderdata);
-var isSold = orderdata.IsForSale;
-console.log(orderdata.IsForSale);
-console.log(isSold);
+var isSoldCheck;
+$('.makemodal').hide();
+// makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + aportfolioid, "GET", token, function(a){
+//   isSoldCheck = a;
+// }, false);
+
 
 var selectedOrder = orderdata[0]; //selected order == het eerste order in de lijst.
 
@@ -64,11 +67,12 @@ loadPage : function(){
 //requesting portfolio information
 
   //Portfolio datamembers
+  console.log(data);
   name = data.name;
   description = data.description;
   goal = data.goal;
   imgurl = data.imgURL;
-
+  console.log(data.isForSale);
   //order datamembers :
   var imgurlOrder = selectedOrder.imgURL;
 
@@ -106,7 +110,19 @@ loadPage : function(){
   }
   teller++;
 } //end if teller == 0;
+
+  if(data.isForSale == true){
+    //modaal met waarschuwing dat je niets meer kan aanpassen.
+    $('#exampleModalCenter').show();
+    $('.makemodal').click();
+    $('.btn-save-order').hide();
+    $('.btn-create-contract-request').hide();
+  }
+
 }, true);
+
+
+
 },
 
 
