@@ -66,7 +66,7 @@ function getUserPortfolios(){
 			setContent();
 		}, true);
 	else
-		portfolios = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true", "GET", token, function(data){
+		makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true", "GET", token, function(data){
 			portfolios = data;
 			setContent();
 		}, true);
@@ -77,11 +77,11 @@ function addPortfolioCards(portfolioData){
 	 var portCardsHTML = $('.content-datacenter').html();
 	 portCardsHTML += `
 	 <div class="card">
-    	<img src="${portfolioData.imgURL}" alt="${portfolioData.name}" class="img-fluid" height="50%"> 
+    	<img src="${portfolioData.imgURL}" alt="${portfolioData.name}" class="img-fluid" height="50%">
     	<div class="card-body">
         	<h5 class="card-title">${portfolioData.name}</h5>
         	<p class="card-text">
-        	${portfolioData.description} 
+        	${portfolioData.description}
         	</p>
         	<a href="datacenternew.php?portfolioId=${portfolioData.portfolioId}" class="btn btn-primary">Buy data</a>
     	</div>
@@ -97,8 +97,8 @@ function setContent(){
 		$('#user-name').text(defaultUsername);
 
 	if(description)
-		$('#user-description').text(description);	
-	else 
+		$('#user-description').text(description);
+	else
 		$('#user-description').text(defaultDescription);
 
 	if(pictureURL){
