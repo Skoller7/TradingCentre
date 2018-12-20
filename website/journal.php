@@ -1,4 +1,4 @@
-<?php 
+<?php
   include ('checkToken.php');
   $showEmailVerificationModal = false;
   if(isset($_SESSION['verificationKey']) && isset($_SESSION['email']) && isset($_SESSION['username'])){
@@ -12,7 +12,7 @@
       unset($_SESSION['email']);
       unset($_SESSION['verificationKey']);
       unset($_SESSION['username']);
-      mail($email,$emailHeader,$emailBody,implode("\r\n", $headers));    
+      mail($email,$emailHeader,$emailBody,implode("\r\n", $headers));
       $showEmailVerificationModal = true;
     }
   }
@@ -37,7 +37,7 @@
 </head>
 <body onload="addbasichart()">
 <?php
-  include_once("header.html");  
+  include_once("header.html");
 ?>
 <div class="containter-fluid">
 <div class="row">
@@ -52,6 +52,7 @@
                         <ul id="portfolios-ul">
                         </ul>
                     </div>
+                    <li id='updatekey'>add key</li>
                     <li id="addorder">Add orders to current portfolio</li>
                     <div id="rightbottom">
                         <div class="footer-port" id="footer-port">
@@ -163,7 +164,7 @@
     </div>
     <div class="row" id="footertext" style="border-top:2px solid #fff;">
         <div class="col-md-12 col-sm-12 col-xs-12" id="copyright">
-        	Tradingcenter &copy; 2019 
+        	Tradingcenter &copy; 2019
         </div>
     </div>
     <script src="js/footer.js"></script>
@@ -209,7 +210,7 @@
     	</div>
 		</div>
 </div>
-    
+
     <!-- add description and image to url!-->
     <div class="modal fade" id="Mupdateorder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
@@ -263,7 +264,7 @@
                         </tr>
                     </thead>
                     <tbody id="all-orders-table-add">
-                        
+
                     </tbody>
                   </table>
       				<span class="modalErrorMsg" id="erroraddorder"></span>

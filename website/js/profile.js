@@ -84,7 +84,7 @@ function addPortfolioCards(portfolioData){
         	<p class="card-text">
         	${portfolioData.description}
         	</p>
-        	<a href="datacenternew.php?portfolioId=${portfolioData.portfolioId}" class="btn btn-primary">Buy data</a>
+        	<a href="datacenternew.php?portfolioId=${portfolioData.portfolioId}" class="btn btn-primary">View data</a>
     	</div>
 	</div>`
 	$('.content-datacenter').html(portCardsHTML);

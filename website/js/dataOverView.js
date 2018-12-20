@@ -197,23 +197,29 @@ calcProfit: function(){
 
 getcard: function(){console.warn();
 
-  makerequestnopar("http://10.3.50.6/api/portfolio/sold?portfolioId=4", "GET", token, function(a){
-    // dataDatum = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    // dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];
-    console.log(a);
-    for(var g = 0; g < a.length; g++){
-    dataDatum.push(a[g].month);
-    dataInput.push(a[g].amount);
-    console.log(a[g]);
-  }
-
-  }, false);
-
-  console.log(dataDatum);
-  console.log(dataInput);
-
     var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token, function(data)
     {
+      console.log(data);
+      for(var f = 0; f < data.length; f++){
+      makerequestnopar("http://10.3.50.6/api/portfolio/sold?portfolioId="+ data[f].portfolioId, "GET", token, function(a){
+        // dataDatum = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        // dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];
+        if(a != null){
+        for(var g = 0; g < a.length; g++){
+
+          if(a[g] != undefined){
+        dataDatum.push(a[g].month);
+        dataInput.push(a[g].amount);
+        console.log(a[g]);
+      }
+      }
+    }
+      }, false);
+    }
+      console.log(dataDatum);
+      console.log(dataInput);
+
+
       if(getstatus() == 401){
           openMLogin();
       }else{
@@ -223,8 +229,14 @@ getcard: function(){console.warn();
               arrayforsaleown = data;
               App.setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
           }
-      }
-    }, true);
+        }
+
+
+      console.log("test");
+
+
+
+    }, false);
 },
 
 

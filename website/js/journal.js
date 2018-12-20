@@ -15,7 +15,7 @@ bool create or update portfolio
 */
 var activemodalportdel = 0;
 /*
-elements for display content 
+elements for display content
 */
 var content = document.getElementById("MCreateNoteContent");
 var errorcontent = document.getElementById("ErrorCreateNoteContent");
@@ -98,7 +98,7 @@ modalList.push("MCreateNote");
 modalList.push("MCreatePort");
 modalList.push("Mupdateorder");
 /*
-event listener if input fields change 
+event listener if input fields change
 */
 fromdate.addEventListener("change",getorders);
 todate.addEventListener("change",getorders);
@@ -121,7 +121,7 @@ document.getElementById("noo").addEventListener("click",function (e){
 }
 /*
 show modal go to settings page
-*/
+*//*
 function addapikey(){
     var key = document.getElementById('key');
     var secretkey = document.getElementById('skey');
@@ -138,13 +138,29 @@ function addapikey(){
                 }
             });
         }
-});
-}
+});*/
 function openapikey(){
    	$('#apikey').modal({
 		backdrop: 'static'
 	});
 }
+document.getElementById("updatekey").addEventListener("click",function(){
+  openapikey();
+         var key = document.getElementById('key');
+            var secretkey = document.getElementById('skey');update
+            document.getElementById("changekey").addEventListener("click",function(){
+                var valid = true;
+                document.getElementById("errorkeys").innerHTML = "";
+                if(key.value == ""|| secretkey.value == ""){
+                    document.getElementById("errorkeys").innerHTML = "Both input fieds are required";
+                }else{
+                    var json = {"Name": "BitMEX","Key": key.value,"Secret": secretkey.value,}
+                    makerequest(json,"http://10.3.50.6/api/key","POST",token,function(data){
+                            $('#apikey').modal('toggle');
+                    });
+                }
+            });
+    });
 document.getElementById("changekey").addEventListener("click",function(){
          var key = document.getElementById('key');
             var secretkey = document.getElementById('skey');
@@ -195,7 +211,7 @@ add zero to number smaller then 10
             return number;
         }
 /*
-show modal add  desc and img to image 
+show modal add  desc and img to image
 */
 var idupdate = 0;
 function openupdateorder(e){
@@ -223,7 +239,7 @@ function setimg(){
     imageurlel.setAttribute("src",urlinput.value);
 }
 /*
-close modal add  desc and img to image 
+close modal add  desc and img to image
 */
 document.getElementById("btncloseupdate").addEventListener("click",closeupdateorder);
 document.getElementById("updateorderBCrosse").addEventListener("click",closeupdateorder);
@@ -232,7 +248,7 @@ function closeupdateorder(){
 }
 
 /*
-api call add  desc and img to image 
+api call add  desc and img to image
 */
 document.getElementById("btnupdateorder").addEventListener("click",function (){
     var valid = true;
@@ -246,7 +262,7 @@ document.getElementById("btnupdateorder").addEventListener("click",function (){
         valid = false;
         errorurl.innerHTML = "* This field cannot be empty";
     }else if(!ValidURL(urlinput.value)){
-        valid = false;   
+        valid = false;
         errorurl.innerHTML = "* This must be an url image from tradingview.com";
     }
     if(valid){
@@ -272,7 +288,7 @@ document.getElementById("btnupdateorder").addEventListener("click",function (){
                         errordescription.innerHTML = data;
                     }else if(getstatus() == 401){
                         errordescription.innerHTML = "* Something went wrong try again later";
-                    }  
+                    }
         });
     }
 });
@@ -333,10 +349,10 @@ function sortarray(){
 ex.addEventListener("click",sortarray);
 si.addEventListener("click",sortarray);
 pr.addEventListener("click",sortarray);
-qt.addEventListener("click",sortarray); 
+qt.addEventListener("click",sortarray);
 sy.addEventListener("click",sortarray);
 ti.addEventListener("click",sortarray);
-/* 
+/*
 menu sidebar portfolios
 */
 document.getElementById("porfolios-sub").style.display = "none";
@@ -494,7 +510,7 @@ function setdefaultport(id){
                    setupactiveport(data,id + "port");
                     activeportfolioid = id;
                     getnotes();
-                    getorders(); 
+                    getorders();
         },true);
 }
 /*
@@ -690,7 +706,7 @@ if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
                 currentnoteid = e.target.id;
                 for(var i = 0; i < notesid.length;i++){
                     if(currentnoteid == notesid[i]){
-                      valid = false; 
+                      valid = false;
                        }
                 }
                 if(valid){
@@ -776,7 +792,7 @@ function createport(){
             makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token,function(data){
                 if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
-                    valid = false; 
+                    valid = false;
                 }
             });
         }
@@ -786,7 +802,7 @@ function createport(){
             makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token,function(data){
                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
-                    valid = false; 
+                    valid = false;
                     }
             });
         }
@@ -827,7 +843,7 @@ refresh orders
 refresh.addEventListener("click",refreshorder);
 function refreshorder(){
     makerequestnopar("http://10.3.50.6/api/order/refresh","GET",token,function(data){
-        getorders(); 
+        getorders();
     },true);
 }
 /*
@@ -844,10 +860,10 @@ function getorderscontent2(){
                                     }else{
                                        color = "red";
                                     }
-                            if(!defaultbool){ 
+                            if(!defaultbool){
                                 content2orders.innerHTML += "<div class='card' style='margin:2%;'><div class='card-body'><h4>"+date.substr(0,10)+" " + date.substr(11,5)+" - <span style='color:"+color+"'>" + data[i].side +"</span> - <a href='#' class='edit' id='"+data[i].orderId+"'>Edit order</a> - <a href='#' class='deleteorder' id='"+data[i].orderId+"'>Delete order</a></h4><img src="+data[i].imgURL+" style='width:100%;'/><div style='font-size:17px;'><u>Description:</u> "+data[i].description+"</div></div></div>";
                             }else{
-                                 content2orders.innerHTML += "<div class='card' style='margin:2%;'><div class='card-body'><h4>"+date.substr(0,10)+" " + date.substr(11,5)+" - <span style='color:"+color+"'>" + data[i].side +"</span> - <a href='#' class='edit' id='"+data[i].orderId+"'>Edit order</a></h4><img src="+data[i].imgURL+" style='width:100%;'/><div style='font-size:17px;'><u>Description:</u> "+data[i].description+"</div></div></div>";                               
+                                 content2orders.innerHTML += "<div class='card' style='margin:2%;'><div class='card-body'><h4>"+date.substr(0,10)+" " + date.substr(11,5)+" - <span style='color:"+color+"'>" + data[i].side +"</span> - <a href='#' class='edit' id='"+data[i].orderId+"'>Edit order</a></h4><img src="+data[i].imgURL+" style='width:100%;'/><div style='font-size:17px;'><u>Description:</u> "+data[i].description+"</div></div></div>";
                             }
                     }
             }else{
@@ -869,7 +885,7 @@ content2orders.addEventListener("click",function(e){
                 current2 = e.target.id;
                 for(var i = 0; i < ids2.length;i++){
                     if(ids2[i] == current2){
-                      valid =false;   
+                      valid =false;
                     }
                 }
                     if(valid){
@@ -988,10 +1004,10 @@ function deleteorder(e){
                 current = e.target.id;
                 for(var i = 0; i < ids.length;i++){
                     if(ids[i] == current){
-                      valid =false;   
+                      valid =false;
                     }
                 }
-                
+
                     if(valid){
                         makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
                             getorders();
@@ -1043,8 +1059,8 @@ fetch('http://api.com/file.json')
         .then(function(myJson){
                 dataBinance.push([JSON.stringify(myJson)]);
 })*/
-      
-        
+
+
         for (var i = base; i <= today; i += oneDay) {
             var j = 1;
             var now = new Date(base += oneDay);
@@ -1063,7 +1079,7 @@ fetch('http://api.com/file.json')
             legend:{
               left: 'left',
               data: ['BitMex', 'Binance'],
-              align: 'left'    
+              align: 'left'
             },
             title: {
                 left: 'center',
@@ -1133,7 +1149,7 @@ fetch('http://api.com/file.json')
                 }
             ]
         };
-        myChart.setOption(doubleLine); 
+        myChart.setOption(doubleLine);
 }
 function addbasichart(){
         test();
@@ -1228,11 +1244,11 @@ BasicChart = {
                     }
                 }]
         });
-            
+
         // use configuration item and data specified to show chart
-myChart.setOption(BasicChart);        
+myChart.setOption(BasicChart);
         }, millisecondsToWait);
-        
+
         // based on prepared DOM, initialize echarts instance
         myChart = echarts.init(document.getElementById('main'),'light');
 
@@ -1253,22 +1269,22 @@ function test(){
     }else{
         makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
                 data = obj;
-        },false); 
+        },false);
     }
 }
 }
 
-function addchart(){ 
-        // based on prepared DOM, initialize echarts instance 
+function addchart(){
+        // based on prepared DOM, initialize echarts instance
         var myChart = echarts.init(document.getElementById('main'));
 
-        // specify chart configuration item and data 
-var base = +new Date(1968, 9, 3); 
+        // specify chart configuration item and data
+var base = +new Date(1968, 9, 3);
 var base2 = +new Date(1968,9,4);
-var oneDay = 24 * 3600 * 1000; 
+var oneDay = 24 * 3600 * 1000;
 var date = [];
 var today = +new Date();
-        
+
 var data = [Math.random() * 300];
 for (var i = base2; i < today; i += oneDay) {
     var j = 1;
