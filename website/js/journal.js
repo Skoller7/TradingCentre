@@ -309,19 +309,21 @@ function getport(){
         makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
             ul.innerHTML = "";
             for(var i = 0; i < data.length;i++){
-                var name = document.createTextNode(data[i].name);
-                var li = document.createElement("LI");
-                ul.appendChild(li);
-                li.setAttribute("style","background-color:#3a4e5f");
-                li.setAttribute("id",data[i].portfolioId + "port");
-                li.appendChild(name);
-                if(data[i].isDefault == true){
-                    defaultbool = true;
-                    setdefaultport(data[i].portfolioId);
-                     activeportfolioid = data[i].portfolioId;
+                if(data[i].isForSale == false){
+                    var name = document.createTextNode(data[i].name);
+                    var li = document.createElement("LI");
+                    ul.appendChild(li);
+                    li.setAttribute("style","background-color:#3a4e5f");
+                    li.setAttribute("id",data[i].portfolioId + "port");
+                    li.appendChild(name);
+                    if(data[i].isDefault == true){
+                        defaultbool = true;
+                        setdefaultport(data[i].portfolioId);
+                         activeportfolioid = data[i].portfolioId;
+                    }
+                    var sub = document.getElementById(data[i].portfolioId + "port");
+                    port.push(sub.getAttribute("id"));
                 }
-                var sub = document.getElementById(data[i].portfolioId + "port");
-                port.push(sub.getAttribute("id"));
             }
         });
           //  ppd();
@@ -374,28 +376,21 @@ function addorderstoportfolio(){
         valid = false;
          erroraddorder.innerHTML = "* Check one or more orders to submit";
     }
+    var tel = 0;
     for(var j = 0; j < arrayaddorders.length; j++){
         var json = {
             "OrderId": arrayaddorders[j],
             "PortfolioId": activeportfolioid
         };
         makerequest(json,"http://10.3.50.6/api/portfolio/order","PUT",token,function(data){
-                    if(getstatus() != 201){
-                           valid = false;
-                        }
-                    if(valid && j == arrayaddorders.length){
-                        erroraddorder.innerHTML = "Orders succesfuly added to portfolio";
-                        all = document.getElementById("all-orders-table");
-                        closeaddorder();
+                tel++;
+                if( tel == arrayaddorders.length){
+                    if(getstatus() == 201){
+                    closeaddorder();
                     }else{
-                        if(erroraddorder.innerHTML == ""){
-                            if(getstatus() == 400){
-                                erroraddorder.innerHTML = data;
-                            }else if(getstatus() == 401){
-                                openMLogin();
-                            }
-                        }
+                        erroraddorder.innerHTML = "* Something went wrong";
                     }
+                }
         });
     }
 }
@@ -473,13 +468,23 @@ function setupactiveport(data,id){
 /*
 api call delete or update portfolio
 */
+var portids = [];
 document.getElementById("footer-port").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "LI") {
     if(e.target.id == "header-port-del"){
         openyesno(function(){
-            makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token,function(data){
-                getport();
-            },true);
+            var valid = true;
+            for(var i = 0;i < portids.length;i++){
+                if(portids[i] == activeportfolioid){
+                    valid = false;
+                }
+            }
+            if(valid){
+                makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + activeportfolioid,"DELETE",token,function(data){
+                    getport();
+                },true);
+                portids.push(activeportfolioid);
+            }
         });
     }else if(e.target.id == "header-port-update"){
         activemodalportdel = 1;
@@ -529,7 +534,6 @@ function getnotes(){
                   }
         },true);
 }
-
 /*
 notes
 */
@@ -607,16 +611,28 @@ function createnote(){
 /*
 api call delete and open update note modal
 */
+var notesid = [];
+var currentnoteid;
 document.getElementById("notes-all").addEventListener("click",function(e) {
 if(e.target && e.target.nodeName == "I" && !(isNaN(e.target.id))) {
     var id = e.target.id;
     if(e.target.className == "fa fa-trash"){
-            openyesno(function(e){
-                makerequestnopar("http://10.3.50.6/api/note?noteId=" +id,"DELETE",token,function(data){
-                    if(getstatus() == 200){
-                        getnotes();
-                    }
-                },true);
+            openyesno(function(){
+                var valid = true;
+                currentnoteid = e.target.id;
+                for(var i = 0; i < notesid.length;i++){
+                    if(currentnoteid == notesid[i]){
+                      valid = false; 
+                       }
+                }
+                if(valid){
+                    makerequestnopar("http://10.3.50.6/api/note?noteId=" +id,"DELETE",token,function(data){
+                        if(getstatus() == 200){
+                            getnotes();
+                        }
+                    },true);
+                    notesid.push(currentnoteid);
+                }
             });
       }else{
           content.value = e.target.getAttribute("value");
@@ -664,8 +680,8 @@ errordesc.innerHTML = "";
 errorgoal.innerHTML = "";
  imgurl.value = "";
 errorurlport.innerHTML = "";
-
-	$('#MCreatePort').modal('toggle');
+getport();
+$('#MCreatePort').modal('toggle');
 }
 
 /*
@@ -678,7 +694,6 @@ function createport(){
     errordesc.innerHTML = "";
     errorgoal.innerHTML = "";
     errorurlport.innerHTML = "";
-    
     if(nameport.value == ""){
         errorname.innerHTML = "This field cannot be empty";
         valid = false;
@@ -687,9 +702,9 @@ function createport(){
         errorurlport.innerHTML = "This field must be a correct image url";
         valid = false;
     }
-    if(activemodalportdel == 0){
+    if(document.getElementById("createporttitle").innerHTML == "Create Portfolio"){
         if(valid){
-            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address":null};
+            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": false,"Address":null};
             makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token,function(data){
                 if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
@@ -710,8 +725,7 @@ function createport(){
         activemodalportdel = 0;
     }
     if(valid){
-    McreateportClose();
-    getport();
+        McreateportClose();
     }
 }
 
@@ -777,14 +791,26 @@ function getorderscontent2(){
 /*
 click eventlistener if link is clicked delete or update order
 */
+var ids2 = [];
+var current2;
 content2orders.addEventListener("click",function(e){
     if(e.target.className == "edit"){
         openupdateorder(e);
     }else if(e.target.className == "deleteorder"){
             openyesno(function(){
-                makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+e.target.id+"&portfolioId="+activeportfolioid,"DELETE",token,function(data){
-                    getorderscontent2();
-                },true);
+                var valid = true;
+                current2 = e.target.id;
+                for(var i = 0; i < ids2.length;i++){
+                    if(ids2[i] == current2){
+                      valid =false;   
+                    }
+                }
+                    if(valid){
+                        makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current2+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
+                                                    getorderscontent2();
+                        },true);
+                        ids2.push(current2);
+                    }
             });
     }
 });
@@ -895,11 +921,7 @@ function deleteorder(e){
                 
                     if(valid){
                         makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
-                                                if(content1.style.display == "block" ){
-                                                    getorders();
-                                                }else{
-                                                    getorderscontent2();
-                                                }
+                            getorders();
                         },true);
                         ids.push(current);
                     }
@@ -1144,21 +1166,17 @@ myChart.setOption(BasicChart);
         var data = [];
         
 function test(){
-     $(function(){
-     $.ajax({
-        "async": true,
-        "crossDomain": true,
-        "url": "http://10.3.50.6/api/portfolio/profit?portfolioId=33",
-        "method": "GET",
-        "headers": {
-            "Authorization": "Bearer " + token,
-            "Content-Type": "application/json"
-        },
-        success: function(obj){
-            data = obj;
-        }
+    var id;
+    makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
+            for(var i = 0; i < data.length;i++){
+                if(data[i].isDefault == true){
+                    id = data[i].portfolioId;
+                }
+            }
+            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+id,"GET",token,function(obj){
+                data = obj;
+            });
     });
-});
 }
 }
 function addchart(){ 
