@@ -35,9 +35,8 @@ function autoLogin(username, password){
 
 $(document).ready(function(){
 
+	//Detects if the user is using IE
 	var isIE = /*@cc_on!@*/false || !!document.documentMode;
-	var isEdge = !isIE && !!window.StyleMedia;
-
 	if(isIE)
 		alert("This site is not optimized for Internet Explorer, so your experience may not be as great as intended.\nPlease consider switching over to a more recent browser.");
 
@@ -45,7 +44,7 @@ for(var i = 0; i < document.getElementsByClassName('getStarted').length; i++){
 	document.getElementsByClassName('getStarted')[i].addEventListener("click", openMSignUp);
 }
 
-
+//Code to scroll to promotexts by clicking on the corresponding buttons
 document.getElementById('promoJournalButton').addEventListener("click", scrollToJournal);
 document.getElementById('promoDatacenterButton').addEventListener("click", scrollToDatacenter);
 setSize();
@@ -71,22 +70,24 @@ $(window).resize(function() {
 
 var journalImg = document.getElementById("journalRight");
 
+//Redraws the site when the window is resized
 function setSize(){
 
-var height = $(window).height()
-if(height < 640)
-	height = 640;
-$('.promo').css('height',height);
-
-$('#demoJournal').css('margin-top',height);
-$('#demoJournal').css('height',height);
-$('#demoDatacenter').css('height',height);
-
-var topPosition = parseFloat($('#journalRight').position().top) * 1.54;
-$('#journalImg').css('top',topPosition + 'px');
-topPosition = parseFloat($('#datacenterLeft').position().top) * 1.485;
-$('#datacenterImg').css('top',topPosition + 'px');
+	var height = $(window).height()
+	if(height < 640)
+		height = 640;
+	$('.promo').css('height',height);
+	
+	$('#demoJournal').css('margin-top',height);
+	$('#demoJournal').css('height',height);
+	$('#demoDatacenter').css('height',height);
+	
+	var topPosition = parseFloat($('#journalRight').position().top) * 1.54;
+	$('#journalImg').css('top',topPosition + 'px');
+	topPosition = parseFloat($('#datacenterLeft').position().top) * 1.485;
+	$('#datacenterImg').css('top',topPosition + 'px');
 }
+
 }); 
 
 function verifieEmail(){
