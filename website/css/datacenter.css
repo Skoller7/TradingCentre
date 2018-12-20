@@ -60,12 +60,11 @@ sidebar-portfolio
 #rightbottom{
     z-index:12;
     position: fixed;
-    bottom:0;
+    top:45%;
     right:0; 
 }
 #header-port-del{
     border-radius: 0;
-    float:left;
     background-color: red;
     color:#fff;
     margin:0;
@@ -75,12 +74,11 @@ sidebar-portfolio
 }
 #header-port-update{
     border-radius: 0;
-    float:left;
     color:#fff;
     margin:0;
 }
 #footer-port{
-    float:left;
+   /* float:left;*/
 }
 #changedisplay{
     float:left;
@@ -593,6 +591,38 @@ dropdown
 }
 .errormess{
     color:red;
+}
+.footer-ul-container {
+	float: left;
+}
+
+.footer-ul {
+	text-align: center;
+	color: white;
+	list-style-type: none;
+}
+
+.footer-ul a {
+	color: white;
+}
+
+.footer-ul a:hover {
+	color: white;
+	cursor: pointer;
+
+}
+
+#footerjournal {
+	padding-top: 20px;
+	width: 100%;
+	background-color: #212529;
+}
+
+#copyright {
+	color: white;
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
 }
 
 /*@media screen and (max-height: 450px) {

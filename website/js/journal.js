@@ -413,8 +413,12 @@ if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.ta
         makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token,function(data){
                     setupactiveport(data,e.target.id);
                         activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
-                    if(data.isDefault == true){
-                        defaultbool = true;
+                    if(data.isDefault == true || data.isForSale == true){
+                        if(data.isDefault == true){
+                            defaultbool = true;
+                        }else{
+                            defaultbool = false;
+                        }
                         journalul.style.display = "none";
                     }else{
                         defaultbool = false;
@@ -456,6 +460,8 @@ function setupactiveport(data,id){
         if(data.isDefault != true){
             var idel = document.createElement("li");
             var iup = document.createElement("li");
+            idel.setAttribute("title","Delete current active portfolio");
+            iup.setAttribute("title","Update current active portfolio");
             idel.setAttribute("id","header-port-del");
             iup.setAttribute("id","header-port-update");
             idel.setAttribute("style","padding:10px 20px 10px 20px;");
@@ -463,7 +469,9 @@ function setupactiveport(data,id){
             idel.className = "fa fa-trash";
             iup.className = "fa fa-edit";
             footer.appendChild(idel);
-            footer.appendChild(iup);
+            if(data.isForSale != true){
+                footer.appendChild(iup);
+            }
         }
         var sub = document.getElementById(id);
         for(var i = 0;i < port.length;i++){
@@ -745,6 +753,7 @@ function getordersadd(){
     all = document.getElementById("all-orders-table-add");
     all.innerHTML = "";
     makerequestnopar("http://10.3.50.6/api/order/getNotInPortfolio?portfolioId="+activeportfolioid,"GET",token,function(data){
+        console.log(defaultbool);
         if(data.length > 0){
                 if(!defaultbool){
                     for(var i = 0;i<data.length; i++){
@@ -846,20 +855,22 @@ function getorders(){
                 all.innerHTML = "No orders found";
             }
     },true);
-    checkFooterPosition();
 }
 /*
 set orders in the table
 */
 function setOrders(data,i,defaultbool){
         var tr = document.createElement("tr");
+        tr.setAttribute("style","height:40px;");
         if(data[i].side == "Buy"){
             color = "green";
         }else{
            color = "red";
         }
         tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>";
+        if(all.className == 'all'){
         tr.innerHTML += "<td class='ex'>"+data[i].exchange+"</td>";
+        }
         tr.innerHTML += "<td class='si' style='color:"+color+"'>"+data[i].side+"</td>";
         tr.innerHTML += "<td class='pr'>"+data[i].price+"("+data[i].currency+")</td>";
         tr.innerHTML += "<td class='qt'>"+data[i].orderQty+"</td>";
@@ -878,23 +889,25 @@ function setOrders(data,i,defaultbool){
             jk.setAttribute("id",data[i].orderId);
             a.appendChild(jk);
             if(!forsale){
-             document.getElementById('optionstable');  
-            }
-            if(!forsale || defaultbool){
-                td.appendChild(a);
-                a.addEventListener("click",openupdateorder);
-                if(!defaultbool){
-                    var a2 = document.createElement("a");
-                    a2.setAttribute("class","btn btn-danger");
-                    a2.setAttribute("id",data[i].orderId);
-                    var kj = document.createElement("i");
-                    kj.setAttribute("class","fa fa-trash");
-                    kj.setAttribute("id",data[i].orderId);
-                    kj.setAttribute("style","background-color:red;");
-                    a2.appendChild(kj);
-                    a2.addEventListener("click",deleteorder);
-                    td.appendChild(a2);
+                 document.getElementById("optionstable").style.display = "block";
+                if(data[i].isSold == false){
+                    td.appendChild(a);
+                    a.addEventListener("click",openupdateorder);
+                    if(!defaultbool){
+                        var a2 = document.createElement("a");
+                        a2.setAttribute("class","btn btn-danger");
+                        a2.setAttribute("id",data[i].orderId);
+                        var kj = document.createElement("i");
+                        kj.setAttribute("class","fa fa-trash");
+                        kj.setAttribute("id",data[i].orderId);
+                        kj.setAttribute("style","background-color:red;");
+                        a2.appendChild(kj);
+                        a2.addEventListener("click",deleteorder);
+                        td.appendChild(a2);
+                    }
                 }
+            }else{
+                document.getElementById("optionstable").style.display = "none";
             }
             if(data[i].imgURL == null || data.imgURL == ""){
                 tr.innerHTML += "<td><i class='fa fa-times' style='color:red;'></i></td>";
@@ -1181,7 +1194,7 @@ function test(){
                   activeportfolioid = id[i].portfolioId;
                 }
             }
-            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId=33","GET",token,function(obj){
+            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId=126","GET",token,function(obj){
                 data = obj;
             });
     });
