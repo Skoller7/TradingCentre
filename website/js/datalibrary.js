@@ -1,11 +1,28 @@
    $('.btn-buycheck').hide();
    $('.btn-fault').hide();
-   var urlParams = new URLSearchParams(window.location.search);
-   var aportfolioid = urlParams.get('portfolioId');
+   // var urlParams = new URLSearchParams(window.location.search);
+   // var aportfolioid = urlParams.get('portfolioId');
    var token = getCookie("jwtToken");
-   var data = makerequestnopar("http://10.3.50.6/api/purchase", "GET", token);
-
-   console.log(data);
+   var data2; //received api data will be in this variable.  = makerequestnopar("http://10.3.50.6/api/purchase", "GET", token);
+   var data = [];
+   var cards = document.getElementById("cards");
+   var seemoreother = document.getElementById("see-more-other");
+   $('.makemodal').hide(); // in case i still want to add a modal if the player didn't buy anything.
+   /*
+   array with all for sale portfolios from other users
+   */
+   var arrayforsale;
+   /*
+   array with all for sale portfolios from current user
+   */
+   var arrayforsaleown;
+   /*
+   begin and max for arrays to show, the function setcontentcards will change the value if see more is clicked
+   */
+   var n_own = 0;
+   var max_own = 6;
+   var n_other = 0;
+   var max_other = 6;
 
 
 App = {
@@ -47,6 +64,7 @@ initContract1: function(){
     App.contracts.DataContract.setProvider(App.web3Provider);
     console.log(App.contracts);
     App.isUserBacker();
+    App.getcard();
   })
 },
 
@@ -72,6 +90,92 @@ isUserBacker: function(){
   });
 })
 },
+
+getcard: function(){console.warn();
+    data2 = makerequestnopar("http://10.3.50.6/api/purchase", "GET", token);
+    console.log(data2);
+    for(var j = 0; j < data2.length; j++){
+
+    var dummyvar = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + data2[j].portfolioId ,"GET",token);
+    console.log(dummyvar);
+    data.push(dummyvar);
+  }
+    console.log(data);
+    if(getstatus() == 401){
+        openMLogin();
+    }else{
+        if(getstatus() == 400 || getstatus() == 500 || getstatus() == 501){
+            alert("Something went wrong, please try again later");
+        }else{
+            arrayforsaleown = data;
+            App.setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
+        }
+    }
+},
+
+
+
+setcontentcards: function(arrayport,seemoreid,boolown,max,n){
+    var seemore = document.getElementById(seemoreid);
+    var lengtharray = arrayport.length / 6;
+    lengtharray = lengtharray.toFixed(0);
+    if(lengtharray == 1 || lengtharray == 0){
+        max = arrayport.length;
+    }
+    for(var i = n; i < max;i++){
+          
+                    App.setcard(arrayport,i,boolown);
+          
+    }
+    lengtharray--;
+    seemore.style.display = "none";
+    seemore.innerHTML = "";
+    if(lengtharray > 0){
+            var a = document.createElement("a");
+            a.setAttribute("href","#");
+            a.setAttribute("style","margin:0 auto;");
+            a.innerHTML = "See more";
+            a.addEventListener("click",function(){
+                n = max;
+                if(lengtharray > 1){
+                    max = max + 6;
+                }else{
+                    max = arrayport.length;
+                }
+                App.setcontentcards(arrayport,seemoreid,boolown,max,n);
+            });
+            seemore.style.display = "block";
+            seemore.appendChild(a);
+    }
+},
+
+
+setcard: function(data,i){
+               var card = document.createElement("div");
+                card.setAttribute("class","col-md-3 col-sm-12 card");
+                var img = document.createElement("img");
+                img.setAttribute("alt","image of trade");
+                img.setAttribute("class","img-fluid");
+                img.setAttribute("height","50%");
+                img.setAttribute("src",data[i].imgURL);
+                card.appendChild(img);
+                var cardbody = document.createElement("div");
+                cardbody.setAttribute("class","card-body");
+
+
+
+                  cardbody.innerHTML +=  "<h5 class='card-title'>"+data[i].name+"</h5>";
+                  cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count: bla"+  +"<br />Profit made: blabla" +  +"</p>";
+                  cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
+                  card.appendChild(cardbody);
+                  cards.appendChild(card);
+
+}
+
+
+
+
+
 
 }
 
