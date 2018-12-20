@@ -35,6 +35,7 @@ function autoLogin(username, password){
 
 $(document).ready(function(){
 
+	//https://stackoverflow.com/questions/9847580/how-to-detect-safari-chrome-ie-firefox-and-opera-browser/9851769
 	//Detects if the user is using IE
 	var isIE = /*@cc_on!@*/false || !!document.documentMode;
 	if(isIE)

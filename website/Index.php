@@ -34,7 +34,7 @@
 		<?php 
 			include('header.html');
 		?>
-		
+		<!-- https://keithclark.co.uk/articles/pure-css-parallax-websites/ -->
 	<div class="parallax" style="transform-style: preserve-3d;">
 		<div id="background" class="parallax__layer parallax__layer--back">
 			<div id="leftPanel" class="showcasePanel">
