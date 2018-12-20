@@ -63,12 +63,12 @@ function getUserPortfolios(){
 	if(URLContainsParam())
 		makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&userId=" + userID, "GET", token, function(data){
 			portfolios = data;
-			setContent();
+			setPortfolios();
 		}, true);
 	else
 		makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true", "GET", token, function(data){
 			portfolios = data;
-			setContent();
+			setPortfolios();
 		}, true);
 }
 
@@ -109,12 +109,15 @@ function setContent(){
 		$('#user-img').attr("src", "img/profile.png");
 		$('#user-img').attr("alt", "default profile picture");
 	}
+}
 
+function setPortfolios(){
 	if(portfolios.length && portfolios != "error: ")
 		for(var i = 0; i < portfolios.length; i++)
 			addPortfolioCards(portfolios[i]);
 	else
 		$('#no-portfolio').css("visibility", "visible");
+
 }
 
 $(document).ready(function() {
