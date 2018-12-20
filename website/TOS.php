@@ -4,7 +4,7 @@
     <title>Guide</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/guides.css">
+    <link rel="stylesheet" href="css/guide.css">
     <link rel="stylesheet" href="css/datacenter.css">
     <link rel="stylesheet" href="bootstrap-4.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
