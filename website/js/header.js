@@ -513,7 +513,6 @@ function allowCookies(){
 }
 //removes the cookie banner when the user agrees with cookies
 function checkAllowCookies(){
-	console.log(getCookie('allowCookies'));
 	if(!getCookie('allowCookies')){
 		$('#banner').css('visibility','visible');
 	}
