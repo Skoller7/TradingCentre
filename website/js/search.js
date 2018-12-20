@@ -1,15 +1,18 @@
 $(document).ready(function() {
 
 	var results;
-	getUsers(function(){
-		makeSearchResultElements();
-	})
-
-
-	$("#search").append(document.createTextNode(search));
-	$("#search").css("margin-top","10%");
-	
-
+	if(search){
+		getUsers(function(){
+			makeSearchResultElements();
+		});
+		//sets the searches term in the title of the page
+		$("#searchedUsername").append(document.createTextNode(search));
+	}
+	else{
+		$("#searchedUsername").append(document.createTextNode(search));
+		noResults();
+	}
+	//api call to get all users that have the searched text in there name
 	function getUsers(callBack){
 		 $.ajax({
 			"async": true,
@@ -19,7 +22,7 @@ $(document).ready(function() {
 			type: 'GET',
 			"headers": {
 			    "Content-Type": "application/json",
-			    "Authorization": "Bearer " + jwtToken,
+			    "Authorization": "Bearer " + getCookie('jwtToken'),
 
 		  },
 		    success: function(data){
@@ -32,12 +35,13 @@ $(document).ready(function() {
 		        console.log(data);
 		    	console.log(data.status);
 		    	console.log(thrownError);
+		    	noResults();
 		    }
 		});
 		
 	}
 
-
+	//makes the user elements from the data that getUsers() provides
 	function makeSearchResultElements(){
 
 		console.log(results.length);
@@ -45,7 +49,7 @@ $(document).ready(function() {
 		if(results.length != 0){
 
 			for(var i = 0; i < results.length; i++){
-
+				//creats a user element
 			    var name = results[i].username;
 			    var e = document.createElement("DIV");
 			    var link = document.createElement("A");
@@ -62,7 +66,8 @@ $(document).ready(function() {
 			    }
 			    img.setAttribute("class","searchImg");   
 			    e.appendChild(img);
-			   
+			   	
+			   	//highligths the search term in the username
 			    var indexOfsearch = [];
 			    var count = 0;
 			    do{
@@ -107,12 +112,15 @@ $(document).ready(function() {
 			}
 		}
 		else{
-			console.log("test");
-			var div = document.createElement("DIV");
-			div.setAttribute("class","noResultsText");
-			div.appendChild(document.createTextNode("No search results found, try again."));
-			document.getElementById("user").appendChild(div);
+			noResults();
 		}
 		document.getElementById('footer').style.top = null;
+	}
+	//creates a message for when there are no users provided from getUsers()
+	function noResults(){
+		var div = document.createElement("DIV");
+		div.setAttribute("class","noResultsText");
+		div.appendChild(document.createTextNode("No search results found, try again."));
+		document.getElementById("user").appendChild(div);
 	}
 });
