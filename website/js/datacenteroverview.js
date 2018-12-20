@@ -50,7 +50,7 @@ function getcard(){
 get for sale portfolios from other users
 */
 function getcardhigh(){
-    makerequestnopar("http://10.3.50.6/api/portfolio/forsale","GET",token,function(data){
+    makerequestnopar("https://10.3.50.6/api/portfolio/forsale","GET",token,function(data){
            if(getstatus() == 401){
                 openMLogin();
             }else{
@@ -132,7 +132,7 @@ function setcard(data,i){
 get username selling portfolio
 */
 function getusername(userid,id){
-    makerequestnopar("http://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
+    makerequestnopar("https://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
       document.getElementById(id).innerHTML = data.username;
     },true);
 }

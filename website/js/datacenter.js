@@ -91,7 +91,7 @@ checkportissell();
 check if portfolio is for sale
 */
 function checkportissell(){
-    makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true&portfolioId="+aportfolioid,"GET",token,function(data){
+    makerequestnopar("https://10.3.50.6/api/portfolio?soldOnly=true&portfolioId="+aportfolioid,"GET",token,function(data){
             if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                     cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                 }else if(data.address == null || data.address == ""){
@@ -101,7 +101,7 @@ function checkportissell(){
                     imgdesc = [];
                     orderid = [];
                     if(overview){
-                                makerequestnopar("http://10.3.50.6/api/order/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
+                                makerequestnopar("https://10.3.50.6/api/order/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
                                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                                          cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                                     }else if(getstatus() == 404){
@@ -218,7 +218,7 @@ button.addEventListener("click",function(){
     }else{
         if(overview){
         var json = {"OrderId": orderid[n],"Message": textarea.value};
-        makerequest(json,"http://10.3.50.6/api/ordercomment","PUT",token,function(data){
+        makerequest(json,"https://10.3.50.6/api/ordercomment","PUT",token,function(data){
             if(getstatus() != 200){
                 textarea.style.border = "1px solid red";
                  diverror.innerHTML ="Error: " + xhr.responseText;
@@ -247,13 +247,13 @@ delete comment from portfolio if purchased from the order
 */
 function deletecomments(e){
     if(overview){
-            makerequestnopar("http://10.3.50.6/api/ordercomment?commentId="+e.target.id,"DELETE",token,function(data){
+            makerequestnopar("https://10.3.50.6/api/ordercomment?commentId="+e.target.id,"DELETE",token,function(data){
                     if(getstatus() == 200){
                         getComments();
                     }
            },true);
     }else{
-            makerequestnopar("http://10.3.50.6/api/portfoliocomment?commentId="+e.target.id,"DELETE",token,function(data){
+            makerequestnopar("https://10.3.50.6/api/portfoliocomment?commentId="+e.target.id,"DELETE",token,function(data){
                     if(getstatus() == 200){
                         getComments();
                     }
@@ -293,14 +293,14 @@ function updatecomments(e){
         }else{
             if(overview){
                 var json = {"CommentId": e.target.id,"Message": text.value};
-                makerequest(json,"http://10.3.50.6/api/ordercomment","POST",token,function(data){
+                makerequest(json,"https://10.3.50.6/api/ordercomment","POST",token,function(data){
                     if(getstatus() == 200){
                             getComments();
                         }
                 });
             }else{
                  var json = {"CommentId": e.target.id,"Message": text.value};
-                makerequest(json,"http://10.3.50.6/api/portfoliocomment","POST",token,function(data){
+                makerequest(json,"https://10.3.50.6/api/portfoliocomment","POST",token,function(data){
                               if(getstatus() == 200){
                                 getComments();
                             }  
@@ -315,7 +315,7 @@ get comments from portfolio if portfolio is not purchased else commments form or
 function getComments(){
             allcomments.innerHTML = "";
             if(overview){
-                makerequestnopar("http://10.3.50.6/api/order/comment?orderId="+orderid[n],"GET",token,function(data){
+                makerequestnopar("https://10.3.50.6/api/order/comment?orderId="+orderid[n],"GET",token,function(data){
                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                             allcomments.innerHTML = "No comments found";
                         }else{
@@ -331,7 +331,7 @@ function getComments(){
 
                 },true);
             }else{
-                makerequestnopar("http://10.3.50.6/api/portfolio/comment?portfolioId="+aportfolioid,"GET",token,function(data){
+                makerequestnopar("https://10.3.50.6/api/portfolio/comment?portfolioId="+aportfolioid,"GET",token,function(data){
                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                             allcomments.innerHTML = "No comments found";
                         }else{
@@ -392,7 +392,7 @@ function setComments(i,data){
 get userid from current logged in user
 */
 function getuserid(userid,commentid){
-        makerequestnopar("http://10.3.50.6/api/user","GET",token,function(data){
+        makerequestnopar("https://10.3.50.6/api/user","GET",token,function(data){
             if(getstatus() == 200 ){
                 if(userid = data.userId){
                         var divfooter = document.createElement("div");
@@ -426,7 +426,7 @@ document.getElementById("portoverview").addEventListener("click",function(){
 get current user
 */
 function getcurrentuser(succes){
-    makerequestnopar("http://10.3.50.6/api/user","GET",token,function(data){
+    makerequestnopar("https://10.3.50.6/api/user","GET",token,function(data){
         currentuserid = data.userId;
         currentusername = data.username;
         succes();
@@ -436,7 +436,7 @@ function getcurrentuser(succes){
 get username comment
 */
 function getusername(userid,id){
-    makerequestnopar("http://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
+    makerequestnopar("https://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
         document.getElementById(id).innerHTML = data.username;
     },true);
 }
@@ -444,7 +444,7 @@ function getusername(userid,id){
 get user information on user id
 */
 function getUser(userid){
-    makerequestnopar("http://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
+    makerequestnopar("https://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
         return false;
     }else{

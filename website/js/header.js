@@ -200,7 +200,7 @@ function loginCall(usernameInput, passwordInput){
     $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: 'http://10.3.50.6/api/user/login',
+  		url: 'https://10.3.50.6/api/user/login',
         type: 'POST',
         "headers": {
     		"Content-Type": "application/json"
@@ -239,7 +239,7 @@ function signUpCall(){
     $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: 'http://10.3.50.6/api/user/register',
+  		url: 'https://10.3.50.6/api/user/register',
         type: 'POST',
         "headers": {
     		"Content-Type": "application/json"
@@ -370,7 +370,7 @@ function getJwtToken(dataSignUp,usernameInput, passwordInput){
     $.ajax({
     	"async": true,
   		"crossDomain": true,
-  		url: 'http://10.3.50.6/api/user/login',
+  		url: 'https://10.3.50.6/api/user/login',
         type: 'POST',
         "headers": {
     		"Content-Type": "application/json"

@@ -92,12 +92,12 @@ initContract1: function(){
 // },
 
 getcard: function(){console.warn();
-    makerequestnopar("http://10.3.50.6/api/purchase", "GET", token, function(data2){
+    makerequestnopar("https://10.3.50.6/api/purchase", "GET", token, function(data2){
 
     console.log(data2);
     for(var j = 0; j < data2.length; j++){
 
-    makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + data2[j].portfolioId ,"GET",token, function(dummyvar){
+    makerequestnopar("https://10.3.50.6/api/portfolio?portfolioId=" + data2[j].portfolioId ,"GET",token, function(dummyvar){
 
     console.log(dummyvar);
     adressen.push(dummyvar.address);

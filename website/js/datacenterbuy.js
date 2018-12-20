@@ -2,7 +2,7 @@ var token = getCookie("jwtToken");
 var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 var cportfolio;
-makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ aportfolioid , "GET" , token, function(a){
+makerequestnopar("https://10.3.50.6/api/portfolio?portfolioId="+ aportfolioid , "GET" , token, function(a){
   cportfolio = a;
 }, false); //retrieving the data of this portfolio.
 console.log(cportfolio);
@@ -76,7 +76,7 @@ createBuyRequest: function(){
       console.log("buy request completed");
       $('#buying-succes').text("You succesfully bought the data!");
 
-      makerequestnopar("http://10.3.50.6/api/purchase?portfolioId=" + aportfolioid , "POST" , token);
+      makerequestnopar("https://10.3.50.6/api/purchase?portfolioId=" + aportfolioid , "POST" , token);
 
     //   $.ajax({
     //     "async": true,
