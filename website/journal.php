@@ -60,7 +60,7 @@
                     <div id="rightbottom">
                         <div class="footer-port" id="footer-port">
                         </div>
-                        <li id="changedisplay" style='padding: 10px 20px 10px 20px;' class='fa fa-desktop'></li>
+                        <li id="changedisplay" style='padding: 10px 20px 10px 20px;' class='fa fa-desktop' title="change display of journal"></li>
                     </div>
                     <li id="BCreateNote">Create note</li>
                     <!--<li class="notes-header" id="notes"><a href="#">All Notes<i id="notes-arrow" class="fa fa-angle-right"></i></a></li>
@@ -87,7 +87,7 @@
 
         </div>
         <h3>Orders</h3>
-        <div class="info-content" id="info-content">
+        <div class="info-content" id="info-content" style='margin-right:2%;'>
             <div class="table-responsive">
                 <label>Amount</label>
                 <select id="amount">
@@ -135,6 +135,44 @@
 
         </div>
         </div>
+<div id="footerjournal">
+    <div class="row" id="footertext" style="display: flex;">
+        <div class="col-md-4 col-sm-12 col-xs-12 footer-ul-container">
+        	<ul class="footer-ul">
+	            <li><h3>INFORMATION</h3></li>
+	            <li><a href="about.php">about us</a></li>
+	            <li><a href="guide.php">guides</a></li>
+	            <li><a href="faq.php">FAQ</a></li>
+        	</ul>
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12 footer-ul-container">
+	        <ul class="footer-ul">
+	            <li><h3>LINKS</h3></li>
+	            <li><a href="index.php">index</a></li>
+	            <li><a href="journal.php">journal</a></li>
+	            <li><a href="datacenternew.php">datacenter</a></li>
+	            <li><a href="boughtdata.php">bought data</a></li>
+	            <li><a href="profile.php">profile</a></li>
+	        </ul>
+        </div>
+        <div class="col-md-4 col-sm-12 col-xs-12 footer-ul-container">
+	        <ul class="footer-ul">
+	            <li><h3>ACCOUNT</h3></li>
+	            <div id="accountLinks">
+	            	<li><a id="footerSignup">sign up</a></li>
+	            	<li><a id="footerLogin">login</a></li>
+	            </div>
+	        </ul>
+        </div>
+    </div>
+    <div class="row" id="footertext" style="border-top:2px solid #fff;">
+        <div class="col-md-12 col-sm-12 col-xs-12" id="copyright">
+        	Tradingcenter &copy; 2019 
+        </div>
+    </div>
+    <script src="js/footer.js"></script>
+</div>
+
     </div>
 </div>
 </div>
@@ -197,7 +235,6 @@
                     <thead>
                       <tr class="head-td">
                         <th>OrderId</th>
-                        <th>Exchange</th>
                           <th >Side</th>
                           <th >Price</th>
                           <th>Quantity</th>
@@ -278,7 +315,6 @@
     	</div>
 		</div>
 </div>
-    <?php include("footer.html"); ?>
     <script type="text/javascript" src="js/journal.js"></script>
     <?php
       if($showEmailVerificationModal){

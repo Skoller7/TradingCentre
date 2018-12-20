@@ -129,7 +129,13 @@ function checkportissell(){
                                     }else if(getstatus() == 404){
                                         cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: no orders found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                                     }else{
-                                    if(purchased){
+                                        var booluser = false;
+                                        makerequestnopar("http://10.3.50.6/api/user","GET",token,function(user){
+                                                if(data.userId == user.userId){
+                                                    booluser = true;
+                                                }
+                                            },false);
+                                    if(purchased || booluser){
                                             for(var i = 0;i < order.length; i++){     
                                                 imgsrc[i] = order[i].imgURL;
                                                 imgdesc[i] =  order[i].description;
@@ -142,11 +148,11 @@ function checkportissell(){
                                                 orderid[i] = order[i].orderId;
                                             }
                                     }
-                                            if(imgdesc.length > 1){
-                                                setbtn();
-                                            }
-                                            getUser(data.userId);
-                                            setcontentdatacenter();
+                                        if(imgdesc.length > 1){
+                                            setbtn();
+                                        }
+                                        getUser(data.userId);
+                                        setcontentdatacenter();
                                     }
                                 },true);
                 },true);
@@ -209,7 +215,6 @@ function setcontentdatacenter(){
         getComments();
     }
     cont.appendChild(similar);
-    checkFooterPosition(); 
 }
 /*
 adds comment to portfolio if user not purchased the current portfolio otherwise comment will be added to order
@@ -336,6 +341,8 @@ function getComments(){
                                 allcomments.innerHTML = "No comments found";
                             }
                         }
+                            checkFooterPosition();
+
                 },true);
             }else{
                 makerequestnopar("http://10.3.50.6/api/portfolio/comment?portfolioId="+aportfolioid,"GET",token,function(data){
@@ -350,6 +357,8 @@ function getComments(){
                                 allcomments.innerHTML = "No comments found";
                             }
                         }
+                            checkFooterPosition();
+
                 },true);
             }
 }
