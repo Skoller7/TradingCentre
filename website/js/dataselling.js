@@ -252,7 +252,40 @@ loadPage : function(){
           }
       });
 
+      var orderdata2 = makerequestnopar("http://10.3.50.6/api/order/get?portfolioId=" + aportfolioid, "GET", token);
+
+      for(var x = 0; x < orderdata2.length; x++){
+      var orderjsondata = {
+          "OrderId" : orderdata2[x].orderId,
+          "Description": orderdata2[x].description,
+          "ImgURL" : orderdata2[x].imgURL,
+          "IsSold" : true
+        }
+
+      $.ajax({
+        "async": true,
+          "crossDomain": true,
+          url: "http://10.3.50.6/api/order",
+        type: "POST",
+        "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + token
+          },
+          "data": JSON.stringify(orderjsondata),
+        dataType: 'json',
+        success: function(data){
+          console.log(data);
+            },
+        error: function(xhr, ajaxOptions, thrownError){
+            console.log(xhr.status);
+            console.log(thrownError);
+            console.log(xhr);
+        }
+    });
+
+  }
     })
+
 
 
        });
