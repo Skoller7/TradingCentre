@@ -2,7 +2,7 @@
 	session_start();
 	if(isset($_POST['jwtToken'])){
 		$_SESSION['jwtToken'] = $_COOKIE['jwtToken'];
-		$_SESSION['jwtTokenExpireTime'] =  $_COOKIE['jwtTokenExpireTime'];
+		$_SESSION['jwtTokenExpireTime'] = $_COOKIE['jwtTokenExpireTime'];
 	}
 	//checks that the session jwtToken is set and if the cookie jwtToken is not not the same it wil put the session token in the cookie
 	//if the session token is expired it wil redirect te user to the index page
@@ -23,8 +23,8 @@
 		}
 	}
 	else{
-		if(isset($_COOKIE['jwtToken'])){
-			if(!empty($_COOKIE['jwtToken'])){
+		if(isset($_COOKIE['jwtToken']) && isset($_COOKIE['jwtTokenExpireTime'])){
+			if(!empty($_COOKIE['jwtToken']) && !empty($_COOKIE['jwtTokenExpireTime'])){
 				echo "<head>";
 				echo "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>";
 				echo "</head>";
