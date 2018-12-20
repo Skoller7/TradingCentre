@@ -1,40 +1,40 @@
 $(document).ready(function() {
 
-var results;
-getUsers(function(){
-	makeSearchResultElements();
-})
+	var results;
+	getUsers(function(){
+		makeSearchResultElements();
+	})
 
 
-$("#search").append(document.createTextNode(search));
-$("#search").css("margin-top","10%");
+	$("#search").append(document.createTextNode(search));
+	$("#search").css("margin-top","10%");
 
-function getUsers(callBack){
-	 $.ajax({
-		"async": true,
-		"crossDomain": true,
-		url: 'http://10.3.50.6/api/user/search?username=' + search,
-		timeout : 0,
-		type: 'GET',
-		"headers": {
-		    "Content-Type": "application/json",
-		    "Authorization": "Bearer " + jwtToken,
+	function getUsers(callBack){
+		 $.ajax({
+			"async": true,
+			"crossDomain": true,
+			url: 'http://10.3.50.6/api/user/search?username=' + search,
+			timeout : 0,
+			type: 'GET',
+			"headers": {
+			    "Content-Type": "application/json",
+			    "Authorization": "Bearer " + jwtToken,
 
-	  },
-	    success: function(data){
-	    	console.log(data);
-	    	results = data;
-	  		callBack();
-	  
-	    },
-	    error: function(data, ajaxOptions, thrownError){
-	        console.log(data);
-	    	console.log(data.status);
-	    	console.log(thrownError);
-	    }
-	});
-	
-}
+		  },
+		    success: function(data){
+		    	console.log(data);
+		    	results = data;
+		  		callBack();
+		  
+		    },
+		    error: function(data, ajaxOptions, thrownError){
+		        console.log(data);
+		    	console.log(data.status);
+		    	console.log(thrownError);
+		    }
+		});
+		
+	}
 
 
 	function makeSearchResultElements(){
@@ -49,7 +49,8 @@ function getUsers(callBack){
 			    var e = document.createElement("DIV");
 			    var link = document.createElement("A");
 				e.setAttribute("class","searchResult");
-			    link.setAttribute("href","journal.php?user=" + results[i].username);
+			    link.setAttribute("href","profile.php?userID=" + results[i].userId);
+			    link.setAttribute("class","searchLink");
 			    var img = document.createElement("IMG");
 			    img.setAttribute("alt","profile picture");
 			    if(results[i].profilePicture == null){
@@ -58,7 +59,6 @@ function getUsers(callBack){
 			    else{
 			    	img.setAttribute("src",results[i].username);
 			    }
-			    //img.setAttribute("src","data:image/png;base64,"+results[i].profilePicture);
 			    img.setAttribute("class","searchImg");   
 			    e.appendChild(img);
 			   
@@ -101,20 +101,19 @@ function getUsers(callBack){
 			    		link.appendChild(document.createTextNode(name.substr((name.length - name.length), name.length)));
 			    	}
 			    }
-			    /*
-			    e.addEventListener("click",function(){
-			    	//document.getElementById('profilePicture').setAttribute("src","data:image/png;base64,"+results.users[i].profilePicture);
-			    });*/
 			    e.appendChild(link);
 				document.getElementById("user").appendChild(e);
 			}
 		}
 		else{
-			console.log('geen users');
+			console.log("test");
+			var div = document.createElement("DIV");
+			div.setAttribute("class","noResultsText");
+			div.appendChild(document.createTextNode("No search results found, try again."));
+			document.getElementById("user").appendChild(div);
 		}
 
 
 	}
 
 });
-

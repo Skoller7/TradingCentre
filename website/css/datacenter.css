@@ -224,6 +224,10 @@ sidebar-portfolio
 .navbar-expand-lg .navbar-brand:hover {
     color: #fff;
 }
+#nav-title{
+    margin-left: 0.5%;
+}
+
 .navbar-items li{
     float: left;
     text-decoration: none;
@@ -250,6 +254,22 @@ sidebar-portfolio
 }
 .nav-link{
     padding:0;
+}
+.terms{
+    color: #0889C4;
+    margin-right: 1%;
+}
+.terms:hover{
+    text-decoration: none;
+    color: #007bff;
+}
+.terms:focus{
+    text-decoration: none;
+    color: #007bff;
+}
+.terms:active{
+    text-decoration: none;
+    color: #007bff;
 }
 #BLogin a{
     color:#fff;
@@ -479,7 +499,7 @@ th:hover{
      appearance: none;
      display: inline-block;
      position: relative;
-     background-color: #f1f1f1;
+     background-color: #d8d8d8;
      color: #666;
      top: 10px;
      height: 30px;
@@ -501,7 +521,7 @@ th:hover{
 }
 .modal input[type="checkbox"]:hover
 {
-     background-color: #f7f7f7;
+     background-color: #c2c2c2;
 }
 .modal input[type="checkbox"]:checked
 {

@@ -5,8 +5,9 @@
 				//check if token is valid
 				session_start();
 				$_SESSION['jwtToken'] = $_POST['jwtToken'];
-				$_SESSION['jwtToken'] = time() + 60*60*24;
-				setcookie('jwtToken',$_POST['jwtToken'], time() + 60*60*24);
+				$expireTime = time() + 60*60*24;
+				$_SESSION['jwtTokenExpireTime'] = $expireTime;
+				setcookie('jwtToken',$_POST['jwtToken'], $expireTime);
 				
 				if(isset($_POST['verificationKey']) && $_POST['email']){
 					$_SESSION['verificationKey'] = $_POST['verificationKey'];
@@ -16,7 +17,7 @@
 				header("location: journal.php");
 			}
 			else{
-				header('location: index.php');
+				header('location: logout.php');
 			}
 		}
 		else{

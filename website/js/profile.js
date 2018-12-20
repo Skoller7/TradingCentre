@@ -21,13 +21,18 @@ var pictureURL;
 var portfolios = [];
 
 var urlParams = new URLSearchParams(window.location.search);
-var userID = /^\d+$/.test(urlParams.get('userID'));
+var userID = urlParams.get('userID');
+if(!userID)
+	urlParams.get('userId');
+if(!userID)
+	urlParams.get('userid');
+var validParam = /^\d+$/.test(userID);
 
 getUserData();
 getUserPortfolios();
 
 function URLContainsParam(){
-	if(window.location.href.indexOf("?userID=") + 1 && userID)
+	if(window.location.href.indexOf("?userID=") + 1 && userID && validParam)
 		return true;
 	return false;
 }
@@ -50,6 +55,7 @@ function getUserPortfolios(){
 }
 
 function addPortfolioCards(portfolioData){
+	console.log(portfolioData);
 	 var portCardsHTML = $('.content-datacenter').html();
 	 portCardsHTML += `
 	 <div class="card">
@@ -59,7 +65,7 @@ function addPortfolioCards(portfolioData){
         	<p class="card-text">
         	${portfolioData.description} 
         	</p>
-        	<a href="datacenternew.php" class="btn btn-primary">Buy data</a>
+        	<a href="datacenternew.php?portfolioId=${portfolioData.portfolioId}" class="btn btn-primary">Buy data</a>
     	</div>
 	</div>`
 	$('.content-datacenter').html(portCardsHTML);

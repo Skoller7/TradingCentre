@@ -4,20 +4,34 @@
 .searchResult{
 	margin: 1% 0% 1% 0%;
 	border: 1px solid black;
+	background-color: #d8d8d8;
 }
-
 .markedText{
-	background-color: #f4aa42;
+	background-color: #ff751a;
 }
-
 .searchImg{
 	height: 64px;
 	width: 64px;
 	border-right: 1px solid black;
 }
 .searchResult:hover{
-	background-color: #ff751a;
+	background-color: #c2c2c2;
 }
 .search{
 	margin-top: 10%;
+}
+.searchLink{
+	color: black;
+}
+.searchLink:hover{
+	color: black;
+}
+.searchLink:focus{
+	color: black;
+}
+.searchLink:active{
+	color: black;
+}
+.noResultsText{
+	
 }

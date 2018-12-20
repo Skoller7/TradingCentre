@@ -35,6 +35,12 @@ function autoLogin(username, password){
 
 $(document).ready(function(){
 
+	var isIE = /*@cc_on!@*/false || !!document.documentMode;
+	var isEdge = !isIE && !!window.StyleMedia;
+
+	if(isIE)
+		alert("This site is not optimized for Internet Explorer, so your experience may not be as great as intended.\nPlease consider switching over to a more recent browser.");
+
 for(var i = 0; i < document.getElementsByClassName('getStarted').length; i++){
 	document.getElementsByClassName('getStarted')[i].addEventListener("click", openMSignUp);
 }

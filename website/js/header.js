@@ -1,6 +1,6 @@
 modalList.push(document.getElementById("MLogin"));
 modalList.push(document.getElementById("MSignUp"));
-modalList.push(document.getElementById("MForgotPassword"));
+//modalList.push(document.getElementById("MForgotPassword"));
 modalList.push(document.getElementById("MVerificationMail"));
 modalList.push(document.getElementById("MVerificationMailAccepted"));
 //arne pls geef info
@@ -18,15 +18,15 @@ document.getElementById("MLoginBLogin").addEventListener("click",function(){
 });
 document.getElementById("MLoginBClose").addEventListener("click",MLoginClose);
 document.getElementById("MLoginBCrosse").addEventListener("click",MLoginClose);
-document.getElementById("MLoginBForgotPassword").addEventListener("click",openMForgotPassword);
+//document.getElementById("MLoginBForgotPassword").addEventListener("click",openMForgotPassword);
 document.getElementById("MLoginBSignUp").addEventListener("click",openMSignUp);
 document.getElementById("MSignUpBSignUp").addEventListener("click",signUp);
 document.getElementById("MSignUpBClose").addEventListener("click",MSignUpClose);
 document.getElementById("MSignUpBCrosse").addEventListener("click",MSignUpClose);
 document.getElementById("MSignUpBLogin").addEventListener("click",openMLogin);
-document.getElementById("MForgotPasswordBForgotPassword").addEventListener("click",forgotPassword);
-document.getElementById("MForgotPasswordBClose").addEventListener("click",MForgotPasswordClose);
-document.getElementById("MForgotPasswordBCrosse").addEventListener("click",MForgotPasswordClose);
+//document.getElementById("MForgotPasswordBForgotPassword").addEventListener("click",forgotPassword);
+//document.getElementById("MForgotPasswordBClose").addEventListener("click",MForgotPasswordClose);
+//document.getElementById("MForgotPasswordBCrosse").addEventListener("click",MForgotPasswordClose);
 document.getElementById("MVerificationMailBClose").addEventListener("click",MVerificationMailClose);
 document.getElementById("MVerificationMailBCrosse").addEventListener("click",MVerificationMailClose);
 document.getElementById("MVerificationMailAcceptedBCrosse").addEventListener("click",MVerificationMailAcceptedClose);
@@ -45,21 +45,32 @@ document.getElementById("Bsearch").addEventListener("click",search);
 
 changeLoginchangeLogin();
 
-var errorList = [];
+var loginErrorElementList = [];
 
-errorList[0] = document.getElementById("MSignUpEMUsername");
-errorList[1] = document.getElementById("MSignUpEMPassword");
-errorList[2] = document.getElementById("MSignUpEMRePassword");
-errorList[3] = document.getElementById("MSignUpEMEmail");
-errorList[4] = document.getElementById("MSignUpEMTermsOfService");
+loginErrorElementList[0] = document.getElementById("MLoginEMUsername");
+loginErrorElementList[1] = document.getElementById("MLoginEMPassword");
+loginErrorElementList[2] = document.getElementById("MLoginEMMain");
 
-var inputList = [];
+var loginInputList = [];
 
-inputList[0] = document.getElementById("MSignUpIUsername");
-inputList[1] = document.getElementById("MSignUpIPassword");
-inputList[2] = document.getElementById("MSignUpIRePassword");
-inputList[3] = document.getElementById("MSignUpIEmail");
-inputList[4] = document.getElementById("MSignUpIAccept");
+loginInputList[0] = document.getElementById("MLoginIUsername");
+loginInputList[1] = document.getElementById("MLoginIUsername");
+
+var signUpErrorElementList = [];
+
+signUpErrorElementList[0] = document.getElementById("MSignUpEMUsername");
+signUpErrorElementList[1] = document.getElementById("MSignUpEMPassword");
+signUpErrorElementList[2] = document.getElementById("MSignUpEMRePassword");
+signUpErrorElementList[3] = document.getElementById("MSignUpEMEmail");
+signUpErrorElementList[4] = document.getElementById("MSignUpEMTermsOfService");
+
+var signUpInputList = [];
+
+signUpInputList[0] = document.getElementById("MSignUpIUsername");
+signUpInputList[1] = document.getElementById("MSignUpIPassword");
+signUpInputList[2] = document.getElementById("MSignUpIRePassword");
+signUpInputList[3] = document.getElementById("MSignUpIEmail");
+signUpInputList[4] = document.getElementById("MSignUpIAccept");
 
 
 function changeLoginchangeLogin() {
@@ -149,30 +160,27 @@ function login(usernameInput, passwordInput){
 	//console.log(document.getElementById("CBremimberMe"));
 	//login logic
 
+	for(var i = 0; i < loginInputList.length; i++){
+		loginInputList[i].remove("modalError");
+	}
 
-	document.getElementById("MLoginIUsername").classList.remove("modalError");
-	//document.getElementById("MLoginIEmail").classList.remove("modalError");
-	document.getElementById("MLoginIPassword").classList.remove("modalError");
-
-	document.getElementById("MLoginEMMain").style.display = "none";
-
-	document.getElementById("MLoginEMUsername").innerHTML = "";
-	//document.getElementById("MLoginEMEmail").innerHTML = "";
-	document.getElementById("MLoginEMPassword").innerHTML = "";
-	document.getElementById("MLoginEMMain").innerHTML = "";
+	for(var i = 0; i < loginErrorElementList.length; i++){
+		loginErrorElementList[i].innerHTML = "";
+	}
+	loginErrorElementList[2].style.display = "none";
 
 	var allowedToLogin = true;
-	if(document.getElementById("MLoginIUsername").value == ""){
-		errorModal(document.getElementById("MLoginIUsername"), document.getElementById("MLoginEMUsername"), "Username required");
+	if(loginInputList[0].value === ""){
+		errorModal(loginInputList[0], loginErrorElementList[0], "Username required");
 		allowedToLogin = false;
 	}
-    /*
-	if(document.getElementById("MLoginIEmail").value == ""){
-		errorModal(document.getElementById("MLoginIEmail"), document.getElementById("MLoginEMEmail"), "Email required");
-		allowedToLogin = false;
-	}*/
+
 	if(document.getElementById("MLoginIPassword").value == ""){
-		errorModal(document.getElementById("MLoginIPassword"), document.getElementById("MLoginEMPassword"), "Password required");
+		errorModal(loginInputList[1], loginErrorElementList[1], "Password required");
+		allowedToLogin = false;
+	}
+	if(loginInputList[1].value < 8){
+		errorModal(loginInputList[1], loginErrorElementList[1], "Password must be 8 characters or longer");
 		allowedToLogin = false;
 	}
 	if(allowedToLogin){
@@ -221,8 +229,8 @@ function login(usernameInput, passwordInput){
 	        	console.log(data);
 	        	console.log(data.status);
 	        	console.log(thrownError);
-	        	document.getElementById("MLoginEMMain").style.display = "block";
-	        	document.getElementById("MLoginEMMain").innerHTML = "Wrong username or password";
+	        	loginErrorElementList[2].style.display = "block";
+	        	loginErrorElementList[2].innerHTML = "Wrong username or password";
 	        	if(data.responseText != null){
 	        		console.log(data.responseText);
 	        		/*
@@ -271,9 +279,9 @@ function login(usernameInput, passwordInput){
 function signUpCall(){
 
 	var newUserData = {
-		username: inputList[0].value,
-        password: inputList[1].value,
-        email: inputList[3].value
+		username: signUpInputList[0].value,
+        password: signUpInputList[1].value,
+        email: signUpInputList[3].value
 	}
 
     $.ajax({
@@ -292,8 +300,8 @@ function signUpCall(){
 	        //date.setMilliseconds(date.getMilliseconds() + 21600000);
 	        //document.cookie = "token=" + data.token + "expires=" + date;
 	       	console.log(data);
-	       	//getJwtToken(inputList[0].value,inputList[1].value);
-	       	getJwtToken(data,inputList[0].value,inputList[1].value);
+	       	//getJwtToken(signUpInputList[0].value,signUpInputList[1].value);
+	       	getJwtToken(data,signUpInputList[0].value,signUpInputList[1].value);
 
         },
         error: function(data, ajaxOptions, thrownError){
@@ -301,11 +309,11 @@ function signUpCall(){
         	console.log(thrownError);
         	if(data.responseText != null){
         		console.log(data.responseText);
-        		if(data.responseText == "Username already exists"){
-					errorModal(document.getElemgientById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username already exists");
+        		if(data.responseText == "Username already taken"){
+					errorModal(signUpInputList[0],signUpErrorElementList[0], "Username already taken");
 				}
 				if(data.responseText == "Email is not valid"){
-					errorModal(document.getElementById("MSignUpIEmail"), document.getElementById("MSignUpEMEmail"), "Email is not valid");
+					errorModal(signUpInputList[3], signUpInputList[3], "Email is not valid");
 				}
         	}
         	console.log(data);
@@ -327,7 +335,13 @@ function signUpCall(){
     });	
 	
 }
-
+/*
+function loginUserNameIsTaken(e){
+	if(e == "Username already taken"){
+		errorModal(signUpInputList[0],signUpErrorElementList[0], "Username already taken");
+	}
+}
+*/
 function loginUserNameErrorHandeler(e){
 	if(e == "The Username field is required."){
 		errorModal(document.getElementById("MSignUpIUsername"), document.getElementById("MSignUpEMUsername"), "Username required");
@@ -348,10 +362,11 @@ function loginPasswordErrorHandeler(e){
 		errorModal(document.getElementById("MSignUpIRePassword"));
 	}
 }
-
+/*
 function forgotPassword(){
 
 }
+*/
 function search(){
 	document.getElementById("FSearch").submit();
 }
@@ -362,9 +377,11 @@ function MLoginClose(){
 function MSignUpClose(){
 	$('#MSignUp').modal('toggle');	
 }
+/*
 function MForgotPasswordClose(){
 	$('#MForgotPassword').modal('toggle');	
 }
+*/
 function MVerificationMailClose(){
 	$('#MVerificationMail').modal('toggle');	
 }
@@ -405,12 +422,14 @@ function openMSignUp(){
 		backdrop: 'static'
 	});
 }
+/*
 function openMForgotPassword() {
 	closeAllModals();
 	$('#MForgotPassword').modal({
 		backdrop: 'static'
 	});
 }
+*/
 function openMVerificationMail(email){
 	closeAllModals();
 	document.getElementById("MVerificationMailPMessage").innerHTML = "We have sent you a verification e-mail to this address <br />" + email;
@@ -608,39 +627,39 @@ function getJwtToken(dataSignUp,usernameInput, passwordInput){
 function checkSignUp(){
 	var makeApiCall = true;
 
-	for(var i = 0; i < errorList.length; i++){
-		errorList[i].innerHTML = "";
+	for(var i = 0; i < signUpErrorElementList.length; i++){
+		signUpErrorElementList[i].innerHTML = "";
 	}
 
 	if(!terms){
-		errorModal(inputList[4],errorList[4],"You must agree with the terms of service");
+		errorModal(signUpInputList[4],signUpErrorElementList[4],"You must agree with the terms of service");
 	}
 		
-	for(var i = 0; i < inputList.length; i++){
-		inputList[i].classList.remove("modalError");
-		if(!checkInputIsEmpty(inputList[i])){
-			errorModal(inputList[i], errorList[i], "can't be empty");
+	for(var i = 0; i < signUpInputList.length; i++){
+		signUpInputList[i].classList.remove("modalError");
+		if(!checkInputIsEmpty(signUpInputList[i])){
+			errorModal(signUpInputList[i], signUpErrorElementList[i], "can't be empty");
 			makeApiCall = false;
 		}
 	}
-	if(inputList[1].value != inputList[2].value){
-		errorModal(inputList[1], errorList[1], "The passwords are not the same");
-		errorModal(inputList[2]);
+	if(signUpInputList[1].value != signUpInputList[2].value){
+		errorModal(signUpInputList[1], signUpErrorElementList[1], "The passwords are not the same");
+		errorModal(signUpInputList[2]);
 		makeApiCall = false;
 	}
 	
-	if(!validateEmail(inputList[3].value)){
-		errorModal(inputList[3], errorList[3], "Email is not valid");
+	if(!validateEmail(signUpInputList[3].value)){
+		errorModal(signUpInputList[3], signUpErrorElementList[3], "Email is not valid");
 		makeApiCall = false;
 	}
 
-	if(inputList[1].length >= 8){
-		errorModal(inputList[1], errorList[1], "Password must be 8 characters or longer");
+	if(signUpInputList[1].length >= 8){
+		errorModal(signUpInputList[1], signUpErrorElementList[1], "Password must be 8 characters or longer");
 	}
 
 
-	if(inputList[2].length >= 8){
-		errorModal(inputList[2], errorList[2], "Password must be 8 characters or longer");
+	if(signUpInputList[2].length >= 8){
+		errorModal(signUpInputList[2], signUpErrorElementList[2], "Password must be 8 characters or longer");
 	}
 
 	console.log("makeApiCall " + makeApiCall);
