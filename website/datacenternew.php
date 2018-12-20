@@ -24,15 +24,22 @@
 <div class="containter-fluid" id="containerdatacenter">
     <nav class="sidebar">
         <div class="user-image col-md-12">
-        <h3 id="username-port"></h3>
+            <h3 id="username-port"></h3>
             <img id="img-user" alt="my girlfriends brain" class="img-fluid" style="margin:1%; width:20%;">
         </div>
         <div class="user-description col-md-12" id="user-description">
             <h3>Description</h3>
         </div>
-        <div class="user-buy col-md-12">
-            <h3>Buy data</h3>
-            <input type="button" value="Retrieving data from the blockchain . . ." id="contractPrice" class="btn-contract-buy">
+        <div class="sidebar-content-data col-md-12" style='float:left;'>
+            <ul>
+            <li id='portoverview'>Portfolio review</li>
+            </ul>
+            <div style='margin-top:70%;'>
+                <h3>Buy data</h3>
+                <ul>
+                <li id="contractPrice" class="btn-contract-buy">Retrieving data from the blockchain . . .</li>
+                </ul>
+            </div>
             <span id="buying-succes"></span>
         </div>
     </nav>
