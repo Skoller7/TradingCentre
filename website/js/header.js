@@ -509,10 +509,11 @@ function signUp(){
 //makes a cookie when the user agrees to allow cookies
 function allowCookies(){
 	document.cookie = "allowCookies=true";
-	$('#banner').css('display','');
+	$('#banner').css('visibility','hidden');
 }
 //removes the cookie banner when the user agrees with cookies
 function checkAllowCookies(){
+	console.log(getCookie('allowCookies'));
 	if(!getCookie('allowCookies')){
 		$('#banner').css('visibility','visible');
 	}
