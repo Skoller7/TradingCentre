@@ -59,11 +59,9 @@ function getcardhigh(){
                 }else{
                     arrayforsale = data;
                     if(arrayforsale.length == 0){
-                        document.getElementById("titleother").style.display = "none";
                         seemoreother.style.display = "none";
                         high.innerHTML = "No selling portfolios found";
                     }else{
-                        document.getElementById("titleother").style.display = "block";
                         seemoreother.style.display = "block";
                         setcontentcards(arrayforsale,"see-more-other",max_other,n_other);
                     }
@@ -123,7 +121,8 @@ function setcard(data,i){
                 cardbody.setAttribute("class","card-body");
                 card.appendChild(img);
                 cardbody.innerHTML +=  "<h5 class='card-title' id='usernamecard"+data[i].portfolioId+"'></h5>";
-                cardbody.innerHTML +=  "<p class='card-text' id='portfoliodesc'>"+data[i].description+"</p>";
+                var portdesc = data[i].description;
+                cardbody.innerHTML +=  "<p class='card-text' id='portfoliodesc'>"+portdesc.substr(0,80)+"...</p>";
                 cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show Preview</a>";
                 card.appendChild(cardbody);
                 high.appendChild(card);

@@ -30,10 +30,10 @@ sidebar
 /*
 sidebar-portfolio
 */
-.sidebar-content-portfolios{
+.sidebar-content-portfolios,.sidebar-content-data{
     width: 100%;
 }
-.sidebar-content-portfolios ul{
+.sidebar-content-portfolios ul,.sidebar-content-data ul{
     margin-left:-40px;
 }
 .sidebar-content-portfolios li{
@@ -55,6 +55,19 @@ sidebar-portfolio
 .sidebar-content-portfolios li a:hover{
     text-decoration: none;
     background-color: #3a4e5f;
+    color:#fff;
+}
+.sidebar-content-data li{
+    list-style: none;
+    text-decoration: none;
+    display: block;
+    padding:9px;
+    cursor:pointer;
+    background-color:#FF751A;
+}
+.sidebar-content-data li:hover{
+    text-decoration: none;
+    background-color: #0889C4;
     color:#fff;
 }
 #rightbottom{
@@ -190,7 +203,7 @@ sidebar-portfolio
 .content-datacenter .card{
     margin:1%;
     float:left;
-     height:300px;
+     height:400px;
     display: inline-block;
 }
 #main{
@@ -542,7 +555,7 @@ dropdown
 }
 
 .dropdown-content span:hover {
-    background-color: #f1f1f1
+    background-color: #f1f1f1;
 }
 
 

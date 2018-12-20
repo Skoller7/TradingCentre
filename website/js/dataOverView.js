@@ -107,6 +107,7 @@ requestData: function(){
           for(var y = 0; y < 3; y++){
                    var card = document.createElement("div");
                     card.setAttribute("class","col-md-3 col-sm-12 card");
+                    card.setAttribute("style", "height:350px");
                     var img = document.createElement("img");
                     img.setAttribute("alt","image of trade");
                     img.setAttribute("class","img-fluid");
@@ -397,7 +398,7 @@ dummy portfolio
 //
 
 
-
+//https://ecomfe.github.io/echarts-doc/public/en/index.html
 function addbarchart(){
   setTimeout(function() {
   option = {

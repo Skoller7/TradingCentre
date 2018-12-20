@@ -120,6 +120,26 @@ document.getElementById("noo").addEventListener("click",function (e){
 });
 }
 /*
+show modal go to settings page
+*/
+function openapikey(){
+   	$('#apikey').modal({
+		backdrop: 'static'
+	});
+    document.getElementById("gotosettings").addEventListener("click",function(e){
+        $('#apikey').modal('toggle');
+        window.location = "settings.php";
+    });
+}
+/*
+check if user has api keys
+*/
+makerequestnopar("http://10.3.50.6/api/key?name=BitMEX","GET",token,function(data){
+    if(data.length == 0){
+        openapikey();
+    }
+});
+/*
 change display onclick button
 */
 changedisplay.addEventListener("click",changedisplayjournal);
@@ -413,6 +433,8 @@ if(e.target && e.target.nodeName == "LI" && !(isNaN(e.target.id.substring(0,e.ta
         makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId="+ e.target.id.substring(0,e.target.id.indexOf("port")),"GET",token,function(data){
                     setupactiveport(data,e.target.id);
                         activeportfolioid = e.target.id.substring(0,e.target.id.indexOf("port"));
+                        myChart = null;
+                        addbasichart();
                     if(data.isDefault == true || data.isForSale == true){
                         if(data.isDefault == true){
                             defaultbool = true;
@@ -730,7 +752,7 @@ function createport(){
         }
    }else{
         if(valid){
-            var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": null};
+            var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": false,"Address": null};
             makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token,function(data){
                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
@@ -1185,7 +1207,7 @@ myChart.setOption(BasicChart);
         myChart = echarts.init(document.getElementById('main'),'light');
 
         var data = [];
-        
+    test();
 function test(){
     if(activeportfolioid == null){
     makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(id){
@@ -1194,17 +1216,18 @@ function test(){
                   activeportfolioid = id[i].portfolioId;
                 }
             }
-            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId=126","GET",token,function(obj){
+            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
                 data = obj;
-            });
-    });
+            },false);
+    },false);
     }else{
         makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
                 data = obj;
-        }); 
+        },false); 
     }
 }
 }
+
 function addchart(){ 
         // based on prepared DOM, initialize echarts instance 
         var myChart = echarts.init(document.getElementById('main'));
