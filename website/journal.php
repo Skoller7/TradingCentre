@@ -1,5 +1,5 @@
 <?php 
-  session_start();
+  include ('checkToken.php');
   $showEmailVerificationModal = false;
   if(isset($_SESSION['verificationKey']) && isset($_SESSION['email']) && isset($_SESSION['username'])){
     if(!empty($_SESSION['verificationKey']) && !empty($_SESSION['email']) && !empty($_SESSION['username'])){
