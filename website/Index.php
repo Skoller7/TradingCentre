@@ -2,7 +2,7 @@
 	if (session_status() == PHP_SESSION_NONE) {
 		if(isset($_SESSION['jwtToken'])){
 			//check if still valid
-			header('location: home.php');
+			header('location: journal.php');
 		}
 	}
 	else{
@@ -10,7 +10,7 @@
 			//check if still valid
 			session_start();
 			$_COOKIE['jwtToken'] = $_COOKIE['jwtToken'];
-			header('location: home.php');
+			header('location: journal.php');
 		}
 	}
 ?>
@@ -22,9 +22,8 @@
 		<link rel="stylesheet" type="text/css" href="css/index.css">
 		<link rel="stylesheet" type="text/css" href="css/datacenter.css">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script src="js/jquery.js" type="text/javascript"></script>
-		<script src="js/index.js" type="text/javascript"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="js/index.js" type="text/javascript"></script>
 	    <script src="bootstrap-4.1.3/js/bootstrap.min.js" type="text/javascript"></script>
 	    <script src="js/lib.js" type="text/javascript"></script>
 	    <?php
@@ -45,8 +44,6 @@
 		</div>
 		<div id="divider" class="parallax__layer parallax__layer--back">
 		</div>
-		
-		
 		<div class="parallax__layer">
 			<div id="promoLeft" class="promo">
 				<img src="img/journal.png" class="promoLogo">
@@ -91,12 +88,6 @@
 		</div>
 		
 	</div>
-	<!--
-	<div id="cookieBanner">
-		<div class="button" id="BAllowCookies">Allow cookies</div>
-		GDPR info
-	</div>
-	-->
 	<script>
 		var verificationKey = "";
 	</script>
