@@ -375,7 +375,7 @@ function getJwtToken(dataSignUp,usernameInput, passwordInput){
         dataType: 'json',
         success: function(data){
 			if(typeof data !== 'undefined' && typeof dataSignUp !== 'undefined'){
-				//form with verificationKey and email address for the verification email and the jwtToken for the user session
+				//form with verificationKey, username and email address for the verification email and the jwtToken for the user session
 				var form = document.createElement("FORM");
 		        form.setAttribute("method","post");
 		        form.setAttribute("action","checkLogin.php");
@@ -391,12 +391,16 @@ function getJwtToken(dataSignUp,usernameInput, passwordInput){
 		        email.setAttribute("type","hidden");
 		        email.setAttribute("name","email");
 		        email.setAttribute("value",dataSignUp.email);
-
+		        var username = document.createElement("INPUT");
+		        username.setAttribute("type","hidden");
+		        username.setAttribute("name","username");
+		        username.setAttribute("value",dataSignUp.username)
 		        form.appendChild(inputJwtToken);
 		        form.appendChild(verificationKey);
 		        form.appendChild(email);
+		        form.appendChild(username);
 			    document.body.appendChild(form);
-			    form.submit();
+			   	form.submit();
 			}
         },
         error: function(data, ajaxOptions, thrownError){

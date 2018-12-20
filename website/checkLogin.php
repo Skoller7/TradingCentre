@@ -9,10 +9,14 @@
 				$_SESSION['jwtTokenExpireTime'] = $expireTime;
 				setcookie('jwtToken',$_POST['jwtToken'], $expireTime);
 				
-				if(isset($_POST['verificationKey']) && $_POST['email']){
-					$_SESSION['verificationKey'] = $_POST['verificationKey'];
-					$_SESSION['email'] = $_POST['email'];
-
+				if(isset($_POST['verificationKey']) && isset($_POST['email']) && isset($_POST['username'])){
+					if(!empty($_POST['verificationKey']) && !empty($_POST['email']) && !empty($_POST['username'])){
+						$_SESSION['verificationKey'] = $_POST['verificationKey'];
+						$_SESSION['email'] = $_POST['email'];
+						$_SESSION['username'] =  $_POST['username'];
+						header("location: journal.php");
+					}
+					header("location: logout.php");
 				}
 				header("location: journal.php");
 			}

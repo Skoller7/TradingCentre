@@ -1,14 +1,17 @@
 <?php 
   session_start();
   $showEmailVerificationModal = false;
-  if(isset($_SESSION['verificationKey']) && isset($_SESSION['email'])){
-    $email = $_SESSION['email'];
-    $emailHeader = 'verification TradingCentre';
-    $emailBody = 'https://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=' . $_SESSION['verificationKey'];
-    unset($_SESSION['email']);
-    unset($_SESSION['verificationKey']);
-    mail($email,$emailHeader,$emailBody);    
-    $showEmailVerificationModal = true;
+  if(isset($_SESSION['verificationKey']) && isset($_SESSION['email']) && isset($_SESSION['username'])){
+    if(!empty($_SESSION['verificationKey']) && !empty($_SESSION['email']) && !empty($_SESSION['username'])){
+      $email = $_SESSION['email'];
+      $emailHeader = 'verification TradingCentre';
+      $emailBody = "Dear ".$_SESSION['username'].",\r\n\r\nYou have regently made an account on <a href='www.google.com'>TradingCentre</a> with this email address.\r\nCan you please comfirnm that this is your email address by clinking this link.\r\nhttps://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey'];
+      unset($_SESSION['email']);
+      unset($_SESSION['verificationKey']);
+      unset($_SESSION['username']);
+      mail($email,$emailHeader,$emailBody);    
+      $showEmailVerificationModal = true;
+    }
   }
 ?>
 <!doctype html>
