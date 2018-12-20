@@ -1,6 +1,6 @@
-//var cookie = getCookie("jwtToken");
+var token = getCookie("jwtToken");
 var user = [];
-var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUyMTExNTAsImV4cCI6MTU0NTI5NzU1MCwiaWF0IjoxNTQ1MjExMTUwfQ.i_S5d_PbOxxisOxTD6w5zDV6AZC5GwBZYWVjBhKC9GgjFzlHYhL0IGWlePq-8H1cz12Yyp6sV1P1BJsI8vYO6g";
+//var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUyMTExNTAsImV4cCI6MTU0NTI5NzU1MCwiaWF0IjoxNTQ1MjExMTUwfQ.i_S5d_PbOxxisOxTD6w5zDV6AZC5GwBZYWVjBhKC9GgjFzlHYhL0IGWlePq-8H1cz12Yyp6sV1P1BJsI8vYO6g";
 
 
 function openOption(evt, optionName) {
@@ -77,6 +77,7 @@ function validateForm(){
             console.log(xhr.status);
             console.log(thrownError);
             console.log(xhr);
+            console.log(user);
         }
     });
    
