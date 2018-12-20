@@ -1,4 +1,5 @@
 var token = getCookie("jwtToken");
+console.log(token);
 var userId;
 makerequestnopar("http://10.3.50.6/api/user" , "GET" , token, function(a){
   userId = a;
@@ -33,10 +34,17 @@ var buyersCountf; //data voor contracts -> html
 var pricef;
 var profitf;
 var portfolioid = [];
+
+if(getCookie("jwtToken")){
 for(var i = 0; i < portfolios.length; i++) //I have to declare the portfolio id's here because else in the App function it will always give the last portfolio id.
 {
   portfolioid[i] = portfolios[i].portfolioId;
 }
+}
+else {
+  portfolios = [];
+}
+
 console.log(portfolioid);
 console.log(portfolios);
 
@@ -86,8 +94,7 @@ initContract1: function(){
 
 requestData: function(){
 
-
-  if(portfolios.length ==  0){
+  if(portfolios.length ==  0 ){
 
     $('#exampleModalCenter').show();
     $('.makemodal').click();
@@ -97,8 +104,25 @@ requestData: function(){
     dataDatum = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];
 
-    var content;
-    $('datacontent').append()
+          for(var y = 0; y < 3; y++){
+                   var card = document.createElement("div");
+                    card.setAttribute("class","col-md-3 col-sm-12 card");
+                    var img = document.createElement("img");
+                    img.setAttribute("alt","image of trade");
+                    img.setAttribute("class","img-fluid");
+                    img.setAttribute("height","50%");
+                    img.setAttribute("src", "https://www.tradingview.com/x/J3AJo0r1/");
+                    card.appendChild(img);
+                    var cardbody = document.createElement("div");
+                    cardbody.setAttribute("class","card-body");
+
+                      cardbody.innerHTML +=  "<h5 class='card-title'> Dummy data </h5>";
+                      cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count: 23 <br />Profit made: 34500 </p>";
+                      cardbody.innerHTML +=  "<a href='datacenternew.php?portfolioId="+33+"' class='btn btn-primary'>this is dummy data</a>";
+                      card.appendChild(cardbody);
+                        cards.appendChild(card);
+                }
+
   }
   else {
     App.getcard();

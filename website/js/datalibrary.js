@@ -1,5 +1,4 @@
-   $('.btn-buycheck').hide();
-   $('.btn-fault').hide();
+
    // var urlParams = new URLSearchParams(window.location.search);
    // var aportfolioid = urlParams.get('portfolioId');
    var token = getCookie("jwtToken");
@@ -92,14 +91,20 @@ isUserBacker: function(){
 },
 
 getcard: function(){console.warn();
-    data2 = makerequestnopar("http://10.3.50.6/api/purchase", "GET", token);
+    makerequestnopar("http://10.3.50.6/api/purchase", "GET", token, function(data2){
+
     console.log(data2);
     for(var j = 0; j < data2.length; j++){
 
-    var dummyvar = makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + data2[j].portfolioId ,"GET",token);
+    makerequestnopar("http://10.3.50.6/api/portfolio?portfolioId=" + data2[j].portfolioId ,"GET",token, function(dummyvar){
+
     console.log(dummyvar);
     data.push(dummyvar);
-  }
+
+      }, false);
+    }
+  } , false);
+
     console.log(data);
     if(getstatus() == 401){
         openMLogin();
@@ -111,6 +116,7 @@ getcard: function(){console.warn();
             App.setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
         }
     }
+
 },
 
 
@@ -123,9 +129,9 @@ setcontentcards: function(arrayport,seemoreid,boolown,max,n){
         max = arrayport.length;
     }
     for(var i = n; i < max;i++){
-          
+
                     App.setcard(arrayport,i,boolown);
-          
+
     }
     lengtharray--;
     seemore.style.display = "none";
@@ -166,10 +172,16 @@ setcard: function(data,i){
 
                   cardbody.innerHTML +=  "<h5 class='card-title'>"+data[i].name+"</h5>";
                   cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count: bla"+  +"<br />Profit made: blabla" +  +"</p>";
-                  cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
+                  cardbody.innerHTML +=  "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
+                  cardbody.innerHTML +=  "<div class='btn-check' id='buyCheck'>  <a class='btn btn-buycheck btn-primary' id='buyCheck' href='boughtdata.php'>View data</a></div> <div class='btn-fault' id='faultcheck'> <p> Either you are not logged in in metamask,    Or you are not an actual buyer of this portfolio!<span><a href=''> Click here for help </a> </span></p>  </div>"
+
+
+
                   card.appendChild(cardbody);
                   cards.appendChild(card);
 
+                  $('.btn-buycheck').hide();
+                  $('.btn-fault').hide();
 }
 
 
