@@ -45,9 +45,9 @@ function validateForm(){
     
     else {
         
-        /*if (document.getElementById("img")) {
+        if (document.getElementById("img").value) {
                 testImage();
-            }*/
+            }
         
         user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
         
@@ -208,6 +208,20 @@ function loadCallback() {
     window.alert("Image URL is valid, you can proceed.");
 }
 
+
+function isVerified() {
+    user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
+    
+    var v = user.IsVerified.value;
+    
+    if (v === 0) {
+        document.getElementsByTagName("p").innerHTML = "verified";
+    }
+    
+    else {
+        document.getElementsByTagName("p").innerHTML = "not erified"
+    }
+}
 /*var modal = document.querySelector(".modald");
 var trigger = document.querySelector(".deleteUser");
 var closeBtn = document.querySelector(".close");
