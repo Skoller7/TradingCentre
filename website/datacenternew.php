@@ -18,7 +18,7 @@
 <?php
   include_once("header.html");
 ?>
-<div class="containter-fluid">
+<div class="containter-fluid" id="containerdatacenter">
     <nav class="sidebar">
         <div class="user-image col-md-12">
         <h3 id="username-port"></h3>
@@ -60,6 +60,7 @@
     	</div>
 		</div>
 </div>
+    <?php include("footer.html"); ?>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/web3.min.js"></script>

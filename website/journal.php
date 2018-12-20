@@ -277,6 +277,7 @@
     	</div>
 		</div>
 </div>
+    <?php include("footer.html"); ?>
     <script type="text/javascript" src="js/journal.js"></script>
     <?php
       if($showEmailVerificationModal){
