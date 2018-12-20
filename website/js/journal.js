@@ -309,19 +309,21 @@ function getport(){
         makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
             ul.innerHTML = "";
             for(var i = 0; i < data.length;i++){
-                var name = document.createTextNode(data[i].name);
-                var li = document.createElement("LI");
-                ul.appendChild(li);
-                li.setAttribute("style","background-color:#3a4e5f");
-                li.setAttribute("id",data[i].portfolioId + "port");
-                li.appendChild(name);
-                if(data[i].isDefault == true){
-                    defaultbool = true;
-                    setdefaultport(data[i].portfolioId);
-                     activeportfolioid = data[i].portfolioId;
+                if(data[i].isForSale == false){
+                    var name = document.createTextNode(data[i].name);
+                    var li = document.createElement("LI");
+                    ul.appendChild(li);
+                    li.setAttribute("style","background-color:#3a4e5f");
+                    li.setAttribute("id",data[i].portfolioId + "port");
+                    li.appendChild(name);
+                    if(data[i].isDefault == true){
+                        defaultbool = true;
+                        setdefaultport(data[i].portfolioId);
+                         activeportfolioid = data[i].portfolioId;
+                    }
+                    var sub = document.getElementById(data[i].portfolioId + "port");
+                    port.push(sub.getAttribute("id"));
                 }
-                var sub = document.getElementById(data[i].portfolioId + "port");
-                port.push(sub.getAttribute("id"));
             }
         });
           //  ppd();
@@ -702,7 +704,7 @@ function createport(){
     }
     if(document.getElementById("createporttitle").innerHTML == "Create Portfolio"){
         if(valid){
-            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address":null};
+            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": false,"Address":null};
             makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token,function(data){
                 if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
