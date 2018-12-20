@@ -86,6 +86,7 @@ requestData: function(){
     $('#exampleModalCenter').show();
     $('.makemodal').click();
     portfolioId = [1, 2 ,3];
+
     //default values.
     dataDatum = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];

@@ -45,6 +45,9 @@
         <div class="header-content">
         <h3>Your bought portfolio's : </h3>
         </div>
+
+        <div class="content-datacenter" id="cards">
+        <div id="see-more-own" class='card' style='width:100%;float:left;text-align:center;'></div>
         <div class="content-datacenter">
             <div class="card">
               <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
