@@ -9,12 +9,14 @@ makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true" , "GET" , token,
   portfolios = a
 }, false);
 var i = 0; //declared this variable here because getting data from the blockchain takes time. And thus if you'd place it in a normal for loop the numbers wouldn't be correct.
-var dataDatum; //= ["January", "February", "March", "April", "May", "Jun", "Jule", "August", "September", "October", "November", "December"]; //variable for the default settings of the data graph.
-var dataInput; // = ["1", "2", "3", "8", "12", "13", "18", "25", "30", "35", "40", "45"];//variable for the default settings of the data graph.
+var dataDatum = []; //= ["January", "February", "March", "April", "May", "Jun", "Jule", "August", "September", "October", "November", "December"]; //variable for the default settings of the data graph.
+var dataInput = []; // = ["1", "2", "3", "8", "12", "13", "18", "25", "30", "35", "40", "45"];//variable for the default settings of the data graph.
 var cards = document.getElementById("cards");
 var seemoreother = document.getElementById("see-more-other");
 $('.makemodal').hide();
 console.log(portfolios);
+
+
 /*
 array with all for sale portfolios from other users
 */
@@ -194,6 +196,22 @@ calcProfit: function(){
 // },
 
 getcard: function(){console.warn();
+
+  makerequestnopar("http://10.3.50.6/api/portfolio/sold?portfolioId=4", "GET", token, function(a){
+    // dataDatum = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    // dataInput = [1, 5, 8, 9, 2, 8, 12, 25, 9, 18, 28, 15];
+    console.log(a);
+    for(var g = 0; g < a.length; g++){
+    dataDatum.push(a[g].month);
+    dataInput.push(a[g].amount);
+    console.log(a[g]);
+  }
+
+  }, false);
+
+  console.log(dataDatum);
+  console.log(dataInput);
+
     var data = makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token, function(data)
     {
       if(getstatus() == 401){
