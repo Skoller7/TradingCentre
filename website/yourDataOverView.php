@@ -56,7 +56,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Data is already for sale</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">No data found yet!</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -81,7 +81,7 @@
           <div class="datacontent panel panel-info" id="datacontent"></div>
           <button type="button" class="btn btn-primary makemodal" data-toggle="modal" data-target="#exampleModalCenter"></button>
           <div class="content-datacenter" id="cards">
-          <div id="see-more-own" class='card' style='width:100%;float:left;text-align:center;'></div>
+
 
 
         </div>
