@@ -25,22 +25,23 @@
 		<div class="col-md-6 col-sm-12 col-xs-12" id="guideContent">
 			<h2 class="guideTitle">Account</h2>
             <button class="collapsible">How do I add a BitMEX account to Tradingcenter?</button>
+            <!-- https://www.w3schools.com/howto/howto_js_collapsible.asp -->
             <div class="collapsibleContent">
-                <p>Lorem ipsum...</p>
+                <p>To add your BitMEX account, go to <a href="settings.php">this</a> page, click on "Security" and enter your key and secret.</p>
             </div>
             <button class="collapsible">How do I change my username?</button>
             <div class="collapsibleContent">
-                <p>Lorem ipsum...</p>
+                <p>You can change your username on <a href="settings.php">this</a> page.</p>
             </div>
 
             <h2 class="guideTitle">General</h2>
             <button class="collapsible">What is the difference between datacenter and journal?</button>
             <div class="collapsibleContent">
-                <p>Lorem ipsum...</p>
+                <p>A journal is to keep track of your own trading data, while datacenter is for sharing trading knowledge.</p>
             </div>
             <button class="collapsible">How do I sell my data?</button>
             <div class="collapsibleContent">
-                <p>Lorem ipsum...</p>
+                <p>To sell your trading data, go to the <a href=""></a> page, click on blablabla and blablabla</p>
             </div>
 
 		</div>

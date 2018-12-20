@@ -55,9 +55,11 @@
             </div>
             <div id="security" class="content">
                 <form class="myForm">
+                    <input type="text" id="key" placeholder="your key">
                     <input type="text" id="skey" placeholder="Change your secret key">
-                    <input type="submit">
+                    <input type="submit" value='Change key' id='changekey'>
                 </form>
+                <span style='color:red;' id='errorkeys'></span>
             </div>
             <div id="verificate" class="content">
                 <form class="myForm">

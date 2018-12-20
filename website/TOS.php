@@ -24,6 +24,7 @@
 		<div class="col-md-3"></div>
 		<div class="col-md-6 col-sm-12 col-xs-12" id="guideContent">
 			
+            <!-- https://termsfeed.com/terms-conditions/generator/ -->
             <h1 class="guideTitle">Terms and Conditions</h1>
 
             <p>Please read these Terms and Conditions ("Terms", "Terms and Conditions") carefully before using the tradingcenter.com website (the "Service") operated by Trading Center ("us", "we", or "our").</p>
