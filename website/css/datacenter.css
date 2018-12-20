@@ -635,13 +635,22 @@ dropdown
     background-color: #25313B;
     color: white;
     padding: 60px;
+
+    /*visibility: hidden;*/
 }
 
 #cookieButton {
     float: right;
     background-color: #ff751a;
     padding: 15px;
+    cursor: pointer;
+    border-bottom: 2px solid #ff751a;
 }
+
+#cookieButton:hover {
+    border-bottom: 2px solid white;
+}
+
 /*@media screen and (max-height: 450px) {
   .overlay a {font-size: 20px}
   .overlay .closebtn {
