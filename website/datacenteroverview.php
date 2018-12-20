@@ -1,6 +1,3 @@
-<?php
-  include ('checkToken.php');
-?>
 <!doctype html>
 
  <!-- menu bar meer naar links, users uit db halen & verschillende portfolio's tonen *
