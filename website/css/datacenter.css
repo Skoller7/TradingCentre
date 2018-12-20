@@ -139,20 +139,6 @@ sidebar-portfolio
 .comment-head .fa-user{
     color:#000;
 }
-.comment-content{
-    padding:1%;
-}
-.image-comment{
-    margin-bottom:2%;
-}
-.comment-links{
-    width:50%;
-    text-align: right;
-}
-.comment-date{
-    width:50%;
-    text-align: left;
-}
 .form-add-comment input[type=text]{
     width:100%;
 }

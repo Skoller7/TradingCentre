@@ -85,7 +85,7 @@ var urlParams = new URLSearchParams(window.location.search);
 var aportfolioid = urlParams.get('portfolioId');
 /*
 delete yes or no
-
+*/
 function openyesno(functiondelete){
 	closeAllModals();
 	$('#yesorno').modal({
@@ -98,9 +98,8 @@ document.getElementById("yess").addEventListener("click",function (e){
 document.getElementById("noo").addEventListener("click",function (e){
 	$('#yesorno').modal('toggle');
 });
-}*/
+}
 checkportissell();
-getcurrentuser();
 /*
 check if portfolio is for sale
 */
@@ -124,10 +123,8 @@ function checkportissell(){
                             }else{
                                 purchased = false;
                             }
-                             console.log(purchased);
                     if(purchased){
                         makerequestnopar("http://10.3.50.6/api/portfolio/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
-                            console.log(getstatus());
                             if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                                  cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                             }else{
@@ -137,6 +134,7 @@ function checkportissell(){
                                         imgdesc[i] =  order[i].description;
                                         orderid[i] = order[i].orderId;
                                     }
+                                    
                                         if(imgdesc.length > 1){
                                             setbtn();
                                         }
@@ -237,6 +235,9 @@ button.addEventListener("click",function(){
             makerequest(json,"http://10.3.50.6/api/portfoliocomment","PUT",token,function(data){
                             if(getstatus() == 200){
                                 getComments();
+                                textarea.style.border = "0px solid red";
+                                diverror.innerHTML = "";
+                                textarea.value = "";
                             }
             });
         }
@@ -247,21 +248,21 @@ delete comment from portfolio if purchased from the order
 */
 function deletecomments(e){
     if(purchased){
-       // openyesno(function(){
+        openyesno(function(){
             makerequestnopar("http://10.3.50.6/api/ordercomment?commentId="+e.target.id,"DELETE",token,function(data){
                     if(getstatus() == 200){
                         getComments();
                     }
            },true);
-       // });
+       });
     }else{
-       // openyesno(function(){
+        openyesno(function(){
             makerequestnopar("http://10.3.50.6/api/portfoliocomment?commentId="+e.target.id,"DELETE",token,function(data){
                     if(getstatus() == 200){
                         getComments();
                     }
             },true);
-      //  });
+        });
     }
 }
 /*
@@ -269,16 +270,26 @@ update comment from portfolio if purchased from the order
 */
 function updatecomments(e){
     var comment = document.getElementById("comment"+e.target.id);
-    var textcontent = "<textarea id='comment-text-update' style='resize:none;width:100%;'>"+comment.innerHTML+"</textarea>";
+    var commenttext = comment.innerHTML;
+    var textcontent = "<textarea id='comment-text-update' style='resize:none;width:100%;'>"+commenttext+"</textarea>";
     comment.innerHTML = "";
     comment.innerHTML = textcontent;
     var btn = document.createElement("button");
     btn.setAttribute("type","button");
     btn.setAttribute("id",e.target.id);
-    btn.setAttribute("style","float:right;margin:2%;");
+    btn.setAttribute("style","float:right;");
     btn.setAttribute("class","btn btn-primary");
     btn.innerHTML = "update comment";
+    var cancel = document.createElement("a");
+    cancel.setAttribute("class","btn btn-light");
+    cancel.setAttribute("style","float:right;");
+    cancel.innerHTML = " cancel ";
+    cancel.addEventListener("click",function(){
+        comment.innerHTML = commenttext;
+    });
+    comment.style.margin = "1%";
     comment.appendChild(btn);
+    comment.appendChild(cancel);
     btn.addEventListener("click",function(e){
         var text = document.getElementById("comment-text-update");
         if(text.value == ""){    
@@ -343,9 +354,9 @@ display comments on screen
 */
 function setComments(i,data){
         var cardcomment = document.createElement("div");
-        cardcomment.setAttribute("style","width:100%;float:left;margin:1%;margin-left:0%;");
         cardcomment.className = "card";
         var comment = document.createElement("div");
+        comment.setAttribute("style","padding:0;");
         comment.className = "card-body";
         var image = document.createElement("div");
         image.setAttribute("class","image-comment");
@@ -359,14 +370,7 @@ function setComments(i,data){
         var divcontent = document.createElement("div");
         divcontent.setAttribute("class","comment-content");
         divcontent.setAttribute("id","comment"+data[i].commentId);
-        var user;
-        if(data[i].userId == currentuserid){
-            user = currentusername;
-        }else{
-            console.log(getusername(data[i].userId));
-            user = getusername(data[i].userId);
-        }
-        divhead.innerHTML +=   user + " <span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span> ";
+        divhead.innerHTML +=  "<span id='username"+data[i].commentId+"'></span><span style='color:#0889C4;font-size:15px;'> on "+data[i].postedOn+"</span> ";
         divcontent.innerHTML = data[i].message;
         divcomment.appendChild(divhead);
         divcomment.appendChild(divcontent);
@@ -374,9 +378,16 @@ function setComments(i,data){
         comment.appendChild(divcomment);
         cardcomment.appendChild(comment);
         allcomments.appendChild(cardcomment);
-        if(data[i].userId == currentuserid){
-            getuserid(data[i].userId,data[i].commentId);
-        }
+        getcurrentuser(function(){
+            if(data[i].userId == currentuserid){
+                getuserid(data[i].userId,data[i].commentId);
+                document.getElementById("username"+data[i].commentId).innerHTML = currentusername;
+                cardcomment.setAttribute("style","width:100%;float:left;margin:1%;margin-left:0%;border:1px solid #0889C4");
+            }else{
+                getusername(data[i].userId,"username"+data[i].commentId);
+                cardcomment.setAttribute("style","width:100%;float:left;margin:1%;margin-left:0%;border:1px solid #25313B");
+            }
+        });
 }
 /*
 get userid from current logged in user
@@ -396,7 +407,7 @@ function getuserid(userid,commentid){
                         del.setAttribute("id",commentid);
                         del.addEventListener("click",deletecomments);
                         del.innerHTML = " delete ";
-                        divfooter.setAttribute("style","float:right;font-size:11px;width:100%;text-align:right;");
+                        divfooter.setAttribute("style","float:right;font-size:11px;width:100%;text-align:right;margin:1%;");
                         divfooter.appendChild(editcom);
                         divfooter.appendChild(del);
                         document.getElementById("divcomment"+commentid).appendChild(divfooter);
@@ -407,21 +418,20 @@ function getuserid(userid,commentid){
 /*
 get current user
 */
-function getcurrentuser(){
+function getcurrentuser(succes){
     makerequestnopar("http://10.3.50.6/api/user","GET",token,function(data){
         currentuserid = data.userId;
         currentusername = data.username;
-    },false);
+        succes();
+    },true);
 }
 /*
 get username comment
 */
-function getusername(userid){
-    var user;
+function getusername(userid,id){
     makerequestnopar("http://10.3.50.6/api/user?userId="+userid,"GET",token,function(data){
-        user = data.username;
-    },false);
-    return user;
+        document.getElementById(id).innerHTML = data.username;
+    },true);
 }
 /*
 get user information on user id

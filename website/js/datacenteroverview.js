@@ -5,7 +5,7 @@ var token = getCookie("jwtToken");
 /*
 elements for changing content
 */
-var cards = document.getElementById("cards");
+//var cards = document.getElementById("cards");
 var high = document.getElementById("highlightcards");
 var seemoreother = document.getElementById("see-more-other");
 /*
@@ -19,15 +19,12 @@ var arrayforsaleown;
 /*
 begin and max for arrays to show, the function setcontentcards will change the value if see more is clicked
 */
-var n_own = 0;
-var max_own = 6;
 var n_other = 0;
-var max_other = 6;
-getcard();
+var max_other = 2;
+//getcard();
 getcardhigh();
 /*
 get for sale portfolios from current user
-*/
 function getcard(){
     makerequestnopar("http://10.3.50.6/api/portfolio?soldOnly=true","GET",token,function(data){
     if(getstatus() == 401){
@@ -42,11 +39,13 @@ function getcard(){
             }else{
                 document.getElementById("titleown").style.display = "block";
                 setcontentcards(arrayforsaleown,"see-more-own",true,max_own,n_own);
+                setcontentcards(arrayforsale,"see-more-other",false,max_other,n_other);
             }
         }
     }
     });
 }
+*/
 /*
 get for sale portfolios from other users
 */
@@ -61,8 +60,11 @@ function getcardhigh(){
                     arrayforsale = data;
                     if(arrayforsale.length == 0){
                         document.getElementById("titleother").style.display = "none";
+                        seemoreother.style.display = "none";
+                        high.innerHTML = "No selling portfolios found";
                     }else{
                         document.getElementById("titleother").style.display = "block";
+                        seemoreother.style.display = "block";
                         setcontentcards(arrayforsale,"see-more-other",false,max_other,n_other);
                     }
                 }
