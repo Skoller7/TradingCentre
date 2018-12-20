@@ -124,26 +124,30 @@ function checkportissell(){
                                 purchased = false;
                             }
                             if(purchased){
-                                makerequestnopar("http://10.3.50.6/api/portfolio/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
-                                    console.log(order);
+                                makerequestnopar("http://10.3.50.6/api/order/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
                                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                                          cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                                     }else if(getstatus() == 404){
                                         cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: no orders found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
                                     }else{
-                                        if(order.length != 0){
+                                    if(purchased){
                                             for(var i = 0;i < order.length; i++){     
                                                 imgsrc[i] = order[i].imgURL;
                                                 imgdesc[i] =  order[i].description;
                                                 orderid[i] = order[i].orderId;
                                             }
-
-                                                if(imgdesc.length > 1){
-                                                    setbtn();
-                                                }
+                                    }else{
+                                            for(var i = 0;i < order.length; i++){     
+                                                imgsrc[i] = order[i].imgURL;
+                                                imgdesc[i] =  order[i].description;
+                                                orderid[i] = order[i].orderId;
+                                            }
+                                    }
+                                            if(imgdesc.length > 1){
+                                                setbtn();
+                                            }
                                             getUser(data.userId);
                                             setcontentdatacenter();
-                                        }
                                     }
                                 },true);
                             }else{
@@ -188,6 +192,7 @@ function setbtn(){
                 n--;
             }
             setcontentdatacenter();
+            checkFooterPosition();
         });
         btn2.addEventListener("click",function(){
             if(n == imgdesc.length - 1){
@@ -196,6 +201,7 @@ function setbtn(){
                 n++;
             }
             setcontentdatacenter();
+            checkFooterPosition();
         }); 
 }
 /*
@@ -207,7 +213,9 @@ function setcontentdatacenter(){
     cont.appendChild(image);
     imagedesc.innerHTML = imgdesc[n];
     cont.appendChild(info);
-    getComments();
+    if(purchased){
+        getComments();
+    }
     cont.appendChild(similar);
     checkFooterPosition(); 
 }
