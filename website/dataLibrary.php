@@ -43,13 +43,13 @@
     <div class="col-md-3"></div>
     <div class="col-md-9 col-sm-12 col-xs-12">
         <div class="header-content">
-        <h3>Your bought portfolio's : </h3>
+        <h3>Your bought portfolios : </h3>
         </div>
 
         <div class="content-datacenter" id="cards">
         <div id="see-more-own" class='card' style='width:100%;float:left;text-align:center;'></div>
         <div class="content-datacenter">
-            <div class="card">
+          <!--  <div class="card">
               <img src="img/tradeimg.png" alt="img of chart" class="img-fluid" height="50%">
               <div class="card-body">
                 <h5 class="card-title">Skoller</h5>
@@ -64,7 +64,7 @@
                 Or you are not an actual buyer of this portfolio!<span><a href=""> Click here for help </a> </span></p>
               </div>
               </div>
-            </div>
+            </div>-->
 
         </div>
     </div>
