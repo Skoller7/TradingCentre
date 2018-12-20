@@ -179,9 +179,19 @@
 			<div class="modal-header">
 		        <h5 class="modal-title">You need an api key from bitmex for this page</h5>
 		    </div>
-      		<div class="modal-footer">
-        		<button type="button" class="btn btn-primary" id="gotosettings">Go to settings</button>
-      		</div>
+            <div class='modal-body'>
+            <div id="security" class="content">
+                <form class="myForm">
+                    <span>Key</span>
+                    <input type="text" id="key" placeholder="your key">
+                    <span>Secret key</span>
+                    <input type="text" id="skey" placeholder="Change your secret key">
+                    <br>
+                    <button type="button" class="btn btn-primary" id="changekey" style='float:right;' title='Double click'>Change key</button>
+                </form>
+                <span style='color:red;' id='errorkeys'></span>
+            </div>
+            </div>
     	</div>
 		</div>
 </div>
