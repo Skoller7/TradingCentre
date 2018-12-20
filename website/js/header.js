@@ -95,6 +95,10 @@ document.getElementById("MVerificationMailBCrosse").addEventListener("click",MVe
 document.getElementById("MVerificationMailAcceptedBCrosse").addEventListener("click",MVerificationMailAcceptedClose);
 document.getElementById("MVerificationMailAcceptedBClose").addEventListener("click",MVerificationMailAcceptedClose);
 
+document.getElementById("journal").addEventListener("click",goToJournal);
+document.getElementById("boughtdata").addEventListener("click",goToBouhtdata);
+document.getElementById("dataoverview").addEventListener("click",goToDataoverview)
+
 changeLoginchangeLogin();
 checkAllowCookies();
 
@@ -334,9 +338,22 @@ function openMVerificationMailAccepted(){
 	closeAllModals();
 	$('#MVerificationMailAccepted').modal();
 }
-//?
+//open journal
 function goToJournal(){
-	window.location.href = "journal.html";
+	if(getCookie("jwtToken")){
+		window.location.href = "journal.php";
+	}
+	else{
+		openMLogin();	
+	}
+}
+function goToBouhtdata(){
+	if(getCookie("jwtToken")){
+		window.location.href = "bouhtdata.php";	
+	}
+	else{
+		openMLogin();
+	}
 }
 //terms of service checkbox
 function changeTerms(){
@@ -347,7 +364,14 @@ function changeTerms(){
 		terms = true;
 	}
 }
-
+function goToDataoverview(){
+	if(getCookie("jwtToken")){
+		window.location.href = "dataoverview.php";	
+	}
+	else{
+		openMLogin();
+	}
+}
 
 function openMenu() {
   document.getElementById("navbar-overlay").style.width = "100%";
