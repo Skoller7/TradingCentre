@@ -253,13 +253,14 @@ setcard: function(data,i,own){
                 img.setAttribute("class","img-fluid");
                 img.setAttribute("height","50%");
                 img.setAttribute("src",data[i].imgURL);
+                card.setAttribute("style", "float:left; margin: 1%; height: 350px;");
                 card.appendChild(img);
                 var cardbody = document.createElement("div");
                 cardbody.setAttribute("class","card-body");
                 if(own){
                     cardbody.innerHTML +=  "<h5 class='card-title'>"+data[i].name+"</h5>";
                 }else{
-                    cardbody.innerHTML +=  "<h5 class='card-title'>skoller</h5>";
+                    cardbody.innerHTML +=  "<h5 class='card-title'>no name</h5>";
                 }
 
                 App.contracts.DataContract.at(portfolios[i].address).then(function(instance){
@@ -275,13 +276,14 @@ setcard: function(data,i,own){
                   cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count: "+ buyersCountf +"<br />Profit made: " + profitf +"</p>";
                   cardbody.innerHTML += "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
                   card.appendChild(cardbody);
+                  document.getElementById("datacontent").appendChild(card);
+                  //card.appendChild(card);
+
+
 
                   })
                 })
               })
-                if(own){
-                    cards.appendChild(card);
-                }
 }
 
 
