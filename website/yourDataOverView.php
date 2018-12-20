@@ -14,7 +14,7 @@
       <script src="bootstrap-4.1.3/js/bootstrap.min.js"></script>
       <script src="js/lib.js" type="text/javascript"></script>
       <?php
-        include('favicon.php');
+        include('favicon.html');
       ?>
 
 </head>
