@@ -172,6 +172,19 @@
     </div>
 </div>
 </div>
+        <!-- no api key go to settings page-->
+<div class="modal fade" id="apikey" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+		        <h5 class="modal-title">You need an api key from bitmex for this page</h5>
+		    </div>
+      		<div class="modal-footer">
+        		<button type="button" class="btn btn-primary" id="gotosettings">Go to settings</button>
+      		</div>
+    	</div>
+		</div>
+</div>
     <!-- delete yes or no-->
 <div class="modal fade" id="yesno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
