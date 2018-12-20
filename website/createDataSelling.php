@@ -115,11 +115,36 @@
         </div>
     </nav>
     <div class="col-md-4"></div>
-    
+
     <div class="col-md-8 col-sm-12 col-xs-12">
         <div class="header-content">
         <h3 id="ordernummerTitel"></h3>
         </div>
+
+        <!-- Modal if user has no data yet -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Sold portfolios can't be editted.</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                This page has been locked because it is for sale. You can still view your content but not edit it.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+          <button type="button" class="btn btn-primary makemodal" data-toggle="modal" data-target="#exampleModalCenter"></button>
+
+
+
+
         <div class="image-content">
           <div class="img-fluid" style="height:50%;" width="80%">
           <img  class="orderimg img-responsive img-fluid" alt="image of this order"/>  <!-- hier een witte box met zwarte randen tonen tot de persoon een img heeft geupload dan wordt de box vervangen door de iamge.-->
