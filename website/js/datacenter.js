@@ -27,7 +27,6 @@ var label = document.createElement("label");
 label.innerHTML = "Comment";
 var textarea = document.createElement("textarea");
 textarea.setAttribute("id","comment-text-content");
-textarea.setAttribute("placeholder","Add your comment here...");
 textarea.setAttribute("style","resize:none;width:100%;");
 textarea.setAttribute("id","comment-text-content");
 var diverror = document.createElement("div");
@@ -192,8 +191,10 @@ function setcontentdatacenter(){
     btnnext.innerHTML = "";
     if(overview){
         document.getElementById("portoverview").innerHTML = "Review portfolio";
+        textarea.setAttribute("placeholder","Add your order comment here...");
     }else{
         document.getElementById("portoverview").innerHTML = "Back to orders";
+        textarea.setAttribute("placeholder","Add your portfolio comment here...");
     }
     if(imgdesc.length > 1){
         setbtn();

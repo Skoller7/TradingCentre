@@ -59,11 +59,9 @@ function getcardhigh(){
                 }else{
                     arrayforsale = data;
                     if(arrayforsale.length == 0){
-                        document.getElementById("titleother").style.display = "none";
                         seemoreother.style.display = "none";
                         high.innerHTML = "No selling portfolios found";
                     }else{
-                        document.getElementById("titleother").style.display = "block";
                         seemoreother.style.display = "block";
                         setcontentcards(arrayforsale,"see-more-other",max_other,n_other);
                     }
