@@ -1,6 +1,8 @@
 var token = getCookie("jwtToken");
 //var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUzMTIzMDIsImV4cCI6MTU0NTM5ODcwMiwiaWF0IjoxNTQ1MzEyMzAyfQ.0QnL1lW_NTNYcIXIERfB5OB0oLCT3c8PvIKHSq5SMtkJ2Cu-_-A1uwNjvrm6LpTf5i1J7YUSWZFX_n6QD8DGQw";
 var user = [];
+//var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUzMTIzMDIsImV4cCI6MTU0NTM5ODcwMiwiaWF0IjoxNTQ1MzEyMzAyfQ.0QnL1lW_NTNYcIXIERfB5OB0oLCT3c8PvIKHSq5SMtkJ2Cu-_-A1uwNjvrm6LpTf5i1J7YUSWZFX_n6QD8DGQw";
+
 
 makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token, function(data){
                 user = data;
@@ -47,6 +49,12 @@ function validateForm(){
     }
     
     else {
+
+        if (document.getElementById("img").value) {
+                testImage();
+            }
+        
+        user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
         
         console.log(user);
         
@@ -207,6 +215,9 @@ function loadCallback() {
 
 
 function isVerified() {
+
+    user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
+
     
     var v = user.IsVerified.value;
     

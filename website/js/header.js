@@ -73,6 +73,7 @@ for(var i = 0; i < signUpInputList.length; i++){
 //header
 document.getElementById("Bsearch").addEventListener("click",search);
 document.getElementById("menu").addEventListener("click",openMenu);
+document.getElementById("BAllowCookies").addEventListener("click",allowCookies);
 //modal button
 //login modal
 document.getElementById("MLoginBLogin").addEventListener("click",function(){
@@ -95,6 +96,8 @@ document.getElementById("MVerificationMailAcceptedBCrosse").addEventListener("cl
 document.getElementById("MVerificationMailAcceptedBClose").addEventListener("click",MVerificationMailAcceptedClose);
 
 changeLoginchangeLogin();
+checkAllowCookies();
+
 
 //creates 2 buttons
 //if the user is logged in profile and logout
@@ -500,5 +503,16 @@ function login(usernameInput, passwordInput){
 function signUp(){
 	if(checkSignUp()){
 		signUpCall();
+	}
+}
+//makes a cookie when the user agrees to allow cookies
+function allowCookies(){
+	document.cookie = "allowCookies=true";
+	$('#banner').css('display','none');
+}
+//removes the cookie banner when the user agrees with cookies
+function checkAllowCookies(){
+	if(getCookie('allowCookies')){
+		$('#banner').css('display','none');
 	}
 }

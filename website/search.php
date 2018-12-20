@@ -1,3 +1,6 @@
+<?php
+  include ('checkToken.php');
+?>
 <html>
 	<head>
 		<title>Tradingcentre</title>
