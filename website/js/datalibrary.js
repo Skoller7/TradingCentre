@@ -161,6 +161,7 @@ setcontentcards: function(arrayport,seemoreid,boolown,max,n){
 
 setcard: function(data,i){
                var card = document.createElement("div");
+                card.setAttribute("style", "height:350px");
                 card.setAttribute("class","col-md-3 col-sm-12 card");
                 var img = document.createElement("img");
                 img.setAttribute("alt","image of trade");
@@ -172,7 +173,7 @@ setcard: function(data,i){
                 cardbody.setAttribute("class","card-body");
 
                   cardbody.innerHTML +=  "<h5 class='card-title'>"+data[i].name+"</h5>";
-                  cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>Buyers count: bla"+  +"<br />Profit made: blabla" +  +"</p>";
+                  cardbody.innerHTML +=  "<p class='card-text' id='portfoliodata'>"+ data[i].description + "</p>";
                   // cardbody.innerHTML +=  "<a href='datacenternew.php?portfolioId="+data[i].portfolioId+"' class='btn btn-primary'>Show data</a>";
 
 
