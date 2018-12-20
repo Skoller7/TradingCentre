@@ -78,6 +78,10 @@ var arrayaddorders = [];
 bool if portfolio is default or not
 */
 var defaultbool = false;
+/*
+bool if portfolio is for sale
+*/
+var forsale = true;
 var frdate;
 var tdate;
 /*
@@ -309,20 +313,21 @@ function getport(){
         makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
             ul.innerHTML = "";
             for(var i = 0; i < data.length;i++){
-                var name = document.createTextNode(data[i].name);
-                var li = document.createElement("LI");
-                ul.appendChild(li);
-                li.setAttribute("style","background-color:#3a4e5f");
-                li.setAttribute("id",data[i].portfolioId + "port");
-                li.appendChild(name);
-                if(data[i].isDefault == true){
-                    defaultbool = true;
-                    setdefaultport(data[i].portfolioId);
-                     activeportfolioid = data[i].portfolioId;
+                    var name = document.createTextNode(data[i].name);
+                    var li = document.createElement("LI");
+                    ul.appendChild(li);
+                    li.setAttribute("style","background-color:#3a4e5f");
+                    li.setAttribute("id",data[i].portfolioId + "port");
+                    li.appendChild(name);
+                    if(data[i].isDefault == true){
+                        defaultbool = true;
+                        setdefaultport(data[i].portfolioId);
+                        forsale = false;
+                         activeportfolioid = data[i].portfolioId;
+                    }
+                    var sub = document.getElementById(data[i].portfolioId + "port");
+                    port.push(sub.getAttribute("id"));
                 }
-                var sub = document.getElementById(data[i].portfolioId + "port");
-                port.push(sub.getAttribute("id"));
-            }
         });
           //  ppd();
 }
@@ -440,6 +445,11 @@ function setdefaultport(id){
 setup active portfolio
 */
 function setupactiveport(data,id){
+    if(data.isForSale){
+        forsale = true;
+    }else{
+        forsale = false;
+    }
     footer.innerHTML = "";
         desc.innerHTML = data.description;
         goals.innerHTML = data.goal;
@@ -702,7 +712,7 @@ function createport(){
     }
     if(document.getElementById("createporttitle").innerHTML == "Create Portfolio"){
         if(valid){
-            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address":null};
+            var jsonfile = {"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": false,"Address":null};
             makerequest(jsonfile,"http://10.3.50.6/api/portfolio","PUT",token,function(data){
                 if(getstatus() == 400 || getstatus() == 401 || getstatus() == 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
@@ -767,7 +777,6 @@ function getorderscontent2(){
         makerequestnopar("http://10.3.50.6/api/order/get?portfolioId="+activeportfolioid,"GET",token,function(data){
                 if(data.length != 0){
                     for(var i = 0;i < data.length; i++){
-                        if(data[i].isSold == false){
                              var date = data[i].timestamp;
                                     if(data[i].side == "Buy"){
                                         color = "green";
@@ -779,7 +788,6 @@ function getorderscontent2(){
                             }else{
                                  content2orders.innerHTML += "<div class='card' style='margin:2%;'><div class='card-body'><h4>"+date.substr(0,10)+" " + date.substr(11,5)+" - <span style='color:"+color+"'>" + data[i].side +"</span> - <a href='#' class='edit' id='"+data[i].orderId+"'>Edit order</a></h4><img src="+data[i].imgURL+" style='width:100%;'/><div style='font-size:17px;'><u>Description:</u> "+data[i].description+"</div></div></div>";                               
                             }
-                        }
                     }
             }else{
                 content2orders.innerHTML = "No orders found";
@@ -805,7 +813,7 @@ content2orders.addEventListener("click",function(e){
                 }
                     if(valid){
                         makerequestnopar("http://10.3.50.6/api/portfolio/order?orderId="+current2+"&portfolioId="+activeportfolioid,"DELETE",token,function(){
-                                                    getorderscontent2();
+                        getorderscontent2();
                         },true);
                         ids2.push(current2);
                     }
@@ -832,14 +840,13 @@ function getorders(){
             if(data.length != 0){
                 arraysort = data;
                     for(var i = 0;i < data.length; i++){
-                        if(data[i].isSold == false){
                             setOrders(data,i,defaultbool);
-                        }
                     }
             }else{
                 all.innerHTML = "No orders found";
             }
     },true);
+    checkFooterPosition();
 }
 /*
 set orders in the table
@@ -851,9 +858,7 @@ function setOrders(data,i,defaultbool){
         }else{
            color = "red";
         }
-        if(all.className == 'all'){
-            tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>";
-        }
+        tr.innerHTML += "<td class='id'>"+data[i].orderId+"</td>";
         tr.innerHTML += "<td class='ex'>"+data[i].exchange+"</td>";
         tr.innerHTML += "<td class='si' style='color:"+color+"'>"+data[i].side+"</td>";
         tr.innerHTML += "<td class='pr'>"+data[i].price+"("+data[i].currency+")</td>";
@@ -872,19 +877,24 @@ function setOrders(data,i,defaultbool){
             jk.setAttribute("class","fa fa-edit");
             jk.setAttribute("id",data[i].orderId);
             a.appendChild(jk);
-            td.appendChild(a);
-            a.addEventListener("click",openupdateorder);
-            if(!defaultbool){
-                var a2 = document.createElement("a");
-                a2.setAttribute("class","btn btn-danger");
-                a2.setAttribute("id",data[i].orderId);
-                var kj = document.createElement("i");
-                kj.setAttribute("class","fa fa-trash");
-                kj.setAttribute("id",data[i].orderId);
-                kj.setAttribute("style","background-color:red;");
-                a2.appendChild(kj);
-                a2.addEventListener("click",deleteorder);
-                td.appendChild(a2);
+            if(!forsale){
+             document.getElementById('optionstable');  
+            }
+            if(!forsale || defaultbool){
+                td.appendChild(a);
+                a.addEventListener("click",openupdateorder);
+                if(!defaultbool){
+                    var a2 = document.createElement("a");
+                    a2.setAttribute("class","btn btn-danger");
+                    a2.setAttribute("id",data[i].orderId);
+                    var kj = document.createElement("i");
+                    kj.setAttribute("class","fa fa-trash");
+                    kj.setAttribute("id",data[i].orderId);
+                    kj.setAttribute("style","background-color:red;");
+                    a2.appendChild(kj);
+                    a2.addEventListener("click",deleteorder);
+                    td.appendChild(a2);
+                }
             }
             if(data[i].imgURL == null || data.imgURL == ""){
                 tr.innerHTML += "<td><i class='fa fa-times' style='color:red;'></i></td>";
@@ -1164,17 +1174,22 @@ myChart.setOption(BasicChart);
         var data = [];
         
 function test(){
-    var id;
-    makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
-            for(var i = 0; i < data.length;i++){
-                if(data[i].isDefault == true){
-                    id = data[i].portfolioId;
+    if(activeportfolioid == null){
+    makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(id){
+            for(var i = 0; i < id.length;i++){
+                if(id[i].isDefault == true){
+                  activeportfolioid = id[i].portfolioId;
                 }
             }
-            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+id,"GET",token,function(obj){
+            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId=33","GET",token,function(obj){
                 data = obj;
             });
     });
+    }else{
+        makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
+                data = obj;
+        }); 
+    }
 }
 }
 function addchart(){ 

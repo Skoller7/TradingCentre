@@ -5,10 +5,9 @@ $(document).ready(function(){
 	function checkFooterPosition(){
 		document.getElementById('footer').style.top = null;
 		if(parseInt($('#footer').css('top'), 10) < $(window).height()){
-			console.log(0);
 			$('#footer').css('top',$(window).height() + 10);
 			//Setting an element's position below the screen causes the browser to scroll to said location, this scrolls back up
-			window.scrollTo(0,0);
+			//window.scrollTo(0,0);
 		}
 	}
 	
@@ -23,8 +22,11 @@ $(document).ready(function(){
 	}
 
 	$(window).resize(function() {
-
 		checkFooterPosition();
+	});
+
+	$("body").on('DOMSubtreeModified', "body", function() {
+   		alert('changed');
 	});
 
 });
