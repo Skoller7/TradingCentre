@@ -1,5 +1,7 @@
 var token = getCookie("jwtToken");
 var user = [];
+//var token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyNCIsInVuaXF1ZV9uYW1lIjoidGVzdHVzZXIiLCJuYmYiOjE1NDUzMTIzMDIsImV4cCI6MTU0NTM5ODcwMiwiaWF0IjoxNTQ1MzEyMzAyfQ.0QnL1lW_NTNYcIXIERfB5OB0oLCT3c8PvIKHSq5SMtkJ2Cu-_-A1uwNjvrm6LpTf5i1J7YUSWZFX_n6QD8DGQw";
+
 
 function openOption(evt, optionName) {
     var i, content, tablink;
@@ -43,9 +45,9 @@ function validateForm(){
     
     else {
         
-        /*if (document.getElementById("img")) {
+        if (document.getElementById("img").value) {
                 testImage();
-            }*/
+            }
         
         user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
         
@@ -206,6 +208,20 @@ function loadCallback() {
     window.alert("Image URL is valid, you can proceed.");
 }
 
+
+function isVerified() {
+    user = makerequestnopar("http://10.3.50.6/api/user?userId=0", "GET", token);
+    
+    var v = user.IsVerified.value;
+    
+    if (v === 0) {
+        document.getElementsByTagName("p").innerHTML = "verified";
+    }
+    
+    else {
+        document.getElementsByTagName("p").innerHTML = "not erified"
+    }
+}
 /*var modal = document.querySelector(".modald");
 var trigger = document.querySelector(".deleteUser");
 var closeBtn = document.querySelector(".close");
