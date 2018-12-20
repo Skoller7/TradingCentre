@@ -122,15 +122,45 @@ document.getElementById("noo").addEventListener("click",function (e){
 /*
 show modal go to settings page
 */
+function addapikey(){
+    var key = document.getElementById('key');
+    var secretkey = document.getElementById('skey');
+    document.getElementById("changekey").addEventListener("click",function(){
+        var valid = true;
+        document.getElementById("errorkeys").innerHTML = "";
+        if(key.value == ""|| secretkey.value == ""){
+            document.getElementById("errorkeys").innerHTML = "Both input fieds are required";
+        }else{
+            var json = {"Name": "BitMEX","Key": key.value,"Secret": secretkey.value,}
+            makerequest("http://10.3.50.6/api/key","POST",token,function(data){
+                if(getstatus() != 200){
+                    console.log(data);
+                }
+            });
+        }
+});
+}
 function openapikey(){
    	$('#apikey').modal({
 		backdrop: 'static'
 	});
-    document.getElementById("gotosettings").addEventListener("click",function(e){
-        $('#apikey').modal('toggle');
-        window.location = "settings.php";
-    });
 }
+document.getElementById("changekey").addEventListener("click",function(){
+         var key = document.getElementById('key');
+            var secretkey = document.getElementById('skey');
+            document.getElementById("changekey").addEventListener("click",function(){
+                var valid = true;
+                document.getElementById("errorkeys").innerHTML = "";
+                if(key.value == ""|| secretkey.value == ""){
+                    document.getElementById("errorkeys").innerHTML = "Both input fieds are required";
+                }else{
+                    var json = {"Name": "BitMEX","Key": key.value,"Secret": secretkey.value,}
+                    makerequest(json,"http://10.3.50.6/api/key","POST",token,function(data){
+                            $('#apikey').modal('toggle');
+                    });
+                }
+            });
+    });
 /*
 check if user has api keys
 */
