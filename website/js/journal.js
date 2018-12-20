@@ -842,6 +842,7 @@ function getorders(){
                 all.innerHTML = "No orders found";
             }
     },true);
+    checkFooterPosition();
 }
 /*
 set orders in the table
@@ -1166,17 +1167,22 @@ myChart.setOption(BasicChart);
         var data = [];
         
 function test(){
-    var id;
-    makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(data){
-            for(var i = 0; i < data.length;i++){
-                if(data[i].isDefault == true){
-                    id = data[i].portfolioId;
+    if(activeportfolioid == null){
+    makerequestnopar("http://10.3.50.6/api/portfolio","GET",token,function(id){
+            for(var i = 0; i < id.length;i++){
+                if(id[i].isDefault == true){
+                  activeportfolioid = id[i].portfolioId;
                 }
             }
-            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+id,"GET",token,function(obj){
+            makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
                 data = obj;
             });
     });
+    }else{
+        makerequestnopar("http://10.3.50.6/api/portfolio/profit?portfolioId="+activeportfolioid,"GET",token,function(obj){
+                data = obj;
+        }); 
+    }
 }
 }
 function addchart(){ 

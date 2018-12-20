@@ -123,33 +123,36 @@ function checkportissell(){
                             }else{
                                 purchased = false;
                             }
-                    if(purchased){
-                        makerequestnopar("http://10.3.50.6/api/portfolio/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
-                            if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
-                                 cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
-                            }else{
-                                if(order.length != 0){
-                                    for(var i = 0;i < order.length; i++){     
-                                        imgsrc[i] = order[i].imgURL;
-                                        imgdesc[i] =  order[i].description;
-                                        orderid[i] = order[i].orderId;
-                                    }
-                                    
-                                        if(imgdesc.length > 1){
-                                            setbtn();
+                            if(purchased){
+                                makerequestnopar("http://10.3.50.6/api/portfolio/getfromsold?portfolioId="+aportfolioid,"GET",token,function(order){
+                                    console.log(order);
+                                    if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
+                                         cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: page not found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
+                                    }else if(getstatus() == 404){
+                                        cont.innerHTML = "<p style='font-size:30px;margin-left:-12%;'>Error 404: no orders found</p><a style='font-size:30px;margin-left:-12%;' href='datacenteroverview.php'>Go back to datacenteroverview</a>";
+                                    }else{
+                                        if(order.length != 0){
+                                            for(var i = 0;i < order.length; i++){     
+                                                imgsrc[i] = order[i].imgURL;
+                                                imgdesc[i] =  order[i].description;
+                                                orderid[i] = order[i].orderId;
+                                            }
+
+                                                if(imgdesc.length > 1){
+                                                    setbtn();
+                                                }
+                                            getUser(data.userId);
+                                            setcontentdatacenter();
                                         }
-                                    getUser(data.userId);
-                                    setcontentdatacenter();
-                                }
+                                    }
+                                },true);
+                            }else{
+                                imgsrc[0] = data.imgURL;
+                                imgdesc[0] =  data.description;
+                                orderid[0] = data.orderId;
+                                getUser(data.userId);
+                                setcontentdatacenter();
                             }
-                        },true);
-                    }else{
-                        imgsrc[0] = data.imgURL;
-                        imgdesc[0] =  data.description;
-                        orderid[0] = data.orderId;
-                        getUser(data.userId);
-                        setcontentdatacenter();
-                    }
                 },true);
             }
     },true);
@@ -206,6 +209,7 @@ function setcontentdatacenter(){
     cont.appendChild(info);
     getComments();
     cont.appendChild(similar);
+    checkFooterPosition(); 
 }
 /*
 adds comment to portfolio if user not purchased the current portfolio otherwise comment will be added to order
