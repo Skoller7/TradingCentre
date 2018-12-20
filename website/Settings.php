@@ -11,6 +11,9 @@
     <script src="bootstrap-4.1.3/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="js/lib.js" type="text/javascript"></script>
     <script src="js/Settings.js" type="text/javascript"></script>
+    <?php
+        include_once('favicon.html');
+    ?>
     <title>Settings</title>
 </head>
 <body>
