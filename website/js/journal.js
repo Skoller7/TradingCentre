@@ -730,7 +730,7 @@ function createport(){
         }
    }else{
         if(valid){
-            var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": true,"Address": null};
+            var jsonfile = {"PortfolioId": activeportfolioid,"Name": nameport.value,"Description": descport.value,"Goal": goalport.value	,"ImgURL":imgurl.value,"IsForSale": false,"Address": null};
             makerequest(jsonfile,"http://10.3.50.6/api/portfolio","POST",token,function(data){
                     if(getstatus() == 400 || getstatus() == 401 || getstatus()== 501 || getstatus() == 500){
                     erroradres.innerHTML = "* Something went wrong try again later";
