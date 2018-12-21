@@ -112,7 +112,7 @@
 				</div>
 				<div id="datacenterRight" class="demoHalves">
 					<div class="demoText">
-						<p>Buy expert trading data via a smartcontract on the NEO blockchain or share your own expertise by creating curated portfolios with custom notesand images paired to each trade. </p>
+						<p>Buy and sell expert trading data via a smartcontract on the NEO blockchain or share your own expertise by creating curated portfolios with custom notesand images paired to each trade. </p>
 						<a class="getStarted" style="text-decoration: underline;">Get started</a>
 					</div>
 				</div>

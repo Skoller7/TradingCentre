@@ -148,7 +148,9 @@ body {
 }
 
 #journalImg {
-	background-image: url("https://www.tradervue.com/assets/feat-journal-dashboard-f67e6bd9666d7cdc7ff47144c8e4270f6eb42a62541883e7b00a37ec2667bfdc.png");
+	background-image: url("../img/journalScreenshot.png");
+	background-position: center;
+	background-size: cover;
 	position: absolute;
 	width: 40%;
 	left: 55%;
@@ -163,7 +165,8 @@ body {
 }
 
 #datacenterImg {
-	background-image: url("https://assets.pcmag.com/media/images/514230-10-free-data-visualization-tools.jpg?thumb=y");
+	background-image: url("../img/datacenterScreenshot.png");
+	background-size: cover;
 	position: absolute;
 	width: 40%;
 	left: 5%;
@@ -223,7 +226,7 @@ body {
   	right: 0;
   	bottom: 0;
   	left: 0;
-  /*transform-style: preserve-3d;*/
+  	transform-style: preserve-3d;
 }
 
 .parallax__layer--base {
