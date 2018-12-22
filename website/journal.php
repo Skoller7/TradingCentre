@@ -8,7 +8,7 @@
       $headers[] = 'From: TradingCenter <TradingCenter@gmail.com>';
       $email = $_SESSION['email'];
       $emailHeader = 'verification TradingCenter';
-      $emailBody = "Dear ".$_SESSION['username'].",<br><br>You have recently made an account on <a href='https://dtprojecten.ehb.be/TradingCenter/index.php'>TradingCenter</a> with this email address.<br>Can you please confirm that this is your email address by clicking this link.<br><a href='https://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey']."'>Confirm email adrress</a><br>With kind regards, the TradingCenter team";
+      $emailBody = "Dear ".$_SESSION['username'].",<br><br>You have recently made an account on <a href='http://dtprojecten.ehb.be/TradingCenter/index.php'>TradingCenter</a> with this email address.<br>Can you please confirm that this is your email address by clicking this link.<br><a href='http://dtprojecten.ehb.be/TradingCenter/index.php?verificationKey=" . $_SESSION['verificationKey']."'>Confirm email adrress</a><br>With kind regards, the TradingCenter team";
       unset($_SESSION['email']);
       unset($_SESSION['verificationKey']);
       unset($_SESSION['username']);
